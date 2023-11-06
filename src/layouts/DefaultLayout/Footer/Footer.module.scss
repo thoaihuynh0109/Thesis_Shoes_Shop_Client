@@ -1,0 +1,36 @@
+/* CSS for Footer */
+.footer {
+    background-color: #f2f2f2;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.fixed-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-title {
+    display: flex;
+    justify-content: flex-start;
+}
+.footer-icon:hover {
+    background-color: var(--text-hover-header);
+    // color: var(--text-hover-header);
+    cursor: pointer; 
+}
+
+.footer-follow-icon {
+    cursor: pointer;
+    font-size: 32px;
+}
+// sx={{cursor: 'pointer' , fontSize: 36 }}
+.footer-follow-icon:hover {
+    color: var(--text-hover-header);
+}

@@ -33,3 +33,15 @@ body {
     text-rendering: optimizeSpeed;
     color: var(--text-color);
 }
+
+// bỏ đi hành vi mặc định
+button,
+input,
+[tabindex] {
+    outline: none;
+    border: none;
+}
+
+a[href] {
+    text-decoration: none;
+}

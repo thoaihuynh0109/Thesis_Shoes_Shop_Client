@@ -1,0 +1,12 @@
+.image-flash-sale {
+    // width: 350px;
+    // height: 300px;
+    border-radius: 20px;
+    // position: relative;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.image-flash-sale:hover {
+    opacity: 0.6;
+}

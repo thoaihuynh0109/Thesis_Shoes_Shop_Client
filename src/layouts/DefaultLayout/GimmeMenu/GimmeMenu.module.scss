@@ -1,0 +1,44 @@
+.gimme_mainnav {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-around;
+}
+.menu-list-item {
+    margin-top: 4px;
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
+}
+
+.menu-child-item {
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-color);
+    &:hover {
+        color: var(--text-hover-header);
+        cursor: pointer;
+    }
+}
+
+.search-input {
+    width: 100%;
+    padding: 4px;
+}
+
+.menu-vertical-line {
+    position: relative;
+    
+    // make divider
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -8px;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 50%;
+      background-color: #eaeaea; 
+    }
+}
+
