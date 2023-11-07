@@ -24,6 +24,8 @@ function MakeProductsCardItem() {
                         price={product.price}
                         rating={product.rating}
                         label={product.label}
+                        labelNew={product.labelNew}
+                        // labelNew={true}
                         sx={{ margin: '0 20px' }}
                     />
                 ))}

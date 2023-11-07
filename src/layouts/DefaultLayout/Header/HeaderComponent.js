@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, Button, Box, styled, Container } from '@mui/material';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
-// import '../GlobalStyles/GlobalStyles.scss';
-// import '~/Components/GlobalStyles';
+
 import styles from './Header.module.scss';
 
 // Icon
@@ -12,7 +11,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import KeyIcon from '@mui/icons-material/Key';
-// import UserAuthenticated from '~/Components/Authenticated/UserAuthenticated';
+
 
 const cx = classNames.bind(styles);
 const CustomizeButton = styled(Button)({
@@ -44,8 +43,8 @@ const CustomizeButton = styled(Button)({
 
 function HeaderDesign() {
     return (
-        <AppBar position="fixed" sx={{bgcolor:'var(--header-color)'}}> 
-            <Container >
+        <AppBar position="fixed" sx={{ bgcolor: 'var(--header-color)' }}>
+            <Container>
                 <Toolbar className={cx('custom-header')}>
                     <HomeIcon fontSize="large"></HomeIcon>
 
