@@ -159,9 +159,10 @@ function TestShop() {
                 <Grid item xs={6} sm={3} md={3} key={imageIndex} sx={{ display: 'flex' }}>
                     {/* onClick={() => navigate('/detail-product')} */}
                     <MakeProductsCard
-                        image={TestProducts[imageIndex]?.img}
+                        onClick={() => navigate('/product-details')}
                         title={TestProducts[imageIndex]?.title}
                         price={TestProducts[imageIndex]?.price}
+                        image={TestProducts[imageIndex]?.img}
                         rating={TestProducts[imageIndex]?.rating}
                         label={TestProducts[imageIndex]?.label}
                         // custom minWidthCard
