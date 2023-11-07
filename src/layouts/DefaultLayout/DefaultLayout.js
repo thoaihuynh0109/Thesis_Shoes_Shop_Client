@@ -7,6 +7,8 @@ import HeaderDesign from './Header/HeaderComponent';
 import SubHeader from './SubHeader/SubHeader';
 import NewHeaderDesign from './Header/NewHeaderDesign';
 import ScrollButtonToTop from '~/components/BackToTop';
+import { InfiniteSliderTrack } from '~/components/SlideShowImage';
+import SlideShowBranchStore from '~/components/SlideShowImage';
 
 function DefaultLayout({ children }) {
     const [displayHeader, setDisplayHeader] = useState(true);
@@ -26,6 +28,8 @@ function DefaultLayout({ children }) {
             {children}
             {/* <SlideShowBranchStore></SlideShowBranchStore> */}
             <ScrollButtonToTop />
+            <InfiniteSliderTrack />
+            {/* <SlideShowBranchStore /> */}
             <Footer></Footer>
         </>
     );
