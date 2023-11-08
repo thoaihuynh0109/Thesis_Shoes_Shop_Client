@@ -68,11 +68,11 @@ export function MakeProductsCard({
     rating,
     label,
     labelNew,
+    // minWidthCard,
     minWidthCard,
     maxHeightCard,
     imgHeight,
     imgWidth,
-    marginLeft,
     onClick,
 }) {
     const navigate = useNavigate();
