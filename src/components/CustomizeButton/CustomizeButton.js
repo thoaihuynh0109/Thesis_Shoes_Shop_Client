@@ -1,6 +1,6 @@
 import { Button, styled } from '@mui/material';
 
-export const CustomizeButton = styled(Button)(({ handleNavigateTo, fontSize }) => ({
+export const CustomizeButton = styled(Button)(({ handleNavigateTo, fontSize, minWdith }) => ({
     variant: 'contained',
     margin: '0 auto',
     display: 'flex',
@@ -10,4 +10,5 @@ export const CustomizeButton = styled(Button)(({ handleNavigateTo, fontSize }) =
     fontWeight: 'bold',
     // bgcolor:'#fff',
     onClick: { handleNavigateTo },
+    minWidth: minWdith || '64px',
 }));
