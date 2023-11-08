@@ -7,7 +7,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import { CustomizeTextField } from '~/components/CustomizeTextField /CustomizeTextField';
+import { CustomizeTextField } from '~/components/CustomizeTextField/CustomizeTextField';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 
 const Item = styled(Paper)(({ theme }) => ({
