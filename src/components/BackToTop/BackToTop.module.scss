@@ -1,0 +1,28 @@
+.backToTopButton {
+    position: fixed;
+    bottom: 100px;
+    right: 40px;
+    // background-color: #000;
+    // color: #fff;
+    background-color: #c2e0ff;
+    color: #004c99;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    &:hover {
+        color: #e34444;
+        cursor: pointer;
+    }
+}
+
+.backToTopButton svg {
+    width: 40px;
+    height: 40px;
+}
+
+/* background: #c2e0ff */
+/* color: #004c99; */
