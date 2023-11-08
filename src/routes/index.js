@@ -18,6 +18,7 @@ import Home from '~/pages/Home/Home';
 import PageNotFound from '~/pages/NotFound/PageNotFound';
 import RecoverPassword from '~/pages/RecoverPassword/RecoverPassword';
 import RegisterAccount from '~/pages/RegisterAccount/RegisterAccount';
+import TestPagination from '~/pages/Shop/Pagination/p1';
 import Shop from '~/pages/Shop/Shop';
 
 // Route khong can dang nhap
@@ -33,6 +34,10 @@ const publicRoutes = [
     {
         path: '/contact',
         component: ContactUs,
+    },
+    {
+        path: '/blog',
+        component: TestPagination,
     },
     {
         path: '/product-details',
