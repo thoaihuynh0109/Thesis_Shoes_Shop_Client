@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Navigate, Link } from 'react-router-dom';
+
+import { useNavigate, Link } from 'react-router-dom';
 import SignIn from '~/components/SignIn';
 import AdminLayout from '~/layouts/AdminLayout/AdminLayout';
 import Category from '~/pages/AdminPages/Category';
@@ -78,8 +79,6 @@ const publicRoutes = [
         path: '/*',
         component: PageNotFound,
     },
-    // <Route path="/404" element={<PageNotFound />} />
-    //             <Route path="*" element={<Navigate to="/404" />} />
 ];
 
 // Route can dang nhap
