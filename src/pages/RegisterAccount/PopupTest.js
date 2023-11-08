@@ -70,7 +70,7 @@ function PopupTest(props) {
                         // src="https://icons.veryicon.com/png/o/miscellaneous/8atour/success-35.png"
                         src={ErrorImage}
                         style={{ width: '200px', height: '100px' }}
-                        alt="Success Logo"
+                        alt="Error Logo"
                     />
                 )}
 

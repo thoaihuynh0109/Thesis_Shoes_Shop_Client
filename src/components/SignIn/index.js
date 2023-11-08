@@ -6,6 +6,8 @@ import styles from './SignIn.module.scss';
 import classNames from 'classnames/bind';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LockIcon from '@mui/icons-material/Lock';
+import CustomTypography from '../CustomTyporaphy/CustomTyporaphy';
+import { CustomizeTextField } from '../CustomizeTextField/CustomizeTextField';
 // import { Typography, TextField } from '~/Layouts/DefaultLayout';
 
 const cx = classNames.bind(styles);
@@ -43,23 +45,23 @@ function SignIn({ onSignIn }) {
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <Item sx={{ p: 2, height: '100%' }}>
-                            <Typography
+                            <CustomTypography
                                 fontWeight={700}
                                 fontSize="20px"
                                 className={cx('page-subheading')}
                                 gutterBottom
                             >
                                 Create an account
-                            </Typography>
+                            </CustomTypography>
 
-                            <Typography variant="body1" textAlign={'left'} gutterBottom>
+                            <CustomTypography variant="body1" textAlign={'left'} gutterBottom>
                                 Please enter your email address to create an account.
-                            </Typography>
-                            <Typography variant="body1" textAlign={'left'}>
+                            </CustomTypography>
+                            <CustomTypography variant="body1" textAlign={'left'}>
                                 Email address
-                            </Typography>
+                            </CustomTypography>
 
-                            <TextField
+                            <CustomizeTextField
                                 fullWidth={true}
                                 id="outlined-basic"
                                 label="Email"
@@ -68,41 +70,41 @@ function SignIn({ onSignIn }) {
 
                             {/* chỗ này cần check lại chiều ngang bất hợp lí */}
 
-                            <Button
+                            <CustomButton
                                 variant="contained"
                                 startIcon={<AccountCircleIcon />}
                                 component={Link}
                                 to="/register-account"
                             >
                                 Create Account
-                            </Button>
+                            </CustomButton>
                         </Item>
                     </Grid>
 
                     {/* Login */}
                     <Grid item xs={6}>
                         <Item sx={{ height: '100%', p: 2 }}>
-                            <Typography
+                            <CustomTypography
                                 fontWeight={700}
                                 fontSize="20px"
                                 className={cx('page-subheading')}
                                 gutterBottom
                             >
                                 Already Have An account
-                            </Typography>
-                            <Typography variant="body1" textAlign={'left'}>
+                            </CustomTypography>
+                            <CustomTypography variant="body1" textAlign={'left'}>
                                 Email address
-                            </Typography>
-                            <TextField
+                            </CustomTypography>
+                            <CustomizeTextField
                                 fullWidth={true}
                                 id="outlined-basic"
                                 label="Email"
                                 variant="outlined"
                             />
-                            <Typography variant="body1" sx={{ textAlign: 'left', mt: 2 }}>
+                            <CustomTypography variant="body1" sx={{ textAlign: 'left', mt: 2 }}>
                                 Password
-                            </Typography>
-                            <TextField
+                            </CustomTypography>
+                            <CustomizeTextField
                                 fullWidth={true}
                                 id="outlined-basic"
                                 label="Password"
@@ -110,17 +112,18 @@ function SignIn({ onSignIn }) {
                                 variant="outlined"
                             />
 
-                            <Button
+                            <CustomButton
                                 variant="contained"
-                                width="120px"
+                                width="160px"
                                 startIcon={<LockIcon />}
                                 onClick={handleLogin}
                                 // after logging in successfully --> href user to Home page
                                 component={Link}
                                 to="/"
+                                sx={{ padding: '6px 20px' }}
                             >
                                 Đăng Nhập
-                            </Button>
+                            </CustomButton>
                         </Item>
                     </Grid>
                 </Grid>
