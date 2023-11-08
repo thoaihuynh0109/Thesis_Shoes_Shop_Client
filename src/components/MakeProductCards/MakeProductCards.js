@@ -13,6 +13,7 @@ import {
     styled,
     TableCell,
     TextField,
+    Avatar,
 } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -21,6 +22,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import Rating from '@mui/material/Rating';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { CustomTooltip } from '~/pages/Home/TabProducts/ProductsCard';
+import CustomTypography from '../CustomTyporaphy/CustomTyporaphy';
 // data for home page
 export const products = [
     {
@@ -30,6 +32,7 @@ export const products = [
         price: '3,600,000',
         rating: 4,
         label: false,
+        labelNew: true,
     },
     {
         id: 2,
@@ -70,6 +73,7 @@ export function MakeProductsCard({
     imgHeight,
     imgWidth,
     marginLeft,
+    onClick,
 }) {
     const navigate = useNavigate();
     const [hoverCard, setHoverCard] = useState(false);
@@ -102,7 +106,7 @@ export function MakeProductsCard({
 
     // handle navigating to the product detail page
     const handleNavigateToProductDetails = () => {
-        navigate('/detail-product');
+        navigate('/product-details');
     };
 
     return (
@@ -141,21 +145,28 @@ export function MakeProductsCard({
                 )}
 
                 {labelNew && (
-                    <Box
+                    <Avatar
                         sx={{
+                            background: 'linear-gradient(45deg, #ff8a00, #e52e71)',
+                            width: '50px',
+                            height: '50px',
                             position: 'absolute',
-                            top: '0',
-                            left: '50%',
-                            transform: 'translate(30%, -10%) rotate(45deg)',
-                            backgroundColor: 'red',
-                            color: 'white',
-                            padding: '4px 16px',
-                            fontWeight: 'bold',
                         }}
                     >
-                        {/* {label} */}
-                        New Product
-                    </Box>
+                        <Box
+                            sx={{
+                                position: 'relative',
+                                top: '33%',
+                                left: '63%',
+                                transform: 'translate(-50%, -50%)',
+                                color: 'white',
+                                padding: '4px 16px',
+                                fontWeight: 'bold',
+                            }}
+                        >
+                            <CustomTypography textAlign={'center'}>New</CustomTypography>
+                        </Box>
+                    </Avatar>
                 )}
 
                 <CardMedia
@@ -163,6 +174,7 @@ export function MakeProductsCard({
                     height={imgHeight || '194'}
                     image={image}
                     alt="Product Image"
+                    onClick={onClick}
                     style={{ objectFit: 'contain', width: imgWidth || '95%', margin: '0 auto' }}
                 />
 
