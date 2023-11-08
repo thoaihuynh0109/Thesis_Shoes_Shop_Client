@@ -1,7 +1,17 @@
-import { Box, Typography, IconButton, Tooltip, Stack } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Typography, IconButton, Tooltip, Stack, Grid, Button, styled } from '@mui/material';
 import { Item } from '../Contants';
 import DeleteIcon from '@mui/icons-material/Delete';
-// import { CustomTypography } from '~/Layouts/DefaultLayout';
+import { Update } from '@mui/icons-material';
+import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
+
+// custom bytton for update quantity
+export const CustomizeButtonUpdateQuantity = styled(Button)(({}) => ({
+    size: 'small',
+    minWidth: '40px',
+    fontSize: '14px',
+    fontWeight: 'bold',
+}));
 
 // Data Products are added to cart
 function createData(
@@ -51,23 +61,12 @@ export const rowsTest = [
         20.0,
 
         // update the quantity
-        <Box sx={{ width: 200 }}>
-            <Item>4</Item>
-            <Stack
-                spacing={{ xs: 2, sm: 2 }}
-                sx={{ mt: 2 }}
-                direction="row"
-                useFlexGap
-                flexWrap="wrap"
-            >
-                <Item>-</Item>
-                <Item>+</Item>
-            </Stack>
-        </Box>,
+        <UpdateQuantity />,
+
         // total the price for each product
-        <Typography fontSize="16px" variant="body1">
+        <CustomTypography fontSize="16px" variant="body1">
             80
-        </Typography>,
+        </CustomTypography>,
         // icon remove product
         <Tooltip arrow title="Delete">
             <IconButton>
@@ -88,30 +87,19 @@ export const rowsTest = [
         />,
         // description of the product
         <Box>
-            <Typography variant="body1">Gimme Shoes</Typography>
-            <Typography variant="body2">SKU: UTE S1</Typography>
-            <Typography variant="body2">Size : 41, Color : Orange Black</Typography>
+            <CustomTypography variant="body1">Gimme Shoes</CustomTypography>
+            <CustomTypography variant="body2">SKU: UTE S1</CustomTypography>
+            <CustomTypography variant="body2">Size : 41, Color : Orange Black</CustomTypography>
         </Box>,
         // status of the product
         true,
         // price of the prodcut
         20.0,
+
         // update the quantity
-        <Box sx={{ width: 200 }}>
-            <Item>4</Item>
-            <Stack
-                spacing={{ xs: 2, sm: 2 }}
-                sx={{ mt: 2 }}
-                direction="row"
-                useFlexGap
-                flexWrap="wrap"
-            >
-                <Item>-</Item>
-                <Item>+</Item>
-            </Stack>
-        </Box>,
+        <UpdateQuantity />,
         // total the price for each product
-        <Typography variant="body1">80</Typography>,
+        <CustomTypography variant="body1">80</CustomTypography>,
         // icon remove product
         <Tooltip arrow title="Delete">
             <IconButton>
@@ -120,3 +108,29 @@ export const rowsTest = [
         </Tooltip>,
     ),
 ];
+
+function UpdateQuantity() {
+    const [count, setCount] = useState(1);
+
+    const increment = () => {
+        setCount(count + 1);
+    };
+
+    const decrement = () => {
+        // khi count > 1 thì mới được giảm
+        if (count > 1) {
+            setCount(count - 1);
+        }
+    };
+    return (
+        <Stack direction="row" spacing={2} justifyContent="center">
+            <CustomizeButtonUpdateQuantity variant="contained" onClick={decrement}>
+                -
+            </CustomizeButtonUpdateQuantity>
+            <Item>{count}</Item>
+            <CustomizeButtonUpdateQuantity variant="contained" onClick={increment}>
+                +
+            </CustomizeButtonUpdateQuantity>
+        </Stack>
+    );
+}
