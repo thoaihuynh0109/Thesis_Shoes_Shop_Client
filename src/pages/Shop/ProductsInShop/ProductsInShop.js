@@ -9,7 +9,10 @@ import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
+<<<<<<< HEAD
 import ResponsiveViewedProducts from '../../Home/MostProductsViewed/GridProducts';
+=======
+>>>>>>> aab4ce165ef233fb97ff67685ca469c5f1ecb622
 
 function ProductsInShop() {
     return (
@@ -156,7 +159,11 @@ function TestShop() {
     return (
         <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
             {currentImages.map((imageIndex) => (
+<<<<<<< HEAD
                 <Grid item xs={6} sm={3} md={3} key={imageIndex} sx={{ display: 'flex' }}>
+=======
+                <Grid item xs={6} sm={3} md={3} key={imageIndex} sx={{ display: 'flex', mb: 2 }}>
+>>>>>>> aab4ce165ef233fb97ff67685ca469c5f1ecb622
                     {/* onClick={() => navigate('/detail-product')} */}
                     <MakeProductsCard
                         onClick={() => navigate('/product-details')}
