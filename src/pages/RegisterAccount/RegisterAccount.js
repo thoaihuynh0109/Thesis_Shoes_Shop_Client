@@ -20,6 +20,9 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Popup from './Popup';
 import PopupTest from './PopupTest';
 import PropTypes from 'prop-types';
+import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
+import { CustomizeTextField } from '~/components/CustomizeTextField/CustomizeTextField';
+import { CustomizeButton } from '~/components/CustomizeButton/CustomizeButton';
 
 const cx = classNames.bind(styles);
 const style = {
@@ -52,22 +55,17 @@ function RegisterAccount() {
 
     return (
         <Container sx={{ minHeight: '800px' }}>
-            <Typography variant="h4" sx={{ mt: 2, mb: 1 }}>
+            <CustomTypography variant="h4" sx={{ mt: 2, mb: 1 }}>
                 Create An Account
-            </Typography>
+            </CustomTypography>
             {/* input field */}
             <Box sx={{ border: '1px solid #757575', p: 4 }}>
-                <Typography variant="h5">Your Personal Information</Typography>
+                <CustomTypography variant="h5">Your Personal Information</CustomTypography>
                 <Divider sx={{ style }} />
-                <Typography
-                    variant="body1"
-                    textAlign={'left'}
-                    gutterBottom
-                    sx={{ mt: 2 }}
-                >
+                <CustomTypography variant="body1" textAlign={'left'} gutterBottom sx={{ mt: 2 }}>
                     First Name
-                </Typography>
-                <TextField
+                </CustomTypography>
+                <CustomizeTextField
                     inputProps={{
                         style: {
                             width: 400,
@@ -78,15 +76,10 @@ function RegisterAccount() {
                     label="First Name"
                     variant="outlined"
                 />
-                <Typography
-                    variant="body1"
-                    textAlign={'left'}
-                    sx={{ mt: 2 }}
-                    gutterBottom
-                >
+                <CustomTypography variant="body1" textAlign={'left'} sx={{ mt: 2 }} gutterBottom>
                     Last Name
-                </Typography>
-                <TextField
+                </CustomTypography>
+                <CustomizeTextField
                     inputProps={{
                         style: {
                             width: 400,
@@ -98,15 +91,10 @@ function RegisterAccount() {
                     label="Last Name"
                     variant="outlined"
                 />
-                <Typography
-                    variant="body1"
-                    textAlign={'left'}
-                    sx={{ mt: 2 }}
-                    gutterBottom
-                >
+                <CustomTypography variant="body1" textAlign={'left'} sx={{ mt: 2 }} gutterBottom>
                     User Name
-                </Typography>
-                <TextField
+                </CustomTypography>
+                <CustomizeTextField
                     inputProps={{
                         style: {
                             width: 400,
@@ -118,15 +106,10 @@ function RegisterAccount() {
                     label="User Name"
                     variant="outlined"
                 />
-                <Typography
-                    variant="body1"
-                    textAlign={'left'}
-                    sx={{ mt: 2 }}
-                    gutterBottom
-                >
+                <CustomTypography variant="body1" textAlign={'left'} sx={{ mt: 2 }} gutterBottom>
                     Email
-                </Typography>
-                <TextField
+                </CustomTypography>
+                <CustomizeTextField
                     //id="outlined-basic"
                     label="Email"
                     variant="outlined"
@@ -138,15 +121,10 @@ function RegisterAccount() {
                         },
                     }}
                 />
-                <Typography
-                    variant="body1"
-                    textAlign={'left'}
-                    sx={{ mt: 2 }}
-                    gutterBottom
-                >
+                <CustomTypography variant="body1" textAlign={'left'} sx={{ mt: 2 }} gutterBottom>
                     Password
-                </Typography>
-                <TextField
+                </CustomTypography>
+                <CustomizeTextField
                     inputProps={{
                         style: {
                             width: 400,
@@ -161,21 +139,21 @@ function RegisterAccount() {
             </Box>
             {/* end input field */}
 
-            <Button
+            <CustomizeButton
                 variant="contained"
                 sx={{ mt: 4, ml: 0, alignItems: 'flex-start', display: 'flex' }}
                 endIcon={<ArrowForwardIosIcon />}
                 onClick={handleOpenDialog}
             >
                 Register
-            </Button>
+            </CustomizeButton>
 
             <PopupTest
                 open={openDialog}
                 handleClose={handleCloseDialog}
                 title=" Success!"
                 content="Create a New Account Successfully"
-                isSuccess = {true}
+                isSuccess={true}
             />
         </Container>
     );
