@@ -29,7 +29,13 @@ function PopupTest(props) {
     const { open, title, content, handleClose, isSuccess = true } = props;
 
     return (
-        <Dialog TransitionComponent={Transition} keepMounted onClose={handleClose} open={open}>
+
+        <Dialog
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleClose}
+            open={open}
+        >
             <IconButton
                 aria-label="close"
                 onClick={handleClose}
@@ -69,7 +75,10 @@ function PopupTest(props) {
                     />
                 )}
 
-                <Typography variant="h3" sx={{ color: '#6bc839', fontWeight: 'bold' }}>
+                <Typography
+                    variant="h3"
+                    sx={{ color: '#6bc839', fontWeight: 'bold' }}
+                >
                     {title}
                     {/* Success! */}
                 </Typography>
@@ -77,7 +86,10 @@ function PopupTest(props) {
             {/* <DialogTitle>{title}</DialogTitle> */}
             <DialogContent>
                 <DialogContentText>
-                    <Typography variant="body1" sx={{ fontSize: '20px', mt: -2 }}>
+                    <Typography
+                        variant="body1"
+                        sx={{ fontSize: '20px', mt: -2 }}
+                    >
                         {content}
                     </Typography>
                     <Box

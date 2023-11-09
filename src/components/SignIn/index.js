@@ -6,10 +6,8 @@ import styles from './SignIn.module.scss';
 import classNames from 'classnames/bind';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LockIcon from '@mui/icons-material/Lock';
-
 import CustomTypography from '../CustomTyporaphy/CustomTyporaphy';
 import { CustomizeTextField } from '../CustomizeTextField/CustomizeTextField';
-
 // import { Typography, TextField } from '~/Layouts/DefaultLayout';
 
 const cx = classNames.bind(styles);
@@ -122,6 +120,7 @@ function SignIn({ onSignIn }) {
                                 // after logging in successfully --> href user to Home page
                                 component={Link}
                                 to="/"
+                                sx={{ padding: '6px 20px' }}
                             >
                                 Đăng Nhập
                             </CustomButton>

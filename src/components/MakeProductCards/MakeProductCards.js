@@ -68,7 +68,6 @@ export function MakeProductsCard({
     rating,
     label,
     labelNew,
-
     // minWidthCard,
     minWidthCard,
     maxHeightCard,

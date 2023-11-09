@@ -14,9 +14,7 @@ import classNames from 'classnames/bind';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import PropTypes from 'prop-types';
 import CustomizeGridProfile from './CustomizeGridProfile';
-
 import { CustomizeTextField } from '~/components/CustomizeTextField/CustomizeTextField';
-
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 
 const style = {
