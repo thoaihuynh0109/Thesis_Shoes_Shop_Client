@@ -29,6 +29,7 @@ function PopupTest(props) {
     const { open, title, content, handleClose, isSuccess = true } = props;
 
     return (
+
         <Dialog
             TransitionComponent={Transition}
             keepMounted

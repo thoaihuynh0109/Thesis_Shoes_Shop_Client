@@ -14,6 +14,7 @@ import PriceInformation from './Filter/PriceInformation';
 import Color from './Filter/Color';
 import { MakeProductsCard } from '~/components/MakeProductCards/MakeProductCards';
 import ProductsInShop from './ProductsInShop/ProductsInShop';
+
 // import SortingProducts from './SortingProduct';
 import TestPagination from './Pagination/p1';
 
@@ -66,6 +67,8 @@ function BasicGrid() {
                 {/* display 16 products for 1 page */}
                 <Grid item xs={9}>
                     {/* <Item><ProductsInShop/></Item> */}
+
+
                     {/* <SortingProducts /> */}
 
                     {/* <ProductsInShop /> */}
