@@ -6,11 +6,10 @@ import styles from './SignIn.module.scss';
 import classNames from 'classnames/bind';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LockIcon from '@mui/icons-material/Lock';
-<<<<<<< HEAD
-=======
+
 import CustomTypography from '../CustomTyporaphy/CustomTyporaphy';
 import { CustomizeTextField } from '../CustomizeTextField/CustomizeTextField';
->>>>>>> aab4ce165ef233fb97ff67685ca469c5f1ecb622
+
 // import { Typography, TextField } from '~/Layouts/DefaultLayout';
 
 const cx = classNames.bind(styles);
@@ -48,29 +47,13 @@ function SignIn({ onSignIn }) {
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <Item sx={{ p: 2, height: '100%' }}>
-<<<<<<< HEAD
-                            <Typography
-=======
                             <CustomTypography
->>>>>>> aab4ce165ef233fb97ff67685ca469c5f1ecb622
                                 fontWeight={700}
                                 fontSize="20px"
                                 className={cx('page-subheading')}
                                 gutterBottom
                             >
                                 Create an account
-<<<<<<< HEAD
-                            </Typography>
-
-                            <Typography variant="body1" textAlign={'left'} gutterBottom>
-                                Please enter your email address to create an account.
-                            </Typography>
-                            <Typography variant="body1" textAlign={'left'}>
-                                Email address
-                            </Typography>
-
-                            <TextField
-=======
                             </CustomTypography>
 
                             <CustomTypography variant="body1" textAlign={'left'} gutterBottom>
@@ -81,7 +64,6 @@ function SignIn({ onSignIn }) {
                             </CustomTypography>
 
                             <CustomizeTextField
->>>>>>> aab4ce165ef233fb97ff67685ca469c5f1ecb622
                                 fullWidth={true}
                                 id="outlined-basic"
                                 label="Email"
@@ -90,68 +72,41 @@ function SignIn({ onSignIn }) {
 
                             {/* chỗ này cần check lại chiều ngang bất hợp lí */}
 
-<<<<<<< HEAD
-                            <Button
-=======
                             <CustomButton
->>>>>>> aab4ce165ef233fb97ff67685ca469c5f1ecb622
                                 variant="contained"
                                 startIcon={<AccountCircleIcon />}
                                 component={Link}
                                 to="/register-account"
                             >
                                 Create Account
-<<<<<<< HEAD
-                            </Button>
-=======
                             </CustomButton>
->>>>>>> aab4ce165ef233fb97ff67685ca469c5f1ecb622
                         </Item>
                     </Grid>
 
                     {/* Login */}
                     <Grid item xs={6}>
                         <Item sx={{ height: '100%', p: 2 }}>
-<<<<<<< HEAD
-                            <Typography
-=======
                             <CustomTypography
->>>>>>> aab4ce165ef233fb97ff67685ca469c5f1ecb622
                                 fontWeight={700}
                                 fontSize="20px"
                                 className={cx('page-subheading')}
                                 gutterBottom
                             >
                                 Already Have An account
-<<<<<<< HEAD
-                            </Typography>
-                            <Typography variant="body1" textAlign={'left'}>
-                                Email address
-                            </Typography>
-                            <TextField
-=======
                             </CustomTypography>
                             <CustomTypography variant="body1" textAlign={'left'}>
                                 Email address
                             </CustomTypography>
                             <CustomizeTextField
->>>>>>> aab4ce165ef233fb97ff67685ca469c5f1ecb622
                                 fullWidth={true}
                                 id="outlined-basic"
                                 label="Email"
                                 variant="outlined"
                             />
-<<<<<<< HEAD
-                            <Typography variant="body1" sx={{ textAlign: 'left', mt: 2 }}>
-                                Password
-                            </Typography>
-                            <TextField
-=======
                             <CustomTypography variant="body1" sx={{ textAlign: 'left', mt: 2 }}>
                                 Password
                             </CustomTypography>
                             <CustomizeTextField
->>>>>>> aab4ce165ef233fb97ff67685ca469c5f1ecb622
                                 fullWidth={true}
                                 id="outlined-basic"
                                 label="Password"
@@ -159,30 +114,17 @@ function SignIn({ onSignIn }) {
                                 variant="outlined"
                             />
 
-<<<<<<< HEAD
-                            <Button
-                                variant="contained"
-                                width="120px"
-=======
                             <CustomButton
                                 variant="contained"
                                 width="160px"
->>>>>>> aab4ce165ef233fb97ff67685ca469c5f1ecb622
                                 startIcon={<LockIcon />}
                                 onClick={handleLogin}
                                 // after logging in successfully --> href user to Home page
                                 component={Link}
                                 to="/"
-<<<<<<< HEAD
-                            >
-                                Đăng Nhập
-                            </Button>
-=======
-                                sx={{ padding: '6px 20px' }}
                             >
                                 Đăng Nhập
                             </CustomButton>
->>>>>>> aab4ce165ef233fb97ff67685ca469c5f1ecb622
                         </Item>
                     </Grid>
                 </Grid>

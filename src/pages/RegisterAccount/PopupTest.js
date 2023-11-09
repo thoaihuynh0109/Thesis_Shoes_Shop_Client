@@ -29,12 +29,7 @@ function PopupTest(props) {
     const { open, title, content, handleClose, isSuccess = true } = props;
 
     return (
-        <Dialog
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={handleClose}
-            open={open}
-        >
+        <Dialog TransitionComponent={Transition} keepMounted onClose={handleClose} open={open}>
             <IconButton
                 aria-label="close"
                 onClick={handleClose}
@@ -70,18 +65,11 @@ function PopupTest(props) {
                         // src="https://icons.veryicon.com/png/o/miscellaneous/8atour/success-35.png"
                         src={ErrorImage}
                         style={{ width: '200px', height: '100px' }}
-<<<<<<< HEAD
-                        alt="Success Logo"
-=======
                         alt="Error Logo"
->>>>>>> aab4ce165ef233fb97ff67685ca469c5f1ecb622
                     />
                 )}
 
-                <Typography
-                    variant="h3"
-                    sx={{ color: '#6bc839', fontWeight: 'bold' }}
-                >
+                <Typography variant="h3" sx={{ color: '#6bc839', fontWeight: 'bold' }}>
                     {title}
                     {/* Success! */}
                 </Typography>
@@ -89,10 +77,7 @@ function PopupTest(props) {
             {/* <DialogTitle>{title}</DialogTitle> */}
             <DialogContent>
                 <DialogContentText>
-                    <Typography
-                        variant="body1"
-                        sx={{ fontSize: '20px', mt: -2 }}
-                    >
+                    <Typography variant="body1" sx={{ fontSize: '20px', mt: -2 }}>
                         {content}
                     </Typography>
                     <Box

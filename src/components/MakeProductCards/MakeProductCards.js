@@ -68,18 +68,13 @@ export function MakeProductsCard({
     rating,
     label,
     labelNew,
-<<<<<<< HEAD
-=======
+
     // minWidthCard,
->>>>>>> aab4ce165ef233fb97ff67685ca469c5f1ecb622
     minWidthCard,
     maxHeightCard,
     imgHeight,
     imgWidth,
-<<<<<<< HEAD
     marginLeft,
-=======
->>>>>>> aab4ce165ef233fb97ff67685ca469c5f1ecb622
     onClick,
 }) {
     const navigate = useNavigate();

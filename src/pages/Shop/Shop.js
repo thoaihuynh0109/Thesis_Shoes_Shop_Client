@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React from 'react';
-=======
 import React, { useState } from 'react';
->>>>>>> aab4ce165ef233fb97ff67685ca469c5f1ecb622
 import {
     styled,
     Container,
@@ -18,12 +14,9 @@ import PriceInformation from './Filter/PriceInformation';
 import Color from './Filter/Color';
 import { MakeProductsCard } from '~/components/MakeProductCards/MakeProductCards';
 import ProductsInShop from './ProductsInShop/ProductsInShop';
-<<<<<<< HEAD
-import PaginationControlled from './Pagination/Pagination';
-=======
+
 // import SortingProducts from './SortingProduct';
 import TestPagination from './Pagination/p1';
->>>>>>> aab4ce165ef233fb97ff67685ca469c5f1ecb622
 
 function Shop() {
     return (
@@ -74,25 +67,17 @@ function BasicGrid() {
                 {/* display 16 products for 1 page */}
                 <Grid item xs={9}>
                     {/* <Item><ProductsInShop/></Item> */}
-<<<<<<< HEAD
-                    <ProductsInShop />
 
-                    {/* phân trang */}
-                    <PaginationControlled />
-=======
                     {/* <SortingProducts /> */}
 
                     {/* <ProductsInShop /> */}
                     <TestPagination />
                     {/* phân trang */}
->>>>>>> aab4ce165ef233fb97ff67685ca469c5f1ecb622
                 </Grid>
             </Grid>
         </Box>
     );
 }
-<<<<<<< HEAD
-=======
 
 function SortingProducts() {
     const [sorting, setSorting] = React.useState('');
@@ -174,4 +159,3 @@ function SortingProducts() {
         </Box>
     );
 }
->>>>>>> aab4ce165ef233fb97ff67685ca469c5f1ecb622

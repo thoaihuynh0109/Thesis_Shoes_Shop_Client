@@ -4,11 +4,8 @@ import { Container, Box, Typography, Button, TextField, styled } from '@mui/mate
 import '~/components/GlobalStyles';
 import styles from './RecoverPassword.module.scss';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
-<<<<<<< HEAD
-import { CustomizeTextField } from '~/components/CustomizeTextField /CustomizeTextField';
-=======
+
 import { CustomizeTextField } from '~/components/CustomizeTextField/CustomizeTextField';
->>>>>>> aab4ce165ef233fb97ff67685ca469c5f1ecb622
 
 const cx = classNames.bind(styles);
 
