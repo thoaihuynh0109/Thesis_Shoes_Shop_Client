@@ -343,7 +343,7 @@ function User() {
                 <Button
                     variant="contained"
                     startIcon={<AddIcon />}
-                    sx={{ fontSize: '1.6rem', borderRadius: 2.5 }}
+                    sx={{ fontSize: '1.6rem', borderRadius: 2.5, textTransform: 'capitalize' }}
                     component={Link}
                     to="create"
                 >
