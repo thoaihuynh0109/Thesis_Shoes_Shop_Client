@@ -21,7 +21,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import CustomTableCell from '~/components/CustomTableCell/CustomTableCell';
-
+import userService from '~/services/userServices';
 import './User.scss';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 
@@ -238,6 +238,7 @@ EnhancedTableHead.propTypes = {
 };
 
 function User() {
+    const [users, setUsers] = React.useState([]);
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
     const [selected, setSelected] = React.useState([]);
@@ -245,6 +246,11 @@ function User() {
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+    React.useEffect(() => {
+        const listUser = userService.getAllUser();
+        console.log(listUser);
+        setUsers(listUser);
+    }, []);
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
