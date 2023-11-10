@@ -20,7 +20,6 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Popup from './Popup';
 import PopupTest from './PopupTest';
 import PropTypes from 'prop-types';
-
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 import { CustomizeTextField } from '~/components/CustomizeTextField/CustomizeTextField';
 import { CustomizeButton } from '~/components/CustomizeButton/CustomizeButton';
@@ -77,7 +76,6 @@ function RegisterAccount() {
                     label="First Name"
                     variant="outlined"
                 />
-
                 <CustomTypography variant="body1" textAlign={'left'} sx={{ mt: 2 }} gutterBottom>
                     Last Name
                 </CustomTypography>
@@ -93,7 +91,6 @@ function RegisterAccount() {
                     label="Last Name"
                     variant="outlined"
                 />
-
                 <CustomTypography variant="body1" textAlign={'left'} sx={{ mt: 2 }} gutterBottom>
                     User Name
                 </CustomTypography>
@@ -109,7 +106,6 @@ function RegisterAccount() {
                     label="User Name"
                     variant="outlined"
                 />
-
                 <CustomTypography variant="body1" textAlign={'left'} sx={{ mt: 2 }} gutterBottom>
                     Email
                 </CustomTypography>
@@ -125,7 +121,6 @@ function RegisterAccount() {
                         },
                     }}
                 />
-
                 <CustomTypography variant="body1" textAlign={'left'} sx={{ mt: 2 }} gutterBottom>
                     Password
                 </CustomTypography>
