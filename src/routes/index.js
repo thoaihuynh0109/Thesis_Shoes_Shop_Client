@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import SignIn from '~/components/SignIn';
 import AdminLayout from '~/layouts/AdminLayout/AdminLayout';
-import Category from '~/pages/AdminPages/Category';
-import Dashboard from '~/pages/AdminPages/Dashboard';
-import Order from '~/pages/AdminPages/Order';
-import Product from '~/pages/AdminPages/Product';
-import User from '~/pages/AdminPages/User';
+import Category from '~/pages/AdminPages/Category/Category';
+import Dashboard from '~/pages/AdminPages/Dashboard/Dashboard';
+import Order from '~/pages/AdminPages/Order/Order';
+import Product from '~/pages/AdminPages/Product/Product';
+import AddUser from '~/pages/AdminPages/User/AddUser';
+import EditUser from '~/pages/AdminPages/User/EditUser';
+import User from '~/pages/AdminPages/User/User';
 import Checkout from '~/pages/Checkout/Checkout';
 import ChangePassword from '~/pages/ClientPages/ChangePassword';
 import PersonalAccount from '~/pages/ClientPages/Profile/PersonalAccount';
@@ -23,76 +25,43 @@ import Shop from '~/pages/Shop/Shop';
 
 // Route khong can dang nhap
 const publicRoutes = [
-    {
-        path: '/',
-        component: Home,
-    },
-    {
-        path: '/shop',
-        component: Shop,
-    },
-    {
-        path: '/contact',
-        component: ContactUs,
-    },
-    {
-        path: '/blog',
-        component: TestPagination,
-    },
-    {
-        path: '/product-details',
-        component: DetailsPage,
-    },
+    { path: '/', component: Home },
+    { path: '/shop', component: Shop },
+    { path: '/contact', component: ContactUs },
+    { path: '/blog', component: TestPagination },
+    { path: '/product-details', component: DetailsPage },
     // product-detail
-    {
-        path: '/my-wishlist',
-        component: WishList,
-    },
-    {
-        path: '/checkout',
-        component: Checkout,
-    },
-    {
-        path: '/checkout',
-        component: Checkout,
-    },
-    {
-        path: '/signin',
-        component: SignIn,
-    },
-    {
-        path: '/register-account',
-        component: RegisterAccount,
-    },
+    { path: '/my-wishlist', component: WishList },
+    { path: '/checkout', component: Checkout },
+    { path: '/signin', component: SignIn },
+    { path: '/register-account', component: RegisterAccount },
 
-    // for authenticated
-    {
-        path: '/profile',
-        component: PersonalAccount,
-    },
-    {
-        path: '/change-password',
-        component: ChangePassword,
-    },
-    {
-        path: '/recover-password',
-        component: RecoverPassword,
-    },
-
+    { path: '/recover-password', component: RecoverPassword },
     // not found page
-    {
-        path: '/*',
-        component: PageNotFound,
-    },
+    { path: '/*', component: PageNotFound },
 ];
 
 // Route can dang nhap
 const privateRoutes = [
+    // for authenticated
+    { path: '/profile', component: PersonalAccount },
+    { path: '/change-password', component: ChangePassword },
     { path: '/dashboard', component: Dashboard, layout: AdminLayout },
     { path: '/manage-product', component: Product, layout: AdminLayout },
+    { path: '/manage-product/create', component: Product, layout: AdminLayout },
+    { path: '/manage-product/:id/edit', component: Product, layout: AdminLayout },
+
     { path: '/manage-user', component: User, layout: AdminLayout },
+    { path: '/manage-user/create', component: AddUser, layout: AdminLayout },
+    { path: '/manage-user/:id/edit', component: EditUser, layout: AdminLayout },
+
     { path: '/manage-order', component: Order, layout: AdminLayout },
+    { path: '/manage-order/create', component: Order, layout: AdminLayout },
+    { path: '/manage-order/:id/edit', component: Order, layout: AdminLayout },
+
     { path: '/manage-category', component: Category, layout: AdminLayout },
+    { path: '/manage-category/create', component: Category, layout: AdminLayout },
+    { path: '/manage-category/:id/edit', component: Category, layout: AdminLayout },
 ];
 
 export { publicRoutes, privateRoutes };
