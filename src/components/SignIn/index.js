@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Button, Paper, Grid, Typography, TextField, Container, Chip } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
@@ -32,9 +32,13 @@ const CustomButton = styled(Button)(({ variant = 'contained', mt, ml, fs, width 
 // for person who don't have account
 // function SignIn({ isCheckout }) {
 
-function SignIn({ onSignIn }) {
+function SignIn() {
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+
     const handleLogin = () => {
-        onSignIn(); // Gọi hàm callback onSignIn từ props
+        console.log({ email, password });
+        // send info to login api
     };
 
     return (
@@ -96,6 +100,10 @@ function SignIn({ onSignIn }) {
                                 Email address
                             </CustomTypography>
                             <CustomizeTextField
+                                value={email}
+                                onChange={(e) => {
+                                    setEmail(e.target.value);
+                                }}
                                 fullWidth={true}
                                 id="outlined-basic"
                                 label="Email"
@@ -105,6 +113,10 @@ function SignIn({ onSignIn }) {
                                 Password
                             </CustomTypography>
                             <CustomizeTextField
+                                value={password}
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                }}
                                 fullWidth={true}
                                 id="outlined-basic"
                                 label="Password"
@@ -118,8 +130,6 @@ function SignIn({ onSignIn }) {
                                 startIcon={<LockIcon />}
                                 onClick={handleLogin}
                                 // after logging in successfully --> href user to Home page
-                                component={Link}
-                                to="/"
                                 sx={{ padding: '6px 20px' }}
                             >
                                 Đăng Nhập

@@ -12,7 +12,6 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import KeyIcon from '@mui/icons-material/Key';
 
-
 const cx = classNames.bind(styles);
 const CustomizeButton = styled(Button)({
     marginRight: 4,
@@ -59,14 +58,6 @@ function HeaderDesign() {
                     </Typography>
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <CustomizeButton
-                            component={Link}
-                            to="/my-account"
-                            startIcon={<PersonIcon />}
-                        >
-                            My Account
-                        </CustomizeButton>
-
                         <CustomizeButton
                             component={Link}
                             to="/my-wishlist"
