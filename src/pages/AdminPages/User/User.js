@@ -20,8 +20,10 @@ import UploadIcon from '@mui/icons-material/Upload';
 import DownloadIcon from '@mui/icons-material/Download';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditNoteIcon from '@mui/icons-material/EditNote';
-
 import CustomTableCell from '~/components/CustomTableCell/CustomTableCell';
+import userService from '~/services/userServices';
+import './User.scss';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 function createData(id, name, email, phone, address, action) {
     return {
@@ -236,6 +238,7 @@ EnhancedTableHead.propTypes = {
 };
 
 function User() {
+    const [users, setUsers] = React.useState([]);
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
     const [selected, setSelected] = React.useState([]);
@@ -243,6 +246,11 @@ function User() {
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+    React.useEffect(() => {
+        const listUser = userService.getAllUser();
+        console.log(listUser);
+        setUsers(listUser);
+    }, []);
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -258,23 +266,38 @@ function User() {
         setSelected([]);
     };
 
-    const handleClick = (event, id) => {
-        const selectedIndex = selected.indexOf(id);
-        let newSelected = [];
+    const handleCheckClick = (event, id) => {
+        if (event.target.tagName === 'INPUT' && event.target.type === 'checkbox') {
+            const selectedIndex = selected.indexOf(id);
+            let newSelected = [];
 
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, id);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
+            if (selectedIndex === -1) {
+                newSelected = newSelected.concat(selected, id);
+            } else if (selectedIndex === 0) {
+                newSelected = newSelected.concat(selected.slice(1));
+            } else if (selectedIndex === selected.length - 1) {
+                newSelected = newSelected.concat(selected.slice(0, -1));
+            } else if (selectedIndex > 0) {
+                newSelected = newSelected.concat(
+                    selected.slice(0, selectedIndex),
+                    selected.slice(selectedIndex + 1),
+                );
+            }
+            setSelected(newSelected);
         }
-        setSelected(newSelected);
+    };
+
+    const handleDelete = (event, id) => {
+        // show pop up to confirm this action
+
+        // call api to delete the user with id
+
+        console.log(id);
+    };
+
+    const navigate = useNavigate();
+    const handleEdit = (event, id) => {
+        navigate(`${id}/edit`);
     };
 
     const handleChangePage = (event, newPage) => {
@@ -326,7 +349,9 @@ function User() {
                 <Button
                     variant="contained"
                     startIcon={<AddIcon />}
-                    sx={{ fontSize: '1.6rem', borderRadius: 2.5, textTransform: 'none' }}
+                    sx={{ fontSize: '1.6rem', borderRadius: 2.5, textTransform: 'capitalize' }}
+                    component={Link}
+                    to="create"
                 >
                     Add
                 </Button>
@@ -370,7 +395,6 @@ function User() {
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => handleClick(event, row.id)}
                                             role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
@@ -385,6 +409,9 @@ function User() {
                                                     inputProps={{
                                                         'aria-labelledby': labelId,
                                                     }}
+                                                    onClick={(event) =>
+                                                        handleCheckClick(event, row.id)
+                                                    }
                                                 />
                                             </CustomTableCell>
                                             <CustomTableCell
@@ -405,11 +432,17 @@ function User() {
                                                 {row.address}
                                             </CustomTableCell>
                                             <CustomTableCell align="left">
-                                                <IconButton>
+                                                <IconButton
+                                                    onClick={(event) => handleDelete(event, row.id)}
+                                                >
                                                     <DeleteIcon />
                                                 </IconButton>
                                                 <IconButton>
-                                                    <EditNoteIcon />
+                                                    <EditNoteIcon
+                                                        onClick={(event) =>
+                                                            handleEdit(event, row.id)
+                                                        }
+                                                    />
                                                 </IconButton>
                                             </CustomTableCell>
                                         </TableRow>
@@ -435,6 +468,7 @@ function User() {
                         page={page}
                         onPageChange={handleChangePage}
                         onRowsPerPageChange={handleChangeRowsPerPage}
+                        className="custom-table-pagination"
                     />
                 </Paper>
             </Box>

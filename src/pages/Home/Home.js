@@ -20,9 +20,9 @@ function Home() {
             {/* Suggest Some Products */}
             <SuggestCollection />
             {/* Banner sale or something else */}
-            <FlashSaleProducts/>
+            <FlashSaleProducts />
             {/* Most Products Viewed */}
-            <MostProductsViewed/>
+            <MostProductsViewed />
         </Container>
     );
 }

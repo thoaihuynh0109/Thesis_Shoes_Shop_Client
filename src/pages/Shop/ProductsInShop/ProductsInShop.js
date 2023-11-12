@@ -154,6 +154,7 @@ function TestShop() {
 
     return (
         <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+            {products.length > 0 && console.log('products: ', products)}
             {currentImages.map((imageIndex) => (
                 <Grid item xs={6} sm={3} md={3} key={imageIndex} sx={{ display: 'flex', mb: 2 }}>
                     {/* onClick={() => navigate('/detail-product')} */}
