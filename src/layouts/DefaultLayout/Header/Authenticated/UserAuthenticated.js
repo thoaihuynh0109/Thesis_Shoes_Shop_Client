@@ -10,19 +10,28 @@ import {
     ListItemIcon,
 } from '@mui/material';
 import { AccountCircle, Dashboard, ExitToApp, Person } from '@mui/icons-material';
+import authService from '~/services/authServices';
+import { useNavigate } from 'react-router-dom';
 
-const settings = [
-    { label: 'Profile', icon: <Person /> },
-    { label: 'Account', icon: <AccountCircle /> },
-    { label: 'Dashboard', icon: <Dashboard /> },
-    { label: 'Logout', icon: <ExitToApp /> },
-];
+// const settings = [
+//     { label: 'Profile', icon: <Person /> },
+//     { label: 'Account', icon: <AccountCircle /> },
+//     { label: 'Dashboard', icon: <Dashboard /> },
+//     { label: 'Logout', icon: <ExitToApp /> },
+// ];
 
-function UserAuthenticated({onLogout}) {
-
-  const handleLogout = () => {
-    onLogout(); // Gọi hàm callback onLogout từ props
-};
+function UserAuthenticated() {
+    const user = localStorage.getItem('user');
+    const dataUser = JSON.parse(user);
+    const isAdmin = dataUser.isAdmin;
+    const navigate = useNavigate();
+    const handleLogout = async () => {
+        // call api  to logout
+        await authService.logout(user.email);
+        // delete data from local storage
+        localStorage.removeItem('user');
+        navigate('/signin');
+    };
 
     const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -61,17 +70,55 @@ function UserAuthenticated({onLogout}) {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
             >
-                {settings.map((setting) => (
-                  // <MenuItem key={setting.label} onClick={handleCloseUserMenu}>
-                   <MenuItem key={setting.label} onClick={handleLogout}>
-                  
-                  <ListItemIcon>{setting.icon}</ListItemIcon>
+                <MenuItem
+                    onClick={() => {
+                        navigate('/profile');
+                    }}
+                >
+                    <ListItemIcon>
+                        <Person />
+                    </ListItemIcon>
+                    <Typography textAlign="center" fontSize={'14px'} p={'0 24px 0 0'}>
+                        Profile
+                    </Typography>
+                </MenuItem>
+
+                <MenuItem
+                    onClick={() => {
+                        navigate('/account');
+                    }}
+                >
+                    <ListItemIcon>
+                        <AccountCircle />
+                    </ListItemIcon>
+                    <Typography textAlign="center" fontSize={'14px'} p={'0 24px 0 0'}>
+                        Account
+                    </Typography>
+                </MenuItem>
+                {user && isAdmin ? (
+                    <MenuItem
+                        onClick={() => {
+                            navigate('/dashboard');
+                        }}
+                    >
+                        <ListItemIcon>
+                            <Dashboard />
+                        </ListItemIcon>
                         <Typography textAlign="center" fontSize={'14px'} p={'0 24px 0 0'}>
-                            {setting.label}
-                            
+                            Dashboard
                         </Typography>
                     </MenuItem>
-                ))}
+                ) : (
+                    console.log(dataUser)
+                )}
+                <MenuItem onClick={handleLogout}>
+                    <ListItemIcon>
+                        <ExitToApp />
+                    </ListItemIcon>
+                    <Typography textAlign="center" fontSize={'14px'} p={'0 24px 0 0'}>
+                        Logout
+                    </Typography>
+                </MenuItem>
             </Menu>
         </Box>
     );

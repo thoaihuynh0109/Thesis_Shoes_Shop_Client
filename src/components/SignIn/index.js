@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Button, Paper, Grid, Typography, TextField, Container, Chip } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import styles from './SignIn.module.scss';
 import classNames from 'classnames/bind';
@@ -9,6 +9,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import CustomTypography from '../CustomTyporaphy/CustomTyporaphy';
 import { CustomizeTextField } from '../CustomizeTextField/CustomizeTextField';
 // import { Typography, TextField } from '~/Layouts/DefaultLayout';
+import authService from '~/services/authServices';
 
 const cx = classNames.bind(styles);
 const Item = styled(Paper)(({ theme }) => ({
@@ -36,9 +37,18 @@ function SignIn() {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
-    const handleLogin = () => {
-        console.log({ email, password });
+    const navigate = useNavigate();
+    const handleLogin = async () => {
+        const data = {
+            email,
+            password,
+        };
+
+        const loginData = await authService.signIn(data);
+
+        localStorage.setItem('user', JSON.stringify(loginData));
         // send info to login api
+        navigate('/');
     };
 
     return (
