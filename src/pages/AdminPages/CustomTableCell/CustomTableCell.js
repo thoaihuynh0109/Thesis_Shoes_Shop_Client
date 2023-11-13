@@ -1,7 +1,7 @@
 import { TableCell, styled } from '@mui/material';
 
-const CusomTableCell = styled(TableCell)({
+const CustomTableCell = styled(TableCell)({
     fontSize: '1.4rem',
 });
 
-export default CusomTableCell;
+export default CustomTableCell;

@@ -24,9 +24,9 @@ function Sidebar(props) {
     //     setMobileOpen(!mobileOpen);
     // };
 
-    const [selectedIndex, setSelectedIndex] = React.useState(1);
+    const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-    const handleListItemClick = (event, index) => {
+    const handleListItemClick = (index) => {
         setSelectedIndex(index);
     };
 
@@ -39,7 +39,7 @@ function Sidebar(props) {
                     <ListItem disablePadding>
                         <ListItemButton
                             selected={selectedIndex === 0}
-                            onClick={(event) => handleListItemClick(event, 0)}
+                            onClick={() => handleListItemClick(0)}
                         >
                             <ListItemIcon>
                                 <InboxIcon />
@@ -55,7 +55,7 @@ function Sidebar(props) {
                     <ListItem disablePadding>
                         <ListItemButton
                             selected={selectedIndex === 1}
-                            onClick={(event) => handleListItemClick(event, 1)}
+                            onClick={() => handleListItemClick(1)}
                         >
                             <ListItemIcon>
                                 <InboxIcon />
@@ -71,7 +71,7 @@ function Sidebar(props) {
                     <ListItem disablePadding>
                         <ListItemButton
                             selected={selectedIndex === 2}
-                            onClick={(event) => handleListItemClick(event, 2)}
+                            onClick={() => handleListItemClick(2)}
                         >
                             <ListItemIcon>
                                 <MailIcon />
@@ -87,7 +87,7 @@ function Sidebar(props) {
                     <ListItem disablePadding>
                         <ListItemButton
                             selected={selectedIndex === 3}
-                            onClick={(event) => handleListItemClick(event, 3)}
+                            onClick={() => handleListItemClick(3)}
                         >
                             <ListItemIcon>
                                 <MailIcon />
@@ -103,7 +103,7 @@ function Sidebar(props) {
                     <ListItem disablePadding>
                         <ListItemButton
                             selected={selectedIndex === 4}
-                            onClick={(event) => handleListItemClick(event, 4)}
+                            onClick={() => handleListItemClick(4)}
                         >
                             <ListItemIcon>
                                 <MailIcon />

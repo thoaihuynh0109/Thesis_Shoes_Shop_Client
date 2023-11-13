@@ -44,7 +44,7 @@ import {
     ResponsiveContainer,
 } from 'recharts';
 import { PieChart, Pie, Cell } from 'recharts';
-import CustomTableCell from '~/components/CustomTableCell/CustomTableCell';
+import CustomTableCell from '~/pages/AdminPages/CustomTableCell/CustomTableCell';
 
 const dataPie = [
     { name: 'Group A', value: 400 },
@@ -186,20 +186,6 @@ function Dashboard() {
                             <CardContent
                                 sx={{ justifyContent: 'space-between', alignItems: 'center' }}
                             >
-                                <ToggleButton
-                                    sx={{
-                                        fontSize: '2rem',
-                                        position: 'absolute',
-                                        top: 5,
-                                        right: 10,
-                                        width: 10,
-                                        height: 10,
-                                        border: 'none',
-                                    }}
-                                    onClick={handleClick}
-                                >
-                                    <MoreHorizIcon></MoreHorizIcon>
-                                </ToggleButton>
                                 <Menu
                                     anchorEl={anchorEl}
                                     open={open}
@@ -225,7 +211,7 @@ function Dashboard() {
                                         alignItems: 'center',
                                     }}
                                 >
-                                    <Grid item>
+                                    <Grid>
                                         <StyledTypography>Total Earning</StyledTypography>
                                         <Typography
                                             variant="h1"
@@ -236,7 +222,7 @@ function Dashboard() {
                                             $50000
                                         </Typography>
                                     </Grid>
-                                    <Grid item>
+                                    <Grid>
                                         <Avatar sx={{ bgcolor: '#f04438', width: 56, height: 56 }}>
                                             <PaidIcon sx={{ width: 24, height: 24 }}></PaidIcon>
                                         </Avatar>
@@ -254,20 +240,6 @@ function Dashboard() {
                             <CardContent
                                 sx={{ justifyContent: 'space-between', alignItems: 'center' }}
                             >
-                                <ToggleButton
-                                    sx={{
-                                        fontSize: '2rem',
-                                        position: 'absolute',
-                                        top: 5,
-                                        right: 10,
-                                        width: 10,
-                                        height: 10,
-                                        border: 'none',
-                                    }}
-                                    onClick={handleClick}
-                                >
-                                    <MoreHorizIcon></MoreHorizIcon>
-                                </ToggleButton>
                                 <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
                                     <StyledMenuItem onClick={handleClose}>
                                         <ArchiveIcon sx={{ mr: 1 }} />
@@ -286,7 +258,7 @@ function Dashboard() {
                                         alignItems: 'center',
                                     }}
                                 >
-                                    <Grid item>
+                                    <Grid>
                                         <StyledTypography>Total Customers</StyledTypography>
                                         <Typography
                                             variant="h1"
@@ -297,7 +269,7 @@ function Dashboard() {
                                             5000
                                         </Typography>
                                     </Grid>
-                                    <Grid item>
+                                    <Grid>
                                         <Avatar sx={{ bgcolor: '#10B981', width: 56, height: 56 }}>
                                             <PeopleAltIcon
                                                 sx={{ width: 24, height: 24 }}
@@ -317,20 +289,6 @@ function Dashboard() {
                             <CardContent
                                 sx={{ justifyContent: 'space-between', alignItems: 'center' }}
                             >
-                                <ToggleButton
-                                    sx={{
-                                        fontSize: '2rem',
-                                        position: 'absolute',
-                                        top: 5,
-                                        right: 10,
-                                        width: 10,
-                                        height: 10,
-                                        border: 'none',
-                                    }}
-                                    onClick={handleClick}
-                                >
-                                    <MoreHorizIcon></MoreHorizIcon>
-                                </ToggleButton>
                                 <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
                                     <StyledMenuItem onClick={handleClose}>
                                         <ArchiveIcon sx={{ mr: 1 }} />
@@ -349,7 +307,7 @@ function Dashboard() {
                                         alignItems: 'center',
                                     }}
                                 >
-                                    <Grid item>
+                                    <Grid>
                                         <StyledTypography>Total Orders</StyledTypography>
                                         <Typography
                                             variant="h1"
@@ -360,7 +318,7 @@ function Dashboard() {
                                             500
                                         </Typography>
                                     </Grid>
-                                    <Grid item>
+                                    <Grid>
                                         <Avatar sx={{ bgcolor: '#f79009', width: 56, height: 56 }}>
                                             <ShoppingBasketIcon
                                                 sx={{ width: 24, height: 24 }}
@@ -380,20 +338,6 @@ function Dashboard() {
                             <CardContent
                                 sx={{ justifyContent: 'space-between', alignItems: 'center' }}
                             >
-                                <ToggleButton
-                                    sx={{
-                                        fontSize: '2rem',
-                                        position: 'absolute',
-                                        top: 5,
-                                        right: 10,
-                                        width: 10,
-                                        height: 10,
-                                        border: 'none',
-                                    }}
-                                    onClick={handleClick}
-                                >
-                                    <MoreHorizIcon></MoreHorizIcon>
-                                </ToggleButton>
                                 <Menu
                                     anchorEl={anchorEl}
                                     open={open}
@@ -419,7 +363,7 @@ function Dashboard() {
                                         alignItems: 'center',
                                     }}
                                 >
-                                    <Grid item>
+                                    <Grid>
                                         <StyledTypography>Total Profit</StyledTypography>
                                         <Typography
                                             variant="h1"
@@ -430,7 +374,7 @@ function Dashboard() {
                                             $42000
                                         </Typography>
                                     </Grid>
-                                    <Grid item>
+                                    <Grid>
                                         <Avatar sx={{ bgcolor: '#6366f1', width: 56, height: 56 }}>
                                             <PaidIcon sx={{ width: 24, height: 24 }}></PaidIcon>
                                         </Avatar>
