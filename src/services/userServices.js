@@ -20,6 +20,22 @@ const userService = {
             console.error(error);
         }
     },
+    createUser: async (data) => {
+        try {
+            const respone = await axios.post(apiUrl + '/', data);
+            return respone;
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    updateUser: async (id, data) => {
+        try {
+            const respone = await axios.put(apiUrl + `/${id}`, data);
+            return respone;
+        } catch (error) {
+            console.log(error);
+        }
+    },
 };
 
 export default userService;
