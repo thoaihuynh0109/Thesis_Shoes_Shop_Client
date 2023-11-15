@@ -19,29 +19,51 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import CustomTableCell from '../CustomTableCell/CustomTableCell';
+import PopupConfirm from '../PopupConfirm/PopupConfirm';
 import userService from '~/services/userServices';
 import './User.scss';
+import ToastMessage from '~/components/ToastMessage/ToastMessage';
 
 function User() {
+    const [selectedUserId, setSelectedUserId] = React.useState(null);
     const [users, setUsers] = React.useState([]);
-
+    const [showPopup, setShowPopup] = React.useState(false);
+    const [message, setMessage] = React.useState('');
+    const [typeMessage, setTypeMessage] = React.useState('');
+    const navigate = useNavigate();
+    const fetchUsers = async () => {
+        const listUser = await userService.getAllUser();
+        setUsers(listUser);
+    };
     React.useEffect(() => {
-        async function fetchUsers() {
-            const listUser = await userService.getAllUser();
-            setUsers(listUser);
-        }
         fetchUsers();
     }, []);
 
-    const handleDelete = (id) => {
+    const handleDelete = (userId) => {
+        setSelectedUserId(userId);
         // show pop up to confirm this action
-
-        // call api to delete the user with id
-
-        console.log(id);
+        setShowPopup(true);
     };
 
-    const navigate = useNavigate();
+    const confirmDelete = async (id) => {
+        // call api để xóa user
+        const respone = await userService.deleteUser(id);
+        console.log(respone);
+        if (respone.status === 204) {
+            setMessage('Xóa user thành công');
+            setTypeMessage('success');
+            const updatedUsers = users.filter((user) => user._id !== id);
+            setUsers(updatedUsers);
+        } else {
+            setMessage('Update user thất bại');
+            setTypeMessage('error');
+        }
+    };
+
+    const handleClosePopup = () => {
+        setShowPopup(false);
+    };
+
     const handleEdit = (id) => {
         navigate(`${id}/edit`);
     };
@@ -94,6 +116,7 @@ function User() {
                 />
             </Paper>
             {/* Table */}
+            <ToastMessage message={message} type={typeMessage} />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
@@ -132,6 +155,13 @@ function User() {
                                         <IconButton onClick={() => handleDelete(row._id)}>
                                             <DeleteIcon color="error" fontSize="large" />
                                         </IconButton>
+                                        {showPopup && (
+                                            <PopupConfirm
+                                                handleClose={handleClosePopup}
+                                                userId={selectedUserId}
+                                                confirmDelete={confirmDelete}
+                                            />
+                                        )}
                                         <IconButton onClick={() => handleEdit(row._id)}>
                                             <EditNoteIcon color="info" fontSize="large" />
                                         </IconButton>

@@ -36,6 +36,14 @@ const userService = {
             console.log(error);
         }
     },
+    deleteUser: async (id) => {
+        try {
+            const respone = await axios.delete(apiUrl + `/${id}`);
+            return respone;
+        } catch (error) {
+            console.log(error);
+        }
+    },
 };
 
 export default userService;
