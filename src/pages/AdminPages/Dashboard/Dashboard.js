@@ -25,7 +25,6 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import PaidIcon from '@mui/icons-material/Paid';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
@@ -35,16 +34,17 @@ import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import {
     BarChart,
     Bar,
-    Rectangle,
     XAxis,
     YAxis,
-    CartesianGrid,
     Tooltip,
     Legend,
+    PieChart,
+    Pie,
+    Cell,
     ResponsiveContainer,
 } from 'recharts';
-import { PieChart, Pie, Cell } from 'recharts';
 import CustomTableCell from '~/pages/AdminPages/CustomTableCell/CustomTableCell';
+import productService from '~/services/productServices';
 
 const dataPie = [
     { name: 'Group A', value: 400 },
@@ -169,7 +169,34 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 function Dashboard() {
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [cardContentWidth, setCardContentWidth] = React.useState(0);
+    const [lastestProducts, setLastestProduct] = React.useState([]);
+
+    React.useEffect(() => {
+        const fetchLastestProduct = async () => {
+            const listProduct = await productService.getLastestProduct();
+            setLastestProduct(listProduct);
+        };
+        fetchLastestProduct();
+    }, []);
+
+    const handleResize = () => {
+        const cardContent = document.getElementById('card-content-sales');
+        if (cardContent) {
+            setCardContentWidth(cardContent.offsetWidth);
+        }
+    };
+
+    React.useEffect(() => {
+        handleResize(); // Lấy giá trị ban đầu của chiều rộng
+        window.addEventListener('resize', handleResize); // Thêm sự kiện resize
+        return () => {
+            window.removeEventListener('resize', handleResize); // Xóa sự kiện resize khi component bị hủy
+        };
+    }, []);
+
     const open = Boolean(anchorEl);
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -412,10 +439,14 @@ function Dashboard() {
                             />
 
                             <CardContent
-                                sx={{ justifyContent: 'space-between', alignItems: 'center' }}
+                                id="card-content-sales"
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                }}
                             >
                                 <BarChart
-                                    width={550}
+                                    width={cardContentWidth - 50}
                                     height={350}
                                     data={data}
                                     margin={{
@@ -424,6 +455,7 @@ function Dashboard() {
                                         left: 20,
                                         bottom: 5,
                                     }}
+                                    barCategoryGap="15%"
                                 >
                                     <XAxis
                                         dataKey="name"
@@ -502,7 +534,15 @@ function Dashboard() {
                         elevation={0}
                         sx={{ position: 'relative', boxShadow: 'none', fontSize: '1.3rem' }}
                     >
-                        <Card variant="outlined" sx={{ borderRadius: '20px', minHeight: '14rem' }}>
+                        <Card
+                            variant="outlined"
+                            sx={{
+                                borderRadius: '20px',
+                                minHeight: '14rem',
+                                maxHeight: '360px',
+                                overflow: 'auto',
+                            }}
+                        >
                             <CardHeader
                                 title={
                                     <Typography
@@ -521,34 +561,37 @@ function Dashboard() {
                                     spacing={2}
                                     divider={<Divider orientation="horizontal" flexItem />}
                                 >
-                                    <Stack spacing={2} direction="row" alignItems="center">
-                                        <CardMedia
-                                            component="img"
-                                            sx={{ width: 151, height: 50 }}
-                                            image="https://img.vn/uploads/version/img24-png-20190726133727cbvncjKzsQ.png"
-                                            alt="Live from space album cover"
-                                        />
-                                        <Typography component="div" variant="h5">
-                                            Adidas Nike Puma
-                                        </Typography>
-                                        <IconButton>
-                                            <MoreVertIcon sx={{ height: 25, width: 25 }} />
-                                        </IconButton>
-                                    </Stack>
-                                    <Stack spacing={2} direction="row" alignItems="center">
-                                        <CardMedia
-                                            component="img"
-                                            sx={{ width: 151, height: 50 }}
-                                            image="https://img.vn/uploads/version/img24-png-20190726133727cbvncjKzsQ.png"
-                                            alt="Live from space album cover"
-                                        />
-                                        <Typography component="div" variant="h5">
-                                            Adidas Nike Puma
-                                        </Typography>
-                                        <IconButton>
-                                            <MoreVertIcon sx={{ height: 25, width: 25 }} />
-                                        </IconButton>
-                                    </Stack>
+                                    {lastestProducts.length > 0 &&
+                                        lastestProducts.map((product) => (
+                                            <Stack
+                                                spacing={2}
+                                                direction="row"
+                                                alignItems="center"
+                                                key={product._id}
+                                            >
+                                                <CardMedia
+                                                    key={product._id}
+                                                    component="img"
+                                                    sx={{ maxWidth: 151, maxHeight: 50 }}
+                                                    image={product.images}
+                                                    alt={product.name}
+                                                />
+                                                <Typography
+                                                    component="div"
+                                                    variant="h5"
+                                                    sx={{ flex: '1' }}
+                                                >
+                                                    {product.name}
+                                                </Typography>
+                                                <Box sx={{ marginLeft: 'auto' }}>
+                                                    <IconButton>
+                                                        <MoreVertIcon
+                                                            sx={{ height: 25, width: 25 }}
+                                                        />
+                                                    </IconButton>
+                                                </Box>
+                                            </Stack>
+                                        ))}
                                 </Stack>
                             </CardContent>
                         </Card>

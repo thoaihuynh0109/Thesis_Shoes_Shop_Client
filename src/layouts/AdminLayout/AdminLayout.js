@@ -7,6 +7,7 @@ function AdminLayout({ children }) {
     return (
         <div>
             <Header></Header>
+            <Sidebar></Sidebar>
             <Box
                 sx={{
                     padding: '64px 0px 64px 240px',
@@ -18,7 +19,6 @@ function AdminLayout({ children }) {
                     {children}
                 </Container>
             </Box>
-            <Sidebar></Sidebar>
         </div>
     );
 }
