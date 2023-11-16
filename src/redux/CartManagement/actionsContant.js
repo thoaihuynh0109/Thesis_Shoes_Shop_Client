@@ -1,0 +1,5 @@
+// Action Types
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const DECREMENT_QUANTITY = 'DECREMENT_QUANTITY';
+export const INCREMENT_QUANTITY = 'INCREMENT_QUANTITY';
+export const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
