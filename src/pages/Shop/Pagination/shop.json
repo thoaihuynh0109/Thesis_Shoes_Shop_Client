@@ -3,9 +3,10 @@
         "id": 1,
         "img": "https://www.bike-discount.de/media/image/6f/89/4b/adidas_Terrex-Free-Hiker-2-Low-GTX-Wanderschuhe_IG5459_2.jpg",
         "title": "Jordan",
-        "price": "3,600,000",
+        "price": "1,600,000",
         "rating": 4,
-        "label": false
+        "label": false,
+        "brand": "Puma"
     },
     {
         "id": 2,
@@ -13,15 +14,18 @@
         "title": "RAPIDMOVE TRAINER",
         "price": "3,200,000",
         "rating": 3,
-        "label": false
+        "label": false,
+        "brand": "Puma"
     },
+
     {
         "id": 3,
         "img": "https://res.cloudinary.com/dd4gcajeh/image/upload/v1698216174/Gimme-shoes-images/Adidas/if2649_wht_01_vkqpnt.jpg",
         "title": "FORUM LOW SHOES",
         "price": "2,600,000",
         "rating": 4,
-        "label": false
+        "label": false,
+        "brand": "Nai Kì"
     },
     {
         "id": 4,
@@ -29,23 +33,26 @@
         "title": "Suede Brand Love",
         "price": "2,350,000",
         "rating": 4,
-        "label": true
+        "label": true,
+        "brand": "New Balance"
     },
     {
         "id": 5,
         "img": "https://res.cloudinary.com/dd4gcajeh/image/upload/v1698222886/Gimme-shoes-images/Puma/SEASONS%20Voyage%20NITRO%E2%84%A2%203.jpg",
-        "title": "SEASONS Voyage NITRO™ 3",
+        "title": "a",
         "price": "2,400,000",
         "rating": 4,
-        "label": true
+        "label": true,
+        "brand": "Nike"
     },
     {
         "id": 6,
         "img": "https://res.cloudinary.com/dd4gcajeh/image/upload/v1698216072/Gimme-shoes-images/Adidas/adidas-meerkleurig-Ftwbla-Negbas-Plaha-Trainer-V-Hardloopschoenen-Voor_pzznwb.jpg",
-        "title": "TRAINER V SHOES",
+        "title": "z",
         "price": "2,200,000",
         "rating": 4,
-        "label": false
+        "label": false,
+        "brand": "Puma"
     },
     {
         "id": 7,
@@ -53,7 +60,8 @@
         "title": "FuelCell 2190",
         "price": "3,289,765",
         "rating": 5,
-        "label": false
+        "label": false,
+        "brand": "Nike"
     },
     {
         "id": 8,
@@ -61,7 +69,8 @@
         "title": "VANS SK8 HI",
         "price": "3,055,000",
         "rating": 3,
-        "label": false
+        "label": false,
+        "brand": "Nike"
     },
     {
         "id": 9,
@@ -69,7 +78,8 @@
         "title": "RAPIDMOVE TRAINER",
         "price": "3,200,000",
         "rating": 3,
-        "label": false
+        "label": false,
+        "brand": "Nike"
     },
     {
         "id": 10,
@@ -77,7 +87,8 @@
         "title": "TRAINER V SHOES",
         "price": "2,200,000",
         "rating": 4,
-        "label": false
+        "label": false,
+        "brand": "Nike"
     },
     {
         "id": 11,
@@ -85,7 +96,8 @@
         "title": "Rengoku",
         "price": "9,999,999",
         "rating": 5,
-        "label": false
+        "label": false,
+        "brand": "Nike"
     },
     {
         "id": 12,
@@ -93,7 +105,8 @@
         "title": "Last",
         "price": "9,999,999",
         "rating": 5,
-        "label": false
+        "label": false,
+        "brand": "Nike"
     },
     {
         "id": 13,
@@ -101,7 +114,8 @@
         "title": "Smile",
         "price": "9,999,999",
         "rating": 5,
-        "label": false
+        "label": false,
+        "brand": "Nike"
     },
     {
         "id": 14,
@@ -109,7 +123,8 @@
         "title": "Mugen Train",
         "price": "9,999,999",
         "rating": 5,
-        "label": false
+        "label": false,
+        "brand": "Nike"
     },
     {
         "id": 15,
@@ -117,7 +132,8 @@
         "title": "Suede Brand Love",
         "price": "2,350,000",
         "rating": 4,
-        "label": true
+        "label": true,
+        "brand": "Nike"
     },
     {
         "id": 16,
@@ -125,7 +141,8 @@
         "title": "SEASONS Voyage NITRO™ 3",
         "price": "2,400,000",
         "rating": 4,
-        "label": true
+        "label": true,
+        "brand": "Nai Kì"
     },
     {
         "id": 17,
@@ -133,7 +150,8 @@
         "title": "Suede Brand Love",
         "price": "2,350,000",
         "rating": 4,
-        "label": true
+        "label": true,
+        "brand": "Nike"
     },
     {
         "id": 18,
@@ -141,22 +159,34 @@
         "title": "SEASONS Voyage NITRO™ 3",
         "price": "2,400,000",
         "rating": 4,
-        "label": true
+        "label": true,
+        "brand": "Nike"
     },
     {
         "id": 19,
         "img": "https://res.cloudinary.com/dd4gcajeh/image/upload/v1698222786/Gimme-shoes-images/Puma/Suede%20Brand%20Love.jpg",
         "title": "Suede Brand Love",
-        "price": "2,350,000",
+        "price": "1,350,000",
         "rating": 4,
-        "label": true
+        "label": true,
+        "brand": "New Balance"
     },
     {
         "id": 20,
         "img": "https://res.cloudinary.com/dd4gcajeh/image/upload/v1698222886/Gimme-shoes-images/Puma/SEASONS%20Voyage%20NITRO%E2%84%A2%203.jpg",
         "title": "SEASONS Voyage NITRO™ 3",
-        "price": "2,400,000",
+        "price": "1,400,000",
         "rating": 4,
-        "label": true
+        "label": true,
+        "brand": "Adidas"
+    },
+    {
+        "id": 21,
+        "img": "https://res.cloudinary.com/dd4gcajeh/image/upload/v1698222886/Gimme-shoes-images/Puma/SEASONS%20Voyage%20NITRO%E2%84%A2%203.jpg",
+        "title": "Ace NITRO™ 3",
+        "price": "400,000",
+        "rating": 4,
+        "label": true,
+        "brand": "Puma"
     }
 ]
