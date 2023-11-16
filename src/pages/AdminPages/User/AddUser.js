@@ -170,7 +170,7 @@ function AddUser() {
                     setRePassword({ value: '', message: '' });
                     setAddress({ value: '', message: '' });
                     setPhone({ value: '', message: '' });
-                    navigate('/manage-user');
+                    // navigate('/manage-user');
                 } else {
                     setMessage('Tạo user thất bại');
                     setTypeMessage('error');
@@ -183,9 +183,14 @@ function AddUser() {
             setMessage('Vui lòng kiểm tra các trường đã nhập');
             setTypeMessage('error');
         }
+        setTimeout(() => {
+            setMessage('');
+            setTypeMessage('');
+        }, 3000);
     };
     const handleBack = () => {
-        window.history.back(); // Quay trở lại trang trước
+        navigate('/manage-user');
+        // window.history.back(); // Quay trở lại trang trước
     };
 
     return (

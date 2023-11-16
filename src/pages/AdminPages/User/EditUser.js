@@ -19,7 +19,6 @@ import ToastMessage from '~/components/ToastMessage/ToastMessage';
 
 function EditUser() {
     const { id } = useParams();
-    const [user, setUser] = React.useState({});
     const [firstName, setFirstName] = React.useState({
         value: '',
         message: '',
@@ -50,10 +49,11 @@ function EditUser() {
     const [message, setMessage] = React.useState('');
     const [typeMessage, setTypeMessage] = React.useState('');
     const navigate = useNavigate();
+
     React.useEffect(() => {
         async function fetchUser() {
             const user = await userService.getUserById(id);
-            setUser(user);
+
             setFirstName({ value: user.firstName || '', message: '' });
             setLastName({ value: user.lastName || '', message: '' });
             setEmail({ value: user.email || '', message: '' });
@@ -158,12 +158,11 @@ function EditUser() {
                 phone: phone.value,
             };
             // call api to create new user
-            const respone = await userService.updateUser(id, data);
+            const response = await userService.updateUser(id, data);
 
-            if (respone.status === 200) {
+            if (response.status === 200) {
                 setMessage('Cập nhật user thành công');
                 setTypeMessage('success');
-                navigate('');
             } else {
                 setMessage('Cập nhật user thất bại');
                 setTypeMessage('error');
@@ -172,9 +171,15 @@ function EditUser() {
             setMessage('Vui lòng kiểm tra các trường đã nhập');
             setTypeMessage('error');
         }
+        setTimeout(() => {
+            setMessage('');
+            setTypeMessage('');
+        }, 3000);
     };
+
     const handleBack = () => {
-        window.history.back(); // Quay trở lại trang trước
+        navigate('/manage-user');
+        // window.history.back(); // Quay trở lại trang trước
     };
 
     return (
@@ -189,7 +194,6 @@ function EditUser() {
             <Typography sx={{ fontSize: '3rem', fontWeight: 600 }}>Edit User</Typography>
             <Paper sx={{ mt: 4, mb: 4, padding: 1.5, borderRadius: 4 }}>
                 <form onSubmit={handleUpdate}>
-                    <ToastMessage message={message} type={typeMessage} />
                     <Stack direction="row" sx={{ mb: '16px' }}>
                         <Box sx={{ width: '50%', mr: 2 }}>
                             <CustomizeTextField
@@ -307,6 +311,9 @@ function EditUser() {
                     </Box>
 
                     <CustomizeButton type="submit">Update User</CustomizeButton>
+                    {message && typeMessage && (
+                        <ToastMessage message={message} type={typeMessage} />
+                    )}
                 </form>
             </Paper>
         </Box>

@@ -20,7 +20,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import CustomTableCell from '../CustomTableCell/CustomTableCell';
 import PopupConfirm from '../PopupConfirm/PopupConfirm';
 import userService from '~/services/userServices';
-import './User.scss';
 import ToastMessage from '~/components/ToastMessage/ToastMessage';
 
 function User() {
@@ -38,8 +37,8 @@ function User() {
         fetchUsers();
     }, []);
 
-    const handleDelete = (userId) => {
-        setSelectedUserId(userId);
+    const handleDelete = (id) => {
+        setSelectedUserId(id);
         // show pop up to confirm this action
         setShowPopup(true);
     };
@@ -51,10 +50,14 @@ function User() {
         if (respone.status === 204) {
             setMessage('Xóa user thành công');
             setTypeMessage('success');
+            setTimeout(() => {
+                setMessage('');
+                setTypeMessage('');
+            }, 3000);
             const updatedUsers = users.filter((user) => user._id !== id);
             setUsers(updatedUsers);
         } else {
-            setMessage('Update user thất bại');
+            setMessage('Xóa user thất bại');
             setTypeMessage('error');
         }
     };
@@ -154,13 +157,7 @@ function User() {
                                         <IconButton onClick={() => handleDelete(row._id)}>
                                             <DeleteIcon color="error" fontSize="large" />
                                         </IconButton>
-                                        {showPopup && (
-                                            <PopupConfirm
-                                                handleClose={handleClosePopup}
-                                                userId={selectedUserId}
-                                                confirmDelete={confirmDelete}
-                                            />
-                                        )}
+
                                         <IconButton onClick={() => handleEdit(row._id)}>
                                             <EditNoteIcon color="info" fontSize="large" />
                                         </IconButton>
@@ -170,6 +167,13 @@ function User() {
                     </TableBody>
                 </Table>
             </TableContainer>
+            {showPopup && (
+                <PopupConfirm
+                    handleClose={handleClosePopup}
+                    id={selectedUserId}
+                    confirmDelete={confirmDelete}
+                />
+            )}
         </Box>
     );
 }
