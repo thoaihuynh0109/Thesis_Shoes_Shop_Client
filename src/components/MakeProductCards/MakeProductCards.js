@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     Box,
@@ -10,76 +10,69 @@ import {
     Zoom,
     IconButton,
     CircularProgress,
-    styled,
-    TableCell,
-    TextField,
+    Badge,
     Avatar,
 } from '@mui/material';
+
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CheckIcon from '@mui/icons-material/Check';
 import Rating from '@mui/material/Rating';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { CustomTooltip } from '~/pages/Home/TabProducts/ProductsCard';
 import CustomTypography from '../CustomTyporaphy/CustomTyporaphy';
-// data for home page
-export const products = [
-    {
-        id: 1,
-        img: 'https://www.bike-discount.de/media/image/6f/89/4b/adidas_Terrex-Free-Hiker-2-Low-GTX-Wanderschuhe_IG5459_2.jpg',
-        title: 'Jordan',
-        price: '3,600,000',
-        rating: 4,
-        label: false,
-        labelNew: true,
-    },
-    {
-        id: 2,
-        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698215220/Gimme-shoes-images/Adidas/adidas-rapidmove-trainers_udkzcn.jpg',
-        title: 'RAPIDMOVE TRAINER',
-        price: '3,200,000',
-        rating: 3,
-        label: false,
-    },
-    {
-        id: 3,
-        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698216174/Gimme-shoes-images/Adidas/if2649_wht_01_vkqpnt.jpg',
-        title: 'FORUM LOW SHOES',
-        price: '2,600,000',
-        rating: 4,
-        label: false,
-    },
-    {
-        id: 4,
-        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698222786/Gimme-shoes-images/Puma/Suede%20Brand%20Love.jpg',
-        title: 'Suede Brand Love',
-        price: '2,350,000',
-        rating: 4,
-        label: true,
-    },
-];
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, incrementQuantity } from '~/redux/CartManagement/cartActions';
+import { findProductIndex } from '~/redux/CartManagement/cartReducer';
 
 // Make Products Card Item for Home Page
 export function MakeProductsCard({
+    productId,
     image,
     title,
     price,
     rating,
     label,
     labelNew,
-    // minWidthCard,
     minWidthCard,
     maxHeightCard,
     imgHeight,
     imgWidth,
     onClick,
 }) {
+    const dispatch = useDispatch();
+
     const navigate = useNavigate();
     const [hoverCard, setHoverCard] = useState(false);
     const [checkAddToWishList, setCheckAddToWishList] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [valueRating, setValueRating] = useState(rating);
+
+    const [cartItemsCount, setCartItemsCount] = useState(0);
+    const cartItems = useSelector((state) => state.cart.cartItems);
+
+    //
+
+    const handleAddToCart = (product) => {
+        console.log('Cart Items:', cartItems);
+        console.log('Adding Product:', product);
+
+        const existingProduct = cartItems.find((item) => item.productId === product.productId);
+
+        console.log('Existing Product:', existingProduct);
+
+        if (existingProduct) {
+            // If the product is already in the cart, update the quantity
+            console.log('Updating Quantity:', existingProduct.quantity + 1);
+            dispatch(incrementQuantity(product.productId, existingProduct.quantity + 1));
+        } else {
+            // If the product is not in the cart, add it with quantity 1
+            console.log('Adding New Product to Cart');
+            dispatch(addToCart(product));
+        }
+    };
 
     // mouse enter and leave event handlers
     const handleHover = () => {
@@ -113,8 +106,8 @@ export function MakeProductsCard({
         <Box>
             <Card
                 sx={{
-                    minWidth: minWidthCard || 270,
-                    maxHeight: maxHeightCard || 285,
+                    minWidth: minWidthCard || '270px',
+                    maxHeight: maxHeightCard || '285px',
                     cursor: 'pointer',
                     position: 'relative',
                     transformStyle: 'preserve-3d',
@@ -123,6 +116,7 @@ export function MakeProductsCard({
                     boxShadow: '0 0 8px rgba(0, 0, 0, 0.2)',
                     mr: 2,
                 }}
+                key={productId}
                 onMouseEnter={handleHover}
                 onMouseLeave={handleUnhover}
             >
@@ -172,16 +166,25 @@ export function MakeProductsCard({
                 <CardMedia
                     component="img"
                     height={imgHeight || '194'}
+                    // width={'194px'}
                     image={image}
                     alt="Product Image"
                     onClick={onClick}
-                    style={{ objectFit: 'contain', width: imgWidth || '95%', margin: '0 auto' }}
+                    style={{ objectFit: 'contain', width: imgWidth || '194px', margin: '0 auto' }}
                 />
 
                 <CardActions disableSpacing sx={{ display: 'block' }}>
                     <Zoom in={hoverCard}>
                         <Box>
-                            <Button fullWidth variant="contained">
+                            <Button
+                                variant="contained"
+                                fullWidth
+                                // onClick={() => handleAddToCart({ image, title, price })}
+                                onClick={() =>
+                                    handleAddToCart({ productId, image, title, price, quantity: 1 })
+                                }
+                                // onClick={handleAddToCart}
+                            >
                                 <AddShoppingCartIcon sx={{ mr: 2, fontSize: '16px' }} />
                                 <Typography sx={{ fontSize: '14px' }}>Add to Cart</Typography>
                             </Button>
@@ -257,8 +260,6 @@ export function MakeProductsCard({
                 </Typography>
                 <Rating name="read-only" value={valueRating} readOnly size="large" />
             </Box>
-
-            {/* More items button */}
         </Box>
     );
 }
