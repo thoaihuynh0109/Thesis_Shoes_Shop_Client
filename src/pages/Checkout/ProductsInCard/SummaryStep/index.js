@@ -11,23 +11,16 @@ import { rowsTest } from './SummaryStepData/ProductsTableData';
 // MUI v5
 import { Container } from '@mui/material';
 
-const calculateTotalPrice = () => {
-    let totalPrice = 0;
-    var quantity = 4;
-    rowsTest.forEach((row) => {
-        // Tính tổng giá trị cho từng sản phẩm
-        totalPrice += row.unitPrice * quantity;
-    });
-    return totalPrice;
-};
-
 const cx = classNames.bind(styles);
+const cartItems = [
+    // ... Dữ liệu sản phẩm
+];
 
 function SummaryStep() {
     return (
         <Container>
             <ProductsTable />
-            <TestLastRows />
+            {/* <TestLastRows tax={8.75} cartItems={cartItems} /> */}
         </Container>
     );
 }
