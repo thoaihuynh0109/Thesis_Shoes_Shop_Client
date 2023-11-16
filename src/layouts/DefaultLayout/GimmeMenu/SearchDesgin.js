@@ -1,12 +1,8 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import { Box, AppBar, Toolbar, IconButton, InputBase } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -55,23 +51,40 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchAppBar() {
-    const navigate = useNavigate();
-
     const handleNavigate = () => {
         navigate('/shop');
+    };
+
+    const [searchKeyword, setSearchKeyword] = useState('');
+    const navigate = useNavigate();
+
+    const handleKeywordChange = (event) => {
+        setSearchKeyword(event.target.value);
+    };
+
+    // const handleSearch = () => {
+    //     const query = encodeURIComponent(searchKeyword.trim());
+    //     navigate(`/shop?search=${query}`);
+    // };
+
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const handleSearch = (query) => {
+        setSearchQuery(query);
     };
 
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" sx={{ backgroundColor: '#fff', boxShadow: 'none' }}>
                 <Toolbar>
-                    <Search>
-                        <IconButton onButton  color="inherit" onClick={handleNavigate}>
+                    <Search onSearch={handleSearch}>
+                        <IconButton onButton color="inherit" onClick={handleSearch}>
                             <SearchIcon />
                         </IconButton>
                         <StyledInputBase
                             placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
+                            inputProps={{ 'aria-label': 'search', value: searchKeyword }}
+                            onChange={handleKeywordChange}
                         />
                     </Search>
                 </Toolbar>
