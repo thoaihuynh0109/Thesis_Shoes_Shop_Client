@@ -11,7 +11,7 @@ import {
     DialogContentText,
     DialogActions,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './RegisterAccount.module.scss';
 import classNames from 'classnames/bind';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -38,11 +38,18 @@ PopupTest.propTypes = {
 };
 
 function RegisterAccount() {
-    const [openDialog, setOpenDialog] = useState(false);
+    const [openDialog, setOpenDialog] = React.useState(false);
+    const [firstName, setFirstName] = React.useState('');
+    const [lastName, setLastName] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
 
     const handleRegister = () => {
         // ??? bruh bruh???
-        setOpenDialog(true);
+        //setOpenDialog(true);
+
+        console.log({ firstName, lastName, email, password });
+        // send data to register account api
     };
 
     const handleOpenDialog = () => {
@@ -66,6 +73,10 @@ function RegisterAccount() {
                     First Name
                 </CustomTypography>
                 <CustomizeTextField
+                    value={firstName}
+                    onChange={(e) => {
+                        setFirstName(e.target.value);
+                    }}
                     inputProps={{
                         style: {
                             width: 400,
@@ -80,6 +91,10 @@ function RegisterAccount() {
                     Last Name
                 </CustomTypography>
                 <CustomizeTextField
+                    value={lastName}
+                    onChange={(e) => {
+                        setLastName(e.target.value);
+                    }}
                     inputProps={{
                         style: {
                             width: 400,
@@ -92,25 +107,14 @@ function RegisterAccount() {
                     variant="outlined"
                 />
                 <CustomTypography variant="body1" textAlign={'left'} sx={{ mt: 2 }} gutterBottom>
-                    User Name
-                </CustomTypography>
-                <CustomizeTextField
-                    inputProps={{
-                        style: {
-                            width: 400,
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                        },
-                    }}
-                    //id="outlined-basic"
-                    label="User Name"
-                    variant="outlined"
-                />
-                <CustomTypography variant="body1" textAlign={'left'} sx={{ mt: 2 }} gutterBottom>
                     Email
                 </CustomTypography>
                 <CustomizeTextField
                     //id="outlined-basic"
+                    value={email}
+                    onChange={(e) => {
+                        setEmail(e.target.value);
+                    }}
                     label="Email"
                     variant="outlined"
                     inputProps={{
@@ -125,6 +129,10 @@ function RegisterAccount() {
                     Password
                 </CustomTypography>
                 <CustomizeTextField
+                    value={password}
+                    onChange={(e) => {
+                        setPassword(e.target.value);
+                    }}
                     inputProps={{
                         style: {
                             width: 400,
@@ -143,7 +151,7 @@ function RegisterAccount() {
                 variant="contained"
                 sx={{ mt: 4, ml: 0, alignItems: 'flex-start', display: 'flex' }}
                 endIcon={<ArrowForwardIosIcon />}
-                onClick={handleOpenDialog}
+                onClick={handleRegister}
             >
                 Register
             </CustomizeButton>

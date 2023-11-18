@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { AppBar, Toolbar, Typography, Button, Box, styled, Container } from '@mui/material';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
@@ -6,12 +6,11 @@ import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 
 // Icon
-import PersonIcon from '@mui/icons-material/Person';
 import HomeIcon from '@mui/icons-material/Home';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import KeyIcon from '@mui/icons-material/Key';
-
+import UserAuthenticated from './Authenticated/UserAuthenticated';
 
 const cx = classNames.bind(styles);
 const CustomizeButton = styled(Button)({
@@ -42,6 +41,7 @@ const CustomizeButton = styled(Button)({
 });
 
 function HeaderDesign() {
+    const user = localStorage.getItem('user');
     return (
         <AppBar position="fixed" sx={{ bgcolor: 'var(--header-color)' }}>
             <Container>
@@ -61,14 +61,6 @@ function HeaderDesign() {
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <CustomizeButton
                             component={Link}
-                            to="/my-account"
-                            startIcon={<PersonIcon />}
-                        >
-                            My Account
-                        </CustomizeButton>
-
-                        <CustomizeButton
-                            component={Link}
                             to="/my-wishlist"
                             startIcon={<FavoriteBorderIcon />}
                         >
@@ -83,9 +75,13 @@ function HeaderDesign() {
                             Checkout
                         </CustomizeButton>
 
-                        <CustomizeButton component={Link} to="/signin" startIcon={<KeyIcon />}>
-                            Sign In
-                        </CustomizeButton>
+                        {user ? (
+                            <UserAuthenticated />
+                        ) : (
+                            <CustomizeButton component={Link} to="/signin" startIcon={<KeyIcon />}>
+                                Sign In
+                            </CustomizeButton>
+                        )}
                         {/* <Box sx={{ ml: 2 }}>
         <UserAuthenticated />
     </Box> */}

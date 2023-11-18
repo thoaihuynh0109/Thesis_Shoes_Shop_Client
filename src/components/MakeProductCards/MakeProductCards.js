@@ -40,6 +40,7 @@ export function MakeProductsCard({
     maxHeightCard,
     imgHeight,
     imgWidth,
+    marginLeft,
     onClick,
 }) {
     const dispatch = useDispatch();

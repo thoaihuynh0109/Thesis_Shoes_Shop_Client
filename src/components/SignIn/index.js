@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Button, Paper, Grid, Typography, TextField, Container, Chip } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import styles from './SignIn.module.scss';
 import classNames from 'classnames/bind';
@@ -9,6 +9,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import CustomTypography from '../CustomTyporaphy/CustomTyporaphy';
 import { CustomizeTextField } from '../CustomizeTextField/CustomizeTextField';
 // import { Typography, TextField } from '~/Layouts/DefaultLayout';
+import authService from '~/services/authServices';
 
 const cx = classNames.bind(styles);
 const Item = styled(Paper)(({ theme }) => ({
@@ -32,9 +33,22 @@ const CustomButton = styled(Button)(({ variant = 'contained', mt, ml, fs, width 
 // for person who don't have account
 // function SignIn({ isCheckout }) {
 
-function SignIn({ onSignIn }) {
-    const handleLogin = () => {
-        onSignIn(); // Gọi hàm callback onSignIn từ props
+function SignIn() {
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+
+    const navigate = useNavigate();
+    const handleLogin = async () => {
+        const data = {
+            email,
+            password,
+        };
+
+        const loginData = await authService.signIn(data);
+
+        localStorage.setItem('user', JSON.stringify(loginData));
+        // send info to login api
+        navigate('/');
     };
 
     return (
@@ -96,6 +110,10 @@ function SignIn({ onSignIn }) {
                                 Email address
                             </CustomTypography>
                             <CustomizeTextField
+                                value={email}
+                                onChange={(e) => {
+                                    setEmail(e.target.value);
+                                }}
                                 fullWidth={true}
                                 id="outlined-basic"
                                 label="Email"
@@ -105,6 +123,10 @@ function SignIn({ onSignIn }) {
                                 Password
                             </CustomTypography>
                             <CustomizeTextField
+                                value={password}
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                }}
                                 fullWidth={true}
                                 id="outlined-basic"
                                 label="Password"
@@ -118,8 +140,6 @@ function SignIn({ onSignIn }) {
                                 startIcon={<LockIcon />}
                                 onClick={handleLogin}
                                 // after logging in successfully --> href user to Home page
-                                component={Link}
-                                to="/"
                                 sx={{ padding: '6px 20px' }}
                             >
                                 Đăng Nhập
