@@ -102,23 +102,23 @@
     },
     {
         "id": 11,
-        "img": "https://ecdn.game4v.com/g4v-content/uploads/2021/07/game4v-anh-bia-3.jpg",
-        "title": "Rengoku",
-        "price": "9,999,999",
+        "img": "https://res.cloudinary.com/dd4gcajeh/image/upload/v1698246048/Gimme-shoes-images/Adidas/Female/download_c7hcyo.jpg",
+        "title": "SUPERSTAR SHOES",
+        "price": "2,600,000",
         "rating": 5,
         "label": false,
-        "brand": "Nike",
-        "gender": "Female"
+        "brand": "Adidas",
+        "gender": "Male"
     },
     {
         "id": 12,
-        "img": "https://i.pinimg.com/originals/36/3f/81/363f8103a45204786a1dff39547cfda9.jpg",
-        "title": "Last",
-        "price": "9,999,999",
+        "img": "https://res.cloudinary.com/dd4gcajeh/image/upload/v1698246433/Gimme-shoes-images/New%20Balance/Female/download_ocuvvs.jpg",
+        "title": "FuelCell SuperComp Trainer v2",
+        "price": "4,423,000",
         "rating": 5,
         "label": false,
-        "brand": "Nike",
-        "gender": "Male"
+        "brand": "New Balance",
+        "gender": "Female"
     },
     {
         "id": 13,
