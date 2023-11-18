@@ -22,8 +22,8 @@ function DefaultLayout({ children }) {
 
     return (
         <>
-            {/* <HeaderDesign></HeaderDesign> */}
-            <NewHeaderDesign />
+            <HeaderDesign></HeaderDesign>
+            {/* <NewHeaderDesign /> */}
             <SubHeader></SubHeader>
             <GimmeMenu></GimmeMenu>
 
