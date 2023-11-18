@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     List,
     ListItemButton,
@@ -6,35 +6,18 @@ import {
     ListItemText,
     Checkbox,
     Collapse,
-    Typography,
 } from '@mui/material';
+import StoreIcon from '@mui/icons-material/Store';
+
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
-import StoreIcon from '@mui/icons-material/Store';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 
-function BrandInformation() {
-    // set true --> for auto show menu list
+export default function BrandFilterInformation({ handleBrandFilter, selectedBrands }) {
     const [open, setOpen] = useState(true);
-    // choose many branches
-    const [selectedItem, setSelectedItem] = useState([]);
 
     const brands = ['Nike', 'Adidas', 'Puma', 'New Balance', 'Nai Kì'];
 
-    // choose the brand when clicking on name
-    const handleBrandClick = (index) => {
-        if (selectedItem.includes(index)) {
-            // nếu item đc click chọn,
-            //mà click chọn nữa thì loại bỏ nó khỏi mảng selectedItem
-            setSelectedItem(selectedItem.filter((item) => item !== index));
-        } else {
-            // nếu chưa tồn tại -> add item đc chọn vào mảng
-            setSelectedItem([...selectedItem, index]);
-        }
-    };
-
-    // close menu
     const handleClick = () => {
         setOpen(!open);
     };
@@ -55,7 +38,7 @@ function BrandInformation() {
                 </ListItemIcon>
                 <ListItemText
                     primary={
-                        <CustomTypography sx={{ fontWeight: 'bold' }}>Thương hiệu</CustomTypography>
+                        <CustomTypography sx={{ fontWeight: 'bold' }}>Thương Hiệu</CustomTypography>
                     }
                 />
                 {open ? <ExpandLess /> : <ExpandMore />}
@@ -65,15 +48,19 @@ function BrandInformation() {
                     {brands.map((brand, index) => (
                         <ListItemButton
                             key={index}
-                            // xác định xem brand item hiện tại có
-                            // nằm trong danh sách các item được chọn không?
-                            selected={selectedItem.includes(index)}
-                            onClick={() => handleBrandClick(index)}
+                            selected={selectedBrands.includes(brand)}
+                            onClick={() => handleBrandFilter(brand)}
                         >
-                            <Checkboxes checked={selectedItem.includes(index)} />
+                            <Checkbox
+                                checked={selectedBrands.includes(brand)}
+                                onChange={() => handleBrandFilter(brand)}
+                            />
+                            {/* <ListItemText primary={brand} /> */}
                             <ListItemText
                                 primary={
-                                    <CustomTypography variant="body1">{brand}</CustomTypography>
+                                    <CustomTypography sx={{ fontSize: '14px' }} variant="body1">
+                                        {brand}
+                                    </CustomTypography>
                                 }
                             />
                         </ListItemButton>
@@ -81,17 +68,5 @@ function BrandInformation() {
                 </List>
             </Collapse>
         </List>
-    );
-}
-
-export default BrandInformation;
-
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
-function Checkboxes({ checked }) {
-    return (
-        <div>
-            <Checkbox {...label} checked={checked} />
-        </div>
     );
 }

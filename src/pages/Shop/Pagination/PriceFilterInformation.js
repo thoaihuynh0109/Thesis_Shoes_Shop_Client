@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     List,
     ListItemButton,
@@ -6,20 +6,15 @@ import {
     ListItemText,
     Checkbox,
     Collapse,
-    Typography,
 } from '@mui/material';
+import { AttachMoneyOutlined } from '@mui/icons-material';
+import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
-import StoreIcon from '@mui/icons-material/Store';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 
-function PriceInformation() {
+export default function PriceFilterInformation({ handlePriceFilter, selectedPriceRange }) {
     // set true --> for auto show menu list
     const [open, setOpen] = useState(true);
-    // choose many branches
-    const [selectedItem, setSelectedItem] = useState([]);
 
     const prices = [
         'Dưới 1,000,000đ',
@@ -27,18 +22,6 @@ function PriceInformation() {
         '2,000,000đ - 3,000,000đ',
         'Trên 3,000,000đ',
     ];
-
-    // choose the brand when clicking on name
-    const handleBrandClick = (index) => {
-        if (selectedItem.includes(index)) {
-            // nếu item đc click chọn,
-            //mà click chọn nữa thì loại bỏ nó khỏi mảng selectedItem
-            setSelectedItem(selectedItem.filter((item) => item !== index));
-        } else {
-            // nếu chưa tồn tại -> add item đc chọn vào mảng
-            setSelectedItem([...selectedItem, index]);
-        }
-    };
 
     // close menu
     const handleClick = () => {
@@ -57,7 +40,7 @@ function PriceInformation() {
         >
             <ListItemButton onClick={handleClick}>
                 <ListItemIcon sx={{ minWidth: '40px' }}>
-                    <AttachMoneyIcon fontSize="large" />
+                    <AttachMoneyOutlined fontSize="large" />
                 </ListItemIcon>
                 <ListItemText
                     primary={
@@ -73,13 +56,13 @@ function PriceInformation() {
                     {prices.map((price, index) => (
                         <ListItemButton
                             key={index}
-                            x
-                            // xác định xem brand item hiện tại có
-                            // nằm trong danh sách các item được chọn không?
-                            selected={selectedItem.includes(index)}
-                            onClick={() => handleBrandClick(index)}
+                            selected={selectedPriceRange.includes(price)}
+                            onClick={() => handlePriceFilter(price)}
                         >
-                            <Checkboxes checked={selectedItem.includes(index)} />
+                            <Checkbox
+                                checked={selectedPriceRange.includes(price)}
+                                onChange={() => handlePriceFilter(price)}
+                            />
                             <ListItemText
                                 primary={
                                     <CustomTypography sx={{ fontSize: '14px' }} variant="body1">
@@ -92,17 +75,5 @@ function PriceInformation() {
                 </List>
             </Collapse>
         </List>
-    );
-}
-
-export default PriceInformation;
-
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
-function Checkboxes({ checked }) {
-    return (
-        <div>
-            <Checkbox {...label} checked={checked} />
-        </div>
     );
 }

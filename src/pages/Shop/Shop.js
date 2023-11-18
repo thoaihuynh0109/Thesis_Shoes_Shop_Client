@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import {
     styled,
     Container,
@@ -20,8 +21,8 @@ import TestPagination from './Pagination/p1';
 
 function Shop() {
     return (
-        <Box sx={{ ml: 4 }}>
-            <BasicGrid />
+        <Box sx={{ flexGrow: 1, minHeight: '500vh', mt: 4, ml: 4 }}>
+            <TestPagination />
         </Box>
     );
 }
@@ -67,7 +68,6 @@ function BasicGrid() {
                 {/* display 16 products for 1 page */}
                 <Grid item xs={9}>
                     {/* <Item><ProductsInShop/></Item> */}
-
 
                     {/* <SortingProducts /> */}
 

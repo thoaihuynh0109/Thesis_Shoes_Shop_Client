@@ -19,24 +19,84 @@ import WishList from '~/pages/ClientPages/WishList/WishList';
 import ContactUs from '~/pages/ContactUs/Contact';
 import DetailsPage from '~/pages/DetailsPage/DetailsPage';
 import Home from '~/pages/Home/Home';
+import Men from '~/pages/Men/Men';
 import PageNotFound from '~/pages/NotFound/PageNotFound';
+import OrderHistory from '~/pages/OrderHistory/OrderHistory';
 import RecoverPassword from '~/pages/RecoverPassword/RecoverPassword';
 import RegisterAccount from '~/pages/RegisterAccount/RegisterAccount';
-import TestPagination from '~/pages/Shop/Pagination/p1';
+import TestProductPagination from '~/pages/Shop/Pagination/TestProductPagination';
 import Shop from '~/pages/Shop/Shop';
+import Women from '~/pages/Women/Women';
 
 // Route khong can dang nhap
 const publicRoutes = [
-    { path: '/', component: Home },
-    { path: '/shop', component: Shop },
-    { path: '/contact', component: ContactUs },
-    { path: '/blog', component: TestPagination },
-    { path: '/product-details', component: DetailsPage },
+    {
+        path: '/',
+        component: Home,
+    },
+    {
+        path: '/shop',
+        component: Shop,
+    },
+    {
+        path: '/men',
+        component: Men,
+    },
+    {
+        path: '/women',
+        component: Women,
+    },
+    {
+        path: '/contact',
+        component: ContactUs,
+    },
+    {
+        path: '/blog',
+        component: TestProductPagination,
+    },
+    {
+        path: '/product-details',
+        component: DetailsPage,
+    },
     // product-detail
-    { path: '/my-wishlist', component: WishList },
-    { path: '/checkout', component: Checkout },
-    { path: '/signin', component: SignIn },
-    { path: '/register-account', component: RegisterAccount },
+    {
+        path: '/my-wishlist',
+        component: WishList,
+    },
+    {
+        path: '/checkout',
+        component: Checkout,
+    },
+    {
+        path: '/checkout',
+        component: Checkout,
+    },
+    {
+        path: '/signin',
+        component: SignIn,
+    },
+    {
+        path: '/register-account',
+        component: RegisterAccount,
+    },
+
+    // for authenticated
+    {
+        path: '/profile',
+        component: PersonalAccount,
+    },
+    {
+        path: '/change-password',
+        component: ChangePassword,
+    },
+    {
+        path: '/order-history',
+        component: OrderHistory,
+    },
+    {
+        path: '/recover-password',
+        component: RecoverPassword,
+    },
 
     { path: '/recover-password', component: RecoverPassword },
     // not found page
