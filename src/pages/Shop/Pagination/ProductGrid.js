@@ -59,7 +59,7 @@ export default function ProductGrid({
         if (!hasProducts) {
             return (
                 <Box style={{ width: '100%', textAlign: 'center', mt: 4 }}>
-                    <EmptyCard text={'Không có sản phẩm phù hợp'} />
+                    <EmptyCard message={'Không có sản phẩm phù hợp'} />
                 </Box>
             );
         }

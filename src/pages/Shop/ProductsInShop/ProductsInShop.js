@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Grid } from '@mui/material';
-import { products } from '~/components/MakeProductCards/MakeProductCards';
+
 import { useNavigate } from 'react-router-dom';
 import { MakeProductsCard } from '~/components/MakeProductCards/MakeProductCards';
-
+// import product
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 
 import Paper from '@mui/material/Paper';
@@ -154,7 +154,7 @@ function TestShop() {
 
     return (
         <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-            {products.length > 0 && console.log('products: ', products)}
+            {/* {products.length > 0 && console.log('products: ', products)} */}
             {currentImages.map((imageIndex) => (
                 <Grid item xs={6} sm={3} md={3} key={imageIndex} sx={{ display: 'flex', mb: 2 }}>
                     {/* onClick={() => navigate('/detail-product')} */}
@@ -166,7 +166,7 @@ function TestShop() {
                         rating={TestProducts[imageIndex]?.rating}
                         label={TestProducts[imageIndex]?.label}
                         // custom minWidthCard
-                        // minWidthCard={'240px'}
+                        // minWidthCard={'240productsx'}
                         minWidthCard={'210px'}
                         maxHeightCard={'210px'}
                         imgHeight={'140px'}
