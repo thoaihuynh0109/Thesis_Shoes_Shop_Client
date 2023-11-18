@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import SignIn from '~/components/SignIn';
 import AdminLayout from '~/layouts/AdminLayout/AdminLayout';
+import AddCategory from '~/pages/AdminPages/Category/AddCategory';
 import Category from '~/pages/AdminPages/Category/Category';
+import EditCategory from '~/pages/AdminPages/Category/EditCategory';
 import Dashboard from '~/pages/AdminPages/Dashboard/Dashboard';
 import Order from '~/pages/AdminPages/Order/Order';
 import Product from '~/pages/AdminPages/Product/Product';
@@ -60,8 +62,8 @@ const privateRoutes = [
     { path: '/manage-order/:id/edit', component: Order, layout: AdminLayout },
 
     { path: '/manage-category', component: Category, layout: AdminLayout },
-    { path: '/manage-category/create', component: Category, layout: AdminLayout },
-    { path: '/manage-category/:id/edit', component: Category, layout: AdminLayout },
+    { path: '/manage-category/create', component: AddCategory, layout: AdminLayout },
+    { path: '/manage-category/:id/edit', component: EditCategory, layout: AdminLayout },
 ];
 
 export { publicRoutes, privateRoutes };

@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const apiUrl = process.env.REACT_APP_API_URL + '/users';
+const apiUrl = process.env.REACT_APP_API_URL + '/categories';
 
-const userService = {
+const categoryService = {
     // Su dung api nay tai trang user.js
-    getAllUser: async () => {
+    getAllCategory: async () => {
         try {
             const respone = await axios.get(apiUrl + '/');
             return respone.data;
@@ -12,7 +12,7 @@ const userService = {
             console.error(error);
         }
     },
-    getUserById: async (id) => {
+    getCategoryById: async (id) => {
         try {
             const respone = await axios.get(apiUrl + `/${id}`);
             return respone.data;
@@ -20,7 +20,7 @@ const userService = {
             console.error(error);
         }
     },
-    createUser: async (data) => {
+    createCategory: async (data) => {
         try {
             const respone = await axios.post(apiUrl + '/', data);
             return respone;
@@ -28,7 +28,7 @@ const userService = {
             console.log(error);
         }
     },
-    updateUser: async (id, data) => {
+    updateCategory: async (id, data) => {
         try {
             const respone = await axios.put(apiUrl + `/${id}`, data);
             return respone;
@@ -36,7 +36,7 @@ const userService = {
             console.log(error);
         }
     },
-    deleteUser: async (id) => {
+    deleteCategory: async (id) => {
         try {
             const respone = await axios.delete(apiUrl + `/${id}`);
             return respone;
@@ -46,4 +46,4 @@ const userService = {
     },
 };
 
-export default userService;
+export default categoryService;

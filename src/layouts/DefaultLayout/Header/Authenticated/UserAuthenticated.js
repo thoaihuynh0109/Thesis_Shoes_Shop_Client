@@ -24,10 +24,11 @@ function UserAuthenticated() {
     const user = localStorage.getItem('user');
     const dataUser = JSON.parse(user);
     const isAdmin = dataUser.isAdmin;
+
     const navigate = useNavigate();
     const handleLogout = async () => {
         // call api  to logout
-        await authService.logout(user.email);
+        await authService.logout(dataUser);
         // delete data from local storage
         localStorage.removeItem('user');
         navigate('/signin');
