@@ -8,6 +8,8 @@ import Category from '~/pages/AdminPages/Category/Category';
 import EditCategory from '~/pages/AdminPages/Category/EditCategory';
 import Dashboard from '~/pages/AdminPages/Dashboard/Dashboard';
 import Order from '~/pages/AdminPages/Order/Order';
+import AddProduct from '~/pages/AdminPages/Product/AddProduct';
+import EditProduct from '~/pages/AdminPages/Product/EditProduct';
 import Product from '~/pages/AdminPages/Product/Product';
 import AddUser from '~/pages/AdminPages/User/AddUser';
 import EditUser from '~/pages/AdminPages/User/EditUser';
@@ -50,8 +52,8 @@ const privateRoutes = [
     { path: '/change-password', component: ChangePassword },
     { path: '/dashboard', component: Dashboard, layout: AdminLayout },
     { path: '/manage-product', component: Product, layout: AdminLayout },
-    { path: '/manage-product/create', component: Product, layout: AdminLayout },
-    { path: '/manage-product/:id/edit', component: Product, layout: AdminLayout },
+    { path: '/manage-product/create', component: AddProduct, layout: AdminLayout },
+    { path: '/manage-product/:id/edit', component: EditProduct, layout: AdminLayout },
 
     { path: '/manage-user', component: User, layout: AdminLayout },
     { path: '/manage-user/create', component: AddUser, layout: AdminLayout },
