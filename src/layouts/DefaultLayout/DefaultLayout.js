@@ -8,6 +8,7 @@ import SubHeader from './SubHeader/SubHeader';
 import ScrollButtonToTop from '~/components/BackToTop';
 import { InfiniteSliderTrack } from '~/components/SlideShowImage';
 import PageNotFound from '~/pages/NotFound/PageNotFound';
+import NewHeaderDesign from './Header/NewHeaderDesign';
 
 function DefaultLayout({ children }) {
     const [displayHeader, setDisplayHeader] = useState(true);
@@ -21,7 +22,8 @@ function DefaultLayout({ children }) {
 
     return (
         <>
-            <HeaderDesign></HeaderDesign>
+            {/* <HeaderDesign></HeaderDesign> */}
+            <NewHeaderDesign />
             <SubHeader></SubHeader>
             <GimmeMenu></GimmeMenu>
 

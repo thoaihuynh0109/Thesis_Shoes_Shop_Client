@@ -4,7 +4,7 @@ import {
     INCREMENT_QUANTITY,
     ADD_TO_CART,
     REMOVE_PRODUCT,
-} from './actionsContant';
+} from '../actionsContant';
 
 const initialState = {
     cartItems: [],
@@ -16,36 +16,6 @@ export const findProductIndex = (cartItems, productId) => {
 
 export const cartReducer = (state = initialState, action) => {
     switch (action.type) {
-        // case ADD_TO_CART:
-        //     const { productId, quantity } = action.payload;
-        //     // find id
-        //     const existingIndex = findProductIndex(state.cartItems, productId);
-
-        //     if (existingIndex !== -1) {
-        //         // Product already exists in the cart, update quantity
-        //         return {
-        //             ...state,
-        //             cartItems: state.cartItems.map((item, index) =>
-        //                 index === existingIndex
-        //                     ? { ...item, quantity: item.quantity + quantity } // update quantiy
-        //                     : item,
-        //             ),
-        //         };
-        //     } else {
-        //         // Product is not in the cart, add it
-        //         return {
-        //             ...state,
-        //             cartItems: [...state.cartItems, { ...action.payload }], // add new product to cart
-        //         };
-        //     }
-
-        // case ADD_TO_CART:
-        //     // Handle adding the product to the cart
-        //     return {
-        //         ...state,
-        //         cartItems: [...state.cartItems, action.payload],
-        //     };
-
         case ADD_TO_CART:
             // Check if the product is already in the cart
             const existingProduct = state.cartItems.find(
@@ -123,26 +93,3 @@ export const cartReducer = (state = initialState, action) => {
 };
 
 export default cartReducer;
-
-// {
-//     productId: 1,
-//     img: 'https://www.bike-discount.de/media/image/6f/89/4b/adidas_Terrex-Free-Hiker-2-Low-GTX-Wanderschuhe_IG5459_2.jpg',
-//     title: 'Jordan',
-//     price: '1,600,000',
-//     rating: 4,
-//     label: false,
-//     brand: 'Puma',
-//     quantity: 1,
-//     stockStatus: true,
-// },
-// {
-//     productId: 2,
-//     img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698215220/Gimme-shoes-images/Adidas/adidas-rapidmove-trainers_udkzcn.jpg',
-//     title: 'RAPIDMOVE TRAINER',
-//     price: '3,200,000',
-//     rating: 3,
-//     label: false,
-//     brand: 'Puma',
-//     quantity: 2,
-//     stockStatus: false,
-// },

@@ -15,11 +15,14 @@ import WishList from '~/pages/ClientPages/WishList/WishList';
 import ContactUs from '~/pages/ContactUs/Contact';
 import DetailsPage from '~/pages/DetailsPage/DetailsPage';
 import Home from '~/pages/Home/Home';
+import Men from '~/pages/Men/Men';
 import PageNotFound from '~/pages/NotFound/PageNotFound';
+import OrderHistory from '~/pages/OrderHistory/OrderHistory';
 import RecoverPassword from '~/pages/RecoverPassword/RecoverPassword';
 import RegisterAccount from '~/pages/RegisterAccount/RegisterAccount';
 import TestProductPagination from '~/pages/Shop/Pagination/TestProductPagination';
 import Shop from '~/pages/Shop/Shop';
+import Women from '~/pages/Women/Women';
 
 // Route khong can dang nhap
 const publicRoutes = [
@@ -30,6 +33,14 @@ const publicRoutes = [
     {
         path: '/shop',
         component: Shop,
+    },
+    {
+        path: '/men',
+        component: Men,
+    },
+    {
+        path: '/women',
+        component: Women,
     },
     {
         path: '/contact',
@@ -73,6 +84,10 @@ const publicRoutes = [
     {
         path: '/change-password',
         component: ChangePassword,
+    },
+    {
+        path: '/order-history',
+        component: OrderHistory,
     },
     {
         path: '/recover-password',

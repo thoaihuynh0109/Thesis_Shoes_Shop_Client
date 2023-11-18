@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button, Box, styled, Container } from '@mui/material';
 import { Tooltip, IconButton, Avatar, Menu, MenuItem, ListItemIcon } from '@mui/material';
+import HistoryIcon from '@mui/icons-material/History';
 import { AccountCircle, Dashboard, ExitToApp, Person } from '@mui/icons-material';
 import classNames from 'classnames/bind';
 // import '../GlobalStyles/GlobalStyles.scss';
@@ -103,7 +104,8 @@ export default NewHeaderDesign;
 const settings = [
     { label: 'Profile', icon: <Person /> },
     { label: 'Change Password', icon: <PasswordIcon /> },
-    { label: 'Dashboard', icon: <Dashboard /> },
+    { label: 'Order History', icon: <HistoryIcon /> },
+    // { label: 'Dashboard', icon: <Dashboard /> },
     { label: 'Logout', icon: <ExitToApp /> },
 ];
 
@@ -127,9 +129,11 @@ function UserAuthenticated() {
             setIsLogoutClicked(true);
             navigate('/');
         }
-        // hard code for label is Change Password
+        // hard code for label includues: Change Password, Order History
         else if (setting.label === 'Change Password') {
             navigate('/change-password'); // Điều hướng đến trang "Change Password"
+        } else if (setting.label === 'Order History') {
+            navigate('/order-history'); // Điều hướng đến trang "Order History"
         } else {
             // Điều hướng đến trang tương ứng
             navigate(`/${setting.label.toLowerCase()}`);

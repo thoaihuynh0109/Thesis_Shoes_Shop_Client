@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     List,
     ListItemButton,
+    Radio,
     ListItemIcon,
     ListItemText,
     Checkbox,
     Collapse,
 } from '@mui/material';
-import StoreIcon from '@mui/icons-material/Store';
-
+import MaleIcon from '@mui/icons-material/Male';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
-
-export default function BrandFilterInformation({ handleBrandFilter, selectedBrands }) {
+import FemaleIcon from '@mui/icons-material/Female';
+import WcIcon from '@mui/icons-material/Wc';
+export default function GenderFilterInformation({ handleGenderFilter, selectedGender }) {
     const [open, setOpen] = useState(true);
 
-    const brands = ['Nike', 'Adidas', 'Puma', 'New Balance', 'Nai Kì'];
+    const genders = ['All', 'Male', 'Female'];
 
     const handleClick = () => {
         setOpen(!open);
@@ -34,32 +35,32 @@ export default function BrandFilterInformation({ handleBrandFilter, selectedBran
         >
             <ListItemButton onClick={handleClick}>
                 <ListItemIcon>
-                    <StoreIcon fontSize="large" />
+                    <WcIcon />
                 </ListItemIcon>
                 <ListItemText
                     primary={
-                        <CustomTypography sx={{ fontWeight: 'bold' }}>Thương Hiệu</CustomTypography>
+                        <CustomTypography sx={{ fontWeight: 'bold' }}>Gender</CustomTypography>
                     }
                 />
                 {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    {brands.map((brand, index) => (
+                    {genders.map((gender, index) => (
                         <ListItemButton
                             key={index}
-                            selected={selectedBrands.includes(brand)}
-                            onClick={() => handleBrandFilter(brand)}
+                            selected={selectedGender === gender}
+                            onClick={() => handleGenderFilter(gender)}
                         >
-                            <Checkbox
-                                checked={selectedBrands.includes(brand)}
-                                onChange={() => handleBrandFilter(brand)}
+                            <Radio
+                                checked={selectedGender === gender}
+                                onChange={() => handleGenderFilter(gender)}
                             />
-                            {/* <ListItemText primary={brand} /> */}
+
                             <ListItemText
                                 primary={
                                     <CustomTypography sx={{ fontSize: '14px' }} variant="body1">
-                                        {brand}
+                                        {gender}
                                     </CustomTypography>
                                 }
                             />

@@ -45,11 +45,29 @@ function GimmeMenu() {
                     <Link
                         color="inherit"
                         component={Link}
+                        to="/men"
+                        className={cx('menu-child-item')}
+                    >
+                        MEN
+                    </Link>
+
+                    <Link
+                        color="inherit"
+                        component={Link}
+                        to="/women"
+                        className={cx('menu-child-item')}
+                    >
+                        WOMEN
+                    </Link>
+                    <Link
+                        color="inherit"
+                        component={Link}
                         to="/shop"
                         className={cx('menu-child-item')}
                     >
                         SHOP
                     </Link>
+
                     <Link
                         color="inherit"
                         component={Link}
@@ -71,7 +89,7 @@ function GimmeMenu() {
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <SearchAppBar />
                 </Box>
-                <AddTC handleAddToCart={handleAddToCart} />
+                {/* <AddTC handleAddToCart={handleAddToCart} /> */}
 
                 {/* card item */}
                 <IconButton color="inherit" component={Link} to="/checkout">

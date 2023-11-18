@@ -5,7 +5,7 @@ import {
     DECREMENT_QUANTITY,
     INCREMENT_QUANTITY,
     REMOVE_PRODUCT,
-} from './actionsContant';
+} from '../actionsContant';
 
 // Action Creators
 // export const addToCart = (productId, quantity) => ({
