@@ -1,8 +1,11 @@
-// ProductGrid.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Grid, Pagination } from '@mui/material';
 import EmptyCard from '~/pages/Checkout/EmptyCard/EmptyCard';
 import { MakeProductsCard } from '~/components/MakeProductCards/MakeProductCards';
+import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
+
+// search section
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function ProductGrid({
     getValue,
@@ -16,6 +19,11 @@ export default function ProductGrid({
     hasProducts,
     navigate,
 }) {
+    const [showToast, setToast] = useState(false);
+
+    const dispatch = useDispatch();
+    const searchTerm = useSelector((state) => state.search.searchTerm);
+
     const sortProducts = (data) => {
         switch (sorting) {
             case 'az':
@@ -39,6 +47,7 @@ export default function ProductGrid({
         }
     };
 
+    // without searching
     const renderProductCards = () => {
         let data;
 
@@ -50,9 +59,12 @@ export default function ProductGrid({
         } else {
             const productsToRender =
                 filteredProducts.length > 0 ? filteredProducts : brandFilteredProducts;
+            const filteredProducts2 = productsToRender.filter((product) =>
+                product.title.toLowerCase().includes(searchTerm.toLowerCase()),
+            );
             const startIndex = (page - 1) * PER_PAGE;
             const endIndex = startIndex + PER_PAGE;
-            const paginatedData = productsToRender.slice(startIndex, endIndex);
+            const paginatedData = filteredProducts2.slice(startIndex, endIndex);
             data = sortProducts(paginatedData);
         }
 
@@ -78,6 +90,8 @@ export default function ProductGrid({
                     maxHeightCard={'210px'}
                     imgHeight={'140px'}
                     imgWidth={'150px'}
+                    showToast={showToast}
+                    setToast={setToast}
                 />
             </Grid>
         ));
@@ -86,6 +100,13 @@ export default function ProductGrid({
     return (
         <Box style={{ display: 'flex', flexWrap: 'wrap', minHeight: '500px' }}>
             {renderProductCards()}
+            {/* show toast message after adding product to cart */}
+            <ToastMessage2
+                message="Product added to cart!"
+                type="success"
+                showToast={showToast}
+                setToast={setToast}
+            />
         </Box>
     );
 }
