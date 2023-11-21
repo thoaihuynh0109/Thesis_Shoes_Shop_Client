@@ -17,7 +17,7 @@ const products = [
     },
     {
         id: 2,
-        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698215220/Gimme-shoes-images/Adidas/adidas-rapidmove-trainers_udkzcn.jpg',
+        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1700364891/Gimme-shoes-images/Adidas/ultrabounce-shoes-core-black-hp5786-0_ev1uxk_hiytlr.png',
         title: 'RAPIDMOVE TRAINER',
         price: '3,200,000',
         rating: 3,
@@ -25,7 +25,7 @@ const products = [
     },
     {
         id: 3,
-        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698216174/Gimme-shoes-images/Adidas/if2649_wht_01_vkqpnt.jpg',
+        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1700364891/Gimme-shoes-images/Adidas/tyle_running_trang_hp2757_01_standard_d50cb46326c3436682610a2d02b21c1d_464ae878e179491c97840eebfda414dc_grande_nanuat_tcwspk.png',
         title: 'FORUM LOW SHOES',
         price: '2,600,000',
         rating: 4,
@@ -33,7 +33,7 @@ const products = [
     },
     {
         id: 4,
-        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698222786/Gimme-shoes-images/Puma/Suede%20Brand%20Love.jpg',
+        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1700375101/Gimme-shoes-images/Puma/Suede_Brand_Love_k1wihf.png',
         title: 'Suede Brand Love',
         price: '2,350,000',
         rating: 4,
@@ -41,7 +41,7 @@ const products = [
     },
     {
         id: 5,
-        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698222886/Gimme-shoes-images/Puma/SEASONS%20Voyage%20NITRO%E2%84%A2%203.jpg',
+        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1700375100/Gimme-shoes-images/Puma/SEASONS_Voyage_NITRO_3_dhfjcw.png',
         title: 'SEASONS Voyage NITRO™ 3',
         price: '2,400,000',
         rating: 4,
@@ -49,7 +49,7 @@ const products = [
     },
     {
         id: 6,
-        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698216072/Gimme-shoes-images/Adidas/adidas-meerkleurig-Ftwbla-Negbas-Plaha-Trainer-V-Hardloopschoenen-Voor_pzznwb.jpg',
+        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1700364892/Gimme-shoes-images/Adidas/4-9_jutp8f_zqsikt.png',
         title: 'TRAINER V SHOES',
         price: '2,200,000',
         rating: 4,
@@ -57,7 +57,7 @@ const products = [
     },
     {
         id: 7,
-        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698238039/Gimme-shoes-images/New%20Balance/FuelCell_2190.jgp_wksaga.webp',
+        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1700374884/Gimme-shoes-images/New%20Balance/FuelCell_2190.jgp_wksaga_djc1i7.png',
         title: 'FuelCell 2190',
         price: '3,289,765',
         rating: 5,
