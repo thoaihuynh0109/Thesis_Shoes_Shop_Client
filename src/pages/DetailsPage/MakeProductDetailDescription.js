@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Avatar, Box, IconButton, Grid } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import { images } from './constantValue';
 import ProductInformation from './ProductInformation';
+import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 
 export default function MakeProductDetailDescription() {
     // initial image is the first item in array
+    const productDetail = useSelector((state) => state.productDetail.productDetails);
     const [selectedImage, setSelectedImage] = useState(images[0]);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -48,7 +51,9 @@ export default function MakeProductDetailDescription() {
                         }}
                     >
                         {/* quick view image in many aspects */}
-                        <Box
+                        {/* Những hình ảnh nhỏ để xem thêm nhiều hình ảnh về 
+                            sản phẩm ở nhiều góc nhìn khác nhau */}
+                        {/* <Box
                             sx={{
                                 maxHeight: '550px',
                                 minWidth: '60px',
@@ -69,18 +74,21 @@ export default function MakeProductDetailDescription() {
                                     style={{ borderRadius: '20px' }} // Add the borderRadius style here
                                 />
                             ))}
-                        </Box>
+                        </Box> */}
+
                         <Box sx={{ minHeight: '600px', minWidth: '540px' }}>
                             {/* show image */}
-                            {selectedImage && (
-                                <img
-                                    src={selectedImage.url}
-                                    alt={`Image ${selectedImage.id}`}
-                                    width="75%"
-                                    height="65%"
-                                    style={{ borderRadius: '12px', marginTop: '12px' }}
-                                />
-                            )}
+                            {/* {selectedImage && (  show hình ảnh nhỏ để có thểm xem thêm*/}
+                            <CustomTypography>{productDetail.gender}</CustomTypography>
+
+                            <img
+                                src={`${productDetail.image}`}
+                                alt={`Image ${productDetail.productId}`}
+                                width="75%"
+                                height="65%"
+                                style={{ borderRadius: '12px', marginTop: '12px' }}
+                            />
+                            {/* )} */}
                         </Box>
 
                         {/* Thêm nút Previous */}

@@ -15,6 +15,8 @@ function EmptyCard({ message }) {
                 fontWeight={'bold'}
                 fontSize={'14px'}
                 variant="body1"
+                textAlign={'center'}
+                textTransform={'capitalize'}
                 className={cx('empty-card', 'empty-card-warning')}
             >
                 {message}

@@ -5,7 +5,7 @@ import RecipeReviewCard from './ProductsCard';
 // call some components are defined
 import { CustomizeButton } from '~/components/CustomizeButton/CustomizeButton';
 import { MakeProductsCard } from '~/components/MakeProductCards/MakeProductCards';
-const products = [
+export const products = [
     {
         id: 1,
         img: 'https://www.bike-discount.de/media/image/6f/89/4b/adidas_Terrex-Free-Hiker-2-Low-GTX-Wanderschuhe_IG5459_2.jpg',
@@ -17,7 +17,7 @@ const products = [
     },
     {
         id: 2,
-        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698215220/Gimme-shoes-images/Adidas/adidas-rapidmove-trainers_udkzcn.jpg',
+        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1700375580/Gimme-shoes-images/Adidas/Female/jd_HP3294_a_d4r8th_ak3gpn.png',
         title: 'RAPIDMOVE TRAINER',
         price: '3,200,000',
         rating: 3,
@@ -25,7 +25,7 @@ const products = [
     },
     {
         id: 3,
-        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698216174/Gimme-shoes-images/Adidas/if2649_wht_01_vkqpnt.jpg',
+        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1700364891/Gimme-shoes-images/Adidas/tyle_running_trang_hp2757_01_standard_d50cb46326c3436682610a2d02b21c1d_464ae878e179491c97840eebfda414dc_grande_nanuat_tcwspk.png',
         title: 'FORUM LOW SHOES',
         price: '2,600,000',
         rating: 4,
@@ -33,7 +33,7 @@ const products = [
     },
     {
         id: 4,
-        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698222786/Gimme-shoes-images/Puma/Suede%20Brand%20Love.jpg',
+        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1700375101/Gimme-shoes-images/Puma/Suede_Brand_Love_k1wihf.png',
         title: 'Suede Brand Love',
         price: '2,350,000',
         rating: 4,

@@ -10,10 +10,12 @@ import {
     Zoom,
     IconButton,
     CircularProgress,
+    Stack,
     Badge,
     Avatar,
 } from '@mui/material';
-
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -25,8 +27,10 @@ import { CustomTooltip } from '~/pages/Home/TabProducts/ProductsCard';
 import CustomTypography from '../CustomTyporaphy/CustomTyporaphy';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, incrementQuantity } from '~/redux/CartManagement/cartActions';
+import { addToWishlist } from '~/redux/WishListManagement/wishlistActions';
+import { storeProductDetails } from '~/redux/ProductDetails/productDetailsActions';
 import { findProductIndex } from '~/redux/CartManagement/cartReducer';
-
+import { ToastMessage } from '~/pages/Checkout/ProductsInCard/SummaryStep/SummaryStepData/ProductsTable';
 // Make Products Card Item for Home Page
 export function MakeProductsCard({
     productId,
@@ -40,39 +44,69 @@ export function MakeProductsCard({
     maxHeightCard,
     imgHeight,
     imgWidth,
-    marginLeft,
+    marginRight,
+    // gender,
     onClick,
+    showToast,
+    setToast,
 }) {
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
+
     const [hoverCard, setHoverCard] = useState(false);
+    const [isLoadingAddToCart, setIsLoadingAddToCart] = useState(false); // Separate loading state
     const [checkAddToWishList, setCheckAddToWishList] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoadingWishList, setIsLoadingWishList] = useState(false); // Separate loading state
     const [valueRating, setValueRating] = useState(rating);
 
-    const [cartItemsCount, setCartItemsCount] = useState(0);
-    const cartItems = useSelector((state) => state.cart.cartItems);
+    // const [cartItemsCount, setCartItemsCount] = useState(0);
+    // const cartItems = useSelector((state) => state.cart.cartItems);
+    // const selectWishlistItems = (state) => state.wishlist.wishlistItems;
+    // const selectProductDetails = useSelector((state) => state.productDetail.productDetails);
 
-    //
-
+    // add to cart action
     const handleAddToCart = (product) => {
-        console.log('Cart Items:', cartItems);
-        console.log('Adding Product:', product);
-
-        const existingProduct = cartItems.find((item) => item.productId === product.productId);
-
-        console.log('Existing Product:', existingProduct);
-
-        if (existingProduct) {
-            // If the product is already in the cart, update the quantity
-            console.log('Updating Quantity:', existingProduct.quantity + 1);
-            dispatch(incrementQuantity(product.productId, existingProduct.quantity + 1));
-        } else {
-            // If the product is not in the cart, add it with quantity 1
-            console.log('Adding New Product to Cart');
+        setIsLoadingAddToCart(true);
+        // Simulate a delay of 2 second before showing the toast
+        setTimeout(() => {
+            setIsLoadingAddToCart(false);
             dispatch(addToCart(product));
-        }
+
+            // Show the toast message
+            setToast(true);
+            // Reset toast after 3 seconds
+            setTimeout(() => {
+                setToast(false);
+            }, 3000);
+        }, 2000);
+    };
+
+    // add to wish list action
+    const handleAddProductToWishList = (product) => {
+        setIsLoadingWishList(true);
+
+        // Simulate a delay of 2 seconds before updating wishlist
+        setTimeout(() => {
+            dispatch(addToWishlist(product));
+            setCheckAddToWishList(true);
+            setIsLoadingWishList(false);
+
+            // Show the toast message
+            setToast(true);
+
+            // Reset toast after 3 seconds
+            setTimeout(() => {
+                setToast(false);
+            }, 3000);
+        }, 2000);
+    };
+
+    const handleNavigateToProductDetails = () => {
+        // Dispatch the action to store product details
+        dispatch(storeProductDetails({ productId, image, title, price }));
+        // Navigate to the product detail page
+        navigate(`/product-details`);
     };
 
     // mouse enter and leave event handlers
@@ -84,24 +118,15 @@ export function MakeProductsCard({
         setHoverCard(false);
     };
 
-    // handle adding product to the wish list
-    const handleAddProductToWishList = () => {
-        setIsLoading(true);
-        setTimeout(() => {
-            setCheckAddToWishList(true);
-            setIsLoading(false);
-        }, 2000);
-    };
-
     // handle navigating to the wishlist page
     const handleNavigateToWishlist = () => {
         navigate('/my-wishlist');
     };
 
-    // handle navigating to the product detail page
-    const handleNavigateToProductDetails = () => {
-        navigate('/product-details');
-    };
+    // handle navigating to the product detail page - without productID
+    // const handleNavigateToProductDetails = () => {
+    //     navigate('/product-details');
+    // };
 
     return (
         <Box>
@@ -115,7 +140,7 @@ export function MakeProductsCard({
                     transform: 'rotateY(0deg)',
                     transition: 'transform 0.3s ease-in-out',
                     boxShadow: '0 0 8px rgba(0, 0, 0, 0.2)',
-                    mr: 2,
+                    mr: marginRight || 2,
                 }}
                 key={productId}
                 onMouseEnter={handleHover}
@@ -170,27 +195,44 @@ export function MakeProductsCard({
                     // width={'194px'}
                     image={image}
                     alt="Product Image"
-                    onClick={onClick}
+                    key={productId}
+                    // onClick={onClick}
+                    onClick={handleNavigateToProductDetails}
                     style={{ objectFit: 'contain', width: imgWidth || '194px', margin: '0 auto' }}
                 />
 
+                {/* buttons in card products */}
                 <CardActions disableSpacing sx={{ display: 'block' }}>
+                    {/* button for add to cart  */}
                     <Zoom in={hoverCard}>
                         <Box>
                             <Button
                                 variant="contained"
                                 fullWidth
-                                // onClick={() => handleAddToCart({ image, title, price })}
                                 onClick={() =>
                                     handleAddToCart({ productId, image, title, price, quantity: 1 })
                                 }
-                                // onClick={handleAddToCart}
                             >
-                                <AddShoppingCartIcon sx={{ mr: 2, fontSize: '16px' }} />
-                                <Typography sx={{ fontSize: '14px' }}>Add to Cart</Typography>
+                                {isLoadingAddToCart ? (
+                                    <>
+                                        <CircularProgress size={20} sx={{ mr: 2 }} />
+                                        <Typography sx={{ fontSize: '14px' }}>
+                                            Adding to Cart
+                                        </Typography>
+                                    </>
+                                ) : (
+                                    <>
+                                        <AddShoppingCartIcon sx={{ mr: 2, fontSize: '16px' }} />
+                                        <Typography sx={{ fontSize: '14px' }}>
+                                            Add to Cart
+                                        </Typography>
+                                    </>
+                                )}
                             </Button>
                         </Box>
                     </Zoom>
+
+                    {/* button for add to wisth list */}
                     {/* appear after 0.5 of Add to Cart */}
                     <Zoom in={hoverCard} style={{ transitionDelay: hoverCard ? '500ms' : '0ms' }}>
                         <Box
@@ -202,36 +244,44 @@ export function MakeProductsCard({
                                 mb: '2px',
                             }}
                         >
-                            {/*  */}
-                            {isLoading ? (
+                            {isLoadingWishList ? (
                                 <CircularProgress size={20} />
                             ) : checkAddToWishList ? (
                                 <IconButton
                                     aria-label="added to favorites"
                                     onClick={handleNavigateToWishlist}
                                 >
-                                    <CustomTooltip title="Browse WishList">
+                                    <CustomTooltip title="Browse Wishlist">
                                         <CheckIcon
                                             sx={{
                                                 fontSize: '20px',
                                                 '&:hover': {
-                                                    color: 'var( --icon-hover)',
+                                                    color: 'var(--icon-hover)',
                                                 },
                                             }}
                                         />
                                     </CustomTooltip>
                                 </IconButton>
                             ) : (
-                                <IconButton aria-label="add to favorites">
-                                    <CustomTooltip title="Add to Wish List">
+                                <IconButton
+                                    aria-label="add to favorites"
+                                    onClick={() =>
+                                        handleAddProductToWishList({
+                                            productId,
+                                            image,
+                                            title,
+                                            price,
+                                        })
+                                    }
+                                >
+                                    <CustomTooltip title="Add to Wishlist">
                                         <FavoriteIcon
                                             sx={{
                                                 fontSize: '20px',
                                                 '&:hover': {
-                                                    color: 'var( --icon-hover)',
+                                                    color: 'var(--icon-hover)',
                                                 },
                                             }}
-                                            onClick={handleAddProductToWishList}
                                         />
                                     </CustomTooltip>
                                 </IconButton>
@@ -246,7 +296,14 @@ export function MakeProductsCard({
                                                 color: 'var( --icon-hover)',
                                             },
                                         }}
-                                        onClick={handleNavigateToProductDetails}
+                                        // onClick={() =>
+                                        //     handleNavigateToProductDetails({
+                                        //         productId,
+                                        //         title,
+                                        //         price,
+                                        //         image,
+                                        //     })
+                                        // }
                                     />
                                 </CustomTooltip>
                             </IconButton>
@@ -261,6 +318,41 @@ export function MakeProductsCard({
                 </Typography>
                 <Rating name="read-only" value={valueRating} readOnly size="large" />
             </Box>
+
+            {/* Toast message */}
         </Box>
+    );
+}
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+export function ToastMessage2({ message, type, showToast, setToast }) {
+    const [open, setOpen] = React.useState(false);
+
+    React.useEffect(() => {
+        if (showToast) {
+            setOpen(true);
+        }
+    }, [showToast]);
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+        // Reset toast state
+        setToast(false);
+    };
+
+    return (
+        <Stack spacing={2} sx={{ width: '100%' }}>
+            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity={type} sx={{ width: '100%' }}>
+                    <CustomTypography>{message}</CustomTypography>
+                </Alert>
+            </Snackbar>
+        </Stack>
     );
 }

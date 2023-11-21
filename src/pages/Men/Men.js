@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
 import { Box } from '@mui/material';
+import ProductPageForGender from './Pagination/ProductPageForGender';
+import MakeUIForMenAndWomenPage from './Pagination/MakeUIForMenAndWomenPage';
 
-import TestPagination from './Pagination/MenShopPage';
-import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
-
-function Women() {
+function Men() {
     return (
-        <Box sx={{ flexGrow: 1, minHeight: '500vh', mt: 4, ml: 4 }}>
-            <CustomTypography sx={{ fontSize: '28px', fontWeight: 'bold' }}>
-                Women Shop Page
-            </CustomTypography>
-            <TestPagination />
+        <Box sx={{ flexGrow: 1, minHeight: '500vh', mt: 4, ml: 5, mr: 4 }}>
+            <MakeUIForMenAndWomenPage forWomen={false} />
+            <ProductPageForGender selectedGender={'Male'} />
         </Box>
     );
 }
-
-export default Women;
+export default Men;

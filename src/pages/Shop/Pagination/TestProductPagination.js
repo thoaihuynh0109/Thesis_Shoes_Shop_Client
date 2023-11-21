@@ -1,17 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-    Box,
-    Grid,
-    IconButton,
-    TextField,
-    Typography,
-    Pagination,
-    InputLabel,
-    MenuItem,
-    Select,
-    FormControl,
-    Divider,
-} from '@mui/material';
+import { Box, Grid, IconButton, TextField, Typography, Pagination, Divider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import usePagination from './PaginationManagement';
@@ -21,6 +9,8 @@ import FilterBrand from './BrandFilterInformation';
 import PriceFilterInformation from './PriceFilterInformation';
 import SortingSection from './SortingSection';
 import ProductGrid from './ProductGrid';
+import SearchAppBar from '~/layouts/DefaultLayout/GimmeMenu/SearchDesgin';
+
 // shopping page
 // pagination
 // filter
@@ -49,6 +39,7 @@ export default function TestProductPagination() {
     useEffect(() => {
         setCurrentImages(Array.from({ length: _DATA.length }, (_, index) => index));
     }, []);
+    // _DATA.length
 
     useEffect(() => {
         // Filter products based on selected brands
@@ -97,23 +88,30 @@ export default function TestProductPagination() {
     };
 
     const navigate = useNavigate();
+    const handleSearchInputChange = (e) => {
+        setSearchVal(e.target.value);
+    };
 
-    function handleSearchClickPagination() {
+    const handleSearchClickPagination = () => {
         if (!searchVal.trim()) {
+            // If the search input is empty, reset the products to the original list
             setProducts(shopData);
             setGetValue(false);
             setPage(1);
             return;
         }
 
+        // Filter products based on the search term
+        const searchTermLower = searchVal.toLowerCase();
         const filteredProducts = shopData.filter((item) =>
-            item.title.toLowerCase().includes(searchVal.toLowerCase()),
+            item.title.toLowerCase().includes(searchTermLower),
         );
 
+        setProducts(filteredProducts);
         setStoreValue(filteredProducts);
         setGetValue(true);
         setPage(1);
-    }
+    };
 
     const handleBrandFilter = (selectedBrand) => {
         let updatedSelectedBrands = [...selectedBrands];
@@ -152,6 +150,9 @@ export default function TestProductPagination() {
 
     return (
         <Box sx={{ flexGrow: 1, minHeight: '500vh', mt: 4 }}>
+            {/* <SearchAppBar
+                
+            /> */}
             <Grid container spacing={2}>
                 <Grid item xs={3}>
                     {/* this box for category, filter products */}
@@ -194,17 +195,7 @@ export default function TestProductPagination() {
                         {/* searching chưa hoàn thành
                             khi search xong thì không thể sorting hoặc filtering
                         */}
-                        <TextField
-                            onChange={(e) => setSearchVal(e.target.value)}
-                            label="Searching..."
-                            variant="outlined"
-                        />
-                        <IconButton
-                            onClick={handleSearchClickPagination}
-                            sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <SearchIcon />
-                        </IconButton>
+
                         <SortingSection sorting={sorting} handleSortChange={handleSortChange} />
                     </Box>
 
