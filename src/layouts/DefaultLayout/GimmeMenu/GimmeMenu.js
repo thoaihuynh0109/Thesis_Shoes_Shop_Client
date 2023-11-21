@@ -1,29 +1,27 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames/bind';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-
 import Badge from '@mui/material/Badge';
 import { Typography, Button, Box, Container, Stack, IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Search as SearchIcon } from '@mui/icons-material';
-
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import DividerDesign from './DividerDesign/DividerDesign';
 import Breadcrumbs from '~/components/BreadCrumb/BreadCrumb';
 import styles from './GimmeMenu.module.scss';
 import '~/components/GlobalStyles';
 import SearchAppBar from './SearchDesgin';
+import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 
 const cx = classNames.bind(styles);
 function GimmeMenu() {
     // show search field when user hover the pointer to search icon
     const [isSearchHovered, setIsSearchHovered] = useState(false);
-    const [cartItemsCount, setCartItemsCount] = useState(0);
 
-    // Function to handle adding items to the cart
-    const handleAddToCart = () => {
-        setCartItemsCount((prevCount) => prevCount + 1);
+    // update the number of products in cart
+    const cartItems = useSelector((state) => state.cart.cartItems);
+    const totalProductsInCart = () => {
+        return cartItems.reduce((total, item) => total + item.quantity, 0);
     };
 
     const handleSearchHover = () => {
@@ -89,12 +87,16 @@ function GimmeMenu() {
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <SearchAppBar />
                 </Box>
-                {/* <AddTC handleAddToCart={handleAddToCart} /> */}
 
                 {/* card item */}
                 <IconButton color="inherit" component={Link} to="/checkout">
-                    <Badge badgeContent={cartItemsCount} color="error">
-                        <ShoppingCartIcon />
+                    <Badge
+                        badgeContent={
+                            <Typography fontSize={'12px'}>{totalProductsInCart()}</Typography>
+                        }
+                        color="warning"
+                    >
+                        <ShoppingCartIcon fontSize="large" />
                     </Badge>
                 </IconButton>
             </Box>
@@ -106,14 +108,3 @@ function GimmeMenu() {
 }
 
 export default GimmeMenu;
-
-export function AddTC({ handleAddToCart }) {
-    return (
-        <Box>
-            <Button variant="contained" fullWidth onClick={handleAddToCart}>
-                <AddShoppingCartIcon sx={{ mr: 2, fontSize: '16px' }} />
-                <Typography sx={{ fontSize: '14px' }}>Add to Cart</Typography>
-            </Button>
-        </Box>
-    );
-}
