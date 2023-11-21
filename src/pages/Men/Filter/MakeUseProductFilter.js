@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import usePagination from '~/pages/Shop/Pagination/PaginationManagement';
-import shopData from '../shop.json';
+// import shopData from '../shop.json';
+import shopData from '~/pages/Shop/Pagination/shop.json';
+
 import { useNavigate } from 'react-router-dom';
 
 const UseProductFilter = () => {
