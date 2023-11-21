@@ -28,7 +28,11 @@ const productService = {
     },
     createProduct: async (data) => {
         try {
-            const response = await axios.post(apiUrl + '/', data);
+            const response = await axios.post(apiUrl + '/', data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
             return response;
         } catch (error) {
             console.log(error);
@@ -36,7 +40,11 @@ const productService = {
     },
     updateProduct: async (id, data) => {
         try {
-            const respone = await axios.put(apiUrl + `/${id}`, data);
+            const respone = await axios.put(apiUrl + `/${id}`, data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
             return respone;
         } catch (error) {
             console.log(error);

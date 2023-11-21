@@ -47,9 +47,9 @@ function Product() {
     const confirmDelete = async (id) => {
         // call api để xóa
         const respone = await productService.deleteProduct(id);
-        console.log(respone);
+
         if (respone.status === 204) {
-            setMessage('Xóa category thành công');
+            setMessage('Xóa product thành công');
             setTypeMessage('success');
 
             const updatedProducts = products.filter((product) => product._id !== id);
