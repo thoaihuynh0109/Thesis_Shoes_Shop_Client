@@ -31,6 +31,7 @@ import {
     removeProduct,
 } from '~/redux/CartManagement/cartActions';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
+import EmptyCard from '~/pages/Checkout/EmptyCard/EmptyCard';
 
 const CustomizeTableCell = styled(({ fontSize, fontWeight, ...rest }) => <TableCell {...rest} />)(
     ({ fontSize, fontWeight }) => ({
@@ -50,6 +51,9 @@ const CustomTableCellPriceDetails = styled(TableCell)(({ fontSize }) => ({
 function ProductsTable() {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart.cartItems);
+    const cartItemsCount = () => {
+        return cartItems.reduce((total, item) => total + item.quantity, 0);
+    };
 
     // Ask user wanna remove Item?
     const [openConfirmation, setOpenConfirmation] = useState(false);
@@ -129,8 +133,16 @@ function ProductsTable() {
     const tax = 8.75;
     const totalWithTax = (tax / 100 + 1) * calculateCartTotal();
 
+    // check if there is no products in cart before adding item
+    if (cartItems.length === 0) {
+        return <EmptyCard message={'Không có sản phẩm trong giỏ hàng'} />;
+    }
+
     return (
         <Box>
+            {/* <Typography>
+                <p>Total items in the cart: {cartItemsCount()}</p>
+            </Typography> */}
             <Box>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
