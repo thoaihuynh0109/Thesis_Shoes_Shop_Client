@@ -1,7 +1,9 @@
--   checkout: chưa có sản phẩm trong cart thì hiển thị không có sản phẩm component
+-   checkout:
 
-    -   có rồi thì producttable
-    -   chỉnh lại address step
-    -   add payment UI
+    -   chỉnh lại address step:
+        -   Make UI for update: New Address
+        -   choose address: add1 or add2 to receive products
+    -   add new payment UI
 
--   add thêm filter những sản phẩm cho giới tính nam và nữ
+-   Order History: tạo UI cho order history
+-   Register Account: Khi người dùng nhập gmail rồi nhấn vào button create account phải lưu lại gmail đã được nhập và bỏ thông tin vào truòng gmail của Create Account
