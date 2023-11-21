@@ -5,7 +5,11 @@ import ProductsInCard from '~/pages/Checkout/ProductsInCard/ProductsInCard';
 
 function Checkout() {
     const [checked, setChecked] = useState(true);
-    return <Container>{checked ? <ProductsInCard /> : <EmptyCard />}</Container>;
+    return (
+        <Container>
+            {checked ? <ProductsInCard /> : <EmptyCard text={'Your shopping cart is empty.'} />}
+        </Container>
+    );
 }
 
 export default Checkout;

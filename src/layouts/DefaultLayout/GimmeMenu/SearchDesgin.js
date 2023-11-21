@@ -1,81 +1,78 @@
-import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import { Link, useNavigate } from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import MenuIcon from '@mui/icons-material/Menu';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setSearchTerm } from '~/redux/SearchManagemenet/searchActions';
+import { Box, InputBase, IconButton, Grow, Zoom } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 
-const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: 'green',
-    '&:hover': {
-        backgroundColor: 'blue',
-        // backgroundColor: alpha(theme.palette.common.blue, 0.8),
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(1),
-        width: 'auto',
-    },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme, onClick }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
+const SearchContainer = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
-    onClick: onClick,
+    borderRadius: theme.shape.borderRadius,
+    border: '1px solid #ccc', // Added border
+    backgroundColor: 'lightGray',
+    '&:hover': {
+        backgroundColor: 'white',
+    },
+    width: '12ch',
+    transition: 'width 0.3s ease-in-out',
+    [theme.breakpoints.up('sm')]: {
+        width: '20ch',
+    },
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            width: '12ch',
-            '&:focus': {
-                width: '20ch',
-            },
-        },
-    },
+    marginLeft: theme.spacing(1),
+    flex: 1,
+    border: 'none', // Removed the default input border
+    outline: 'none', // Removed the default input outline
+}));
+
+const SearchIconButton = styled(IconButton)(({ theme }) => ({
+    padding: theme.spacing(0.5),
 }));
 
 export default function SearchAppBar() {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [isSearchFocused, setIsSearchFocused] = useState(false);
 
-    const handleNavigate = () => {
+    // save data in input when user is not at '/shop'
+    const handleSearchChange = (e) => {
+        const term = e.target.value;
+        dispatch(setSearchTerm(term));
+    };
+
+    // Navigate to '/shop' when the search icon is clicked
+    const handleSearchClick = () => {
         navigate('/shop');
     };
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static" sx={{ backgroundColor: '#fff', boxShadow: 'none' }}>
-                <Toolbar>
-                    <Search>
-                        <IconButton onButton  color="inherit" onClick={handleNavigate}>
+            <SearchContainer>
+                <StyledInputBase
+                    placeholder="Search..."
+                    inputProps={{ 'aria-label': 'search' }}
+                    onFocus={() => setIsSearchFocused(true)}
+                    onBlur={() => setIsSearchFocused(false)}
+                    onChange={handleSearchChange}
+                />
+                <Grow in={isSearchFocused}>
+                    <SearchIconButton
+                        color="inherit"
+                        onClick={handleSearchClick}
+                        aria-label="search"
+                        sx={{ padding: 0 }}
+                    >
+                        <Zoom in={isSearchFocused} style={{ transitionDelay: '150ms' }}>
                             <SearchIcon />
-                        </IconButton>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
-                </Toolbar>
-            </AppBar>
+                        </Zoom>
+                    </SearchIconButton>
+                </Grow>
+            </SearchContainer>
         </Box>
     );
 }

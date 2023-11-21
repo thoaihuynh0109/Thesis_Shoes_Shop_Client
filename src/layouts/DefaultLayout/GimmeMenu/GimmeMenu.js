@@ -1,22 +1,28 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames/bind';
-import { Typography, Button, Box, Container, Stack, IconButton, Badge } from '@mui/material';
+import Badge from '@mui/material/Badge';
+import { Typography, Button, Box, Container, Stack, IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
-import {
-    Search as SearchIcon,
-    ShoppingCartOutlined as ShoppingCartIcon,
-} from '@mui/icons-material';
+import { Search as SearchIcon } from '@mui/icons-material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import DividerDesign from './DividerDesign/DividerDesign';
 import Breadcrumbs from '~/components/BreadCrumb/BreadCrumb';
 import styles from './GimmeMenu.module.scss';
 import '~/components/GlobalStyles';
 import SearchAppBar from './SearchDesgin';
+import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 
 const cx = classNames.bind(styles);
 function GimmeMenu() {
     // show search field when user hover the pointer to search icon
     const [isSearchHovered, setIsSearchHovered] = useState(false);
+
+    // update the number of products in cart
+    const cartItems = useSelector((state) => state.cart.cartItems);
+    const totalProductsInCart = () => {
+        return cartItems.reduce((total, item) => total + item.quantity, 0);
+    };
 
     const handleSearchHover = () => {
         setIsSearchHovered(true);
@@ -37,11 +43,29 @@ function GimmeMenu() {
                     <Link
                         color="inherit"
                         component={Link}
+                        to="/men"
+                        className={cx('menu-child-item')}
+                    >
+                        MEN
+                    </Link>
+
+                    <Link
+                        color="inherit"
+                        component={Link}
+                        to="/women"
+                        className={cx('menu-child-item')}
+                    >
+                        WOMEN
+                    </Link>
+                    <Link
+                        color="inherit"
+                        component={Link}
                         to="/shop"
                         className={cx('menu-child-item')}
                     >
                         SHOP
                     </Link>
+
                     <Link
                         color="inherit"
                         component={Link}
@@ -66,8 +90,13 @@ function GimmeMenu() {
 
                 {/* card item */}
                 <IconButton color="inherit" component={Link} to="/checkout">
-                    <Badge badgeContent={0} color="error">
-                        <ShoppingCartIcon />
+                    <Badge
+                        badgeContent={
+                            <Typography fontSize={'12px'}>{totalProductsInCart()}</Typography>
+                        }
+                        color="warning"
+                    >
+                        <ShoppingCartIcon fontSize="large" />
                     </Badge>
                 </IconButton>
             </Box>

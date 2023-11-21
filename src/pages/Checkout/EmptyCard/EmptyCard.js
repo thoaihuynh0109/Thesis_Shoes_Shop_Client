@@ -6,23 +6,20 @@ import classNames from 'classnames/bind';
 import { Box, Typography } from '@mui/material';
 
 const cx = classNames.bind(styles);
-function EmptyCard() {
+function EmptyCard({ message }) {
     return (
         // Don't have products in Card
         <Box className={cx('my-account-container')}>
-            {/* <Box className={cx('border-container')}>
-            <Typography variant='body1'>
-                Your shopping cart is empty.
-            </Typography>
-        </Box> */}
             <Typography
                 margin="0 0 10px;"
                 fontWeight={'bold'}
                 fontSize={'14px'}
                 variant="body1"
+                textAlign={'center'}
+                textTransform={'capitalize'}
                 className={cx('empty-card', 'empty-card-warning')}
             >
-                Your shopping cart is empty.
+                {message}
             </Typography>
         </Box>
     );
