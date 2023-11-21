@@ -1,22 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Button, Typography } from '@mui/material';
-
+import { useSelector } from 'react-redux';
 import { FavoriteSharp } from '@mui/icons-material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import MakeProductSize from './MakeProductSize';
 import RatingProductInformation from './RatingProduct';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 
-// make product description
-// function CustomTypography({ children, ...rest }) {
-//     return (
-//         <Box component="span" {...rest}>
-//             {children}
-//         </Box>
-//     );
-// }
-
 function ProductInformation({ flashSale }) {
+    const productDetail = useSelector((state) => state.productDetail.productDetails);
+
+    if (!productDetail) {
+        // If productDetail is null, you can return a loading state or an empty component
+        return <div>Loading...</div>;
+    }
+
     return (
         <Box
             sx={{
@@ -25,33 +23,40 @@ function ProductInformation({ flashSale }) {
                 pl: 12,
                 ml: 8,
                 pr: 12,
-                // bgcolor: 'yellowgreen',
                 overflow: 'scroll',
             }}
+            key={productDetail.productId}
         >
             {/* product name */}
-            <Typography sx={{ fontWeight: '600', fontSize: 17, mt: 2 }}>
-                Jordan 1 Low Alt
-            </Typography>
+            {/* <img src={productDetail.image}/> */}
+            <CustomTypography sx={{ fontWeight: '600', fontSize: 17, mt: 2 }}>
+                {productDetail.title}
+            </CustomTypography>
             {/* for who? */}
-            <Typography>Men's Shoes</Typography>
-            {/* originial price and sale price */}
-            <Box sx={{ display: 'flex', mr: 4 }}>
+
+            {/* không lấy được gender */}
+            {/* <CustomTypography>{productDetail.gender}'s Shoes</CustomTypography> */}
+
+            {/* <CustomTypography>Men's Shoes</CustomTypography> */}
+            {/* original price and sale price */}
+            <Box sx={{ display: 'flex', mr: 4, mt: 2 }}>
                 {/* amount is reduced */}
-                <Typography sx={{ mr: 1 }}>3,620,149₫</Typography>
+                <CustomTypography sx={{ mr: 1 }}>{productDetail.price}</CustomTypography>
 
                 {/* original price */}
                 {flashSale ? (
-                    <Typography sx={{ textDecoration: 'line-through', color: '#333' }}>
+                    <CustomTypography sx={{ textDecoration: 'line-through', color: '#333' }}>
                         {' '}
                         4,259,000₫
-                    </Typography>
+                    </CustomTypography>
                 ) : (
                     <Typography></Typography>
                 )}
             </Box>
             {/*  make size */}
-            <Typography sx={{ fontWeight: 'bold', mt: 2, mb: '4px' }}>Select Size</Typography>
+            <CustomTypography sx={{ fontWeight: 'bold', mt: 2, mb: '4px' }}>
+                Select Size
+            </CustomTypography>
             <Box sx={{ maxWidth: '300px' }}>
                 <MakeProductSize />
             </Box>
@@ -77,13 +82,13 @@ function ProductInformation({ flashSale }) {
                 </Button>
             </Box>
 
-            {/*product description  */}
+            {/* product description */}
             <Box sx={{ maxWidth: '300px', mb: 2, textAlign: 'justify' }}>
-                <Typography>
+                <CustomTypography>
                     Celebrate MJ's legacy with this shout-out to Chicago's 312 area code. With
                     elements from three iconic Jordans (the AJ3, AJ1 and Air Alpha Force), it's a
                     modern mash-up that reps the best.
-                </Typography>
+                </CustomTypography>
             </Box>
 
             {/* Reviews */}
