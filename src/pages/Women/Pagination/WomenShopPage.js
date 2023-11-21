@@ -340,7 +340,7 @@ export default function TestProductPagination() {
                             onChange={handleChange}
                         />
                     </Box> */}
-                    {hasProducts ? (
+                    {hasProducts ? ( 
                         <>
                             <RenderProductForGender
                                 getValue={getValue}
