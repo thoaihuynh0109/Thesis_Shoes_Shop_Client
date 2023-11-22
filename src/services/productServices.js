@@ -10,11 +10,50 @@ const productService = {
 
         return data;
     },
-    // viet tiep cac api can thiet phia duoi
     getLastestProduct: async () => {
         try {
             const response = await axios.get(apiUrl + '/lastest-products');
             return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    getProductById: async (id) => {
+        try {
+            const response = await axios.get(apiUrl + `/${id}`);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    createProduct: async (data) => {
+        try {
+            const response = await axios.post(apiUrl + '/', data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    updateProduct: async (id, data) => {
+        try {
+            const respone = await axios.put(apiUrl + `/${id}`, data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            return respone;
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    deleteProduct: async (id) => {
+        try {
+            const respone = await axios.delete(apiUrl + `/${id}`);
+            return respone;
         } catch (error) {
             console.log(error);
         }

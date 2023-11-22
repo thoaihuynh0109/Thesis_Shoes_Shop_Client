@@ -27,7 +27,7 @@ function EditCategory() {
         value: '',
         message: '',
     });
-    const [selectedCategoryId, setSelectedCategoryId] = React.useState(null);
+    const [selectedCategoryId, setSelectedCategoryId] = React.useState({});
     const [message, setMessage] = React.useState('');
     const [typeMessage, setTypeMessage] = React.useState('');
     const navigate = useNavigate();
