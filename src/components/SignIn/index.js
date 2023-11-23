@@ -16,7 +16,7 @@ const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
     padding: theme.spacing(1),
-    textAlign: 'center',
+    // textAlign: 'center',
     color: theme.palette.text.secondary,
 }));
 
@@ -36,7 +36,6 @@ const CustomButton = styled(Button)(({ variant = 'contained', mt, ml, fs, width 
 function SignIn() {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
-
     const navigate = useNavigate();
     const handleLogin = async () => {
         const data = {
@@ -44,11 +43,27 @@ function SignIn() {
             password,
         };
 
+        // Save email to localStorage
+
         const loginData = await authService.signIn(data);
 
         localStorage.setItem('user', JSON.stringify(loginData));
         // send info to login api
         navigate('/');
+    };
+
+    const handleRegisterAccount = () => {
+        const data = {
+            email,
+        };
+
+        // Save email to localStorage
+        localStorage.setItem('userEmail', email);
+
+        // Perform login logic if needed
+
+        // Navigate to the desired location
+        navigate('/register-account');
     };
 
     return (
@@ -64,6 +79,7 @@ function SignIn() {
                                 fontSize="20px"
                                 className={cx('page-subheading')}
                                 gutterBottom
+                                textAlign="center"
                             >
                                 Create an account
                             </CustomTypography>
@@ -76,8 +92,12 @@ function SignIn() {
                             </CustomTypography>
 
                             <CustomizeTextField
+                                value={email}
+                                onChange={(e) => {
+                                    setEmail(e.target.value);
+                                }}
                                 fullWidth={true}
-                                id="outlined-basic"
+                                // id="outlined-basic"
                                 label="Email"
                                 variant="outlined"
                             />
@@ -87,8 +107,9 @@ function SignIn() {
                             <CustomButton
                                 variant="contained"
                                 startIcon={<AccountCircleIcon />}
-                                component={Link}
-                                to="/register-account"
+                                // component={Link}
+                                // to="/register-account"
+                                onClick={handleRegisterAccount}
                             >
                                 Create Account
                             </CustomButton>
@@ -103,6 +124,7 @@ function SignIn() {
                                 fontSize="20px"
                                 className={cx('page-subheading')}
                                 gutterBottom
+                                textAlign={'center'}
                             >
                                 Already Have An account
                             </CustomTypography>
@@ -115,7 +137,7 @@ function SignIn() {
                                     setEmail(e.target.value);
                                 }}
                                 fullWidth={true}
-                                id="outlined-basic"
+                                // id="outlined-basic"
                                 label="Email"
                                 variant="outlined"
                             />
@@ -128,7 +150,7 @@ function SignIn() {
                                     setPassword(e.target.value);
                                 }}
                                 fullWidth={true}
-                                id="outlined-basic"
+                                // id="outlined-basic"
                                 label="Password"
                                 type="password"
                                 variant="outlined"
