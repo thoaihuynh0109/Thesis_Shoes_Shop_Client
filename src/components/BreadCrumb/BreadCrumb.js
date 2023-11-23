@@ -21,6 +21,7 @@ const breadcrumbData = [
     },
     { path: '/signin', name: 'Đăng nhập' },
     { path: '/order-history', name: 'Lịch sử mua hàng' },
+    { path: '/update-address', name: 'Địa chỉ mua hàng' },
     { path: '/register-account', name: 'Đăng ký tài khoản' },
     { path: '/shop', name: 'Shop' },
     { path: '/men', name: 'Nam' },
