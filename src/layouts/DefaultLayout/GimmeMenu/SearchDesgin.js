@@ -9,13 +9,14 @@ import SearchIcon from '@mui/icons-material/Search';
 const SearchContainer = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
-    borderRadius: theme.shape.borderRadius,
-    border: '1px solid #ccc', // Added border
-    backgroundColor: 'lightGray',
+    borderRadius: '10px',
+    border: '1px solid #ccc',
+    backgroundColor: 'white',
     '&:hover': {
-        backgroundColor: 'white',
+        backgroundColor: 'lightGray',
     },
-    width: '12ch',
+    width: '12px',
+    padding: '8px 4px',
     transition: 'width 0.3s ease-in-out',
     [theme.breakpoints.up('sm')]: {
         width: '20ch',
@@ -26,8 +27,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     marginLeft: theme.spacing(1),
     flex: 1,
-    border: 'none', // Removed the default input border
-    outline: 'none', // Removed the default input outline
+    border: 'none',
+    outline: 'none',
+    fontSize: '14px',
+    transition: 'width 0.3s ease-in-out', // Added transition
 }));
 
 const SearchIconButton = styled(IconButton)(({ theme }) => ({
@@ -39,13 +42,11 @@ export default function SearchAppBar() {
     const navigate = useNavigate();
     const [isSearchFocused, setIsSearchFocused] = useState(false);
 
-    // save data in input when user is not at '/shop'
     const handleSearchChange = (e) => {
         const term = e.target.value;
         dispatch(setSearchTerm(term));
     };
 
-    // Navigate to '/shop' when the search icon is clicked
     const handleSearchClick = () => {
         navigate('/shop');
     };
@@ -59,13 +60,19 @@ export default function SearchAppBar() {
                     onFocus={() => setIsSearchFocused(true)}
                     onBlur={() => setIsSearchFocused(false)}
                     onChange={handleSearchChange}
+                    className={isSearchFocused ? 'focused' : ''} // Apply the 'focused' class when input is focused
                 />
                 <Grow in={isSearchFocused}>
                     <SearchIconButton
                         color="inherit"
                         onClick={handleSearchClick}
                         aria-label="search"
-                        sx={{ padding: 0 }}
+                        sx={{
+                            padding: '0 8px',
+                            '&:hover': {
+                                backgroundColor: 'transparent',
+                            },
+                        }}
                     >
                         <Zoom in={isSearchFocused} style={{ transitionDelay: '150ms' }}>
                             <SearchIcon />
