@@ -327,8 +327,7 @@ export function MakeProductsCard({
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-
-export function ToastMessage2({ message, type, showToast, setToast }) {
+export function ToastMessage2({ message, type, showToast, setShowToast }) {
     const [open, setOpen] = React.useState(false);
 
     React.useEffect(() => {
@@ -343,16 +342,20 @@ export function ToastMessage2({ message, type, showToast, setToast }) {
         }
         setOpen(false);
         // Reset toast state
-        setToast(false);
+        setShowToast(false);
     };
 
     return (
-        <Stack spacing={2} sx={{ width: '100%' }}>
-            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity={type} sx={{ width: '100%' }}>
-                    <CustomTypography>{message}</CustomTypography>
-                </Alert>
-            </Snackbar>
-        </Stack>
+        <Snackbar
+            open={open}
+            autoHideDuration={3000}
+            onClose={handleClose}
+            // Adjust anchorOrigin for centering
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        >
+            <Alert onClose={handleClose} severity={type} sx={{ width: '100%' }}>
+                <CustomTypography>{message}</CustomTypography>
+            </Alert>
+        </Snackbar>
     );
 }

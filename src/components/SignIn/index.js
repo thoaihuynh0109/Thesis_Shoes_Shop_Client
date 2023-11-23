@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Button, Paper, Grid, Typography, TextField, Container, Chip } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
@@ -16,7 +16,7 @@ const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
     padding: theme.spacing(1),
-    textAlign: 'center',
+    // textAlign: 'center',
     color: theme.palette.text.secondary,
 }));
 
@@ -34,36 +34,41 @@ const CustomButton = styled(Button)(({ variant = 'contained', mt, ml, fs, width 
 // function SignIn({ isCheckout }) {
 
 function SignIn() {
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
-
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const navigate = useNavigate();
+
     const handleLogin = async () => {
         const data = {
             email,
             password,
         };
 
-        const loginData = await authService.signIn(data);
+        // Save email to localStorage
+        localStorage.setItem('userEmail', email);
 
-        localStorage.setItem('user', JSON.stringify(loginData));
-        // send info to login api
-        navigate('/');
+        // Perform login logic if needed
+
+        // Navigate to the desired location
+        navigate('/register-account', { state: { email } });
     };
 
+    useEffect(() => {
+        // Clear email from localStorage on component mount (page reload)
+        localStorage.removeItem('userEmail');
+    }, []);
+
     return (
-        // <Box sx={{ height: '100%' }} className={cx('my-account-container')}>
         <Container sx={{ height: '100%', minHeight: '200vh' }}>
-            {/*  sx={{minHeight: '600px'}} */}
             <Box sx={{ flexGrow: 2 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
-                        <Item sx={{ p: 2, height: '100%' }}>
+                        <Box sx={{ p: 2, height: '100%' }}>
                             <CustomTypography
                                 fontWeight={700}
                                 fontSize="20px"
-                                className={cx('page-subheading')}
                                 gutterBottom
+                                textAlign="center"
                             >
                                 Create an account
                             </CustomTypography>
@@ -76,23 +81,21 @@ function SignIn() {
                             </CustomTypography>
 
                             <CustomizeTextField
-                                fullWidth={true}
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 id="outlined-basic"
                                 label="Email"
                                 variant="outlined"
                             />
 
-                            {/* chỗ này cần check lại chiều ngang bất hợp lí */}
-
                             <CustomButton
                                 variant="contained"
                                 startIcon={<AccountCircleIcon />}
-                                component={Link}
-                                to="/register-account"
+                                onClick={handleLogin}
                             >
                                 Create Account
                             </CustomButton>
-                        </Item>
+                        </Box>
                     </Grid>
 
                     {/* Login */}
@@ -103,6 +106,7 @@ function SignIn() {
                                 fontSize="20px"
                                 className={cx('page-subheading')}
                                 gutterBottom
+                                textAlign={'center'}
                             >
                                 Already Have An account
                             </CustomTypography>
@@ -115,7 +119,7 @@ function SignIn() {
                                     setEmail(e.target.value);
                                 }}
                                 fullWidth={true}
-                                id="outlined-basic"
+                                // id="outlined-basic"
                                 label="Email"
                                 variant="outlined"
                             />
@@ -128,7 +132,7 @@ function SignIn() {
                                     setPassword(e.target.value);
                                 }}
                                 fullWidth={true}
-                                id="outlined-basic"
+                                // id="outlined-basic"
                                 label="Password"
                                 type="password"
                                 variant="outlined"
