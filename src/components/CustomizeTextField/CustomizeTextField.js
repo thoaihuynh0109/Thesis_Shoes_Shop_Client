@@ -1,11 +1,12 @@
 import { styled, TextField } from '@mui/material';
 
 export const CustomizeTextField = styled(TextField)(
-    ({ fullWidth, id, label, mt, variant, inputFontSize, labelFontSize }) => ({
+    ({ id, label, mt, variant, inputFontSize, labelFontSize }) => ({
         // fullWidth: fullWidth || true,
-        width: fullWidth ? '100%' : 'auto',
+        // width: fullWidth ? '100%' : 'auto',
+        width: 400,
         id: id || 'outlined-basic',
-        marginTop: mt || '8px',
+        marginTop: mt || '1px',
         '& label': {
             fontSize: labelFontSize || '16px',
         },
@@ -16,8 +17,12 @@ export const CustomizeTextField = styled(TextField)(
         '& .MuiInputBase-root': {
             fontSize: '2rem',
         },
+        
 
         label: label || 'Email',
         variant: variant || 'outlined',
+
+        // overflow: 'hidden',
+        textOverflow: 'ellipsis',
     }),
 );
