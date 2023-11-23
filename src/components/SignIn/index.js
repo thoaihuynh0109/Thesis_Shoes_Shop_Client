@@ -8,8 +8,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LockIcon from '@mui/icons-material/Lock';
 import CustomTypography from '../CustomTyporaphy/CustomTyporaphy';
 import { CustomizeTextField } from '../CustomizeTextField/CustomizeTextField';
-// import { Typography, TextField } from '~/Layouts/DefaultLayout';
+import useValidation from '../UseValidation/useValidation';
 import authService from '~/services/authServices';
+import { ToastMessage2 } from '../MakeProductCards/MakeProductCards';
 
 const cx = classNames.bind(styles);
 const Item = styled(Paper)(({ theme }) => ({
@@ -35,22 +36,44 @@ const CustomButton = styled(Button)(({ variant = 'contained', mt, ml, fs, width 
 
 function SignIn() {
     const [email, setEmail] = useState('');
+    const [emailRegister, setEmailRegister] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate();
+    const [showToast, setShowToast] = useState(false);
+    const emailValidation = useValidation({ value: '' });
 
+    const navigate = useNavigate();
     const handleLogin = async () => {
         const data = {
             email,
             password,
         };
 
-        // Save email to localStorage
-        localStorage.setItem('userEmail', email);
+        const loginData = await authService.signIn(data);
 
-        // Perform login logic if needed
+        localStorage.setItem('user', JSON.stringify(loginData));
+        // send info to login api
+        navigate('/');
+    };
 
-        // Navigate to the desired location
-        navigate('/register-account', { state: { email } });
+    const handleCreateAccount = () => {
+        const data = {
+            emailRegister,
+        };
+        const isEmailValid = emailValidation.validateEmail();
+
+        if (isEmailValid) {
+            // Save email to localStorage
+            localStorage.setItem('userEmail', emailRegister);
+
+            navigate('/register-account', { state: { emailRegister } });
+
+            // Set showToast to true after successful registration
+            // setShowToast(true);
+        } else {
+            // Handle validation errors
+            console.log('Validation failed. Please check the form.');
+            setShowToast(true);
+        }
     };
 
     useEffect(() => {
@@ -63,7 +86,7 @@ function SignIn() {
             <Box sx={{ flexGrow: 2 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
-                        <Box sx={{ p: 2, height: '100%' }}>
+                        <Item sx={{ p: 2, height: '100%' }}>
                             <CustomTypography
                                 fontWeight={700}
                                 fontSize="20px"
@@ -76,26 +99,46 @@ function SignIn() {
                             <CustomTypography variant="body1" textAlign={'left'} gutterBottom>
                                 Please enter your email address to create an account.
                             </CustomTypography>
-                            <CustomTypography variant="body1" textAlign={'left'}>
+                            <CustomTypography variant="body1" textAlign={'left'} sx={{ mb: 2 }}>
                                 Email address
                             </CustomTypography>
 
-                            <CustomizeTextField
+                            {/* <CustomizeTextField
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 id="outlined-basic"
                                 label="Email"
                                 variant="outlined"
-                            />
+                            /> */}
 
+                            <CustomizeTextField
+                                value={emailRegister}
+                                onChange={(e) => {
+                                    setEmailRegister(e.target.value);
+                                    emailValidation.setState({
+                                        ...emailValidation.state,
+                                        value: e.target.value,
+                                    });
+                                }}
+                                label="Email"
+                                variant="outlined"
+                                onBlur={emailValidation.validateEmail}
+                                error={emailValidation.state.message !== ''}
+                                helperText={emailValidation.state.message}
+                                sx={{
+                                    '& .MuiFormHelperText-root': {
+                                        fontSize: '12px', // Adjust the font size as needed
+                                    },
+                                }}
+                            />
                             <CustomButton
                                 variant="contained"
                                 startIcon={<AccountCircleIcon />}
-                                onClick={handleLogin}
+                                onClick={handleCreateAccount}
                             >
                                 Create Account
                             </CustomButton>
-                        </Box>
+                        </Item>
                     </Grid>
 
                     {/* Login */}
@@ -110,7 +153,7 @@ function SignIn() {
                             >
                                 Already Have An account
                             </CustomTypography>
-                            <CustomTypography variant="body1" textAlign={'left'}>
+                            <CustomTypography variant="body1" textAlign={'left'} sx={{ mb: 2 }}>
                                 Email address
                             </CustomTypography>
                             <CustomizeTextField
@@ -122,6 +165,12 @@ function SignIn() {
                                 // id="outlined-basic"
                                 label="Email"
                                 variant="outlined"
+                            />
+                            <ToastMessage2
+                                message="Vui Lòng Nhập Email!"
+                                type="warning"
+                                showToast={showToast}
+                                setShowToast={setShowToast}
                             />
                             <CustomTypography variant="body1" sx={{ textAlign: 'left', mt: 2 }}>
                                 Password
