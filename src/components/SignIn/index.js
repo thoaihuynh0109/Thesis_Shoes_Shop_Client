@@ -55,16 +55,19 @@ function SignIn() {
         navigate('/');
     };
 
+    // create an account with email address
     const handleCreateAccount = () => {
         const data = {
             emailRegister,
         };
+        // Email is validate
         const isEmailValid = emailValidation.validateEmail();
 
         if (isEmailValid) {
             // Save email to localStorage
             localStorage.setItem('userEmail', emailRegister);
 
+            // navigate to register account page with email that filled into textfield
             navigate('/register-account', { state: { emailRegister } });
 
             // Set showToast to true after successful registration
@@ -72,7 +75,7 @@ function SignIn() {
         } else {
             // Handle validation errors
             console.log('Validation failed. Please check the form.');
-            setShowToast(true);
+            setShowToast(true); // show message
         }
     };
 
