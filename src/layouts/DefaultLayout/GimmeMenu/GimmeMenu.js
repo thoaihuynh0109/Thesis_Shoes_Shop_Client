@@ -82,6 +82,14 @@ function GimmeMenu() {
                     >
                         CONTACT{' '}
                     </Link>
+                    <Link
+                        color="inherit"
+                        component={Link}
+                        to="/order-history"
+                        className={cx('menu-child-item')}
+                    >
+                        ORDER
+                    </Link>
                 </Stack>
 
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
