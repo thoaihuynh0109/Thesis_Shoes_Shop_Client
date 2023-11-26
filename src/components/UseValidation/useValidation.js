@@ -103,8 +103,9 @@ const useValidation = (initialState) => {
         if (state.value === '') {
             setState({
                 ...state,
-                message: '',
+                message: 'Vui Lòng Nhập Số Điện Thoại',
             });
+            return false;
         } else {
             let validPhone = state.value.match(/(0[3|5|7|8|9])+([0-9]{8})\b/g);
             if (validPhone) {
@@ -112,11 +113,13 @@ const useValidation = (initialState) => {
                     ...state,
                     message: '',
                 });
+                return true;
             } else {
                 setState({
                     ...state,
-                    message: 'Invalid phone number.',
+                    message: 'Số Điện Chỉ Có 10 Số!',
                 });
+                return false;
             }
         }
     };
