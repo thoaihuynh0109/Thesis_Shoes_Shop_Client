@@ -1,6 +1,7 @@
 import React from 'react';
-import { Grid, Paper, Box} from '@mui/material';
+import { Grid, Paper, Box, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 import CarouselImage from './CarouselImage';
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -12,6 +13,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function SlideShowImageShop() {
+    const navigate = useNavigate();
     return (
         <Box sx={{ flexGrow: 2 }}>
             <Grid container spacing={2}>
@@ -32,32 +34,40 @@ export default function SlideShowImageShop() {
                         >
                             <Grid item xs={6}>
                                 <img
-                                    src={`https://res.cloudinary.com/dd4gcajeh/image/upload/v1698214558/Gimme-shoes-images/Nike/Nike%20Air%20Max%2090%20GORE-TEX.jpg`}
+                                    src={`https://res.cloudinary.com/dd4gcajeh/image/upload/v1700375124/Gimme-shoes-images/Puma/Palermo_Sneakers_xsf4kf.png`}
                                     alt={'item.title'}
-                                    height="140px"
-                                    width="100%"
+                                    height="180px"
+                                    width="200px"
                                     loading="lazy"
                                 />
                             </Grid>
+
                             <Grid item xs={6}>
                                 <img
-                                    src={`https://res.cloudinary.com/dd4gcajeh/image/upload/v1698214835/Gimme-shoes-images/Adidas/4-9_jutp8f.jpg`}
+                                    src={`https://res.cloudinary.com/dd4gcajeh/image/upload/v1700375104/Gimme-shoes-images/Puma/Electrify_NITRO_2_x8xbrh.png`}
                                     alt={'item.title'}
-                                    height="140px"
-                                    width="100%"
+                                    height="180px"
+                                    width="200px"
                                     loading="lazy"
                                 />
                             </Grid>
                             <Grid item xs={12} sx={{ mt: '-4px' }}>
                                 <img
-                                    src={`https://res.cloudinary.com/dd4gcajeh/image/upload/v1698226178/Gimme-shoes-images/Converse/Converse_x_GOLF_WANG_Chuck_70_Flames_High_Top_dbfbzd.jpg`}
+                                    src={`https://res.cloudinary.com/dd4gcajeh/image/upload/v1700375324/Gimme-shoes-images/Nike/Female/1960142320_zm_pnlsf4_fjuzuw.png`}
                                     alt={'item.title'}
-                                    height="240px"
-                                    width="100%"
+                                    height="200px"
+                                    width="auto"
                                     loading="lazy"
                                 />
                             </Grid>
                         </Grid>
+                        <Button
+                            variant="Outlined"
+                            sx={{ mt: -4, fontSize: '16px', color: '#0d6efd' }}
+                            onClick={() => navigate('/shop')}
+                        >
+                            Shop Now
+                        </Button>
                     </Item>
                 </Grid>
             </Grid>

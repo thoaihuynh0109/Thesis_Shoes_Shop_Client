@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Carousel.css'; // Import custom CSS file if needed
+import { useNavigate } from 'react-router-dom';
 import { Button, Grid, Box, Container } from '@mui/material';
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -16,12 +17,13 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const CarouselImage = () => {
     const images = [
-        'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698226172/Gimme-shoes-images/Converse/Chuck_70_AT-CX_Rugged_Basics_High_Top_v2vqpi.jpg',
-        'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698226177/Gimme-shoes-images/Converse/Chuck_70_Marquis_Sportswear_High_Top_oqpl3a.jpg',
-        'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698245965/Gimme-shoes-images/Adidas/Female/17588947_36598235_600_acrqah.jpg',
+        'https://res.cloudinary.com/dd4gcajeh/image/upload/v1700366310/Gimme-shoes-images/Nike/Nike_Air_Max_90_GORE-TEX_jrudlb.png',
+        'https://res.cloudinary.com/dd4gcajeh/image/upload/v1700364893/Gimme-shoes-images/Adidas/fz22287_vcbt9t_nruuqm.png',
+        'https://res.cloudinary.com/dd4gcajeh/image/upload/v1700375094/Gimme-shoes-images/Puma/SEASONS_Fast-Trac_NITRO_GORE-TEX_v32hwa.png',
     ];
 
     const [currentImage, setCurrentImage] = useState(0);
+    const navigate = useNavigate();
 
     const handleGoToNextImage = () => {
         setCurrentImage((prevImage) => (prevImage + 1) % images.length);
@@ -33,11 +35,11 @@ const CarouselImage = () => {
 
     useEffect(() => {
         // Chuyển đến hình ảnh tiếp theo sau mỗi 3 giây
-        const interval = setInterval(handleGoToNextImage, 3000); 
+        const interval = setInterval(handleGoToNextImage, 3000);
 
         return () => {
             // Xóa interval khi component unmount
-            clearInterval(interval); 
+            clearInterval(interval);
         };
     }, []);
 
@@ -57,7 +59,11 @@ const CarouselImage = () => {
                     <ArrowForwardIos />
                 </Button>
             </div>
-            <Button variant="Outlined" sx={{ mt: -4, fontSize: '16px', color: '#0d6efd' }}>
+            <Button
+                variant="Outlined"
+                sx={{ mt: -4, fontSize: '16px', color: '#0d6efd' }}
+                onClick={() => navigate('/shop')}
+            >
                 Shop Now
             </Button>
         </Box>
