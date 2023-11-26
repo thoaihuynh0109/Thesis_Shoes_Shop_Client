@@ -13,6 +13,8 @@ import AddUser from '~/pages/AdminPages/User/AddUser';
 import EditUser from '~/pages/AdminPages/User/EditUser';
 import User from '~/pages/AdminPages/User/User';
 import Checkout from '~/pages/Checkout/Checkout';
+import AddNewAddress from '~/pages/Checkout/ProductsInCard/AddressStep/AddNewAddress/AddNewAddress';
+import UpdateAddress from '~/pages/Checkout/ProductsInCard/AddressStep/UpdateAddress/UpdateAddress';
 import ChangePassword from '~/pages/ClientPages/ChangePassword';
 import PersonalAccount from '~/pages/ClientPages/Profile/PersonalAccount';
 import WishList from '~/pages/ClientPages/WishList/WishList';
@@ -88,6 +90,14 @@ const publicRoutes = [
     {
         path: '/change-password',
         component: ChangePassword,
+    },
+    {
+        path: '/add-new-address',
+        component: AddNewAddress,
+    },
+    {
+        path: '/update-address',
+        component: UpdateAddress,
     },
     {
         path: '/order-history',
