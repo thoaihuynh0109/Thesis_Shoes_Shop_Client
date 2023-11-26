@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import Order from './Order';
+import { Container } from '@mui/material';
+import ProductsTable from '../Checkout/ProductsInCard/SummaryStep/SummaryStepData/ProductsTable';
+import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
+import OrderDetail from './OrderDetail';
 
 const OrderHistory = () => {
     const [orders, setOrders] = useState([
@@ -13,12 +17,15 @@ const OrderHistory = () => {
     ]);
 
     return (
-        <div>
-            <h2>Order History</h2>
-            {orders.map((order) => (
-                <Order key={order.id} order={order} />
-            ))}
-        </div>
+        <Container>
+            <CustomTypography
+                sx={{ textTransform: 'capitalize', fontWeight: 'bold', fontSize: '24px' }}
+            >
+                lịch sử giao hàng
+            </CustomTypography>
+            <ProductsTable />
+            <OrderDetail />
+        </Container>
     );
 };
 
