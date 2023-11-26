@@ -180,6 +180,7 @@ function ProductsInCard() {
                         </CustomTypography>
 
                         {activeStep === 0 && <SummaryStep />}
+
                         <Box className={cx('my-account-container2')}>
                             {activeStep === 1 && <SignIn />}
                         </Box>
