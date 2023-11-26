@@ -48,7 +48,11 @@ export function MakeProductsCard({
     // gender,
     onClick,
     showToast,
-    setToast,
+    setShowToast,
+    //message for what actions are clicking!
+    toastMessage,
+    setToastMessage,
+    // setToast,
 }) {
     const dispatch = useDispatch();
 
@@ -60,11 +64,6 @@ export function MakeProductsCard({
     const [isLoadingWishList, setIsLoadingWishList] = useState(false); // Separate loading state
     const [valueRating, setValueRating] = useState(rating);
 
-    // const [cartItemsCount, setCartItemsCount] = useState(0);
-    // const cartItems = useSelector((state) => state.cart.cartItems);
-    // const selectWishlistItems = (state) => state.wishlist.wishlistItems;
-    // const selectProductDetails = useSelector((state) => state.productDetail.productDetails);
-
     // add to cart action
     const handleAddToCart = (product) => {
         setIsLoadingAddToCart(true);
@@ -74,10 +73,11 @@ export function MakeProductsCard({
             dispatch(addToCart(product));
 
             // Show the toast message
-            setToast(true);
+            setToastMessage('Sản Phẩm Đã Được Thêm Vào Giỏ Hàng');
+            setShowToast(true);
             // Reset toast after 3 seconds
             setTimeout(() => {
-                setToast(false);
+                setShowToast(false);
             }, 3000);
         }, 2000);
     };
@@ -91,13 +91,13 @@ export function MakeProductsCard({
             dispatch(addToWishlist(product));
             setCheckAddToWishList(true);
             setIsLoadingWishList(false);
-
+            setToastMessage('Sản Phẩm Đã Được Thêm Vào Danh Sách Yêu Thích');
             // Show the toast message
-            setToast(true);
+            setShowToast(true);
 
             // Reset toast after 3 seconds
             setTimeout(() => {
-                setToast(false);
+                setShowToast(false);
             }, 3000);
         }, 2000);
     };
@@ -122,11 +122,6 @@ export function MakeProductsCard({
     const handleNavigateToWishlist = () => {
         navigate('/my-wishlist');
     };
-
-    // handle navigating to the product detail page - without productID
-    // const handleNavigateToProductDetails = () => {
-    //     navigate('/product-details');
-    // };
 
     return (
         <Box>
@@ -296,14 +291,6 @@ export function MakeProductsCard({
                                                 color: 'var( --icon-hover)',
                                             },
                                         }}
-                                        // onClick={() =>
-                                        //     handleNavigateToProductDetails({
-                                        //         productId,
-                                        //         title,
-                                        //         price,
-                                        //         image,
-                                        //     })
-                                        // }
                                     />
                                 </CustomTooltip>
                             </IconButton>
