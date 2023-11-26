@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setSearchTerm } from '~/redux/SearchManagemenet/searchActions';
 import { Box, InputBase, IconButton, Grow, Zoom } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -30,7 +30,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     border: 'none',
     outline: 'none',
     fontSize: '14px',
-    transition: 'width 0.3s ease-in-out', // Added transition
+    transition: 'width 0.3s ease-in-out',
 }));
 
 const SearchIconButton = styled(IconButton)(({ theme }) => ({
@@ -40,6 +40,7 @@ const SearchIconButton = styled(IconButton)(({ theme }) => ({
 export default function SearchAppBar() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
     const [isSearchFocused, setIsSearchFocused] = useState(false);
 
     const handleSearchChange = (e) => {
@@ -51,6 +52,24 @@ export default function SearchAppBar() {
         navigate('/shop');
     };
 
+    // listen event --> when user type and then press "Enter" or Click Search icon
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            // Check if the current location is already '/shop'
+            if (location.pathname !== '/shop') {
+                navigate('/shop');
+            }
+        }
+    };
+
+    // href to '/shop'
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyPress);
+        return () => {
+            window.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [location.pathname]);
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <SearchContainer>
@@ -60,7 +79,7 @@ export default function SearchAppBar() {
                     onFocus={() => setIsSearchFocused(true)}
                     onBlur={() => setIsSearchFocused(false)}
                     onChange={handleSearchChange}
-                    className={isSearchFocused ? 'focused' : ''} // Apply the 'focused' class when input is focused
+                    className={isSearchFocused ? 'focused' : ''}
                 />
                 <Grow in={isSearchFocused}>
                     <SearchIconButton
