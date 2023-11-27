@@ -1,37 +1,63 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-
-import { Button, IconButton, styled, Tooltip, Typography, CircularProgress } from '@mui/material';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Paper,
+    Tooltip,
+    IconButton,
+} from '@mui/material';
+import { styled } from '@mui/system';
 import DeleteIcon from '@mui/icons-material/Delete';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { removeFromWishlist } from '~/redux/WishListManagement/wishlistActions';
+import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
+import { PopUpMessage } from '~/pages/Checkout/ProductsInCard/SummaryStep/SummaryStepData/ProductsTable';
 import EmptyCard from '~/pages/Checkout/EmptyCard/EmptyCard';
-
 const CustomizeTableCell = styled(TableCell)({
     fontSize: '18px',
     borderRadius: '20px',
     align: 'center',
 });
 
-function WishListTable() {
+const WishListTable = () => {
     const dispatch = useDispatch();
     const selectWishlistItems = useSelector((state) => state.wishlist.wishlistItems);
 
+    // Một state để theo dõi hàng nào đang mở hộp thoại xác nhận
+    const [openConfirmationMap, setOpenConfirmationMap] = useState({});
+
     const handleRemoveFromWishlist = (productId) => {
-        console.log('Removing product from wishlist:', productId);
-        dispatch(removeFromWishlist(productId));
+        // Mở hộp thoại xác nhận khi bấm vào nút xóa
+        setOpenConfirmationMap((prev) => ({ ...prev, [productId]: true }));
     };
 
+    const handleCancelRemove = (productId) => {
+        // Đóng hộp thoại xác nhận khi hủy bỏ
+        setOpenConfirmationMap((prev) => ({ ...prev, [productId]: false }));
+    };
+
+    const removeItem = (productId) => {
+        dispatch(removeFromWishlist(productId));
+        // Đóng hộp thoại xác nhận sau khi xóa thành công
+        setOpenConfirmationMap((prev) => ({ ...prev, [productId]: false }));
+    };
+
+    const handleConfirmRemove = (productId) => {
+        if (productId !== null) {
+            removeItem(productId);
+        }
+    };
+
+    // không có sản phẩm nào trong wish list
     if (selectWishlistItems.length === 0) {
         // return <div>No items in the wishlist.</div>;
-        return <EmptyCard message={'No items in the wishlist.'} />;
+        return <EmptyCard message={'Không Có Sản Phẩm Nào Trong Danh Sách Yêu Thích!'} />;
     }
     return (
         <TableContainer component={Paper}>
@@ -46,7 +72,6 @@ function WishListTable() {
                         <CustomizeTableCell>Shopping</CustomizeTableCell>
                     </TableRow>
                 </TableHead>
-                {/* removeIcon, productImage, unitPrice, stockStatus, shoppingButton */}
                 <TableBody>
                     {selectWishlistItems.map((product) => (
                         <TableRow
@@ -54,24 +79,26 @@ function WishListTable() {
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <CustomizeTableCell align="left">
-                                <Tooltip arrow title="Delete">
-                                    {/* <IconButton onClick={() => handleRemoveItem(item.productId)}> */}
+                                <Tooltip
+                                    arrow
+                                    title={
+                                        <CustomTypography fontSize="11px">Delete</CustomTypography>
+                                    }
+                                >
                                     <IconButton
                                         onClick={() => handleRemoveFromWishlist(product.productId)}
                                     >
-                                        <DeleteIcon
-                                            onClick={() =>
-                                                handleRemoveFromWishlist(product.productId)
-                                            }
-                                        />
+                                        <DeleteIcon fontSize="large" />
                                     </IconButton>
-                                    {/* <PopUpMessage
-                                        open={openConfirmation}
-                                        title="Confirm Removal"
-                                        message="Are you sure you want to remove this item from your cart?"
-                                        onCancel={handleCancelRemove}
-                                        onConfirm={handleConfirmRemove}
-                                    /> */}
+                                    {openConfirmationMap[product.productId] && (
+                                        <PopUpMessage
+                                            open={openConfirmationMap}
+                                            title="Confirm Removal"
+                                            message="Are you sure you want to remove this item from your wishlist?"
+                                            onCancel={() => handleCancelRemove(product.productId)}
+                                            onConfirm={() => handleConfirmRemove(product.productId)}
+                                        />
+                                    )}
                                 </Tooltip>
                             </CustomizeTableCell>
                             <CustomizeTableCell borderRadius="20px">
@@ -92,6 +119,6 @@ function WishListTable() {
             </Table>
         </TableContainer>
     );
-}
+};
 
 export default WishListTable;

@@ -19,7 +19,9 @@ export default function ProductGrid({
     hasProducts,
     navigate,
 }) {
-    const [showToast, setToast] = useState(false);
+    // const [showToast, setToast] = useState(false);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
 
     const dispatch = useDispatch();
     const searchTerm = useSelector((state) => state.search.searchTerm);
@@ -91,7 +93,10 @@ export default function ProductGrid({
                     imgHeight={'140px'}
                     imgWidth={'150px'}
                     showToast={showToast}
-                    setToast={setToast}
+                    setShowToast={setShowToast}
+                    // show suitable toast message
+                    toastMessage={toastMessage}
+                    setToastMessage={setToastMessage}
                 />
             </Grid>
         ));
@@ -102,10 +107,11 @@ export default function ProductGrid({
             {renderProductCards()}
             {/* show toast message after adding product to cart */}
             <ToastMessage2
-                message="Product added to cart!"
+                // message="Product added to cart!"
+                message={toastMessage}
                 type="success"
                 showToast={showToast}
-                setToast={setToast}
+                setShowToast={setShowToast}
             />
         </Box>
     );

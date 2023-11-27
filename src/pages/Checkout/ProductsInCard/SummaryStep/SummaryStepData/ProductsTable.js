@@ -32,7 +32,7 @@ import {
 } from '~/redux/CartManagement/cartActions';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 import EmptyCard from '~/pages/Checkout/EmptyCard/EmptyCard';
-
+import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
 const CustomizeTableCell = styled(({ fontSize, fontWeight, ...rest }) => <TableCell {...rest} />)(
     ({ fontSize, fontWeight }) => ({
         fontSize: fontSize || '16px',
@@ -163,13 +163,6 @@ function ProductsTable() {
                             {cartItems.map((item) => (
                                 <TableRow key={item.productId}>
                                     <CustomizeTableCell component="th" scope="row">
-                                        {/* <img
-                                    src={
-                                        'https://www.bike-discount.de/media/image/6f/89/4b/adidas_Terrex-Free-Hiker-2-Low-GTX-Wanderschuhe_IG5459_2.jpg'
-                                    }
-                                    alt="Product"
-                                    style={{ width: '50px' }}
-                                /> */}
                                         <img
                                             src={item.image}
                                             alt={`Product: ${item.title}`}
@@ -190,15 +183,17 @@ function ProductsTable() {
                                             <Button
                                                 variant="contained"
                                                 onClick={() => decrement(item.productId)}
+                                                sx={{ minWidth: '40px', height: '30px' }}
                                             >
-                                                -
+                                                <CustomTypography>-</CustomTypography>
                                             </Button>
                                             <span>{item.quantity}</span>
                                             <Button
                                                 variant="contained"
                                                 onClick={() => increment(item.productId)}
+                                                sx={{ minWidth: '40px', height: '30px' }}
                                             >
-                                                +
+                                                <CustomTypography>+</CustomTypography>
                                             </Button>
                                         </Stack>
                                     </CustomizeTableCell>
@@ -207,11 +202,18 @@ function ProductsTable() {
                                         {calculateTotalPrice(item.price, item.quantity)}
                                     </CustomizeTableCell>
                                     <CustomizeTableCell align="left">
-                                        <Tooltip arrow title="Delete">
+                                        <Tooltip
+                                            arrow
+                                            title={
+                                                <CustomTypography sx={{ fontSize: '12px' }}>
+                                                    Delete
+                                                </CustomTypography>
+                                            }
+                                        >
                                             <IconButton
                                                 onClick={() => handleRemoveItem(item.productId)}
                                             >
-                                                <DeleteIcon />
+                                                <DeleteIcon fontSize="large" />
                                             </IconButton>
                                             <PopUpMessage
                                                 open={openConfirmation}
@@ -227,11 +229,6 @@ function ProductsTable() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <ToastMessage message={toastMessage} type={toastType} />
-
-                {/* <Typography variant="h6" align="right">
-                    Total: {calculateCartTotal()} - {totalWithTax}
-                </Typography> */}
             </Box>
 
             <TestLastRows

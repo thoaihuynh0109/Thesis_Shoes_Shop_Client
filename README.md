@@ -1,9 +1,10 @@
 -   checkout:
 
-    -   chỉnh lại address step:
-        -   Make UI for update: New Address
-        -   choose address: add1 or add2 to receive products
-    -   add new payment UI
+    -   Update address --> done
+    -   payment: paypal, card còn lỗi nhẹ
 
 -   Order History: tạo UI cho order history
--   Register Account: Khi người dùng nhập gmail rồi nhấn vào button create account phải lưu lại gmail đã được nhập và bỏ thông tin vào truòng gmail của Create Account
+
+    -   Cần thêm dữ liệu động
+
+-   Modify Styles for the whole websites

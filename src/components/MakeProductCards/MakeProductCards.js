@@ -48,7 +48,11 @@ export function MakeProductsCard({
     // gender,
     onClick,
     showToast,
-    setToast,
+    setShowToast,
+    //message for what actions are clicking!
+    toastMessage,
+    setToastMessage,
+    // setToast,
 }) {
     const dispatch = useDispatch();
 
@@ -60,11 +64,6 @@ export function MakeProductsCard({
     const [isLoadingWishList, setIsLoadingWishList] = useState(false); // Separate loading state
     const [valueRating, setValueRating] = useState(rating);
 
-    // const [cartItemsCount, setCartItemsCount] = useState(0);
-    // const cartItems = useSelector((state) => state.cart.cartItems);
-    // const selectWishlistItems = (state) => state.wishlist.wishlistItems;
-    // const selectProductDetails = useSelector((state) => state.productDetail.productDetails);
-
     // add to cart action
     const handleAddToCart = (product) => {
         setIsLoadingAddToCart(true);
@@ -74,10 +73,11 @@ export function MakeProductsCard({
             dispatch(addToCart(product));
 
             // Show the toast message
-            setToast(true);
+            setToastMessage('Sản Phẩm Đã Được Thêm Vào Giỏ Hàng');
+            setShowToast(true);
             // Reset toast after 3 seconds
             setTimeout(() => {
-                setToast(false);
+                setShowToast(false);
             }, 3000);
         }, 2000);
     };
@@ -91,13 +91,13 @@ export function MakeProductsCard({
             dispatch(addToWishlist(product));
             setCheckAddToWishList(true);
             setIsLoadingWishList(false);
-
+            setToastMessage('Sản Phẩm Đã Được Thêm Vào Danh Sách Yêu Thích');
             // Show the toast message
-            setToast(true);
+            setShowToast(true);
 
             // Reset toast after 3 seconds
             setTimeout(() => {
-                setToast(false);
+                setShowToast(false);
             }, 3000);
         }, 2000);
     };
@@ -122,11 +122,6 @@ export function MakeProductsCard({
     const handleNavigateToWishlist = () => {
         navigate('/my-wishlist');
     };
-
-    // handle navigating to the product detail page - without productID
-    // const handleNavigateToProductDetails = () => {
-    //     navigate('/product-details');
-    // };
 
     return (
         <Box>
@@ -296,14 +291,6 @@ export function MakeProductsCard({
                                                 color: 'var( --icon-hover)',
                                             },
                                         }}
-                                        // onClick={() =>
-                                        //     handleNavigateToProductDetails({
-                                        //         productId,
-                                        //         title,
-                                        //         price,
-                                        //         image,
-                                        //     })
-                                        // }
                                     />
                                 </CustomTooltip>
                             </IconButton>
@@ -327,8 +314,7 @@ export function MakeProductsCard({
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-
-export function ToastMessage2({ message, type, showToast, setToast }) {
+export function ToastMessage2({ message, type, showToast, setShowToast }) {
     const [open, setOpen] = React.useState(false);
 
     React.useEffect(() => {
@@ -343,16 +329,20 @@ export function ToastMessage2({ message, type, showToast, setToast }) {
         }
         setOpen(false);
         // Reset toast state
-        setToast(false);
+        setShowToast(false);
     };
 
     return (
-        <Stack spacing={2} sx={{ width: '100%' }}>
-            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity={type} sx={{ width: '100%' }}>
-                    <CustomTypography>{message}</CustomTypography>
-                </Alert>
-            </Snackbar>
-        </Stack>
+        <Snackbar
+            open={open}
+            autoHideDuration={3000}
+            onClose={handleClose}
+            // Adjust anchorOrigin for centering
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        >
+            <Alert onClose={handleClose} severity={type} sx={{ width: '100%' }}>
+                <CustomTypography>{message}</CustomTypography>
+            </Alert>
+        </Snackbar>
     );
 }

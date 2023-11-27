@@ -5,6 +5,7 @@ import classNames from 'classnames/bind';
 import { Typography, Box, Radio, Divider, Stack, Checkbox, Button } from '@mui/material';
 import DeliveryTruck from '~/assets/images/delivery-truck.png';
 import { Link } from 'react-router-dom';
+import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 // import { CustomTypography } from '~/Layouts/DefaultLayout';
 
 const commonStyles = {
@@ -84,9 +85,9 @@ function ShippingStep() {
                         <strong>My carrier</strong> Delivery next day!
                     </Typography>
                     <Divider orientation="vertical" flexItem borderColor="success" />
-                    <Typography variant="body1" sx={{ flexGrow: 1 }}>
+                    <CustomTypography variant="body1" sx={{ flexGrow: 1 }}>
                         $2.00
-                    </Typography>
+                    </CustomTypography>
                 </Box>
                 <Box>
                     <Typography fontSize="15px">Terms of service</Typography>
@@ -96,9 +97,9 @@ function ShippingStep() {
                             I agree to the terms of service and will adhere to them unconditionally.
                         </Typography>
                     </Stack>
-                    <Button component={Link} to="/policy" sx={{ fontSize: '14px' }}>
+                    {/* <Button component={Link} to="/policy" sx={{ fontSize: '14px' }}>
                         Read the Terms of Service
-                    </Button>
+                    </Button> */}
                 </Box>
             </Box>
         </Box>

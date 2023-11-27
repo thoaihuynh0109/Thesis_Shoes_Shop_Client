@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 function EmptyCard({ message }) {
     return (
         // Don't have products in Card
-        <Box className={cx('my-account-container')}>
+        <Box className={cx('empty-card-container')}>
             <Typography
                 margin="0 0 10px;"
                 fontWeight={'bold'}
