@@ -82,22 +82,40 @@ function ProductsInCard() {
     };
 
     const handleNext = () => {
-        const newActiveStep =
-            isLastStep() && !allStepsCompleted()
-                ? // It's the last step, but not all steps have been completed,
-                  // find the first step that has been completed
-                  steps.findIndex((step, i) => !(i in completed))
-                : activeStep + 1;
-        setActiveStep(newActiveStep);
+        // Check if the current step (activeStep) is greater than 0
+        // If yes, check if the previous step (activeStep - 1) is completed
+        if (activeStep > 0 && !completed[activeStep - 1]) {
+            // If the previous step is not completed, show a message or take appropriate action
+            console.log('Please complete the previous step before proceeding.');
+        } else {
+            // Proceed to the next step as usual
+            const newActiveStep =
+                isLastStep() && !allStepsCompleted()
+                    ? steps.findIndex((step, i) => !(i in completed))
+                    : activeStep + 1;
+            setActiveStep(newActiveStep);
+        }
     };
+
+    // const handleNext = () => {
+    //     const newActiveStep =
+    //         isLastStep() && !allStepsCompleted()
+    //             ? // It's the last step, but not all steps have been completed,
+    //               // find the first step that has been completed
+    //               steps.findIndex((step, i) => !(i in completed))
+    //             : activeStep + 1;
+    //     setActiveStep(newActiveStep);
+    // };
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleStep = (step) => () => {
-        setActiveStep(step);
-    };
+    // click on step name to see information of step
+    // const handleStep = (step) => () => {
+    //     setActiveStep(step);
+    // };
+
     const location = useLocation();
 
     // Render GUI with each step similiar to their component
@@ -149,7 +167,7 @@ function ProductsInCard() {
                         <CustomStepButton
                             fontSize="36px"
                             color="inherit"
-                            onClick={handleStep(index)}
+                            // onClick={handleStep(index)}
                         >
                             <CustomTypography>{label}</CustomTypography>
                         </CustomStepButton>
@@ -173,11 +191,34 @@ function ProductsInCard() {
                     </Box>
                 ) : (
                     <Fragment>
-                        <CustomTypography sx={{ mt: 2, mb: 1, py: 1 }}>
-                            {/* Step {activeStep + 1} */}
-                            <b>Step</b> <i>{stepHeaders[activeStep]}</i>
-                        </CustomTypography>
-
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <CustomTypography sx={{ mt: 2, mb: 1, py: 1 }}>
+                                {/* Step {activeStep + 1} */}
+                                <b>Step</b> <i>{stepHeaders[activeStep]}</i>
+                            </CustomTypography>
+                            {activeStep !== steps.length &&
+                                (completed[activeStep] ? (
+                                    <CustomTypography
+                                        variant="caption"
+                                        sx={{ display: 'inline-block' }}
+                                        fontSize="100px"
+                                    >
+                                        Step {activeStep + 1} already completed
+                                    </CustomTypography>
+                                ) : (
+                                    <CustomButton onClick={handleComplete}>
+                                        {completedSteps() === totalSteps() - 1
+                                            ? 'Finish'
+                                            : 'Complete Step'}
+                                    </CustomButton>
+                                ))}
+                        </Box>
                         {activeStep === 0 && <SummaryStep />}
                         {/* {activeStep === 0 && <PaymentStep />} */}
 
@@ -208,7 +249,7 @@ function ProductsInCard() {
                             </CustomButton>
                             <Box sx={{ flex: '1 1 auto' }} />
 
-                            {activeStep !== steps.length &&
+                            {/* {activeStep !== steps.length &&
                                 (completed[activeStep] ? (
                                     <CustomTypography
                                         variant="caption"
@@ -223,7 +264,7 @@ function ProductsInCard() {
                                             ? 'Finish'
                                             : 'Complete Step'}
                                     </CustomButton>
-                                ))}
+                                ))} */}
                         </Box>
                     </Fragment>
                 )}

@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { PayPalButtons } from '@paypal/react-paypal-js';
+import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
+
 function PayPalCheckoutButton(props) {
     const { product } = props;
+    const [showToast, setShowToast] = useState(false);
     const [paidFor, setPaidFor] = useState(false);
     const [error, setError] = useState(null);
 
@@ -14,13 +17,34 @@ function PayPalCheckoutButton(props) {
     };
 
     // paid successfully
+    // paid successfully
     if (paidFor) {
-        alert('Thank you for purchase');
+        // Set showToast to true to display the toast
+        setShowToast(true);
+
+        return (
+            <ToastMessage2
+                message={'Order Successfully!'}
+                type={'success'}
+                showToast={showToast}
+                // Pass setShowToast function to handle closing the toast
+                setShowToast={setShowToast}
+            />
+        );
     }
 
     if (error) {
         // Display error message, modal or redirect user to error page
-        alert(error);
+        setShowToast(true);
+        return (
+            <ToastMessage2
+                message={'Something Went Wrong !!!'}
+                type={'warning'}
+                showToast={showToast}
+                // Pass setShowToast function to handle closing the toast
+                setShowToast={setShowToast}
+            />
+        );
     }
 
     return (
