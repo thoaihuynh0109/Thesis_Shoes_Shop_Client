@@ -20,7 +20,7 @@ function SummaryStep() {
     return (
         <Box>
             <ProductsTable />
-            {/* <TestLastRows tax={8.75} cartItems={cartItems} /> */}
+            
         </Box>
     );
 }
