@@ -154,7 +154,9 @@ function ProductsTable() {
                                 <CustomizeTableCell align="left">Status</CustomizeTableCell>
                                 <CustomizeTableCell align="left">Unit Price</CustomizeTableCell>
                                 <CustomizeTableCell align="left">Quantity</CustomizeTableCell>
-                                <CustomizeTableCell align="left">Total</CustomizeTableCell>
+                                <CustomizeTableCell align="left">
+                                    <Typography sx={{ ml: 6, fontSize: '16px' }}>Total</Typography>
+                                </CustomizeTableCell>
                                 <CustomizeTableCell align="left">Actions</CustomizeTableCell>
                             </TableRow>
                         </TableHead>
@@ -180,7 +182,12 @@ function ProductsTable() {
                                         {item.price}
                                     </CustomizeTableCell>
                                     <CustomizeTableCell align="left">
-                                        <Stack direction="row" spacing={2} justifyContent="center">
+                                        <Stack
+                                            direction="row"
+                                            spacing={2}
+                                            justifyContent="center"
+                                            sx={{ ml: -8 }}
+                                        >
                                             <Button
                                                 variant="contained"
                                                 onClick={() => decrement(item.productId)}
@@ -200,7 +207,9 @@ function ProductsTable() {
                                     </CustomizeTableCell>
                                     {/* total for one product */}
                                     <CustomizeTableCell align="left">
-                                        {calculateTotalPrice(item.price, item.quantity)}
+                                        <Box sx={{ ml: 6 }}>
+                                            {calculateTotalPrice(item.price, item.quantity)}
+                                        </Box>
                                     </CustomizeTableCell>
                                     <CustomizeTableCell align="left">
                                         <Tooltip
@@ -284,17 +293,17 @@ function TotalToCheckout({ tax, totalWithTax, subtotal }) {
                     <CustomTypography sx={{ mr: 24, fontSize: '16px', ...commonTypographyStyles }}>
                         Subtotal
                     </CustomTypography>
-                    <CustomTypography sx={{ commonTypographyStyles, ml: '100px' }}>
+                    <CustomTypography sx={{ commonTypographyStyles, ml: '-30px' }}>
                         {subtotal}
                     </CustomTypography>
                 </Box>
 
                 <Divider sx={{ ml: 14, mr: 15 }} />
                 <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-                    <CustomTypography sx={{ mr: 24, fontSize: '16px', ...commonTypographyStyles }}>
+                    <CustomTypography sx={{ mr: 29, fontSize: '16px', ...commonTypographyStyles }}>
                         Tax
                     </CustomTypography>
-                    <CustomTypography sx={{ commonTypographyStyles, ml: '130px' }}>
+                    <CustomTypography sx={{ commonTypographyStyles, ml: '-45px' }}>
                         {tax}%
                     </CustomTypography>
                 </Box>
@@ -303,7 +312,7 @@ function TotalToCheckout({ tax, totalWithTax, subtotal }) {
                     <CustomTypography sx={{ mr: 24, fontSize: '16px', ...commonTypographyStyles }}>
                         Total
                     </CustomTypography>
-                    <CustomTypography sx={{ commonTypographyStyles, ml: '100px' }}>
+                    <CustomTypography sx={{ commonTypographyStyles, ml: '-30px' }}>
                         {totalWithTax}
                     </CustomTypography>
                 </Box>
