@@ -31,12 +31,25 @@ const PaymentMethod = ({ onSelectPaymentMethod }) => {
                     <FormControlLabel
                         value="paypal"
                         control={<Radio size="large" />}
-                        label={<Typography sx={{ fontSize: '14px' }}>Paypal</Typography>}
+                        label={
+                            <img
+                                src="https://res.cloudinary.com/dd4gcajeh/image/upload/v1701186085/Gimme-shoes-images/Logo/PayPal-Logo-png_wabrm3.png"
+                                alt="PayPal Logo"
+                                width={'100px'}
+                            />
+                        }
                     />
                     <FormControlLabel
                         value="COD"
                         control={<Radio size="large" />}
-                        label={<Typography sx={{ fontSize: '14px' }}>Cash On Delivery</Typography>}
+                        label={
+                            <img
+                                src="https://res.cloudinary.com/dd4gcajeh/image/upload/v1701186085/Gimme-shoes-images/Logo/cod-logo_o2ek2f.webp"
+                                alt="COD Logo"
+                                width={'100px'}
+                                height={'80px'}
+                            />
+                        }
                     />
                     {/* Add more payment methods as needed */}
                 </RadioGroup>
