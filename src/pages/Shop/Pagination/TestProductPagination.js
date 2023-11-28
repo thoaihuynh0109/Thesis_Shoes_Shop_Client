@@ -20,6 +20,7 @@ export default function TestProductPagination() {
     const [currentImages, setCurrentImages] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [hasProducts, setHasProducts] = useState(false);
+
     const [brandFilteredProducts, setBrandFilteredProducts] = useState([]);
     let [page, setPage] = useState(1);
 
