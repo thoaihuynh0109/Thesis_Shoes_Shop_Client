@@ -9,7 +9,7 @@ import ProductsTable from './SummaryStepData/ProductsTable';
 import { rowsTest } from './SummaryStepData/ProductsTableData';
 
 // MUI v5
-import { Container } from '@mui/material';
+import { Container, Box } from '@mui/material';
 
 const cx = classNames.bind(styles);
 const cartItems = [
@@ -18,10 +18,10 @@ const cartItems = [
 
 function SummaryStep() {
     return (
-        <Container>
+        <Box>
             <ProductsTable />
             {/* <TestLastRows tax={8.75} cartItems={cartItems} /> */}
-        </Container>
+        </Box>
     );
 }
 

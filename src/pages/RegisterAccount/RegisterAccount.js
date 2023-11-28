@@ -50,7 +50,7 @@ function RegisterAccount() {
         // Validation logic
         const isFirstNameValid = firstNameValidation.validateRequiredWithoutDigits();
         const isLastNameValid = lastNameValidation.validateRequiredWithoutDigits();
-
+        
         const isEmailValid = emailValidation.validateEmail();
         const isPasswordValid = passwordValidation.validatePassword();
         const isRePasswordValid = rePasswordValidation.validateConfirmPassword(password);

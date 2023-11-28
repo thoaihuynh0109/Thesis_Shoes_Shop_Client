@@ -9,14 +9,8 @@ import FilterBrand from './BrandFilterInformation';
 import PriceFilterInformation from './PriceFilterInformation';
 import SortingSection from './SortingSection';
 import ProductGrid from './ProductGrid';
+import EmptyCard from '~/pages/Checkout/EmptyCard/EmptyCard';
 import SearchAppBar from '~/layouts/DefaultLayout/GimmeMenu/SearchDesgin';
-
-// shopping page
-// pagination
-// filter
-// sorting
-// search?
-// add to card?
 
 export default function TestProductPagination() {
     const [products, setProducts] = useState(shopData);
@@ -88,8 +82,29 @@ export default function TestProductPagination() {
     };
 
     const navigate = useNavigate();
+    // const handleSearchInputChange = (e) => {
+    //     setSearchVal(e.target.value);
+    // };
+
     const handleSearchInputChange = (e) => {
-        setSearchVal(e.target.value);
+        const searchTerm = e.target.value.toLowerCase();
+
+        // Update the search value in the state
+        setSearchVal(searchTerm);
+
+        // Filter products based on the search term
+        const filteredProducts = shopData.filter((item) =>
+            item.title.toLowerCase().includes(searchTerm),
+        );
+
+        // Update the state with the filtered products
+        setProducts(filteredProducts);
+        setStoreValue(filteredProducts);
+        setGetValue(true);
+        setPage(1);
+
+        // Update the state to reflect whether there are products or not
+        setHasProducts(filteredProducts.length > 0);
     };
 
     const handleSearchClickPagination = () => {
@@ -106,6 +121,9 @@ export default function TestProductPagination() {
         const filteredProducts = shopData.filter((item) =>
             item.title.toLowerCase().includes(searchTermLower),
         );
+
+        // Update the state to reflect whether there are products or not
+        setHasProducts(filteredProducts.length > 0);
 
         setProducts(filteredProducts);
         setStoreValue(filteredProducts);
@@ -150,13 +168,10 @@ export default function TestProductPagination() {
 
     return (
         <Box sx={{ flexGrow: 1, minHeight: '500vh', mt: 4 }}>
-            {/* <SearchAppBar
-                
-            /> */}
             <Grid container spacing={2}>
                 <Grid item xs={3}>
                     {/* this box for category, filter products */}
-                    <Box sx={{ border: '1px solid #333', mr: 6, ml: 3 }}>
+                    <Box sx={{ border: '1px solid #333', mr: 6 }}>
                         <Typography
                             sx={{
                                 fontSize: '14px',
@@ -197,9 +212,21 @@ export default function TestProductPagination() {
                         */}
 
                         <SortingSection sorting={sorting} handleSortChange={handleSortChange} />
+
+                        {/* done for this function */}
+                        {/* <TextField
+                            label="Search"
+                            variant="outlined"
+                            size="small"
+                            value={searchVal}
+                            onChange={handleSearchInputChange}
+                        />
+                        <IconButton onClick={handleSearchClickPagination}>
+                            <SearchIcon />
+                        </IconButton> */}
                     </Box>
 
-                    <ProductGrid
+                    {/* <ProductGrid
                         getValue={getValue}
                         page={page}
                         PER_PAGE={PER_PAGE}
@@ -210,9 +237,26 @@ export default function TestProductPagination() {
                         sorting={sorting}
                         hasProducts={hasProducts}
                         navigate={navigate}
-                    />
+                    /> */}
 
-                    <Box>
+                    {hasProducts ? (
+                        <ProductGrid
+                            getValue={getValue}
+                            page={page}
+                            PER_PAGE={PER_PAGE}
+                            _DATA={_DATA}
+                            storeValue={storeValue}
+                            filteredProducts={filteredProducts}
+                            brandFilteredProducts={brandFilteredProducts}
+                            sorting={sorting}
+                            hasProducts={hasProducts}
+                            navigate={navigate}
+                        />
+                    ) : (
+                        <EmptyCard message={'Không có sản phẩm '} />
+                    )}
+
+                    <Box sx={{ display: 'flex', justifyContent: 'space-around', mt: 2 }}>
                         <Pagination
                             count={count}
                             size="large"

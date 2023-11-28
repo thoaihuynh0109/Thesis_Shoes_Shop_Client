@@ -3,9 +3,11 @@ import { Box, Grid, Pagination } from '@mui/material';
 import EmptyCard from '~/pages/Checkout/EmptyCard/EmptyCard';
 import { MakeProductsCard } from '~/components/MakeProductCards/MakeProductCards';
 import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
+import { styled } from '@mui/system';
 
 // search section
 import { useSelector, useDispatch } from 'react-redux';
+import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 
 export default function ProductGrid({
     getValue,

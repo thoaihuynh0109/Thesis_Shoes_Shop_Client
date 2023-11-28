@@ -22,6 +22,7 @@ import {
     DialogContent,
     DialogContentText,
     DialogActions,
+    Divider,
 } from '@mui/material';
 import { styled } from '@mui/system';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -231,7 +232,7 @@ function ProductsTable() {
                 </TableContainer>
             </Box>
 
-            <TestLastRows
+            <TotalToCheckout
                 tax={8.75}
                 subtotal={calculateCartTotal().toLocaleString()}
                 totalWithTax={totalWithTax.toLocaleString()}
@@ -261,94 +262,52 @@ export function PopUpMessage({ open, title, message, onCancel, onConfirm }) {
     );
 }
 
-export function TestLastRows({ tax, totalWithTax, subtotal }) {
-    return (
-        <Box sx={{ mt: 2, border: '1px solid #757575', borderRadius: '5px' }}>
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 700 }} aria-label="spanning table">
-                    <TableBody align="right">
-                        <TableRow>
-                            <CustomTableCellPriceDetails rowSpan={4} />
-                            <CustomTableCellPriceDetails colSpan={2}>
-                                Subtotal
-                            </CustomTableCellPriceDetails>
-                            <CustomTableCellPriceDetails align="right">
-                                <CustomTypographyPriceDetails
-                                    sx={{
-                                        width: '300px',
-                                        pr: '99px',
-                                        display: 'inline-block',
-                                    }}
-                                >
-                                    {subtotal}
-                                </CustomTypographyPriceDetails>
-                            </CustomTableCellPriceDetails>
-                        </TableRow>
-                        <TableRow>
-                            <CustomTableCellPriceDetails>Tax</CustomTableCellPriceDetails>
-                            <CustomTableCellPriceDetails align="right"></CustomTableCellPriceDetails>
-                            <CustomTableCellPriceDetails align="right">
-                                <CustomTypographyPriceDetails
-                                    sx={{
-                                        width: '300px',
-                                        pr: '99px',
-                                        display: 'inline-block',
-                                    }}
-                                >
-                                    {tax}%
-                                </CustomTypographyPriceDetails>
-                            </CustomTableCellPriceDetails>
-                        </TableRow>
-                        <TableRow>
-                            <CustomTableCellPriceDetails colSpan={2}>
-                                Total
-                            </CustomTableCellPriceDetails>
-                            <CustomTableCellPriceDetails align="right">
-                                <CustomTypographyPriceDetails
-                                    sx={{
-                                        width: '300px',
-                                        pr: '99px',
-                                        display: 'inline-block',
-                                    }}
-                                >
-                                    {totalWithTax}
-                                </CustomTypographyPriceDetails>
-                            </CustomTableCellPriceDetails>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Box>
-    );
-}
-
-const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
-
-export function ToastMessage({ message, type }) {
-    const [open, setOpen] = React.useState(false);
-
-    React.useEffect(() => {
-        if (message) {
-            setOpen(true);
-        }
-    }, [message]);
-
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpen(false);
+function TotalToCheckout({ tax, totalWithTax, subtotal }) {
+    const commonTypographyStyles = {
+        // Set a fixed width for all Typography components
+        width: '5px',
+        display: 'inline-block',
+        textAlign: 'right', // Align the text to the right
     };
 
     return (
-        <Stack spacing={2} sx={{ width: '100%' }}>
-            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity={type} sx={{ width: '100%' }}>
-                    {message}
-                </Alert>
-            </Snackbar>
-        </Stack>
+        <Box
+            sx={{
+                border: '1px solid #333',
+                mt: 2,
+                maxWidth: 600,
+                ml: '674px',
+            }}
+        >
+            <Box>
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                    <CustomTypography sx={{ mr: 24, fontSize: '16px', ...commonTypographyStyles }}>
+                        Subtotal
+                    </CustomTypography>
+                    <CustomTypography sx={{ commonTypographyStyles, ml: '100px' }}>
+                        {subtotal}
+                    </CustomTypography>
+                </Box>
+
+                <Divider sx={{ ml: 14, mr: 15 }} />
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                    <CustomTypography sx={{ mr: 24, fontSize: '16px', ...commonTypographyStyles }}>
+                        Tax
+                    </CustomTypography>
+                    <CustomTypography sx={{ commonTypographyStyles, ml: '130px' }}>
+                        {tax}%
+                    </CustomTypography>
+                </Box>
+                <Divider sx={{ ml: 14, mr: 15 }} />
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, mb: 2 }}>
+                    <CustomTypography sx={{ mr: 24, fontSize: '16px', ...commonTypographyStyles }}>
+                        Total
+                    </CustomTypography>
+                    <CustomTypography sx={{ commonTypographyStyles, ml: '100px' }}>
+                        {totalWithTax}
+                    </CustomTypography>
+                </Box>
+            </Box>
+        </Box>
     );
 }

@@ -185,25 +185,37 @@ export function LoadMoreProduct({
     };
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Box
-                style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    minHeight: '500px',
-                    marginLeft: '64px',
-                }}
-            >
-                {renderProductCards()}
+        <Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Box
+                        style={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            minHeight: '500px',
+                            marginLeft: '64px',
+                        }}
+                    >
+                        {renderProductCards()}
+                    </Box>
+                </Box>
             </Box>
-
-            <Button
-                variant="contained"
-                onClick={handleButtonLoadMore}
-                sx={{ fontSize: '14px', padding: '8px 24px', mt: 2 }}
-            >
-                Load More
-            </Button>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Button
+                    variant="contained"
+                    onClick={handleButtonLoadMore}
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        fontSize: '14px',
+                        padding: '8px 24px',
+                        mt: 2,
+                    }}
+                >
+                    Load More
+                </Button>
+            </Box>
         </Box>
     );
 }

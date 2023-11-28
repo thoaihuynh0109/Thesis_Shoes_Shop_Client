@@ -5,7 +5,8 @@ import MakeUIForMenAndWomenPage from './Pagination/MakeUIForMenAndWomenPage';
 
 function Men() {
     return (
-        <Box sx={{ flexGrow: 1, minHeight: '500vh', mt: 4, ml: 5, mr: 4 }}>
+        // <Box sx={{ minHeight: '50vh', mt: 4, ml: 5, mr: 4 }}>
+        <Box sx={{ minHeight: '50vh', mt: 2 }}>
             <MakeUIForMenAndWomenPage forWomen={false} />
             <ProductPageForGender selectedGender={'Male'} />
         </Box>
