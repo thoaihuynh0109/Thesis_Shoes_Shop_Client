@@ -20,7 +20,7 @@ const CustomAvatar = styled(Avatar)(({ mr }) => ({
 }));
 function SubHeader() {
     return (
-        <Container>
+        <Box>
             <Stack
                 sx={{ marginTop: 12, mb: 4 }}
                 direction="row"
@@ -75,7 +75,7 @@ function SubHeader() {
                     </Stack>
                 </Stack>
             </Stack>
-        </Container>
+        </Box>
     );
 }
 

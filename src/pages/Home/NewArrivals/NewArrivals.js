@@ -53,7 +53,9 @@ function NewArrivals() {
                     these shoes help keep your feet protected from debris, no matter where you roam.
                 </CustomTypography>
                 {/* Need to href somewhere? */}
-                <CustomizeButton variant="contained">Buy Now</CustomizeButton>
+                <CustomizeButton variant="contained" sx={{ mt: 8 }}>
+                    Buy Now
+                </CustomizeButton>
             </Box>
         </Box>
     );

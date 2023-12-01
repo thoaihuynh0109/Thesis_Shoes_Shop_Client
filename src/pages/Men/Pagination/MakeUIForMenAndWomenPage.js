@@ -6,9 +6,10 @@ function MakeUIForMenAndWomenPage({ forWomen }) {
         'https://res.cloudinary.com/dd4gcajeh/image/upload/v1700368488/Gimme-shoes-images/Women-Page/fmale-adidas_tocvrf.webp';
     const src2 =
         'https://res.cloudinary.com/dd4gcajeh/image/upload/v1700368487/Gimme-shoes-images/Women-Page/girl-shoes_ojheny.webp';
+
     return (
         <Box>
-            <CustomTypography sx={{ fontWeight: 'bold', fontSize: '18px', mb: 2 }}>
+            <CustomTypography sx={{ fontWeight: 'bold', fontSize: '20px', mb: 2 }}>
                 Nổi Bật
             </CustomTypography>
             <Box
@@ -26,7 +27,10 @@ function MakeUIForMenAndWomenPage({ forWomen }) {
                                     alt={'Adidas '}
                                     height="500px"
                                     width="90%"
-                                    style={{ borderRadius: '10px' }}
+                                    style={{
+                                        borderRadius: '10px',
+                                        boxShadow: ' 0 3px 10px rgb(0 0 0 / 0.95)',
+                                    }}
                                 />
                             ) : (
                                 <img
@@ -36,7 +40,10 @@ function MakeUIForMenAndWomenPage({ forWomen }) {
                                     alt={'Adidas '}
                                     height="500px"
                                     width="90%"
-                                    style={{ borderRadius: '10px' }}
+                                    style={{
+                                        borderRadius: '10px',
+                                        boxShadow: ' 0 3px 10px rgb(0 0 0 / 0.95)',
+                                    }}
                                 />
                             )}
                         </Box>
@@ -49,7 +56,10 @@ function MakeUIForMenAndWomenPage({ forWomen }) {
                                     alt={'Adidas '}
                                     height="500px"
                                     width="90%"
-                                    style={{ borderRadius: '10px' }}
+                                    style={{
+                                        borderRadius: '10px',
+                                        boxShadow: ' 0 3px 10px rgb(0 0 0 / 0.95)',
+                                    }}
                                 />
                             ) : (
                                 <img
@@ -57,7 +67,10 @@ function MakeUIForMenAndWomenPage({ forWomen }) {
                                     alt="Nike "
                                     height="500px"
                                     width="90%"
-                                    style={{ borderRadius: '10px' }}
+                                    style={{
+                                        borderRadius: '10px',
+                                        boxShadow: ' 0 3px 10px rgb(0 0 0 / 0.95)',
+                                    }}
                                 />
                             )}
                         </Box>
@@ -65,7 +78,7 @@ function MakeUIForMenAndWomenPage({ forWomen }) {
                 </Grid>
             </Box>
             <Box>
-                <CustomTypography sx={{ fontWeight: 'bold', fontSize: '18px', mt: 4, mb: 2 }}>
+                <CustomTypography sx={{ fontWeight: 'bold', fontSize: '20px', mt: 4, mb: 2 }}>
                     Mới Nhất
                 </CustomTypography>
                 <DirectionStack />
@@ -104,6 +117,7 @@ const CustomTypographyGenderPage = styled(Typography)(({ fontSize, fontWeight, c
     padding: '10px',
 }));
 
+// use to show image and description for some activities
 export function DirectionStack() {
     return (
         <Box>

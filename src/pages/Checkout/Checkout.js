@@ -6,9 +6,9 @@ import ProductsInCard from '~/pages/Checkout/ProductsInCard/ProductsInCard';
 function Checkout() {
     const [checked, setChecked] = useState(true);
     return (
-        <Container>
+        <Box sx={{ mt: 2 }}>
             {checked ? <ProductsInCard /> : <EmptyCard text={'Your shopping cart is empty.'} />}
-        </Container>
+        </Box>
     );
 }
 

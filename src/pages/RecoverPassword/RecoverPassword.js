@@ -1,24 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 import { Container, Box, Typography, Button, TextField, styled } from '@mui/material';
 import '~/components/GlobalStyles';
 import styles from './RecoverPassword.module.scss';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 import { CustomizeTextField } from '~/components/CustomizeTextField/CustomizeTextField';
+import useValidation from '~/components/UseValidation/useValidation';
+import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
 
 const cx = classNames.bind(styles);
 
 const CustomTextField = styled(TextField)(({ theme }) => ({
     '& .MuiInputLabel-root': {
-        fontSize: '18px', // Tăng kích thước của nhãn
+        fontSize: '16px', // Tăng kích thước của nhãn
     },
     '& .MuiInputBase-input': {
-        fontSize: '18px', // Tăng kích thước của đầu vào
+        fontSize: '16px', // Tăng kích thước của đầu vào
     },
     '& .MuiOutlinedInput-root': {},
 }));
 
 function RecoverPassword() {
+    // check validation
+    const [emailorUserName, setEmailOrUserName] = useState('');
+    const emailValidation = useValidation({ value: '' });
+    const [showToast, setShowToast] = useState(false);
+    const handleRecoverPassword = () => {
+        const isEmailValid = emailValidation.validateEmail();
+        if (isEmailValid) {
+            console.log('Email: ', emailorUserName);
+            setShowToast(true);
+        } else {
+            // Handle validation errors
+            console.log('Validation failed. Please check the form.');
+        }
+    };
     return (
         <Container sx={{ minHeight: '40vh' }}>
             <Box>
@@ -34,9 +50,20 @@ function RecoverPassword() {
                     create a new password via email.
                 </CustomTypography>
                 <CustomTextField
+                    value={emailorUserName}
+                    onChange={(e) => {
+                        setEmailOrUserName(e.target.value);
+                        emailValidation.setState({
+                            ...emailValidation.state,
+                            value: e.target.value,
+                        });
+                    }}
+                    variant="outlined"
+                    onBlur={emailValidation.validateEmail}
+                    error={emailValidation.state.message !== ''}
+                    helperText={emailValidation.state.message}
                     id="input-text-password"
                     label="UserName or Email"
-                    variant="outlined"
                     fullWidth
                     sx={{
                         '& label': {
@@ -49,9 +76,10 @@ function RecoverPassword() {
                         '& .MuiInputBase-root': {
                             fontSize: '2rem',
                         },
-                        // '& .MuiOutlinedInput-root': {
-                        //   fontSize: '7rem',
-                        // },
+                        '& .MuiFormHelperText-root': {
+                            fontSize: '12px', // Adjust the font size as needed
+                        },
+                        mt: 1,
                     }}
                 />
 
@@ -64,18 +92,21 @@ function RecoverPassword() {
                         color: 'grey', // Màu chữ là màu xám
                         borderColor: 'grey', // Màu viền là màu xám
                         fontSize: '14px',
-                        '&:hover': {
-                            color: 'white', // Màu chữ khi hover là màu trắng
-                            backgroundColor: 'var(--primary)', // Màu nền khi hover là màu xám
-                            borderColor: 'grey', // Màu viền khi hover là màu xám
-                        },
                     }}
-                    onClick={() => {
-                        alert('xss attack lỏd :)))');
-                    }}
+                    onClick={handleRecoverPassword}
                 >
                     Recover Password
                 </Button>
+                <ToastMessage2
+                    message={
+                        <Typography sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
+                            Vui lòng đăng nhập gmail của bạn để lấy lại mật khẩu
+                        </Typography>
+                    }
+                    type={'success'}
+                    setShowToast={setShowToast}
+                    showToast={showToast}
+                />
             </Box>
         </Container>
     );

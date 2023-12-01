@@ -11,7 +11,7 @@ function EmptyCard({ message }) {
         // Don't have products in Card
         <Box className={cx('empty-card-container')}>
             <Typography
-                margin="0 0 10px;"
+                margin="0 0 10px"
                 fontWeight={'bold'}
                 fontSize={'14px'}
                 variant="body1"

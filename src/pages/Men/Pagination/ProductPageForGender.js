@@ -55,6 +55,7 @@ export default function ProductPageForGender({ selectedGender }) {
                 <CustomTypography sx={{ fontWeight: 'bold', fontSize: '18px', mt: 4, mb: 2 }}>
                     Lọc Sản Phẩm
                 </CustomTypography>
+                {/* filter by brand and price */}
                 <FilterBrandPriceByAccordion
                     handleBrandFilter={handleBrandFilter}
                     selectedBrands={selectedBrands}
@@ -71,6 +72,7 @@ export default function ProductPageForGender({ selectedGender }) {
                         mb: 2,
                     }}
                 >
+                    {/* searching product */}
                     <TextField
                         onChange={(e) => setSearchVal(e.target.value)}
                         label="Searching..."
@@ -82,12 +84,12 @@ export default function ProductPageForGender({ selectedGender }) {
                     >
                         <SearchIcon />
                     </IconButton>
-                    <Box sx={{ mt: 2 }}>
+                    <Box sx={{ mt: 4 }}>
                         <SortingSection sorting={sorting} handleSortChange={handleSortChange} />
                     </Box>
                 </Box>
             </Box>
-            <Grid>
+            <Box>
                 {hasProducts ? (
                     <>
                         <LoadMoreProduct
@@ -106,11 +108,12 @@ export default function ProductPageForGender({ selectedGender }) {
                 ) : (
                     <EmptyCard message={'Không có sản phẩm phù hợp'} />
                 )}
-            </Grid>
+            </Box>
         </Box>
     );
 }
 
+// filter product for men and women page
 function FilterBrandPriceByAccordion({
     handleBrandFilter,
     selectedBrands,

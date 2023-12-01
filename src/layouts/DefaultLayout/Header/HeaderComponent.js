@@ -44,7 +44,7 @@ function HeaderDesign() {
     const user = localStorage.getItem('user');
     return (
         <AppBar position="fixed" sx={{ bgcolor: 'var(--header-color)' }}>
-            <Container>
+            <Box sx={{ ml: 3, mr: 3 }}>
                 <Toolbar className={cx('custom-header')}>
                     <HomeIcon fontSize="large"></HomeIcon>
 
@@ -87,7 +87,7 @@ function HeaderDesign() {
     </Box> */}
                     </Box>
                 </Toolbar>{' '}
-            </Container>
+            </Box>
             {/* Corrected component name */}
         </AppBar>
     );

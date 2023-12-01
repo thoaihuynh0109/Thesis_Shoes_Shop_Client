@@ -6,7 +6,8 @@ import TestProductPagination from './Pagination/TestProductPagination';
 
 function Shop() {
     return (
-        <Box sx={{ flexGrow: 1, minHeight: '500vh', mt: 4, ml: 4 }}>
+        // <Box sx={{ flexGrow: 1, mt: 4, ml: 4 }}>
+        <Box sx={{ flexGrow: 1, mt: 4 }}>
             <TestProductPagination />
         </Box>
     );

@@ -61,6 +61,7 @@ function MakeProductsCardItem() {
                         labelNew={product.labelNew}
                         // labelNew={true}
                         sx={{ margin: '0 20px' }}
+                        mr={0}
                     />
                 ))}
             </Box>

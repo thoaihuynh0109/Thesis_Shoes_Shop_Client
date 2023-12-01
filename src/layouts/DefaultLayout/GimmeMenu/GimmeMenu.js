@@ -33,9 +33,12 @@ function GimmeMenu() {
     };
 
     return (
-        <Container className={cx('gimme-mainnav_wrapper')}>
+        <Box className={cx('gimme-mainnav_wrapper')}>
             <DividerDesign />
-            <Box className={cx('gimme_mainnav')} sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box
+                className={cx('gimme_mainnav')}
+                sx={{ display: 'flex', alignItems: 'center', mb: 1 }}
+            >
                 <Stack direction="row" spacing={8} className={cx('menu-list-item')}>
                     <Link color="inherit" component={Link} to="/" className={cx('menu-child-item')}>
                         HOME
@@ -111,7 +114,7 @@ function GimmeMenu() {
             <DividerDesign />
             {/* <Breadcrumbs /> */}
             <Breadcrumbs />
-        </Container>
+        </Box>
     );
 }
 

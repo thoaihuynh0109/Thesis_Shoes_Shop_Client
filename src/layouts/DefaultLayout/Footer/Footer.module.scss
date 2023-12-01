@@ -4,6 +4,7 @@
     padding: 20px;
     text-align: center;
     position: fixed;
+
     left: 0;
     bottom: 0;
     width: 100%;
@@ -23,7 +24,7 @@
 .footer-icon:hover {
     background-color: var(--text-hover-header);
     // color: var(--text-hover-header);
-    cursor: pointer; 
+    cursor: pointer;
 }
 
 .footer-follow-icon {

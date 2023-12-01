@@ -12,6 +12,7 @@ function UpdateAddress() {
     const navigate = useNavigate();
 
     const [showToast, setShowToast] = useState(false);
+    
     const location = useLocation();
     const { deliveryAddress } = location.state || {};
 

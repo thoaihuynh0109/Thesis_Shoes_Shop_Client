@@ -30,7 +30,6 @@ const CustomTypographyContent = styled(Typography)(({}) => ({
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    
 }));
 
 function Footer() {
@@ -88,7 +87,7 @@ function Footer() {
                     {/* ACCOUNT section */}
                     <Grid item xs={12} sm={3}>
                         <CustomTypographyTitle>ACCOUNT?</CustomTypographyTitle>
-                        <CustomTypographyContent  color="text.secondary" mt={2}>
+                        <CustomTypographyContent color="text.secondary" mt={2}>
                             We are student come HCMUTE.
                         </CustomTypographyContent>
                     </Grid>
@@ -130,8 +129,13 @@ function Footer() {
                 </Grid>
 
                 {/* Copyright section */}
-                <Box mt={5} >
-                <Typography variant="body2" fontSize="17px" color="text.secondary" align='center'>
+                <Box mt={5}>
+                    <Typography
+                        variant="body2"
+                        fontSize="17px"
+                        color="text.secondary"
+                        align="center"
+                    >
                         {'Copyright © '}
                         <Link
                             color="inherit"

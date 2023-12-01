@@ -17,13 +17,15 @@ function FlashSaleProducts() {
                 sx={{
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'space-evenly',
+                    justifyContent: 'space-between',
+                    ml: 7,
                 }}
             >
-                <CustomFlashSaleProduct topPosition="40%" leftPosition={'44%'} />
+                <CustomFlashSaleProduct topPosition="40%" leftPosition={'44%'} imgWidth={550} />
                 <CustomFlashSaleProduct
                     topPosition="40%"
                     leftPosition={'44%'}
+                    imgWidth={550}
                     imgSrc={
                         'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/shoes-flash-sale-design-template-1175b5ee5ef28e1270927651c6d3e010_screen.jpg?ts=1663231305'
                     }
@@ -34,10 +36,12 @@ function FlashSaleProducts() {
                 imgSrc={
                     'https://s.yimg.com/ny/api/res/1.2/qgqP4dNUr9lBnIuqVIwK4w--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD02MDA-/https://media.zenfs.com/en/hearst_womens_health_52/e28a86725943f53af75942de9fb65db7'
                 }
-                ml={24}
+                ml={12}
                 mt={2}
-                imgHeight="300px"
+                imgHeight="350px"
                 imgWidth="85%"
+                topPosition={'48%'}
+                leftPosition={'48%'}
             />
         </Box>
     );

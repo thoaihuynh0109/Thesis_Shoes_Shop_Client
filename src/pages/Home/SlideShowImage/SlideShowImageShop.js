@@ -15,7 +15,7 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function SlideShowImageShop() {
     const navigate = useNavigate();
     return (
-        <Box sx={{ flexGrow: 2 }}>
+        <Box sx={{ flexGrow: 2, mt: 2 }}>
             <Grid container spacing={2}>
                 <Grid item xs={6}>
                     <Item sx={{ p: 2 }}>

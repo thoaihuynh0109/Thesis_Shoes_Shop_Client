@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from '@mui/material';
+import { Container, Box } from '@mui/material';
 import styles from './Home.module.scss';
 import classNames from 'classnames/bind';
 import TabProducts from './TabProducts/TabProducts';
@@ -12,7 +12,7 @@ const cx = classNames.bind(styles);
 
 function Home() {
     return (
-        <Container sx={{ height: '100%', minHeight: '500vh' }}>
+        <Box sx={{ height: '100%', minHeight: '450vh' }}>
             <SlideShowImageShop />
             <TabProducts />
             {/* New Products Arrivals */}
@@ -23,7 +23,7 @@ function Home() {
             <FlashSaleProducts />
             {/* Most Products Viewed */}
             <MostProductsViewed />
-        </Container>
+        </Box>
     );
 }
 

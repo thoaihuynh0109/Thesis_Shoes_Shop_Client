@@ -12,7 +12,7 @@ function PaymentStep() {
 
     return (
         <Box>
-            <CustomTypography sx={{ textTransform: 'capitalize' }}>
+            <CustomTypography sx={{ textTransform: 'capitalize', fontSize: '16px' }}>
                 Chọn phương thức thanh toán
             </CustomTypography>
 

@@ -124,7 +124,7 @@ export function MakeProductsCard({
     };
 
     return (
-        <Box>
+        <Box sx={{ mb: 2, ml: 1 }}>
             <Card
                 sx={{
                     minWidth: minWidthCard || '270px',
@@ -299,7 +299,9 @@ export function MakeProductsCard({
                 </CardActions>
             </Card>
             <Box maxWidth={minWidthCard} sx={{ textAlign: 'center', mt: 1 }}>
-                <Typography sx={{ fontSize: '15px' }}>{title}</Typography>
+                <Typography sx={{ fontSize: '15px', textTransform: 'capitalize' }}>
+                    {title}
+                </Typography>
                 <Typography sx={{ fontSize: '14px' }}>
                     <strong>{price} VND</strong>
                 </Typography>

@@ -1,15 +1,5 @@
 import React, { useState } from 'react';
-import {
-    Box,
-    styled,
-    Paper,
-    Grid,
-    IconButton,
-    Button,
-    Typography,
-    Container,
-    Divider,
-} from '@mui/material';
+import { Box, styled, Grid, Button, Container, Divider } from '@mui/material';
 import { MakeProductsCard } from '~/components/MakeProductCards/MakeProductCards';
 import { ArrowBackIos } from '@mui/icons-material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -177,25 +167,27 @@ export default function ResponsiveViewedProducts() {
                 </Box>
             </Box>
             <Divider sx={{ mt: 1, mb: 2 }} />
-
-            <Grid container spacing={{ xs: 2, md: 3 }}>
-                {currentImages.map((imageIndex) => (
-                    <Grid item xs={6} sm={3} md={3} sx={{ display: 'flex' }}>
-                        <MakeProductsCard
-                            image={products[imageIndex].img}
-                            title={products[imageIndex].title}
-                            price={products[imageIndex].price}
-                            rating={products[imageIndex].rating}
-                            label={products[imageIndex].label}
-                            // custom card
-                            minWidthCard={'240px'}
-                            maxHeightCard={'210px'}
-                            imgHeight={'140px'}
-                            imgWidth={'75%'}
-                        />
-                    </Grid>
-                ))}
-            </Grid>
+            <Box sx={{ ml: 9, mt: 4 }}>
+                <Grid container spacing={{ xs: 2, md: 3 }}>
+                    {currentImages.map((imageIndex) => (
+                        <Grid item xs={6} sm={3} md={3} sx={{ display: 'flex' }}>
+                            <MakeProductsCard
+                                image={products[imageIndex].img}
+                                title={products[imageIndex].title}
+                                price={products[imageIndex].price}
+                                rating={products[imageIndex].rating}
+                                label={products[imageIndex].label}
+                                // custom card
+                                minWidthCard={'240px'}
+                                maxHeightCard={'210px'}
+                                imgHeight={'140px'}
+                                imgWidth={'180px'}
+                            />
+                        </Grid>
+                    ))}
+                </Grid>
+            </Box>
+            ;
         </Box>
     );
 }

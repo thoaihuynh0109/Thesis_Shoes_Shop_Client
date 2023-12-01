@@ -4,7 +4,7 @@ import Footer from './Footer/Footer';
 import GimmeMenu from './GimmeMenu/GimmeMenu';
 import HeaderDesign from './Header/HeaderComponent';
 import SubHeader from './SubHeader/SubHeader';
-
+import { Box } from '@mui/material';
 import ScrollButtonToTop from '~/components/BackToTop';
 import { InfiniteSliderTrack } from '~/components/SlideShowImage';
 import PageNotFound from '~/pages/NotFound/PageNotFound';
@@ -21,19 +21,20 @@ function DefaultLayout({ children }) {
     const shouldDisplayHeaderAndFooter = location.pathname !== '/404';
 
     return (
-        <>
-            <HeaderDesign></HeaderDesign>
-            {/* <NewHeaderDesign /> */}
-            <SubHeader></SubHeader>
-            <GimmeMenu></GimmeMenu>
+        <Box>
+            <Box sx={{ ml: 4, mr: 4 }}>
+                <HeaderDesign></HeaderDesign>
+                {/* <NewHeaderDesign /> */}
+                <SubHeader></SubHeader>
+                <GimmeMenu></GimmeMenu>
 
-            {children}
+                {children}
 
-            <ScrollButtonToTop />
-            <InfiniteSliderTrack />
-
+                <ScrollButtonToTop />
+                <InfiniteSliderTrack />
+            </Box>
             <Footer />
-        </>
+        </Box>
     );
 }
 
