@@ -66,7 +66,7 @@ export default function ProductGrid({
             const filteredProducts2 = productsToRender.filter((product) =>
                 product.title.toLowerCase().includes(searchTerm.toLowerCase()),
             );
-            // Update the state to reflect whether there are products or not
+
             // console.log('filter này ne ahihi:', filteredProducts2);
             if (filteredProducts2.length > 0) {
                 // console.log('List Product:', filteredProducts2);
@@ -74,7 +74,9 @@ export default function ProductGrid({
                 const endIndex = startIndex + PER_PAGE;
                 const paginatedData = filteredProducts2.slice(startIndex, endIndex);
                 data = sortProducts(paginatedData);
-            } else {
+            }
+            // Update the state to reflect whether there are products or not
+            else {
                 return (
                     <Box style={{ width: '100%', textAlign: 'center', mt: 4 }}>
                         <EmptyCard message={'Product Is Not Found'} />;
