@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom';
 // ];
 
 function UserAuthenticated() {
-    const user = localStorage.getItem('user');
+    const user = localStorage.getItem('user') || {};
     const dataUser = JSON.parse(user);
     const isAdmin = dataUser.isAdmin;
 

@@ -19,7 +19,7 @@ import { useTheme } from '@mui/material/styles';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { CustomizeTextField } from '~/components/CustomizeTextField/CustomizeTextField';
 import { CustomizeButton } from '~/components/CustomizeButton/CustomizeButton';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import productService from '~/services/productServices';
 import categoryService from '~/services/categoryServices';
 import ToastMessage from '~/components/ToastMessage/ToastMessage';
@@ -40,7 +40,7 @@ const MenuProps = {
 
 const listColors = ['Trắng', 'Đen', 'Đỏ', 'Xanh lá', 'Vàng'];
 
-function AddProduct() {
+function EditProduct() {
     const [name, setName] = React.useState({
         value: '',
         message: '',
@@ -74,6 +74,24 @@ function AddProduct() {
 
     const theme = useTheme();
 
+    const { id } = useParams();
+
+    React.useEffect(() => {
+        async function fetchProduct() {
+            const product = await productService.getProductById(id);
+            console.log(product);
+            setName({ value: product.name, message: '' });
+            setDescription({ value: product.description, message: '' });
+            setPrice({ value: product.price, message: '' });
+            setPriceSale({ value: product.priceSale, message: '' });
+            setColors(product.colors);
+            setSelectedBrandId(product.brand);
+            setSelectedCategoryId(product.categoryId);
+            setSelectedSubCategoryId(null);
+            setImageUrl(product.images);
+        }
+        fetchProduct();
+    }, []);
     const handleChange = (event) => {
         const {
             target: { value },
@@ -136,7 +154,7 @@ function AddProduct() {
         return false;
     };
 
-    const handleCreate = async (e) => {
+    const handleUpdate = async (e) => {
         e.preventDefault();
         if (!checkError()) {
             const data = {
@@ -150,23 +168,14 @@ function AddProduct() {
                 brand: selectedBrandId,
                 categoryId: selectedCategoryId,
             };
-            const respone = await productService.createProduct(data);
+            const respone = await productService.updateProduct(id, data);
 
-            // call api to create new product
-            if (respone.status === 201) {
-                setMessage('Tạo product thành công');
+            // call api to update product
+            if (respone.status === 200) {
+                setMessage('Update product thành công');
                 setTypeMessage('success');
-                setName({ value: '', message: '' });
-                setDescription({ value: '', message: '' });
-                setPrice({ value: 0, message: '' });
-                setPriceSale({ value: 0, message: '' });
-                setColors([]);
-                setSelectedBrandId(null);
-                setSelectedCategoryId(null);
-                setSelectedSubCategoryId(null);
-                setImageUrl('');
             } else {
-                setMessage('Tạo product thất bại');
+                setMessage('Update product thất bại');
                 setTypeMessage('error');
             }
         } else {
@@ -192,7 +201,7 @@ function AddProduct() {
             >
                 Back
             </CustomizeButton>
-            <Typography sx={{ fontSize: '3rem', fontWeight: 600 }}>New Product</Typography>
+            <Typography sx={{ fontSize: '3rem', fontWeight: 600 }}>Update Product</Typography>
 
             <Paper sx={{ mt: 4, mb: 4, padding: 1.5, borderRadius: 4 }}>
                 <Box sx={{ flexGrow: 1, width: '100%' }}>
@@ -274,7 +283,7 @@ function AddProduct() {
                                     flexGrow: 1,
                                 }}
                             >
-                                <form onSubmit={handleCreate}>
+                                <form onSubmit={handleUpdate}>
                                     <ToastMessage message={message} type={typeMessage} />
 
                                     <Box>
@@ -453,7 +462,7 @@ function AddProduct() {
                                         </CustomizeTextField>
                                     )}
 
-                                    <CustomizeButton type="submit">Create Product</CustomizeButton>
+                                    <CustomizeButton type="submit">Update Product</CustomizeButton>
                                 </form>
                             </Paper>
                         </Grid>
@@ -464,4 +473,4 @@ function AddProduct() {
     );
 }
 
-export default AddProduct;
+export default EditProduct;
