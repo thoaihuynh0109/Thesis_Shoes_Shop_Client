@@ -31,10 +31,9 @@ export default function MakeProductDetailDescription() {
     };
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, mt: 2 }}>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
-                    {/* <Item>xs=6 md=8</Item> */}
                     {/* image on the left side
                 information on the right side
             */}
@@ -85,30 +84,64 @@ export default function MakeProductDetailDescription() {
                                 src={`${productDetail.image}`}
                                 alt={`Image ${productDetail.productId}`}
                                 width="75%"
-                                height="65%"
-                                style={{ borderRadius: '12px', marginTop: '12px' }}
+                                height="400px"
+                                style={{
+                                    // borderRadius: '12px',
+                                    marginTop: '12px',
+                                    margin: '58px 75px  ',
+                                }}
                             />
                             {/* )} */}
                         </Box>
 
                         {/* Thêm nút Previous */}
                         <IconButton
-                            sx={{ position: 'absolute', bottom: '10px', right: '10px' }}
+                            sx={{
+                                position: 'absolute',
+                                bottom: '10px',
+                                right: '10px',
+                                ml: 2,
+                                '&:hover': {
+                                    background: 'transparent',
+                                },
+                            }}
                             onClick={handleNextImage}
                             disabled={images.length <= 1}
                         >
                             <Avatar>
-                                <NavigateNextIcon />
+                                <NavigateNextIcon
+                                    sx={{
+                                        fontSize: 28,
+                                        '&:hover': {
+                                            color: 'greenyellow',
+                                        },
+                                    }}
+                                />
                             </Avatar>
                         </IconButton>
                         {/* Thêm nút Next */}
                         <IconButton
-                            sx={{ position: 'absolute', bottom: '10px', right: '50px' }}
+                            sx={{
+                                position: 'absolute',
+                                bottom: '10px',
+                                right: '50px',
+                                mr: 2,
+                                '&:hover': {
+                                    background: 'transparent',
+                                },
+                            }}
                             onClick={handlePreviousImage}
                             disabled={images.length <= 1}
                         >
                             <Avatar>
-                                <NavigateBeforeIcon />
+                                <NavigateBeforeIcon
+                                    sx={{
+                                        fontSize: 28,
+                                        '&:hover': {
+                                            color: 'greenyellow',
+                                        },
+                                    }}
+                                />
                             </Avatar>
                         </IconButton>
                     </Box>
