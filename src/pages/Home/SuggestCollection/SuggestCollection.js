@@ -5,7 +5,7 @@ import { ArrowBackIos } from '@mui/icons-material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 import { MakeProductsCard } from '~/components/MakeProductCards/MakeProductCards';
-
+import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
 const products = [
     {
         id: 1,
@@ -82,6 +82,8 @@ export default SuggestCollection;
 
 function CustomSuggestCollection() {
     const [currentImages, setCurrentImages] = useState([0, 1, 2, 3]);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
 
     // previous item
     const handleGoToPrevImage = () => {
@@ -122,6 +124,11 @@ function CustomSuggestCollection() {
                             price={products[imageIndex].price}
                             rating={products[imageIndex].rating}
                             label={products[imageIndex].label}
+                            showToast={showToast}
+                            setShowToast={setShowToast}
+                            // show suitable toast message
+                            toastMessage={toastMessage}
+                            setToastMessage={setToastMessage}
                         />
                     ))}
                 </Box>
@@ -132,6 +139,13 @@ function CustomSuggestCollection() {
             >
                 <ArrowForwardIosIcon sx={{ fontSize: '36px', ml: '12px' }} />
             </Button>
+            <ToastMessage2
+                // message="Product added to cart!"
+                message={toastMessage}
+                type="success"
+                showToast={showToast}
+                setShowToast={setShowToast}
+            />
         </Box>
     );
 }
