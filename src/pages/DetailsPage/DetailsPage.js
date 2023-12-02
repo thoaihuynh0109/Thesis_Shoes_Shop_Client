@@ -84,7 +84,7 @@ function DetailsPage() {
     };
 
     return (
-        <Box sx={{ minHeight: '600vh', ml: 2, mr: 2 }}>
+        <Box sx={{ minHeight: '150vh', ml: 2, mr: 2 }}>
             <MakeProductDetailDescription />
             {/* some products suggestion */}
             <Box>
