@@ -239,14 +239,14 @@ function ProductsInCard() {
                             >
                                 Continue Shopping
                             </CustomButton>
-                            <CustomButton
+                            {/* <CustomButton
                                 color="inherit"
                                 disabled={activeStep === 0}
                                 onClick={handleBack}
                                 sx={{ mr: 1 }}
                             >
                                 Back
-                            </CustomButton>
+                            </CustomButton> */}
                             <Box sx={{ flex: '1 1 auto' }} />
 
                             {/* {activeStep !== steps.length &&
