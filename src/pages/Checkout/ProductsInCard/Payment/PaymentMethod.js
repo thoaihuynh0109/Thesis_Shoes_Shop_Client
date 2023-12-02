@@ -60,9 +60,10 @@ const PaymentMethod = ({ onSelectPaymentMethod }) => {
             </form>
 
             {/* Conditionally render UI based on the selected payment method */}
-
-            {selectedPaymentMethod === 'paypal' && <PayPalMethod />}
-            {selectedPaymentMethod === 'COD' && <CashOnDeliveryMethod />}
+            <Box sx={{ ml: 48, mr: 48, textAlign: 'center' }}>
+                {selectedPaymentMethod === 'paypal' && <PayPalMethod />}
+                {selectedPaymentMethod === 'COD' && <CashOnDeliveryMethod />}
+            </Box>
         </Box>
     );
 };

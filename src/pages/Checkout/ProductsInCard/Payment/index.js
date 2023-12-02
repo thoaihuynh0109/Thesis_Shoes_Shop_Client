@@ -16,7 +16,10 @@ function PaymentStep() {
                 Chọn phương thức thanh toán
             </CustomTypography>
 
-            <PaymentMethod onSelectPaymentMethod={handleSelectPaymentMethod} />
+            <Box sx={{}}>
+                {' '}
+                <PaymentMethod onSelectPaymentMethod={handleSelectPaymentMethod} />
+            </Box>
         </Box>
     );
 }
