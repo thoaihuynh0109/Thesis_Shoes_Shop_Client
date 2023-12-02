@@ -4,6 +4,8 @@ import { MakeProductsCard } from '~/components/MakeProductCards/MakeProductCards
 import { ArrowBackIos } from '@mui/icons-material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
+import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
+import shopData from '~/pages/Shop/Pagination/shop.json';
 const ButtonContainer = styled(Button)({
     alignItems: 'center',
     justifyContent: 'center',
@@ -124,15 +126,100 @@ const products = [
     },
 ];
 
+// get data with an array in its component
+// export default function ResponsiveViewedProducts() {
+//     const [currentImages, setCurrentImages] = useState([0, 1, 2, 3, 4, 5, 6, 7]);
+//     const [showToast, setShowToast] = useState(false);
+//     const [toastMessage, setToastMessage] = useState('');
+
+//     const handleNext = () => {
+//         const updatedImages = [...currentImages];
+//         const nextIndices = [];
+
+//         for (let i = 0; i < currentImages.length; i++) {
+//             nextIndices[i] = (currentImages[i] + 1) % products.length;
+//             updatedImages[i] = nextIndices[i];
+//         }
+
+//         setCurrentImages(updatedImages);
+//     };
+
+//     const handlePrevious = () => {
+//         const updatedImages = [...currentImages];
+//         const previousIndices = [];
+
+//         for (let i = 0; i < currentImages.length; i++) {
+//             previousIndices[i] = (currentImages[i] - 1 + products.length) % products.length;
+//             updatedImages[i] = previousIndices[i];
+//         }
+
+//         setCurrentImages(updatedImages);
+//     };
+
+//     return (
+//         <Box sx={{ flexGrow: 1 }}>
+//             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+//                 <CustomTypography variant="h3" sx={{ fontSize: '24px', fontWeight: 'bold' }}>
+//                     MOST PRODUCTS VIEWED
+//                 </CustomTypography>
+//                 <Box>
+//                     <ButtonContainer onClick={handlePrevious} variant="contained" sx={{ mr: 2 }}>
+//                         <ArrowBackIos sx={{ fontSize: '24px', marginRight: '-25%' }} />
+//                     </ButtonContainer>
+//                     <ButtonContainer onClick={handleNext} variant="contained">
+//                         <ArrowForwardIosIcon sx={{ fontSize: '24px', margin: '0 auto' }} />
+//                     </ButtonContainer>
+//                 </Box>
+//             </Box>
+//             <Divider sx={{ mt: 1, mb: 2 }} />
+//             <Box sx={{ ml: 9, mt: 4 }}>
+//                 <Grid container spacing={{ xs: 2, md: 3 }}>
+//                     {currentImages.map((imageIndex) => (
+//                         <Grid item xs={6} sm={3} md={3} sx={{ display: 'flex' }}>
+//                             <MakeProductsCard
+//                                 image={products[imageIndex].img}
+//                                 title={products[imageIndex].title}
+//                                 price={products[imageIndex].price}
+//                                 rating={products[imageIndex].rating}
+//                                 label={products[imageIndex].label}
+//                                 // custom card
+//                                 minWidthCard={'240px'}
+//                                 maxHeightCard={'210px'}
+//                                 imgHeight={'140px'}
+//                                 imgWidth={'180px'}
+//                                 showToast={showToast}
+//                                 setShowToast={setShowToast}
+//                                 // show suitable toast message
+//                                 toastMessage={toastMessage}
+//                                 setToastMessage={setToastMessage}
+//                             />
+//                         </Grid>
+//                     ))}
+//                 </Grid>
+//             </Box>
+//             <ToastMessage2
+//                 // message="Product added to cart!"
+//                 message={toastMessage}
+//                 type="success"
+//                 showToast={showToast}
+//                 setShowToast={setShowToast}
+//             />
+//         </Box>
+//     );
+// }
+
+// get data with shop.json
 export default function ResponsiveViewedProducts() {
     const [currentImages, setCurrentImages] = useState([0, 1, 2, 3, 4, 5, 6, 7]);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
 
     const handleNext = () => {
         const updatedImages = [...currentImages];
         const nextIndices = [];
 
         for (let i = 0; i < currentImages.length; i++) {
-            nextIndices[i] = (currentImages[i] + 1) % products.length;
+            nextIndices[i] = (currentImages[i] + 1) % shopData.length;
             updatedImages[i] = nextIndices[i];
         }
 
@@ -144,12 +231,13 @@ export default function ResponsiveViewedProducts() {
         const previousIndices = [];
 
         for (let i = 0; i < currentImages.length; i++) {
-            previousIndices[i] = (currentImages[i] - 1 + products.length) % products.length;
+            previousIndices[i] = (currentImages[i] - 1 + shopData.length) % shopData.length;
             updatedImages[i] = previousIndices[i];
         }
 
         setCurrentImages(updatedImages);
     };
+    const visibleProducts = shopData.slice(0, 8); // Display only the first 8 items
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -169,25 +257,56 @@ export default function ResponsiveViewedProducts() {
             <Divider sx={{ mt: 1, mb: 2 }} />
             <Box sx={{ ml: 9, mt: 4 }}>
                 <Grid container spacing={{ xs: 2, md: 3 }}>
-                    {currentImages.map((imageIndex) => (
-                        <Grid item xs={6} sm={3} md={3} sx={{ display: 'flex' }}>
+                    {currentImages.map((data) => (
+                        <Grid item xs={6} sm={3} md={3} sx={{ display: 'flex' }} key={data.id}>
                             <MakeProductsCard
-                                image={products[imageIndex].img}
-                                title={products[imageIndex].title}
-                                price={products[imageIndex].price}
-                                rating={products[imageIndex].rating}
-                                label={products[imageIndex].label}
-                                // custom card
+                                image={shopData[data].img}
+                                title={shopData[data].title}
+                                price={shopData[data].price}
+                                rating={shopData[data].rating}
+                                label={shopData[data].label}
                                 minWidthCard={'240px'}
-                                maxHeightCard={'210px'}
+                                maxHeightCard={'220px'}
                                 imgHeight={'140px'}
                                 imgWidth={'180px'}
+                                showToast={showToast}
+                                setShowToast={setShowToast}
+                                toastMessage={toastMessage}
+                                setToastMessage={setToastMessage}
                             />
                         </Grid>
                     ))}
                 </Grid>
             </Box>
-            ;
+            {/* <Box sx={{ ml: 9, mt: 4 }}>
+                <Grid container spacing={{ xs: 2, md: 3 }}>
+                    {visibleProducts.map((data) => (
+                        <Grid item xs={6} sm={3} md={3} sx={{ display: 'flex' }} key={data.id}>
+                            <MakeProductsCard
+                                image={data.img}
+                                title={data.title}
+                                price={data.price}
+                                rating={data.rating}
+                                label={data.label}
+                                minWidthCard={'240px'}
+                                maxHeightCard={'210px'}
+                                imgHeight={'140px'}
+                                imgWidth={'180px'}
+                                showToast={showToast}
+                                setShowToast={setShowToast}
+                                toastMessage={toastMessage}
+                                setToastMessage={setToastMessage}
+                            />
+                        </Grid>
+                    ))}
+                </Grid>
+            </Box> */}
+            <ToastMessage2
+                message={toastMessage}
+                type="success"
+                showToast={showToast}
+                setShowToast={setShowToast}
+            />
         </Box>
     );
 }
