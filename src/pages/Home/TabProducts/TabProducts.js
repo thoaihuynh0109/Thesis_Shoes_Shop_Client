@@ -3,9 +3,10 @@ import { Box, Tab, Typography, styled } from '@mui/material';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import RecipeReviewCard from './ProductsCard';
 import BestSeller from './BestSeller';
 import MakeProductsCardItem from './MakeProductsCardItem';
+import Featured from './Featured';
+
 const CustomTab = styled(Tab)(({}) => ({
     fontSize: '18px',
     color: '#333',
@@ -42,7 +43,9 @@ export default function TabProducts() {
                 <CustomTabPanel value="2">
                     <BestSeller />
                 </CustomTabPanel>
-                <CustomTabPanel value="3">Featured</CustomTabPanel>
+                <CustomTabPanel value="3">
+                    <Featured />
+                </CustomTabPanel>
             </TabContext>
         </Box>
     );
