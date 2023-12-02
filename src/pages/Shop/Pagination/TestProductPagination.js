@@ -208,10 +208,6 @@ export default function TestProductPagination() {
                             mb: 2,
                         }}
                     >
-                        {/* searching chưa hoàn thành
-                            khi search xong thì không thể sorting hoặc filtering
-                        */}
-
                         <SortingSection sorting={sorting} handleSortChange={handleSortChange} />
 
                         {/* done for this function */}
@@ -226,19 +222,6 @@ export default function TestProductPagination() {
                             <SearchIcon />
                         </IconButton> */}
                     </Box>
-
-                    {/* <ProductGrid
-                        getValue={getValue}
-                        page={page}
-                        PER_PAGE={PER_PAGE}
-                        _DATA={_DATA}
-                        storeValue={storeValue}
-                        filteredProducts={filteredProducts}
-                        brandFilteredProducts={brandFilteredProducts}
-                        sorting={sorting}
-                        hasProducts={hasProducts}
-                        navigate={navigate}
-                    /> */}
 
                     {hasProducts ? (
                         <ProductGrid
