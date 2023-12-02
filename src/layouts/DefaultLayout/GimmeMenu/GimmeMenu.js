@@ -116,16 +116,7 @@ function GimmeMenu() {
                     <SearchAppBar />
                 </Box>
                 {/* card item */}
-                {/* <IconButton color="inherit" component={Link} to="/checkout">
-                    <Badge
-                        badgeContent={
-                            <Typography fontSize={'12px'}>{totalProductsInCart()}</Typography>
-                        }
-                        color="warning"
-                    >
-                        <ShoppingCartIcon fontSize="large" />
-                    </Badge>
-                </IconButton> */}
+                
                 <Tooltip title={<CartTooltip />} arrow enterTouchDelay={0} leaveTouchDelay={1500}>
                     <IconButton color="inherit" component={Link} to="/checkout">
                         <Badge
