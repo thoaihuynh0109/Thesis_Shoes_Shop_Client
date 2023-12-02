@@ -18,21 +18,29 @@ export default function SlideShowImageShop() {
         <Box sx={{ flexGrow: 2, mt: 2 }}>
             <Grid container spacing={2}>
                 <Grid item xs={6}>
-                    <Item sx={{ p: 2 }}>
+                    <Item sx={{ p: 2, backgroundColor: '#c1bcbc' }}>
                         <CarouselImage />
                     </Item>
                 </Grid>
 
                 <Grid item xs={6}>
-                    <Item sx={{ height: '100%', p: 2 }}>
+                    <Item sx={{ height: '100%', p: 2, backgroundColor: '#d9ecd9' }}>
                         <Grid
                             container
-                            spacing={2}
                             direction="row"
                             justifyContent="flex-end"
                             sx={{ height: '100%' }}
                         >
-                            <Grid item xs={6}>
+                            <Grid
+                                item
+                                xs={6}
+                                sx={{
+                                    border: '1px solid #696183',
+                                    borderRadius: '5px',
+                                    mr: '-1px',
+                                    backgroundColor: '#d9ecd9',
+                                }}
+                            >
                                 <img
                                     src={`https://res.cloudinary.com/dd4gcajeh/image/upload/v1700375124/Gimme-shoes-images/Puma/Palermo_Sneakers_xsf4kf.png`}
                                     alt={'item.title'}
@@ -42,7 +50,15 @@ export default function SlideShowImageShop() {
                                 />
                             </Grid>
 
-                            <Grid item xs={6}>
+                            <Grid
+                                item
+                                xs={6}
+                                sx={{
+                                    border: '1px solid #696183',
+                                    borderRadius: '5px',
+                                    backgroundColor: '#d9ecd9',
+                                }}
+                            >
                                 <img
                                     src={`https://res.cloudinary.com/dd4gcajeh/image/upload/v1700375104/Gimme-shoes-images/Puma/Electrify_NITRO_2_x8xbrh.png`}
                                     alt={'item.title'}
@@ -51,7 +67,16 @@ export default function SlideShowImageShop() {
                                     loading="lazy"
                                 />
                             </Grid>
-                            <Grid item xs={12} sx={{ mt: '-4px' }}>
+                            <Grid
+                                item
+                                xs={12}
+                                sx={{
+                                    mt: '4px',
+                                    border: '1px solid #696183',
+                                    borderRadius: '5px',
+                                    backgroundColor: '#d9ecd9',
+                                }}
+                            >
                                 <img
                                     src={`https://res.cloudinary.com/dd4gcajeh/image/upload/v1700375324/Gimme-shoes-images/Nike/Female/1960142320_zm_pnlsf4_fjuzuw.png`}
                                     alt={'item.title'}
