@@ -83,10 +83,6 @@ export default function ProductGrid({
                     </Box>
                 );
             }
-            // const startIndex = (page - 1) * PER_PAGE;
-            // const endIndex = startIndex + PER_PAGE;
-            // const paginatedData = filteredProducts2.slice(startIndex, endIndex);
-            // data = sortProducts(paginatedData);
         }
 
         if (!hasProducts) {
