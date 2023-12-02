@@ -1,11 +1,10 @@
 .empty-card-container {
-    min-height: 60vh;
+    // min-height: 60vh;
     margin-top: 24px;
 }
 
 .border-container {
     border: 1px solid var(--header-text);
-    border-radius: 5px;
     padding: 32px;
 }
 
@@ -13,7 +12,7 @@
     padding: 15px;
     margin-bottom: 20px;
     border: 1px solid transparent;
-    border-radius: 0px;
+    border-radius: 5px;
 }
 .empty-card-warning {
     background-color: #fcf8e3;
