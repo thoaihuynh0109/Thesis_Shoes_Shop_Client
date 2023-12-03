@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 function PayPalCheckoutButton(props) {
     const { product } = props;
+    const navigate = useNavigate();
     const [paidFor, setPaidFor] = useState(false);
     const [error, setError] = useState(null);
     const [showToast, setShowToast] = useState(false);
@@ -17,6 +19,10 @@ function PayPalCheckoutButton(props) {
 
         // setPaidFor(true);
         setShowToast(true);
+        // Navigate to the home page after 2 seconds
+        setTimeout(() => {
+            navigate('/');
+        }, 4000);
         // refresh users's account or subscription status
     };
 
@@ -61,7 +67,7 @@ function PayPalCheckoutButton(props) {
                     const order = await actions.order.capture();
                     console.log('order', order);
                     setShowToast(true);
-                    setToastMessage('Order Successfully!!!');
+                    setToastMessage('Thanks so much for your order!');
                     setTypeMessage('success');
                     handleApprove(data.orderID);
                 }}
