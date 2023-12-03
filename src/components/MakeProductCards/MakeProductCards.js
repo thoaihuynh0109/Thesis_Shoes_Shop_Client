@@ -64,24 +64,6 @@ export function MakeProductsCard({
     const [valueRating, setValueRating] = useState(rating);
 
     // add to cart action
-    // const handleAddToCart = (product) => {
-    //     setIsLoadingAddToCart(true);
-    //     // Simulate a delay of 2 second before showing the toast
-    //     setTimeout(() => {
-    //         setIsLoadingAddToCart(false);
-    //         dispatch(addToCart(product));
-    //         console.log(product._id);
-
-    //         // Show the toast message
-    //         setToastMessage('Sản Phẩm Đã Được Thêm Vào Giỏ Hàng');
-    //         setShowToast(true);
-    //         // Reset toast after 3 seconds
-    //         setTimeout(() => {
-    //             setShowToast(false);
-    //         }, 3000);
-    //     }, 2000);
-    // };
-
     // add to cart action with product exist in cart
     const handleAddToCart = (product) => {
         setIsLoadingAddToCart(true);
