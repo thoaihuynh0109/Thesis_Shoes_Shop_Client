@@ -67,47 +67,54 @@ function GimmeMenu() {
                 <Stack direction="row" spacing={8} className={cx('menu-list-item')}>
                     <Link
                         to="/"
-                        className={cx('menu-child-item', { 'active-link': isLinkActive('/') })}
+                        className={(cx('menu-child-item'), { 'active-link': isLinkActive('/') })}
                     >
                         HOME
                     </Link>
                     <Link
                         to="/men"
-                        className={cx('menu-child-item', { 'active-link': isLinkActive('/men') })}
+                        className={(cx('menu-child-item'), { 'active-link': isLinkActive('/men') })}
                     >
                         MEN
                     </Link>
                     <Link
                         to="/women"
-                        className={cx('menu-child-item', { 'active-link': isLinkActive('/women') })}
+                        className={
+                            (cx('menu-child-item'), { 'active-link': isLinkActive('/women') })
+                        }
                     >
                         WOMEN
                     </Link>
                     <Link
                         to="/shop"
-                        className={cx('menu-child-item', { 'active-link': isLinkActive('/shop') })}
+                        className={
+                            (cx('menu-child-item'), { 'active-link': isLinkActive('/shop') })
+                        }
                     >
                         SHOP
                     </Link>
                     <Link
                         to="/blog"
-                        className={cx('menu-child-item', { 'active-link': isLinkActive('/blog') })}
+                        className={
+                            (cx('menu-child-item'), { 'active-link': isLinkActive('/blog') })
+                        }
                     >
                         BLOG
                     </Link>
                     <Link
                         to="/contact"
-                        className={cx('menu-child-item', {
-                            'active-link': isLinkActive('/contact'),
-                        })}
+                        className={
+                            (cx('menu-child-item'), { 'active-link': isLinkActive('/contact') })
+                        }
                     >
                         CONTACT
                     </Link>
                     <Link
                         to="/order-history"
-                        className={cx('menu-child-item', {
-                            'active-link': isLinkActive('/order-history'),
-                        })}
+                        className={
+                            (cx('menu-child-item'),
+                            { 'active-link': isLinkActive('/order-history') })
+                        }
                     >
                         ORDER
                     </Link>
@@ -116,7 +123,7 @@ function GimmeMenu() {
                     <SearchAppBar />
                 </Box>
                 {/* card item */}
-                
+
                 <Tooltip title={<CartTooltip />} arrow enterTouchDelay={0} leaveTouchDelay={1500}>
                     <IconButton color="inherit" component={Link} to="/checkout">
                         <Badge
