@@ -71,7 +71,7 @@ export default function SlideShowImageShop() {
                                 item
                                 xs={12}
                                 sx={{
-                                    mt: '4px',
+                                    mt: '0px',
                                     border: '1px solid #696183',
                                     borderRadius: '5px',
                                     backgroundColor: '#d9ecd9',
