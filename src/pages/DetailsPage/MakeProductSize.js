@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, Grid, Paper, styled } from '@mui/material';
 
-export const productsSize = ['37', '38', '39', '40', '41', '42', '43', '44'];
+export const productsSize = ['35', '36', '37', '38', '39', '40', '41', '42', '43'];
 
 function MakeProductSize() {
     const [selectedValue, setSelectedValue] = useState('');

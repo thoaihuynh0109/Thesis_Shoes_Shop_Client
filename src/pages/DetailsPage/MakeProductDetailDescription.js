@@ -81,7 +81,7 @@ export default function MakeProductDetailDescription() {
                             <CustomTypography>{productDetail.gender}</CustomTypography>
 
                             <img
-                                src={`${productDetail.image}`}
+                                src={`${productDetail.images}`}
                                 alt={`Image ${productDetail.productId}`}
                                 width="75%"
                                 height="400px"
