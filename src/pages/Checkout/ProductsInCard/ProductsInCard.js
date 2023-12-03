@@ -1,13 +1,20 @@
 import React, { useState, Fragment } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Box, Stepper, Step, StepButton, Button, Typography, Container } from '@mui/material';
+import {
+    Box,
+    Stepper,
+    Step,
+    StepButton,
+    Button,
+    Typography,
+    Container,
+    Snackbar,
+} from '@mui/material';
 import { styled } from '@mui/system';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import classNames from 'classnames/bind';
 import styles from './ProductsInCard.module.scss';
-import PageNotFound from '~/pages/NotFound/PageNotFound';
 import SummaryStep from './SummaryStep';
-import AddressStep from './AddressStep';
+import AddressStep from './AddressStep/AddressStep';
 import ShippingStep from './ShippingStep';
 import PaymentStep from './Payment';
 import SignIn from '~/components/SignIn';
@@ -47,7 +54,11 @@ const CustomStepper = styled(Stepper)(({ theme }) => ({
 function ProductsInCard() {
     const [activeStep, setActiveStep] = useState(0);
     const [completed, setCompleted] = useState({});
-
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+    const [showErrorMessage, setShowErrorMessage] = useState(false);
+    const handleCloseErrorMessage = () => {
+        setShowErrorMessage(false);
+    };
     // const [currentStepName, setCurrentStepName] = useState(''); // for 2 step: Home > Shop > GiayNam
 
     // display name for each step
@@ -118,11 +129,73 @@ function ProductsInCard() {
 
     const location = useLocation();
 
+    // const handleComplete = () => {
+    //     const newCompleted = completed;
+    //     newCompleted[activeStep] = true;
+    //     setCompleted(newCompleted);
+    // handleNext();
+    // };
+
+    // ...
+
     const handleComplete = () => {
+        const newCompleted = { ...completed };
+        newCompleted[activeStep] = true;
+        setCompleted(newCompleted);
+
+        if (isLastStep()) {
+            if (allStepsCompleted()) {
+                if (
+                    activeStep === 4 &&
+                    (selectedPaymentMethod === 'paypal' || selectedPaymentMethod === 'COD')
+                ) {
+                    setTimeout(() => {
+                        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+                        setTimeout(() => {
+                            navigate('/');
+                        }, 5000);
+                    }, 100);
+                } else if (activeStep === 4 && !selectedPaymentMethod) {
+                    // Disable Finish button and show reminder message
+                    setShowErrorMessage(true);
+                } else if (activeStep === 4) {
+                    console.log(
+                        'Vui lòng chọn một phương thức thanh toán (PayPal hoặc COD) trước khi hoàn thành đơn hàng.',
+                    );
+                }
+            }
+        } else {
+            handleNext();
+        }
+    };
+
+    const handleComplete2 = () => {
         const newCompleted = completed;
         newCompleted[activeStep] = true;
         setCompleted(newCompleted);
-        handleNext();
+
+        // Check if it's the last step
+        if (isLastStep()) {
+            // Check if all steps are completed
+            if (allStepsCompleted()) {
+                // Delay the navigation to ensure the activeStep state is updated
+                setTimeout(() => {
+                    // Update the activeStep state
+                    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
+                    // Use setTimeout to delay the navigation by 5 seconds
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 5000);
+                }, 100);
+            } else {
+                // If it's the last step but not all steps are completed, proceed to the next step
+                handleNext();
+            }
+        } else {
+            // If it's not the last step, proceed to the next step
+            handleNext();
+        }
     };
 
     const handleReset = () => {
@@ -159,9 +232,19 @@ function ProductsInCard() {
                 {allStepsCompleted() ? (
                     <Box>
                         <Fragment>
-                            <CustomTypography sx={{ mt: 2, mb: 1 }}>
-                                All steps completed - you&apos;re finished
-                            </CustomTypography>
+                            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                                <CustomTypography
+                                    sx={{
+                                        mt: 4,
+                                        mb: 1,
+                                        textAlgin: 'center',
+                                        fontWeight: 'bold',
+                                        fontSize: '20px',
+                                    }}
+                                >
+                                    Thanks so much for your order
+                                </CustomTypography>
+                            </Box>
                             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                                 <Box sx={{ flex: '1 1 auto' }} />
                                 <Button onClick={handleReset}>Reset</Button>
@@ -181,7 +264,7 @@ function ProductsInCard() {
                                 {/* Step {activeStep + 1} */}
                                 <b>Step</b> <i>{stepHeaders[activeStep]}</i>
                             </CustomTypography>
-                            {activeStep !== steps.length &&
+                            {/* {activeStep !== steps.length &&
                                 (completed[activeStep] ? (
                                     <CustomTypography
                                         variant="caption"
@@ -196,17 +279,34 @@ function ProductsInCard() {
                                             ? 'Finish'
                                             : 'Complete Step'}
                                     </CustomButton>
-                                ))}
+                                ))} */}
+                            {activeStep !== steps.length && (
+                                <CustomButton
+                                    onClick={handleComplete}
+                                    // Disable the button if no payment method is selected
+                                    disabled={!selectedPaymentMethod}
+                                >
+                                    {completedSteps() === totalSteps() - 1
+                                        ? 'Finish'
+                                        : 'Complete Step'}
+                                </CustomButton>
+                            )}
                         </Box>
-                        {activeStep === 0 && <SummaryStep />}
-                        {/* {activeStep === 0 && <PaymentStep />} */}
+                        {/* {activeStep === 0 && <SummaryStep />} */}
+                        {activeStep === 0 && <PaymentStep />}
 
                         <Box className={cx('my-account-container2')}>
                             {activeStep === 1 && <SignIn />}
                         </Box>
                         {activeStep === 2 && <AddressStep />}
                         {activeStep === 3 && <ShippingStep />}
-                        {activeStep === 4 && <PaymentStep />}
+                        {activeStep === 4 && (
+                            <PaymentStep
+                                onSelectPaymentMethod={(paymentMethod) =>
+                                    setSelectedPaymentMethod(paymentMethod)
+                                }
+                            />
+                        )}
 
                         <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                             {/* Return to the Shopping Page and Continue to Shopping */}
@@ -248,6 +348,14 @@ function ProductsInCard() {
                     </Fragment>
                 )}
             </div>
+
+            <Snackbar
+                open={showErrorMessage}
+                autoHideDuration={6000}
+                onClose={handleCloseErrorMessage}
+                message="Vui lòng chọn phương thức thanh toán trước khi hoàn thành."
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            />
         </Box>
     );
 }
