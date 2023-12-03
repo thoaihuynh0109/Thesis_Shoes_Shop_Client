@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { CustomizeButton } from '~/components/CustomizeButton/CustomizeButton';
@@ -45,14 +45,25 @@ function ShowDeliveryInformation() {
             >
                 Phone Number: {deliveryAddress.phoneNumber}
             </CustomTyporaphy>
-            <CustomTyporaphy variant="body2">Address: {deliveryAddress.address}</CustomTyporaphy>
+            <CustomTyporaphy
+                variant="body2"
+                sx={{ fontSize: ' 16px', mb: 1, textTransform: 'capitalize' }}
+            >
+                Address: {deliveryAddress.address}
+            </CustomTyporaphy>
             <CustomizeButton
                 variant="contained"
                 endIcon={<ArrowForwardIosIcon />}
                 onClick={handleUpdateAddress}
-                sx={{ fontSize: ' 16px', mt: 3, padding: '8px 20px 8px 20px' }}
+                sx={{
+                    fontSize: ' 16px',
+                    mt: 3,
+                    padding: '8px 20px 8px 20px',
+                    textTransform: 'capitalize',
+                    fontWeight: 'normal',
+                }}
             >
-                Update
+                Update Information
             </CustomizeButton>
         </Box>
     );
