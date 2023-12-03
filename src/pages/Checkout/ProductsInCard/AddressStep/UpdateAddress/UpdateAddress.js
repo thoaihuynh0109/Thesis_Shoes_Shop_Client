@@ -12,7 +12,7 @@ function UpdateAddress() {
     const navigate = useNavigate();
 
     const [showToast, setShowToast] = useState(false);
-    
+
     const location = useLocation();
     const { deliveryAddress } = location.state || {};
 
@@ -28,7 +28,7 @@ function UpdateAddress() {
 
     const handleUpdateAddress = () => {
         // Validate each field
-        const isFullNameValid = fullNameValidation.validateRequired();
+        const isFullNameValid = fullNameValidation.validateRequiredWithoutDigits();
         const isPhoneNumberValid = phoneNumberValidation.validatePhone();
         const isAddressValid = addressValidation.validateRequired();
 
@@ -56,8 +56,8 @@ function UpdateAddress() {
                 // Hide the toast before navigating
                 setShowToast(false);
                 // Update the address in the local state of ShowDeliveryInformation
-                navigate('/checkout', { state: { deliveryAddress: selectedAddress } });
-            }, 1500);
+                navigate('/checkout-page', { state: { deliveryAddress: selectedAddress } });
+            }, 2500);
         } else {
             // Handle validation errors
             console.log('Validation failed. Please check again.');
@@ -90,7 +90,7 @@ function UpdateAddress() {
                         });
                     }}
                     variant="outlined"
-                    onBlur={fullNameValidation.validateRequired}
+                    onBlur={fullNameValidation.validateRequiredWithoutDigits}
                     error={fullNameValidation.state.message !== ''}
                     helperText={fullNameValidation.state.message}
                     sx={{
@@ -173,7 +173,7 @@ function UpdateAddress() {
                 </CustomizeButtonPersonalAccount>
             </Box>
             <ToastMessage2
-                message="Chúc Mừng, Bạn Đăng Ký Tài Khoản Thành Công!"
+                message="You just updated your shipping address"
                 type="success"
                 showToast={showToast}
                 setShowToast={setShowToast}
