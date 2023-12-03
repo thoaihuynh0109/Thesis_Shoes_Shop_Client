@@ -11,7 +11,7 @@ const initialState = {
 };
 
 export const findProductIndex = (cartItems, productId) => {
-    return cartItems.findIndex((item) => item.productId === productId);
+    return cartItems.findIndex((item) => item._id === productId);
 };
 
 export const cartReducer = (state = initialState, action) => {
@@ -19,13 +19,13 @@ export const cartReducer = (state = initialState, action) => {
         case ADD_TO_CART:
             // Check if the product is already in the cart
             const existingProduct = state.cartItems.find(
-                (item) => item.productId === action.payload.productId,
+                (item) => item._id === action.payload.productId,
             );
 
             if (existingProduct) {
                 // If the product is already in the cart, update the quantity
                 const updatedCartItems = state.cartItems.map((item) =>
-                    item.productId === action.payload.productId
+                    item._id === action.payload.productId
                         ? { ...item, quantity: item.quantity + 1 }
                         : item,
                 );
