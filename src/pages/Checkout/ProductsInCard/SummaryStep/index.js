@@ -18,7 +18,6 @@ function SummaryStep() {
     return (
         <Box>
             <ProductsTable />
-            
         </Box>
     );
 }
