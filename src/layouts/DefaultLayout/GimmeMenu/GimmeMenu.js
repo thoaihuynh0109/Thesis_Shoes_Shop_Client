@@ -58,7 +58,7 @@ function GimmeMenu() {
     };
 
     return (
-        <Box className={cx('gimme-mainnav_wrapper')}>
+        <Box className={cx('gimme-mainnav_wrapper')} sx={{ cursor: 'pointer' }}>
             <DividerDesign />
             <Box
                 className={cx('gimme_mainnav')}
@@ -67,54 +67,47 @@ function GimmeMenu() {
                 <Stack direction="row" spacing={8} className={cx('menu-list-item')}>
                     <Link
                         to="/"
-                        className={(cx('menu-child-item'), { 'active-link': isLinkActive('/') })}
+                        className={cx('menu-child-item', { 'active-link': isLinkActive('/') })}
                     >
                         HOME
                     </Link>
                     <Link
                         to="/men"
-                        className={(cx('menu-child-item'), { 'active-link': isLinkActive('/men') })}
+                        className={cx('menu-child-item', { 'active-link': isLinkActive('/men') })}
                     >
                         MEN
                     </Link>
                     <Link
                         to="/women"
-                        className={
-                            (cx('menu-child-item'), { 'active-link': isLinkActive('/women') })
-                        }
+                        className={cx('menu-child-item', { 'active-link': isLinkActive('/women') })}
                     >
                         WOMEN
                     </Link>
                     <Link
                         to="/shop"
-                        className={
-                            (cx('menu-child-item'), { 'active-link': isLinkActive('/shop') })
-                        }
+                        className={cx('menu-child-item', { 'active-link': isLinkActive('/shop') })}
                     >
                         SHOP
                     </Link>
                     <Link
                         to="/blog"
-                        className={
-                            (cx('menu-child-item'), { 'active-link': isLinkActive('/blog') })
-                        }
+                        className={cx('menu-child-item', { 'active-link': isLinkActive('/blog') })}
                     >
                         BLOG
                     </Link>
                     <Link
                         to="/contact"
-                        className={
-                            (cx('menu-child-item'), { 'active-link': isLinkActive('/contact') })
-                        }
+                        className={cx('menu-child-item', {
+                            'active-link': isLinkActive('/contact'),
+                        })}
                     >
                         CONTACT
                     </Link>
                     <Link
                         to="/order-history"
-                        className={
-                            (cx('menu-child-item'),
-                            { 'active-link': isLinkActive('/order-history') })
-                        }
+                        className={cx('menu-child-item', {
+                            'active-link': isLinkActive('/order-history'),
+                        })}
                     >
                         ORDER
                     </Link>
@@ -125,7 +118,8 @@ function GimmeMenu() {
                 {/* card item */}
 
                 <Tooltip title={<CartTooltip />} arrow enterTouchDelay={0} leaveTouchDelay={1500}>
-                    <IconButton color="inherit" component={Link} to="/checkout">
+                    <IconButton color="inherit" component={Link} to="/shopping-cart">
+                        {/* <IconButton color="inherit" component={Link} to="/checkout"> */}
                         <Badge
                             badgeContent={
                                 <Typography fontSize={'12px'}>{totalProductsInCart()}</Typography>
@@ -188,7 +182,8 @@ function CartTooltip() {
                 sx={{ display: 'flex', alignItems: 'right', fontSize: '12px' }}
                 variant="contained"
                 component={Link}
-                to="/checkout"
+                // to="/checkout"
+                to="/shopping-cart"
             >
                 View Cart
             </Button>
