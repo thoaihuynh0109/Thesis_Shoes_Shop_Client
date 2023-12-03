@@ -118,27 +118,6 @@ function ProductsInCard() {
 
     const location = useLocation();
 
-    // Render GUI with each step similiar to their component
-    // const renderStepContent = (step) => {
-    //     switch (step) {
-    //         case 0:
-    //             return <SummaryStep />;
-    //         // return <PaymentStep />;
-
-    //         case 1:
-    //             // return <SignIn isCheckout={location.pathname === '/checkout'} />;
-    //             return <SignIn />;
-    //         case 2:
-    //             return <AddressStep />;
-    //         case 3:
-    //             return <ShippingStep />;
-    //         case 4:
-    //             return <PaymentStep />;
-    //         default:
-    //             return <PageNotFound />;
-    //     }
-    // };
-
     const handleComplete = () => {
         const newCompleted = completed;
         newCompleted[activeStep] = true;
