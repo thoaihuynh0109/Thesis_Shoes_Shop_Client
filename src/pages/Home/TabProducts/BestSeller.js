@@ -6,7 +6,7 @@ import RecipeReviewCard from './ProductsCard';
 // import { products } from '~/components/MakeProductCards/MakeProductCards';
 import { CustomizeButton } from '~/components/CustomizeButton/CustomizeButton';
 import { MakeProductsCard } from '~/components/MakeProductCards/MakeProductCards';
-import { products } from './MakeProductsCardItem';
+import { products } from './LastesProduct';
 import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
 import productService from '~/services/productServices';
 function BestSeller() {

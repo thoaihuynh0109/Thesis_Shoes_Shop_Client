@@ -4,7 +4,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import BestSeller from './BestSeller';
-import MakeProductsCardItem from './MakeProductsCardItem';
+import LastesProduct from './LastesProduct';
 import Featured from './Featured';
 
 const CustomTab = styled(Tab)(({}) => ({
@@ -17,7 +17,7 @@ const CustomTabPanel = styled(TabPanel)(({}) => ({
     color: '#333',
 }));
 
-export default function TabProducts() {
+export default function ToastTabProducts() {
     const [value, setValue] = useState('1');
 
     const handleChange = (event, newValue) => {
@@ -37,7 +37,7 @@ export default function TabProducts() {
                 <CustomTabPanel value="1">
                     <Box>
                         {/* <RecipeReviewCard/> */}
-                        <MakeProductsCardItem />
+                        <LastesProduct />
                     </Box>
                 </CustomTabPanel>
                 <CustomTabPanel value="2">
