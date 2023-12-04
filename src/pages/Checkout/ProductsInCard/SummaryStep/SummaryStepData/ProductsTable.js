@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Snackbar from '@mui/material/Snackbar';
 import { useNavigate } from 'react-router-dom';
-import MuiAlert from '@mui/material/Alert';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {
     Table,
@@ -42,14 +40,6 @@ const CustomizeTableCell = styled(({ fontSize, fontWeight, ...rest }) => <TableC
         fontWeight: fontWeight || 'normal',
     }),
 );
-
-const CustomTypographyPriceDetails = styled(Typography)(({ fontSize }) => ({
-    fontSize: fontSize || '16px',
-}));
-
-const CustomTableCellPriceDetails = styled(TableCell)(({ fontSize }) => ({
-    fontSize: fontSize || '16px',
-}));
 
 function ProductsTable() {
     const dispatch = useDispatch();
@@ -147,15 +137,13 @@ function ProductsTable() {
     }
 
     // Show Checkout Page
+    // ShippingInformation.js
     const handleCheckoutPage = () => {
         navigate('/checkout-page');
     };
 
     return (
         <Box>
-            {/* <Typography>
-                <p>Total items in the cart: {cartItemsCount()}</p>
-            </Typography> */}
             <Box>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">

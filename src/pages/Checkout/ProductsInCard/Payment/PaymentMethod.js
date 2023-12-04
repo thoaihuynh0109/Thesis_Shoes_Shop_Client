@@ -18,6 +18,9 @@ const PaymentMethod = ({ onSelectPaymentMethod }) => {
         event.preventDefault();
         // Pass the selected payment method to the parent component
         onSelectPaymentMethod(selectedPaymentMethod);
+
+        // Log the selected payment method to the console
+        console.log('Selected Payment Method:', selectedPaymentMethod);
     };
 
     return (
@@ -41,7 +44,7 @@ const PaymentMethod = ({ onSelectPaymentMethod }) => {
                         }
                     />
                     <FormControlLabel
-                        value="COD"
+                        value="cod"
                         control={<Radio size="medium" />}
                         label={
                             <img
@@ -64,7 +67,7 @@ const PaymentMethod = ({ onSelectPaymentMethod }) => {
             <Box sx={{ cursor: 'pointer' }}>
                 {selectedPaymentMethod === 'paypal' && <PayPalMethod />}
                 {/* {selectedPaymentMethod === 'paypal' && <Paypal />} */}
-                {selectedPaymentMethod === 'COD' && <CashOnDeliveryMethod />}
+                {selectedPaymentMethod === 'cod' && <CashOnDeliveryMethod />}
             </Box>
         </Box>
     );

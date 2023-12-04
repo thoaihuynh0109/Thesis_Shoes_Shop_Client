@@ -6,7 +6,7 @@ import SummaryStep from '../../SummaryStep';
 // Separate UI components for each payment method
 
 function CashOnDeliveryMethod() {
-    return <Box sx={{ mb: 2, mt: 4, ml: 2 }}>{/* <SummaryStep></SummaryStep> */}</Box>;
+    return <Box>{/* <SummaryStep></SummaryStep> */}</Box>;
 }
 
 export default CashOnDeliveryMethod;
