@@ -35,10 +35,8 @@ export default function ToastTabProducts() {
                     </TabList>
                 </Box>
                 <CustomTabPanel value="1">
-                    <Box>
-                        {/* <RecipeReviewCard/> */}
-                        <LastesProduct />
-                    </Box>
+                    {/* <RecipeReviewCard/> */}
+                    <LastesProduct />
                 </CustomTabPanel>
                 <CustomTabPanel value="2">
                     <BestSeller />
