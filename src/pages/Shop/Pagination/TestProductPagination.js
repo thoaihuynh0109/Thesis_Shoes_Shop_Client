@@ -11,9 +11,12 @@ import SortingSection from './SortingSection';
 import ProductGrid from './ProductGrid';
 import EmptyCard from '~/pages/Checkout/EmptyCard/EmptyCard';
 import SearchAppBar from '~/layouts/DefaultLayout/GimmeMenu/SearchDesgin';
+import categoryService from '~/services/categoryServices';
+import productService from '~/services/productServices';
 
 export default function TestProductPagination() {
-    const [products, setProducts] = useState(shopData);
+    const [listAllProducts, setListAllProducts] = useState([]); // call api
+    const [products, setProducts] = useState(listAllProducts);
     const [searchVal, setSearchVal] = useState('');
     const [storeValue, setStoreValue] = useState([]);
     const [getValue, setGetValue] = useState(false);
@@ -31,6 +34,15 @@ export default function TestProductPagination() {
     const [selectedPriceRange, setSelectedPriceRange] = useState('');
     const [selectedBrands, setSelectedBrands] = useState([]);
 
+    // call api
+    useEffect(() => {
+        const fetchProductData = async () => {
+            const listAllProducts = await productService.getAllProduct();
+            setListAllProducts(listAllProducts);
+        };
+        fetchProductData();
+    }, []);
+
     useEffect(() => {
         setCurrentImages(Array.from({ length: _DATA.length }, (_, index) => index));
     }, []);
@@ -38,18 +50,19 @@ export default function TestProductPagination() {
 
     useEffect(() => {
         // Filter products based on selected brands
-        const brandFiltered = shopData.filter((product) => {
+        const brandFiltered = listAllProducts.filter((product) => {
             return selectedBrands.length === 0 || selectedBrands.includes(product.brand);
         });
         setBrandFilteredProducts(brandFiltered);
-    }, [selectedBrands, shopData]);
+    }, [selectedBrands, listAllProducts]);
 
     // make filter
 
     useEffect(() => {
         // Filter products based on selected price range
         const priceFiltered = brandFilteredProducts.filter((product) => {
-            const priceNumber = parseFloat(product.price.replace(/,/g, '').replace('đ', ''));
+            // const priceNumber = parseFloat(product.price.replace(/,/g, '').replace('đ', ''));
+            const priceNumber = parseFloat(product.price);
 
             return (
                 selectedPriceRange.length === 0 ||
@@ -88,14 +101,16 @@ export default function TestProductPagination() {
     // };
 
     const handleSearchInputChange = (e) => {
-        const searchTerm = e.target.value.toLowerCase();
+        // const searchTerm = e.target.value.toLowerCase();
+        const searchTerm = e.target.value;
 
         // Update the search value in the state
         setSearchVal(searchTerm);
 
         // Filter products based on the search term
-        const filteredProducts = shopData.filter((item) =>
-            item.title.toLowerCase().includes(searchTerm),
+        const filteredProducts = listAllProducts.filter(
+            (item) => item.title,
+            // item.title.toLowerCase().includes(searchTerm),
         );
 
         // Update the state with the filtered products
@@ -111,16 +126,18 @@ export default function TestProductPagination() {
     const handleSearchClickPagination = () => {
         if (!searchVal.trim()) {
             // If the search input is empty, reset the products to the original list
-            setProducts(shopData);
+            setProducts(listAllProducts);
             setGetValue(false);
             setPage(1);
             return;
         }
 
         // Filter products based on the search term
-        const searchTermLower = searchVal.toLowerCase();
-        const filteredProducts = shopData.filter((item) =>
-            item.title.toLowerCase().includes(searchTermLower),
+        const searchTermLower = searchVal;
+        // const searchTermLower = searchVal.toLowerCase();
+        const filteredProducts = listAllProducts.filter(
+            (item) => item.title.includes(searchTermLower),
+            // item.title.toLowerCase().includes(searchTermLower),
         );
 
         // Update the state to reflect whether there are products or not

@@ -13,7 +13,7 @@ import {
 import { styled } from '@mui/system';
 import classNames from 'classnames/bind';
 import styles from './ProductsInCard.module.scss';
-import SummaryStep from './SummaryStep';
+import SummaryStep from './SummaryStep/SummaryProduct';
 import AddressStep from './AddressStep/AddressStep';
 import ShippingStep from './ShippingStep';
 import PaymentStep from './Payment';

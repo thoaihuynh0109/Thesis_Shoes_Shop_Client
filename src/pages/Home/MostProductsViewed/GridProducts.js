@@ -358,7 +358,7 @@ export default function ResponsiveViewedProducts() {
                                 _id={product._id}
                                 images={product.images}
                                 name={product.name}
-                                price={product.price}
+                                price={product.price.toLocaleString()}
                                 rating={product.rating}
                                 label={product.priceSale}
                                 sx={{ margin: '0 20px' }}

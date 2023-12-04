@@ -17,7 +17,8 @@ export default function Paypal() {
         const exchangeRate = 24300; // Replace with your actual exchange rate
 
         const totalPriceVND = cartItems.reduce((total, item) => {
-            const itemPrice = parseFloat(item.price.replace(/,/g, '')) * item.quantity;
+            const itemPrice = parseFloat(item.price) * item.quantity;
+            // const itemPrice = parseFloat(item.price.replace(/,/g, '')) * item.quantity;
             return total + itemPrice;
         }, 0);
 

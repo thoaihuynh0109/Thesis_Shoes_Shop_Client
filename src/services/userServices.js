@@ -28,6 +28,14 @@ const userService = {
             console.log(error);
         }
     },
+    updateUserProfile: async (id, data) => {
+        try {
+            const respone = await axios.put(apiUrl + `/${id}/profile`, data);
+            return respone;
+        } catch (error) {
+            console.log(error);
+        }
+    },
     updateUser: async (id, data) => {
         try {
             const respone = await axios.put(apiUrl + `/${id}`, data);

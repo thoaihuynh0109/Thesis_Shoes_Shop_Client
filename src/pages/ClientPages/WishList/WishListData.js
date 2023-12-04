@@ -75,7 +75,7 @@ const WishListTable = () => {
                 <TableBody>
                     {selectWishlistItems.map((product) => (
                         <TableRow
-                            key={product.productId}
+                            key={product._id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <CustomizeTableCell align="left">
@@ -86,32 +86,33 @@ const WishListTable = () => {
                                     }
                                 >
                                     <IconButton
-                                        onClick={() => handleRemoveFromWishlist(product.productId)}
+                                        onClick={() => handleRemoveFromWishlist(product._id)}
                                     >
                                         <DeleteIcon fontSize="large" />
                                     </IconButton>
-                                    {openConfirmationMap[product.productId] && (
+                                    {openConfirmationMap[product._id] && (
                                         <PopUpMessage
                                             open={openConfirmationMap}
                                             title="Confirm Removal"
                                             message="Are you sure you want to remove this item from your wishlist?"
-                                            onCancel={() => handleCancelRemove(product.productId)}
-                                            onConfirm={() => handleConfirmRemove(product.productId)}
+                                            onCancel={() => handleCancelRemove(product._id)}
+                                            onConfirm={() => handleConfirmRemove(product._id)}
                                         />
                                     )}
                                 </Tooltip>
                             </CustomizeTableCell>
                             <CustomizeTableCell borderRadius="20px">
                                 <img
-                                    src={product.image}
-                                    alt={`Product: ${product.title}`}
+                                    src={product.images}
+                                    alt={`Product: ${product.name}`}
                                     style={{ width: '50px' }}
                                 />
                             </CustomizeTableCell>
-                            <CustomizeTableCell>{product.title}</CustomizeTableCell>
+                            <CustomizeTableCell>{product.name}</CustomizeTableCell>
                             <CustomizeTableCell>{product.price}</CustomizeTableCell>
                             <CustomizeTableCell>
-                                {product.stockStatus ? 'In Stock' : 'Sold Out'}
+                                {/* {product.countInStock} */}
+                                {product.countInStock ? 'In Stock' : 'Sold Out'}
                             </CustomizeTableCell>
                         </TableRow>
                     ))}

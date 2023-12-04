@@ -44,6 +44,7 @@ export function MakeProductsCard({
     imgHeight,
     imgWidth,
     marginRight,
+    countInStock,
     // gender,
     onClick,
     showToast,
@@ -284,6 +285,7 @@ export function MakeProductsCard({
                                             images,
                                             name,
                                             price,
+                                            countInStock,
                                         })
                                     }
                                 >

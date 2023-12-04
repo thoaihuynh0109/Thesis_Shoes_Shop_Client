@@ -95,31 +95,29 @@ function ProductsTable() {
 
     const calculateTotalPrice = (price, quantity) => {
         // check if price is defined and not null
-        // if (price && typeof price === 'string') {
-        // remove commas, ',' and convert to float for price
-        // const parsedPrice = parseFloat(price.replace(/,/g, ''));
-        const parsedPrice = parseFloat(price);
+        if (price && typeof price === 'string') {
+            // remove commas, ',' and convert to float for price
+            const parsedPrice = parseFloat(price.replace(/,/g, ''));
+            // const parsedPrice = parseFloat(price);
 
-        // Check if both price is a valid number
-        // if (!isNaN(parsedPrice) && typeof quantity === 'number' && !isNaN(quantity)) {
-        const total = parsedPrice * quantity;
-        // This will add "commas - ," for better readability
-        // return total.toLocaleString(); // convert to vnd
-        console.log(total.toString());
-        return total; // convert to vnd
-        // }
-        // }
+            // Check if both price is a valid number
+            if (!isNaN(parsedPrice) && typeof quantity === 'number' && !isNaN(quantity)) {
+                const total = parsedPrice * quantity;
+                // This will add "commas - ," for better readability
+                return total.toLocaleString(); // convert to vnd
+                // console.log(total.toString());
+                // return total; // convert to vnd
+            }
+        }
 
         // default value
-        // return '0';
+        return '0';
     };
 
     const calculateCartTotal = () => {
         let total = 0;
         for (const item of cartItems) {
-            // assuming price is a string
-            // const itemPrice = parseFloat(item.price.replace(/,/g, ''));
-            const itemPrice = parseFloat(item.price);
+            const itemPrice = parseFloat(item.price.replace(/,/g, ''));
             const itemQuantity = parseFloat(item.quantity);
 
             if (!isNaN(itemPrice) && !isNaN(itemQuantity)) {
@@ -128,8 +126,11 @@ function ProductsTable() {
         }
         return total;
     };
+
     const tax = 8.75;
     const totalWithTax = (tax / 100 + 1) * calculateCartTotal();
+    // Format totalWithTax without decimal places and commas
+    const formattedTotalWithTax = Math.floor(totalWithTax).toLocaleString('vi-VN');
 
     // check if there is no products in cart before adding item
     if (cartItems.length === 0) {
@@ -180,7 +181,7 @@ function ProductsTable() {
                                         {item.countInstock ? 'In Stock' : 'Sold Out'}
                                     </CustomizeTableCell>
                                     <CustomizeTableCell align="left">
-                                        {item.price}
+                                        {item.price.toLocaleString()}
                                     </CustomizeTableCell>
                                     <CustomizeTableCell align="left">
                                         <Stack
@@ -243,7 +244,7 @@ function ProductsTable() {
             <TotalToCheckout
                 tax={8.75}
                 subtotal={calculateCartTotal().toLocaleString()}
-                totalWithTax={totalWithTax.toLocaleString()}
+                totalWithTax={formattedTotalWithTax}
             />
             <Box sx={{ mb: '10px', display: 'flex', justifyContent: 'end', mt: 2 }}>
                 <Button

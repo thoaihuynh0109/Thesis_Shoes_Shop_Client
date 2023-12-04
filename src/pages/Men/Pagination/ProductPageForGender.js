@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, IconButton, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
@@ -8,6 +8,7 @@ import SortingSection from '~/pages/Shop/Pagination/SortingSection';
 import { LoadMoreProduct } from './RenderProductForGender';
 import useProductFilter from '../Filter/MakeUseProductFilter';
 import FilterBrandPriceByAccordion from '../FilterProductForGender';
+import productService from '~/services/productServices';
 
 export default function ProductPageForGender({ selectedGender }) {
     const {
@@ -89,7 +90,7 @@ export default function ProductPageForGender({ selectedGender }) {
                             sorting={sorting}
                             hasProducts={hasProducts}
                             navigate={navigate}
-                            // selectedGender={'Male'}
+                            // selectedGender={'Nam'}
                             selectedGender={selectedGender}
                         />
                     </Box>

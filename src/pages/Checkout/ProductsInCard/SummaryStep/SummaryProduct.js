@@ -13,7 +13,6 @@ import { Container, Box } from '@mui/material';
 
 const cx = classNames.bind(styles);
 
-
 function SummaryStep() {
     return (
         <Box>

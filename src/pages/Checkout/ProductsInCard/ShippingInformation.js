@@ -94,6 +94,7 @@ function ShippingInformation() {
         // Check if a payment method is selected
         if (selectedPaymentMethod) {
             console.log('Selected Payment Method:', selectedPaymentMethod);
+
             setShowToast(true);
             setToastMessage('Thanks so much for your order by COD!');
             setTypeMessage('success');
@@ -292,12 +293,6 @@ function ShippingInformation() {
             )}
 
             {/* show toast message */}
-            <ToastMessage2
-                message={toastMessage}
-                type={typeMessage}
-                showToast={showToast}
-                setShowToast={setShowToast}
-            />
         </Box>
     );
 }

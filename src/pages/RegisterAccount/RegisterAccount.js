@@ -10,6 +10,8 @@ import { CustomizeButton } from '~/components/CustomizeButton/CustomizeButton';
 
 import useValidation from '~/components/UseValidation/useValidation';
 import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
+import userService from '~/services/userServices';
+
 const style = {
     width: '100%',
     maxWidth: 360,
@@ -30,6 +32,8 @@ function RegisterAccount() {
     // Retrieve email from localStorage
     const emailFromStorage = localStorage.getItem('userEmail') || '';
     const [email, setEmail] = useState(emailFromStorage);
+    const [address, setAddress] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
 
     // Clear email from localStorage on component mount (page reload)
     useEffect(() => {
@@ -40,6 +44,8 @@ function RegisterAccount() {
     const firstNameValidation = useValidation({ value: '' });
     const lastNameValidation = useValidation({ value: '' });
     const emailValidation = useValidation({ value: '' });
+    const phoneNumberValidation = useValidation({ value: '' });
+    const addressValivation = useValidation({ value: '' });
     const passwordValidation = useValidation({ value: '', isShow: false });
     const rePasswordValidation = useValidation({ value: '', isShow: false });
 
@@ -48,35 +54,93 @@ function RegisterAccount() {
     //     // send data to register account api
     // };
 
-    const handleRegister = () => {
+    // const handleRegister = () => {
+    //     // Validation logic
+    //     const isFirstNameValid = firstNameValidation.validateRequiredWithoutDigits();
+    //     const isLastNameValid = lastNameValidation.validateRequiredWithoutDigits();
+
+    //     const isEmailValid = emailValidation.validateEmail();
+    //     const isPasswordValid = passwordValidation.validatePassword();
+    //     const isRePasswordValid = rePasswordValidation.validateConfirmPassword(password);
+
+    //     if (
+    //         isFirstNameValid &&
+    //         isLastNameValid &&
+    //         isEmailValid &&
+    //         isPasswordValid &&
+    //         isRePasswordValid
+    //     ) {
+    //         // Continue with registration logic
+    //         console.log('Validation succeeded');
+    //         console.log({ firstName, lastName, email, password, rePassword });
+
+    //         // Set showToast to true after successful registration
+    //         // Delay the navigation to /signin page after showing the toast for 1,5 seconds
+    //         setTimeout(() => {
+    //             // Hide the toast before navigating
+    //             setShowToast(false);
+    //             // Update the address in the local state of ShowDeliveryInformation
+    //             navigate('/signin');
+    //         }, 1500);
+    //         setShowToast(true);
+    //     } else {
+    //         // Handle validation errors
+    //         console.log('Validation failed. Please check the form.');
+    //     }
+    // };
+
+    const handleRegister = async () => {
         // Validation logic
         const isFirstNameValid = firstNameValidation.validateRequiredWithoutDigits();
         const isLastNameValid = lastNameValidation.validateRequiredWithoutDigits();
-
         const isEmailValid = emailValidation.validateEmail();
         const isPasswordValid = passwordValidation.validatePassword();
         const isRePasswordValid = rePasswordValidation.validateConfirmPassword(password);
+        const isAddressValid = emailValidation.validateRequired();
+        const isPhoneNumberValid = phoneNumberValidation.validatePhone();
 
         if (
             isFirstNameValid &&
             isLastNameValid &&
             isEmailValid &&
             isPasswordValid &&
-            isRePasswordValid
+            isRePasswordValid &&
+            isAddressValid &&
+            isPhoneNumberValid
         ) {
-            // Continue with registration logic
-            console.log('Validation succeeded');
-            console.log({ firstName, lastName, email, password, rePassword });
+            try {
+                // Call the API to create a new user
+                const registrationData = {
+                    // update to database
+                    firstName,
+                    lastName,
+                    email,
+                    phoneNumber,
+                    password,
+                    rePassword,
+                    address,
+                };
 
-            // Set showToast to true after successful registration
-            // Delay the navigation to /signin page after showing the toast for 1,5 seconds
-            setTimeout(() => {
-                // Hide the toast before navigating
-                setShowToast(false);
-                // Update the address in the local state of ShowDeliveryInformation
-                navigate('/signin');
-            }, 1500);
-            setShowToast(true);
+                const response = await userService.createUser(registrationData);
+
+                // Check if the registration was successful
+                if (response.status === 201) {
+                    console.log('User registered successfully');
+                    // Set showToast to true after successful registration
+                    // Delay the navigation to /signin page after showing the toast for 1,5 seconds
+                    setTimeout(() => {
+                        // Hide the toast before navigating
+                        setShowToast(false);
+                        // Update the address in the local state of ShowDeliveryInformation
+                        navigate('/signin');
+                    }, 1500);
+                    setShowToast(true);
+                } else {
+                    console.log('User registration failed. Please check the form.');
+                }
+            } catch (error) {
+                console.error('Error during user registration:', error);
+            }
         } else {
             // Handle validation errors
             console.log('Validation failed. Please check the form.');
@@ -118,6 +182,7 @@ function RegisterAccount() {
 
                         <CustomizeTextField
                             value={firstName}
+                            wd={400}
                             onChange={(e) => {
                                 setFirstName(e.target.value);
                                 firstNameValidation.setState({
@@ -164,6 +229,64 @@ function RegisterAccount() {
                                 },
                             }}
                         />
+                        <CustomTypography
+                            variant="body1"
+                            textAlign={'left'}
+                            sx={{ mt: 2 }}
+                            gutterBottom
+                        >
+                            Phone Number
+                        </CustomTypography>
+                        <CustomizeTextField
+                            value={phoneNumber}
+                            onChange={(e) => {
+                                setPhoneNumber(e.target.value);
+                                phoneNumberValidation.setState({
+                                    ...phoneNumberValidation.state,
+                                    value: e.target.value,
+                                });
+                            }}
+                            label="Phone Number"
+                            variant="outlined"
+                            onBlur={phoneNumberValidation.validatePhone}
+                            error={phoneNumberValidation.state.message !== ''}
+                            helperText={phoneNumberValidation.state.message}
+                            sx={{
+                                '& .MuiFormHelperText-root': {
+                                    fontSize: '12px', // Adjust the font size as needed
+                                },
+                            }}
+                        />
+
+                        <CustomTypography
+                            variant="body1"
+                            textAlign={'left'}
+                            sx={{ mt: 2 }}
+                            gutterBottom
+                        >
+                            Address
+                        </CustomTypography>
+                        <CustomizeTextField
+                            value={address}
+                            onChange={(e) => {
+                                setAddress(e.target.value);
+                                addressValivation.setState({
+                                    ...addressValivation.state,
+                                    value: e.target.value,
+                                });
+                            }}
+                            label="Address"
+                            variant="outlined"
+                            onBlur={addressValivation.validateRequired}
+                            error={addressValivation.state.message !== ''}
+                            helperText={addressValivation.state.message}
+                            sx={{
+                                '& .MuiFormHelperText-root': {
+                                    fontSize: '12px', // Adjust the font size as needed
+                                },
+                            }}
+                        />
+
                         <CustomTypography
                             variant="body1"
                             textAlign={'left'}

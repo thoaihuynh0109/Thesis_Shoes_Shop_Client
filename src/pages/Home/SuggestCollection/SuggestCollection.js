@@ -136,7 +136,7 @@ function CustomSuggestCollection() {
                                         _id={listLastest[product]._id}
                                         images={listLastest[product].images}
                                         name={listLastest[product].name}
-                                        price={listLastest[product].price}
+                                        price={listLastest[product].price.toLocaleString()}
                                         rating={listLastest[product].rating}
                                         label={listLastest[product].priceSale}
                                         // labelNew={product.labelNew}

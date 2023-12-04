@@ -31,20 +31,22 @@ export default function ProductGrid({
     const sortProducts = (data) => {
         switch (sorting) {
             case 'az':
-                return data.sort((a, b) => a.title.localeCompare(b.title));
+                return data.sort((a, b) => a.name.localeCompare(b.name));
             case 'za':
-                return data.sort((a, b) => b.title.localeCompare(a.title));
+                return data.sort((a, b) => b.name.localeCompare(a.name));
             case 'asc':
                 return data.sort(
                     (a, b) =>
-                        parseFloat(a.price.replace(/,/g, '').replace('đ', '')) -
-                        parseFloat(b.price.replace(/,/g, '').replace('đ', '')),
+                        // parseFloat(a.price.replace(/,/g, '').replace('đ', '')) -
+                        // parseFloat(b.price.replace(/,/g, '').replace('đ', '')),
+                        parseFloat(a.price) - parseFloat(b.price),
                 );
             case 'desc':
                 return data.sort(
                     (a, b) =>
-                        parseFloat(b.price.replace(/,/g, '').replace('đ', '')) -
-                        parseFloat(a.price.replace(/,/g, '').replace('đ', '')),
+                        // parseFloat(b.price.replace(/,/g, '').replace('đ', '')) -
+                        // parseFloat(a.price.replace(/,/g, '').replace('đ', '')),
+                        parseFloat(b.price) - parseFloat(a.price),
                 );
             default:
                 return data;
@@ -63,8 +65,10 @@ export default function ProductGrid({
         } else {
             const productsToRender =
                 filteredProducts.length > 0 ? filteredProducts : brandFilteredProducts;
-            const filteredProducts2 = productsToRender.filter((product) =>
-                product.title.toLowerCase().includes(searchTerm.toLowerCase()),
+            const filteredProducts2 = productsToRender.filter(
+                (product) =>
+                    // product.title.toLowerCase().includes(searchTerm.toLowerCase()),
+                    product.name,
             );
 
             // console.log('filter này ne ahihi:', filteredProducts2);
@@ -79,7 +83,7 @@ export default function ProductGrid({
             else {
                 return (
                     <Box style={{ width: '100%', textAlign: 'center', mt: 4 }}>
-                        <EmptyCard message={'Product Is Not Found'} />;
+                        <EmptyCard message={'Product Is Not Found'} />
                     </Box>
                 );
             }
@@ -93,28 +97,48 @@ export default function ProductGrid({
             );
         }
 
-        return data.map((product, index) => (
-            <Grid item xs={6} sm={3} md={3} key={index} style={{ display: 'flex', mb: 2 }}>
-                <MakeProductsCard
-                    productId={product.id}
-                    onClick={() => navigate('/product-details')}
-                    title={product.title}
-                    price={product.price}
-                    image={product.img}
-                    rating={product.rating}
-                    label={product.label}
-                    minWidthCard={'210px'}
-                    maxHeightCard={'210px'}
-                    imgHeight={'140px'}
-                    imgWidth={'150px'}
-                    showToast={showToast}
-                    setShowToast={setShowToast}
-                    // show suitable toast message
-                    toastMessage={toastMessage}
-                    setToastMessage={setToastMessage}
-                />
-            </Grid>
-        ));
+        return (
+            data.length > 0 &&
+            data.map((product, index) => (
+                <Grid item xs={6} sm={3} md={3} key={index} style={{ display: 'flex', mb: 2 }}>
+                    <MakeProductsCard
+                        // productId={product.id}
+                        // onClick={() => navigate('/product-details')}
+                        // title={product.title}
+                        // price={product.price}
+                        // image={product.img}
+                        // rating={product.rating}
+                        // label={product.label}
+                        // minWidthCard={'210px'}
+                        // maxHeightCard={'210px'}
+                        // imgHeight={'140px'}
+                        // imgWidth={'150px'}
+                        // showToast={showToast}
+                        // setShowToast={setShowToast}
+                        // // show suitable toast message
+                        // toastMessage={toastMessage}
+                        // setToastMessage={setToastMessage}
+
+                        _id={product._id}
+                        onClick={() => navigate('/product-details')}
+                        name={product.name}
+                        price={product.price.toLocaleString()}
+                        images={product.images}
+                        rating={product.rating}
+                        label={product.priceSale}
+                        minWidthCard={'210px'}
+                        maxHeightCard={'210px'}
+                        imgHeight={'140px'}
+                        imgWidth={'150px'}
+                        showToast={showToast}
+                        setShowToast={setShowToast}
+                        // show suitable toast message
+                        toastMessage={toastMessage}
+                        setToastMessage={setToastMessage}
+                    />
+                </Grid>
+            ))
+        );
     };
 
     return (

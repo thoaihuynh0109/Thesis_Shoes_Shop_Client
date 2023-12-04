@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react';
 import usePagination from '~/pages/Shop/Pagination/PaginationManagement';
 // import shopData from '../shop.json';
 import shopData from '~/pages/Shop/Pagination/shop.json';
-
+import productService from '~/services/productServices';
 import { useNavigate } from 'react-router-dom';
 
 const UseProductFilter = () => {
-    const [products, setProducts] = useState(shopData);
+    const [listAllProducts, setListAllProducts] = useState([]);
+    const [products, setProducts] = useState(listAllProducts);
     const [searchVal, setSearchVal] = useState('');
     const [storeValue, setStoreValue] = useState([]);
     const [getValue, setGetValue] = useState(false);
@@ -26,23 +27,33 @@ const UseProductFilter = () => {
     const [selectedBrands, setSelectedBrands] = useState([]);
     const navigate = useNavigate();
 
+    // call api
+    useEffect(() => {
+        const fetchData = async () => {
+            const listAllProducts = await productService.getAllProduct();
+            setListAllProducts(listAllProducts);
+        };
+        fetchData();
+    }, []);
+
     useEffect(() => {
         setCurrentImages(Array.from({ length: _DATA.length }, (_, index) => index));
     }, []);
 
     useEffect(() => {
         // Filter products based on selected brands
-        const brandFiltered = shopData.filter(
+        const brandFiltered = listAllProducts.filter(
             (product) => selectedBrands.length === 0 || selectedBrands.includes(product.brand),
         );
         setBrandFilteredProducts(brandFiltered);
         setHasProducts(brandFiltered.length > 0);
-    }, [selectedBrands, shopData]);
+    }, [selectedBrands, listAllProducts]);
 
     useEffect(() => {
         // Filter products based on selected price range
         const priceFiltered = brandFilteredProducts.filter((product) => {
-            const priceNumber = parseFloat(product.price.replace(/,/g, '').replace('đ', ''));
+            // const priceNumber = parseFloat(product.price.replace(/,/g, '').replace('đ', ''));
+            const priceNumber = parseFloat(product.price);
 
             return (
                 selectedPriceRange.length === 0 ||
@@ -76,13 +87,13 @@ const UseProductFilter = () => {
 
     const handleSearchClickPagination = () => {
         if (!searchVal.trim()) {
-            setProducts(shopData);
+            setProducts(listAllProducts);
             setGetValue(false);
             setPage(1);
             return;
         }
 
-        const filteredProducts = shopData.filter((item) =>
+        const filteredProducts = listAllProducts.filter((item) =>
             item.title.toLowerCase().includes(searchVal.toLowerCase()),
         );
 
