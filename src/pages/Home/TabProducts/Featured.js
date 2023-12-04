@@ -9,7 +9,7 @@ import { MakeProductsCard } from '~/components/MakeProductCards/MakeProductCards
 import { products } from './LastesProduct';
 import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
 import productService from '~/services/productServices';
-function BestSeller() {
+function Featured() {
     const navigate = useNavigate();
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
@@ -72,4 +72,4 @@ function BestSeller() {
     );
 }
 
-export default BestSeller;
+export default Featured;

@@ -74,6 +74,8 @@ function UserAuthenticated() {
                 <MenuItem
                     onClick={() => {
                         navigate('/profile');
+                        // console.log('user _id: ', dataUser._id);
+                        // navigate('/profile', { state: { user: dataUser._id } });
                     }}
                 >
                     <ListItemIcon>

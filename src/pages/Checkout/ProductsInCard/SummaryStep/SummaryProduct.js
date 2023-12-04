@@ -12,15 +12,11 @@ import { rowsTest } from './SummaryStepData/ProductsTableData';
 import { Container, Box } from '@mui/material';
 
 const cx = classNames.bind(styles);
-const cartItems = [
-    // ... Dữ liệu sản phẩm
-];
 
 function SummaryStep() {
     return (
         <Box>
             <ProductsTable />
-            
         </Box>
     );
 }

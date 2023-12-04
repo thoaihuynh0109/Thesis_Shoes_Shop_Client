@@ -39,14 +39,13 @@ const useValidation = (initialState) => {
                         message: '',
                     });
                     return true;
+                } else {
+                    setState({
+                        ...state,
+                        message: 'Must includes @gmail.com in your email',
+                    });
+                    return false;
                 }
-                // else {
-                //     setState({
-                //         ...state,
-                //         message: 'Only Gmail addresses are allowed.',
-                //     });
-                //     return false;
-                // }
             } else {
                 setState({
                     ...state,

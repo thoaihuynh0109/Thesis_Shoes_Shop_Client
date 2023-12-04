@@ -28,17 +28,22 @@
 
 .menu-vertical-line {
     position: relative;
-    
+
     // make divider
     &::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      right: -8px;
-      transform: translateY(-50%);
-      width: 1px;
-      height: 50%;
-      background-color: #eaeaea; 
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: -8px;
+        transform: translateY(-50%);
+        width: 1px;
+        height: 50%;
+        background-color: #eaeaea;
     }
 }
 
+// active menu
+.active-link {
+    color: #ff0000;
+    border-bottom: 1px solid #333;
+}

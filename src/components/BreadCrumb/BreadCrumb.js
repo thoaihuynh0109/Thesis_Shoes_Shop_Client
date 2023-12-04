@@ -16,7 +16,14 @@ const breadcrumbData = [
     { path: '/my-account', name: 'My Account' },
     { path: '/my-wishlist', name: 'Wish List' },
     {
-        path: '/checkout',
+        // sửa lại là shopping cart
+        // path: '/checkout',
+        // name: 'Checkout',
+        path: '/shopping-cart',
+        name: 'Shopping Cart',
+    },
+    {
+        path: '/checkout-page',
         name: 'Checkout',
     },
     { path: '/signin', name: 'Đăng nhập' },

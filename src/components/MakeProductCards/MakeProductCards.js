@@ -29,13 +29,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, incrementQuantity } from '~/redux/CartManagement/cartActions';
 import { addToWishlist } from '~/redux/WishListManagement/wishlistActions';
 import { storeProductDetails } from '~/redux/ProductDetails/productDetailsActions';
-import { findProductIndex } from '~/redux/CartManagement/cartReducer';
-import { ToastMessage } from '~/pages/Checkout/ProductsInCard/SummaryStep/SummaryStepData/ProductsTable';
 // Make Products Card Item for Home Page
+
 export function MakeProductsCard({
-    productId,
-    image,
-    title,
+    _id,
+    images,
+    name,
     price,
     rating,
     label,
@@ -45,6 +44,7 @@ export function MakeProductsCard({
     imgHeight,
     imgWidth,
     marginRight,
+    countInStock,
     // gender,
     onClick,
     showToast,
@@ -55,7 +55,7 @@ export function MakeProductsCard({
     // setToast,
 }) {
     const dispatch = useDispatch();
-
+    const cartItems = useSelector((state) => state.cart.cartItems);
     const navigate = useNavigate();
 
     const [hoverCard, setHoverCard] = useState(false);
@@ -65,16 +65,29 @@ export function MakeProductsCard({
     const [valueRating, setValueRating] = useState(rating);
 
     // add to cart action
+    // add to cart action with product exist in cart
     const handleAddToCart = (product) => {
         setIsLoadingAddToCart(true);
-        // Simulate a delay of 2 second before showing the toast
+
+        // Check if the product is already in the cart
+        const existingProduct = cartItems.find((item) => item._id === product._id);
+
+        // Simulate a delay of 2 seconds before showing the toast
         setTimeout(() => {
             setIsLoadingAddToCart(false);
-            dispatch(addToCart(product));
+
+            if (existingProduct) {
+                // If the product is already in the cart, update the quantity
+                dispatch(incrementQuantity(product._id, 1));
+            } else {
+                // If the product is not in the cart, add it with quantity 1
+                dispatch(addToCart(product));
+            }
 
             // Show the toast message
             setToastMessage('Sản Phẩm Đã Được Thêm Vào Giỏ Hàng');
             setShowToast(true);
+
             // Reset toast after 3 seconds
             setTimeout(() => {
                 setShowToast(false);
@@ -104,7 +117,7 @@ export function MakeProductsCard({
 
     const handleNavigateToProductDetails = () => {
         // Dispatch the action to store product details
-        dispatch(storeProductDetails({ productId, image, title, price }));
+        dispatch(storeProductDetails({ _id, images, name, price }));
         // Navigate to the product detail page
         navigate(`/product-details`);
     };
@@ -137,7 +150,7 @@ export function MakeProductsCard({
                     boxShadow: '0 0 8px rgba(0, 0, 0, 0.2)',
                     mr: marginRight || 2,
                 }}
-                key={productId}
+                key={_id}
                 onMouseEnter={handleHover}
                 onMouseLeave={handleUnhover}
             >
@@ -188,9 +201,9 @@ export function MakeProductsCard({
                     component="img"
                     height={imgHeight || '194'}
                     // width={'194px'}
-                    image={image}
+                    image={images}
                     alt="Product Image"
-                    key={productId}
+                    key={_id}
                     // onClick={onClick}
                     onClick={handleNavigateToProductDetails}
                     style={{ objectFit: 'contain', width: imgWidth || '194px', margin: '0 auto' }}
@@ -205,7 +218,13 @@ export function MakeProductsCard({
                                 variant="contained"
                                 fullWidth
                                 onClick={() =>
-                                    handleAddToCart({ productId, image, title, price, quantity: 1 })
+                                    handleAddToCart({
+                                        _id,
+                                        images,
+                                        name,
+                                        price,
+                                        quantity: 1,
+                                    })
                                 }
                             >
                                 {isLoadingAddToCart ? (
@@ -262,10 +281,11 @@ export function MakeProductsCard({
                                     aria-label="add to favorites"
                                     onClick={() =>
                                         handleAddProductToWishList({
-                                            productId,
-                                            image,
-                                            title,
+                                            _id,
+                                            images,
+                                            name,
                                             price,
+                                            countInStock,
                                         })
                                     }
                                 >
@@ -300,7 +320,7 @@ export function MakeProductsCard({
             </Card>
             <Box maxWidth={minWidthCard} sx={{ textAlign: 'center', mt: 1 }}>
                 <Typography sx={{ fontSize: '15px', textTransform: 'capitalize' }}>
-                    {title}
+                    {name}
                 </Typography>
                 <Typography sx={{ fontSize: '14px' }}>
                     <strong>{price} VND</strong>

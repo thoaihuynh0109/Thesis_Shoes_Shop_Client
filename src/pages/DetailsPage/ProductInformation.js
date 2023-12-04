@@ -25,12 +25,12 @@ function ProductInformation({ flashSale }) {
                 pr: 12,
                 overflow: 'scroll',
             }}
-            key={productDetail.productId}
+            key={productDetail._id}
         >
             {/* product name */}
             {/* <img src={productDetail.image}/> */}
             <CustomTypography sx={{ fontWeight: '600', fontSize: 17, mt: 2 }}>
-                {productDetail.title}
+                {productDetail.name}
             </CustomTypography>
             {/* for who? */}
 
@@ -44,14 +44,14 @@ function ProductInformation({ flashSale }) {
                 <CustomTypography sx={{ mr: 1 }}>{productDetail.price}</CustomTypography>
 
                 {/* original price */}
-                {flashSale ? (
+                {/* {flashSale ? (
                     <CustomTypography sx={{ textDecoration: 'line-through', color: '#333' }}>
                         {' '}
                         4,259,000₫
                     </CustomTypography>
                 ) : (
                     <Typography></Typography>
-                )}
+                )} */}
             </Box>
             {/*  make size */}
             <CustomTypography sx={{ fontWeight: 'bold', mt: 2, mb: '4px' }}>

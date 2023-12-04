@@ -1,36 +1,10 @@
-import {
-    Box,
-    Button,
-    Container,
-    Divider,
-    TextField,
-    Typography,
-    Grid,
-    styled,
-    Paper,
-} from '@mui/material';
-import React, { useState } from 'react';
-import classNames from 'classnames/bind';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import PropTypes from 'prop-types';
-import CustomizeGridProfile from './CustomizeGridProfile';
+import { Box, Button, Container, Typography, styled, Grid, Paper } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { CustomizeTextField } from '~/components/CustomizeTextField/CustomizeTextField';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
-
-const style = {
-    width: '100%',
-    maxWidth: 360,
-    bgcolor: 'background.paper',
-};
-
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
-
+import useValidation from '~/components/UseValidation/useValidation';
+import userService from '~/services/userServices';
+import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
 export const CustomizeButtonPersonalAccount = styled(Button)(({ pl = 15, pr = 15 }) => ({
     marginTop: 4,
     paddingLeft: pl || 0,
@@ -45,38 +19,86 @@ export const CustomizeButtonPersonalAccount = styled(Button)(({ pl = 15, pr = 15
 }));
 
 function PersonalAccount() {
-    const [openDialog, setOpenDialog] = useState(false);
-
+    const [userData, setUserData] = useState({});
+    const [userId, setUserId] = useState(''); // Assuming you have the userId somewhere in your component
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [error, setError] = useState(false);
+    const [address, setAddress] = useState('');
+    const [phone, setPhone] = useState('');
 
-    const handleCheckTextField = () => {
-        // Kiểm tra các textfield nếu rỗng
-        if (!firstName || !lastName || !email || !username || !phoneNumber) {
-            setError(true);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [typeMessage, setTypeMessage] = useState('');
+
+    // Fetch user data from local storage
+    useEffect(() => {
+        const storedUserData = JSON.parse(localStorage.getItem('user')) || {};
+        setUserData(storedUserData);
+        setUserId(storedUserData._id); // Assuming userId is part of the user data
+        console.log('storedUserData._id: ', storedUserData._id);
+    }, []);
+
+    // Populate the state variables with the retrieved user data
+    useEffect(() => {
+        setFirstName(userData?.firstName || '');
+        setLastName(userData?.lastName || '');
+        setEmail(userData?.email || '');
+        setAddress(userData?.address || '');
+        setPhone(userData?.phone || '');
+    }, [userData]);
+
+    // check validate
+    const firstNameValidation = useValidation({ value: '' });
+    const lastNameValidation = useValidation({ value: '' });
+    const emailValidation = useValidation({ value: '' });
+    const phoneValidation = useValidation({ value: '' });
+    const addressValivation = useValidation({ value: '' });
+
+    const handleCheckTextField = async () => {
+        // Validate fields
+        const isFirstNameValid = firstNameValidation.validateRequiredWithoutDigits();
+        const isLastNameValid = lastNameValidation.validateRequiredWithoutDigits();
+        const isEmailValid = emailValidation.validateEmail();
+        const isAddressValid = emailValidation.validateRequired();
+        const isPhoneNumberValid = phoneValidation.validatePhone();
+
+        if (
+            isFirstNameValid &&
+            isLastNameValid &&
+            isEmailValid &&
+            isAddressValid &&
+            phoneValidation
+        ) {
+            try {
+                // Update user data in the database
+                const updatedUserData = {
+                    firstName,
+                    lastName,
+                    email,
+                    address,
+                    phone,
+                };
+                console.log('ahiahi:', userId);
+                console.log(updatedUserData);
+                await userService.updateUserProfile(userId, updatedUserData);
+
+                // Optionally, you can also update the local storage with the new user data
+                setUserData(updatedUserData);
+
+                setShowToast(true);
+                setToastMessage('You just updated your information!');
+                setTypeMessage('success');
+
+                // Show a success message or perform other actions as needed
+                console.log('User profile updated successfully!');
+            } catch (error) {
+                console.error('Error updating user profile:', error);
+            }
         } else {
-            // Lưu thông tin cá nhân và thực hiện các hành động khác
-            // ...
-            setError(false);
-            <Typography>ahiahi</Typography>;
+            // Handle validation errors
+            console.log('Validation failed. Please check the form.');
         }
-    };
-
-    const handleRegister = () => {
-        // ??? bruh bruh???
-        setOpenDialog(true);
-    };
-
-    const handleOpenDialog = () => {
-        setOpenDialog(true);
-    };
-
-    const handleCloseDialog = () => {
-        setOpenDialog(false);
     };
 
     // back to the previous page
@@ -91,44 +113,195 @@ function PersonalAccount() {
             </Typography>
             {/* input field */}
 
-            <CustomizeGridProfile
-                label={'First Name'}
-                textField={'First Name'}
-                onChange={(e) => setFirstName(e.target.value)}
-            />
-            <CustomizeGridProfile
-                label={'Last Name'}
-                textField={'Last Name'}
-                onChange={(e) => setLastName(e.target.value)}
-            />
-            <CustomizeGridProfile
-                label={'Email'}
-                textField={'Email'}
-                onChange={(e) => setEmail(e.target.value)}
-            />
-            <CustomizeGridProfile
-                label={'Tên đăng nhập'}
-                textField={'Tên đăng nhập'}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <CustomizeGridProfile
-                label={'Số điện thoại'}
-                textField={'Số điện thoại'}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-            />
+            <Grid container spacing={2} sx={{ ml: 31, mr: 31, mb: 2 }}>
+                {/* Text fields with validation */}
+                <Grid item xs={6}>
+                    <Grid container alignItems="center" justifyContent="space-between">
+                        <Grid item>
+                            <CustomTypography variant="body1" textAlign={'left'} gutterBottom>
+                                First Name
+                            </CustomTypography>
+                        </Grid>
+                        <Grid item>
+                            <CustomizeTextField
+                                value={firstName}
+                                wd={400}
+                                onChange={(e) => {
+                                    setFirstName(e.target.value);
+                                    firstNameValidation.setState({
+                                        ...firstNameValidation.state,
+                                        value: e.target.value,
+                                    });
+                                }}
+                                label="First Name"
+                                variant="outlined"
+                                onBlur={firstNameValidation.validateRequiredWithoutDigits}
+                                error={firstNameValidation.state.message !== ''}
+                                helperText={firstNameValidation.state.message}
+                                sx={{
+                                    '& .MuiFormHelperText-root': {
+                                        fontSize: '12px', // Adjust the font size as needed
+                                    },
+                                }}
+                            />
+                        </Grid>
+                    </Grid>
+                    <Grid
+                        container
+                        alignItems="center"
+                        justifyContent="space-between"
+                        sx={{ mt: 2 }}
+                    >
+                        <Grid item>
+                            <CustomTypography variant="body1" textAlign={'left'} gutterBottom>
+                                Last Name
+                            </CustomTypography>
+                        </Grid>
+                        <Grid item>
+                            <CustomizeTextField
+                                value={lastName}
+                                wd={400}
+                                onChange={(e) => {
+                                    setLastName(e.target.value);
+                                    lastNameValidation.setState({
+                                        ...lastNameValidation.state,
+                                        value: e.target.value,
+                                    });
+                                }}
+                                label="Last Name"
+                                variant="outlined"
+                                onBlur={lastNameValidation.validateRequiredWithoutDigits}
+                                error={lastNameValidation.state.message !== ''}
+                                helperText={lastNameValidation.state.message}
+                                sx={{
+                                    '& .MuiFormHelperText-root': {
+                                        fontSize: '12px', // Adjust the font size as needed
+                                    },
+                                }}
+                            />
+                        </Grid>
+                    </Grid>
+                    <Grid
+                        container
+                        alignItems="center"
+                        justifyContent="space-between"
+                        sx={{ mt: 2 }}
+                    >
+                        <Grid item>
+                            <CustomTypography variant="body1" textAlign={'left'} gutterBottom>
+                                Email
+                            </CustomTypography>
+                        </Grid>
+                        <Grid item>
+                            <CustomizeTextField
+                                value={email}
+                                wd={400}
+                                onChange={(e) => {
+                                    setEmail(e.target.value);
+                                    emailValidation.setState({
+                                        ...emailValidation.state,
+                                        value: e.target.value,
+                                    });
+                                }}
+                                label="Email"
+                                variant="outlined"
+                                onBlur={emailValidation.validateEmail}
+                                error={emailValidation.state.message !== ''}
+                                helperText={emailValidation.state.message}
+                                sx={{
+                                    '& .MuiFormHelperText-root': {
+                                        fontSize: '12px', // Adjust the font size as needed
+                                    },
+                                }}
+                            />
+                        </Grid>
+                    </Grid>
+
+                    <Grid
+                        container
+                        alignItems="center"
+                        justifyContent="space-between"
+                        sx={{ mt: 2 }}
+                    >
+                        <Grid item>
+                            <CustomTypography variant="body1" textAlign={'left'} gutterBottom>
+                                Phone Number
+                            </CustomTypography>
+                        </Grid>
+                        <Grid item>
+                            <CustomizeTextField
+                                value={phone}
+                                wd={400}
+                                onChange={(e) => {
+                                    setPhone(e.target.value);
+                                    phoneValidation.setState({
+                                        ...phoneValidation.state,
+                                        value: e.target.value,
+                                    });
+                                }}
+                                label="Phone Number"
+                                variant="outlined"
+                                onBlur={phoneValidation.validatePhone}
+                                error={phoneValidation.state.message !== ''}
+                                helperText={phoneValidation.state.message}
+                                sx={{
+                                    '& .MuiFormHelperText-root': {
+                                        fontSize: '12px', // Adjust the font size as needed
+                                    },
+                                }}
+                            />
+                        </Grid>
+                    </Grid>
+
+                    <Grid
+                        container
+                        alignItems="center"
+                        justifyContent="space-between"
+                        sx={{ mt: 2 }}
+                    >
+                        <Grid item>
+                            <CustomTypography variant="body1" textAlign={'left'} gutterBottom>
+                                Address
+                            </CustomTypography>
+                        </Grid>
+                        <Grid item>
+                            <CustomizeTextField
+                                value={address}
+                                wd={400}
+                                onChange={(e) => {
+                                    setAddress(e.target.value);
+                                    addressValivation.setState({
+                                        ...addressValivation.state,
+                                        value: e.target.value,
+                                    });
+                                }}
+                                label="Address"
+                                variant="outlined"
+                                onBlur={addressValivation.validateRequired}
+                                error={addressValivation.state.message !== ''}
+                                helperText={addressValivation.state.message}
+                                sx={{
+                                    '& .MuiFormHelperText-root': {
+                                        fontSize: '12px', // Adjust the font size as needed
+                                    },
+                                }}
+                            />
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
 
             {/* check if these field are empty */}
             <Box display="flex" justifyContent={'center'} alignItems={'center'}>
                 <CustomizeButtonPersonalAccount variant="contained" onClick={handleCheckTextField}>
                     Save Profile
                 </CustomizeButtonPersonalAccount>
-
-                {/* show error message */}
-                {error && (
-                    <Typography variant="body2" sx={{ color: 'red', mt: 1 }}>
-                        Vui lòng điền đầy đủ thông tin cá nhân.
-                    </Typography>
-                )}
+                <ToastMessage2
+                    message={toastMessage}
+                    type={typeMessage}
+                    showToast={showToast}
+                    setShowToast={setShowToast}
+                />
 
                 <CustomizeButtonPersonalAccount
                     variant="outlined"

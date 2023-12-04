@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import RecipeReviewCard from './ProductsCard';
 // call some components are defined
-// import { products } from '~/components/MakeProductCards/MakeProductCards';
 import { CustomizeButton } from '~/components/CustomizeButton/CustomizeButton';
 import { MakeProductsCard } from '~/components/MakeProductCards/MakeProductCards';
-import { products } from './LastesProduct';
 import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
 import productService from '~/services/productServices';
-function BestSeller() {
+
+function LastesProduct() {
     const navigate = useNavigate();
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
+    const [listLastest, setListLastest] = useState([]);
 
     // call api
     useEffect(() => {
@@ -22,8 +23,6 @@ function BestSeller() {
         };
         fetchData();
     }, []);
-
-    const [listLastest, setListLastest] = useState([]);
 
     const handleNavigateToShop = () => {
         navigate('/shop');
@@ -59,7 +58,6 @@ function BestSeller() {
                     })}
             </Box>
             <ToastMessage2
-                // message="Product added to cart!"
                 message={toastMessage}
                 type="success"
                 showToast={showToast}
@@ -72,4 +70,4 @@ function BestSeller() {
     );
 }
 
-export default BestSeller;
+export default LastesProduct;

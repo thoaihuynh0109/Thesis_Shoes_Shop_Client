@@ -31,6 +31,9 @@ import RegisterAccount from '~/pages/RegisterAccount/RegisterAccount';
 import TestProductPagination from '~/pages/Shop/Pagination/TestProductPagination';
 import Shop from '~/pages/Shop/Shop';
 import Women from '~/pages/Women/Women';
+import AddressStep from '~/pages/Checkout/ProductsInCard/AddressStep/AddressStep';
+import ShowDeliveryInformation from '~/pages/Checkout/ProductsInCard/AddressStep/ShowDeliveryInformation';
+import ShippingInformation from '~/pages/Checkout/ProductsInCard/ShippingInformation';
 
 // Route khong can dang nhap
 const publicRoutes = [
@@ -68,12 +71,15 @@ const publicRoutes = [
         component: WishList,
     },
     {
-        path: '/checkout',
+        // path: '/checkout',
+        path: '/shopping-cart',
         component: Checkout,
     },
     {
-        path: '/checkout',
-        component: Checkout,
+        path: '/checkout-page',
+        // component: AddressStep,
+
+        component: ShippingInformation,
     },
     {
         path: '/signin',

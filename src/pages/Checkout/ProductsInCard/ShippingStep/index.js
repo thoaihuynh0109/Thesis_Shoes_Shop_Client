@@ -31,9 +31,10 @@ function ShippingStep() {
     };
     return (
         <Box>
-            <Box sx={{ ...commonStyles, border: 1, p: 2 }}>
+            <Box sx={{ ...commonStyles, border: 1, p: 2, borderRadius: '5px' }}>
                 <Typography variant="body1" fontWeight={'bold'} fontSize="20px">
-                    Choose a shipping option for this address: Em số 2 HCMUTE
+                    Choose a shipping option for this address
+                    {/* Choose a shipping option for this address: Em số 2 HCMUTE */}
                 </Typography>
                 <Box
                     sx={{
@@ -89,7 +90,9 @@ function ShippingStep() {
                         $2.00
                     </CustomTypography>
                 </Box>
-                <Box>
+
+                {/* agree with policy */}
+                {/* <Box>
                     <Typography fontSize="15px">Terms of service</Typography>
                     <Stack direction={'row'} alignItems="center">
                         <Checkbox {...label} size="large" />
@@ -97,10 +100,10 @@ function ShippingStep() {
                             I agree to the terms of service and will adhere to them unconditionally.
                         </Typography>
                     </Stack>
-                    {/* <Button component={Link} to="/policy" sx={{ fontSize: '14px' }}>
+                    <Button component={Link} to="/policy" sx={{ fontSize: '14px' }}>
                         Read the Terms of Service
-                    </Button> */}
-                </Box>
+                    </Button>
+                </Box> */}
             </Box>
         </Box>
     );

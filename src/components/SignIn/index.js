@@ -48,12 +48,32 @@ function SignIn() {
             password,
         };
 
+        //
         const loginData = await authService.signIn(data);
 
         localStorage.setItem('user', JSON.stringify(loginData));
         // send info to login api
         navigate('/');
     };
+
+    // const handleLogin = async (event) => {
+    //     // Kiểm tra xem sự kiện là sự kiện nhấn phím Enter
+    //     if (event.key === 'Enter') {
+    //         // Ngăn chặn hành động mặc định của nút Enter (ví dụ: gửi form)
+    //         event.preventDefault();
+
+    //         const data = {
+    //             email,
+    //             password,
+    //         };
+
+    //         const loginData = await authService.signIn(data);
+
+    //         localStorage.setItem('user', JSON.stringify(loginData));
+    //         // Gửi thông tin đến API đăng nhập
+    //         navigate('/');
+    //     }
+    // };
 
     const handleRegisterAccount = () => {
         navigate('/register-account');
@@ -121,8 +141,10 @@ function SignIn() {
                                 onChange={(e) => {
                                     setEmail(e.target.value);
                                 }}
-                                fullWidth={true}
+                                // fullWidth={true}
+                                wd="400px"
                                 // id="outlined-basic"
+
                                 label="Email"
                                 variant="outlined"
                             />

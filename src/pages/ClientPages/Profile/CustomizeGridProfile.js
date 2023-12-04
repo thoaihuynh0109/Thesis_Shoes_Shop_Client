@@ -20,7 +20,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 // customize for form Profile
-function CustomizeGridProfile({ label, textField, forPassword }) {
+function CustomizeGridProfile({ label, textField, forPassword, checkValidation }) {
     const navigate = useNavigate();
     return (
         <Box sx={{ flexGrow: 1, overflow: 'hidden', px: 3 }}>

@@ -69,7 +69,8 @@ function HeaderDesign() {
 
                         <CustomizeButton
                             component={Link}
-                            to="/checkout"
+                            // to="/checkout"
+                            to="/shopping-cart"
                             startIcon={<CheckCircleOutlineIcon />}
                         >
                             Checkout

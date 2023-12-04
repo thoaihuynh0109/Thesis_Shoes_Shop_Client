@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
+import { useNavigate } from 'react-router-dom';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {
     Table,
     TableBody,
@@ -41,17 +41,10 @@ const CustomizeTableCell = styled(({ fontSize, fontWeight, ...rest }) => <TableC
     }),
 );
 
-const CustomTypographyPriceDetails = styled(Typography)(({ fontSize }) => ({
-    fontSize: fontSize || '16px',
-}));
-
-const CustomTableCellPriceDetails = styled(TableCell)(({ fontSize }) => ({
-    fontSize: fontSize || '16px',
-}));
-
 function ProductsTable() {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart.cartItems);
+    const navigate = useNavigate();
     const cartItemsCount = () => {
         return cartItems.reduce((total, item) => total + item.quantity, 0);
     };
@@ -105,12 +98,15 @@ function ProductsTable() {
         if (price && typeof price === 'string') {
             // remove commas, ',' and convert to float for price
             const parsedPrice = parseFloat(price.replace(/,/g, ''));
+            // const parsedPrice = parseFloat(price);
 
             // Check if both price is a valid number
             if (!isNaN(parsedPrice) && typeof quantity === 'number' && !isNaN(quantity)) {
                 const total = parsedPrice * quantity;
                 // This will add "commas - ," for better readability
-                return total.toLocaleString();
+                return total.toLocaleString(); // convert to vnd
+                // console.log(total.toString());
+                // return total; // convert to vnd
             }
         }
 
@@ -121,7 +117,6 @@ function ProductsTable() {
     const calculateCartTotal = () => {
         let total = 0;
         for (const item of cartItems) {
-            // assuming price is a string
             const itemPrice = parseFloat(item.price.replace(/,/g, ''));
             const itemQuantity = parseFloat(item.quantity);
 
@@ -131,19 +126,25 @@ function ProductsTable() {
         }
         return total;
     };
+
     const tax = 8.75;
     const totalWithTax = (tax / 100 + 1) * calculateCartTotal();
+    // Format totalWithTax without decimal places and commas
+    const formattedTotalWithTax = Math.floor(totalWithTax).toLocaleString('vi-VN');
 
     // check if there is no products in cart before adding item
     if (cartItems.length === 0) {
-        return <EmptyCard message={'Không có sản phẩm trong giỏ hàng'} />;
+        return <EmptyCard message={'No product in cart'} />;
     }
+
+    // Show Checkout Page
+    // ShippingInformation.js
+    const handleCheckoutPage = () => {
+        navigate('/checkout-page');
+    };
 
     return (
         <Box>
-            {/* <Typography>
-                <p>Total items in the cart: {cartItemsCount()}</p>
-            </Typography> */}
             <Box>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -164,22 +165,23 @@ function ProductsTable() {
                         {/* content of table */}
                         <TableBody>
                             {cartItems.map((item) => (
-                                <TableRow key={item.productId}>
+                                <TableRow key={item._id}>
                                     <CustomizeTableCell component="th" scope="row">
                                         <img
-                                            src={item.image}
-                                            alt={`Product: ${item.title}`}
+                                            src={item.images}
+                                            alt={`Product: ${item.name}`}
                                             style={{ width: '50px' }}
                                         />
                                     </CustomizeTableCell>
+
                                     <CustomizeTableCell align="left">
-                                        {item.title}
+                                        {item.name}
                                     </CustomizeTableCell>
                                     <CustomizeTableCell align="left">
-                                        {item.stockStatus ? 'In Stock' : 'Sold Out'}
+                                        {item.countInstock ? 'In Stock' : 'Sold Out'}
                                     </CustomizeTableCell>
                                     <CustomizeTableCell align="left">
-                                        {item.price}
+                                        {item.price.toLocaleString()}
                                     </CustomizeTableCell>
                                     <CustomizeTableCell align="left">
                                         <Stack
@@ -190,7 +192,7 @@ function ProductsTable() {
                                         >
                                             <Button
                                                 variant="contained"
-                                                onClick={() => decrement(item.productId)}
+                                                onClick={() => decrement(item._id)}
                                                 sx={{ minWidth: '40px', height: '30px' }}
                                             >
                                                 <CustomTypography>-</CustomTypography>
@@ -198,7 +200,7 @@ function ProductsTable() {
                                             <span>{item.quantity}</span>
                                             <Button
                                                 variant="contained"
-                                                onClick={() => increment(item.productId)}
+                                                onClick={() => increment(item._id)}
                                                 sx={{ minWidth: '40px', height: '30px' }}
                                             >
                                                 <CustomTypography>+</CustomTypography>
@@ -220,9 +222,7 @@ function ProductsTable() {
                                                 </CustomTypography>
                                             }
                                         >
-                                            <IconButton
-                                                onClick={() => handleRemoveItem(item.productId)}
-                                            >
+                                            <IconButton onClick={() => handleRemoveItem(item._id)}>
                                                 <DeleteIcon fontSize="large" />
                                             </IconButton>
                                             <PopUpMessage
@@ -244,8 +244,18 @@ function ProductsTable() {
             <TotalToCheckout
                 tax={8.75}
                 subtotal={calculateCartTotal().toLocaleString()}
-                totalWithTax={totalWithTax.toLocaleString()}
+                totalWithTax={formattedTotalWithTax}
             />
+            <Box sx={{ mb: '10px', display: 'flex', justifyContent: 'end', mt: 2 }}>
+                <Button
+                    sx={{ p: '12px 30px', fontSize: ' 15px', textTransform: 'capitalize' }}
+                    variant="contained"
+                    onClick={handleCheckoutPage}
+                    endIcon={<ArrowForwardIosIcon />}
+                >
+                    Checkout
+                </Button>
+            </Box>
         </Box>
     );
 }
@@ -320,3 +330,5 @@ function TotalToCheckout({ tax, totalWithTax, subtotal }) {
         </Box>
     );
 }
+
+// Use Case Checkout
