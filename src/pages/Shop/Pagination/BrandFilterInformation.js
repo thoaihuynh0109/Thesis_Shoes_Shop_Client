@@ -62,17 +62,18 @@ export default function BrandFilterInformation({ handleBrandFilter, selectedBran
                         listBrands.map((brand, index) => (
                             <ListItemButton
                                 key={brand._id}
-                                selected={selectedBrands.includes(brand)}
+                                selected={selectedBrands.includes(brand.name)}
                                 onClick={() => {
-                                    handleBrandFilter(brand);
+                                    handleBrandFilter(brand.name);
                                 }}
                             >
                                 <Checkbox
-                                    checked={selectedBrands.includes(brand)}
-                                    onChange={() => handleBrandFilter(brand)}
+                                    checked={selectedBrands.includes(brand.name)}
+                                    onChange={() => handleBrandFilter(brand.name)}
                                 />
                                 {/* <ListItemText primary={brand} /> */}
                                 <ListItemText
+                                    key={brand._id}
                                     primary={
                                         <CustomTypography sx={{ fontSize: '14px' }} variant="body1">
                                             {brand.name}

@@ -20,6 +20,16 @@ const brandService = {
             console.error(error);
         }
     },
+    // Trong productService.js
+    getProductsByBrand: async (brand) => {
+        try {
+            const response = await axios.get(apiUrl + `/${brand}`);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    },
     // createBrand: async (data) => {
     //     try {
     //         const respone = await axios.post(apiUrl + '/', data);

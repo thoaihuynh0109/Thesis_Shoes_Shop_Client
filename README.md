@@ -27,5 +27,6 @@
     -   sorting product --> Done
     -   filter product for shop page by price --> Done
     -   search for shop page --> Done
+    -   filter product follow brands for shop page --> Done
     -   product for women
     -   filter for 3 pages brand: shop, men, women,

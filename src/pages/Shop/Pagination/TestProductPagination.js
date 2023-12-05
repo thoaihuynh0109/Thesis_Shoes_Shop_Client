@@ -325,7 +325,8 @@ import brandService from '~/services/brandServices';
 
 export default function TestProductPagination() {
     const [listAllProducts, setListAllProducts] = useState([]); // call api
-    const [products, setProducts] = useState(listAllProducts);
+
+    // const [products, setProducts] = useState(listAllProducts);
     const [searchVal, setSearchVal] = useState('');
     const [storeValue, setStoreValue] = useState([]);
     const [getValue, setGetValue] = useState(false);
@@ -337,13 +338,11 @@ export default function TestProductPagination() {
     let [page, setPage] = useState(1);
 
     const PER_PAGE = 8; // have 8 products in one page
-    const count = Math.ceil(products.length / PER_PAGE);
-    const _DATA = usePagination(products, PER_PAGE);
+    const count = Math.ceil(listAllProducts.length / PER_PAGE);
+    const _DATA = usePagination(listAllProducts, PER_PAGE);
     const [sorting, setSorting] = useState('');
     const [selectedPriceRange, setSelectedPriceRange] = useState('');
     const [selectedBrands, setSelectedBrands] = useState([]);
-    //     // list brands
-    const [listBrands, setListBrands] = useState([]);
     // call api
     useEffect(() => {
         const fetchProductData = async () => {
@@ -355,15 +354,6 @@ export default function TestProductPagination() {
     }, []);
 
     useEffect(() => {
-        const fetchBrandsData = async () => {
-            const listProductBrands = await brandService.getAllBrand();
-            console.log('listProductBrands.name: ', listProductBrands.name);
-            setListBrands(listProductBrands);
-        };
-        fetchBrandsData();
-    }, []);
-
-    useEffect(() => {
         setCurrentImages(Array.from({ length: _DATA.length }, (_, index) => index));
     }, []);
     // _DATA.length
@@ -371,7 +361,9 @@ export default function TestProductPagination() {
     useEffect(() => {
         // Filter products based on selected brands
         const brandFiltered = listAllProducts.filter((product) => {
-            return selectedBrands.length === 0 || selectedBrands.includes(product.name);
+            console.log('product Name: ', product.name);
+            console.log('Product Brand: ', product.brand);
+            return selectedBrands.length === 0 || selectedBrands.includes(product.brand);
         });
         setBrandFilteredProducts(brandFiltered);
     }, [selectedBrands, listAllProducts]);
@@ -434,7 +426,7 @@ export default function TestProductPagination() {
         );
 
         // Update the state with the filtered products
-        setProducts(filteredProducts);
+        setListAllProducts(filteredProducts);
         setStoreValue(filteredProducts);
         setGetValue(true);
         setPage(1);
@@ -446,7 +438,7 @@ export default function TestProductPagination() {
     const handleSearchClickPagination = () => {
         if (!searchVal.trim()) {
             // If the search input is empty, reset the products to the original list
-            setProducts(listAllProducts);
+            setListAllProducts(listAllProducts);
             setGetValue(false);
             setPage(1);
             return;
@@ -463,7 +455,7 @@ export default function TestProductPagination() {
         // Update the state to reflect whether there are products or not
         setHasProducts(filteredProducts.length > 0);
 
-        setProducts(filteredProducts);
+        setListAllProducts(filteredProducts);
         setStoreValue(filteredProducts);
         setGetValue(true);
         setPage(1);
