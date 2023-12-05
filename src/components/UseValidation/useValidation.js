@@ -14,12 +14,13 @@ const useValidation = (initialState) => {
                 message: 'This field is required.',
             });
             return false;
+        } else {
+            setState({
+                ...state,
+                message: '',
+            });
+            return true;
         }
-        setState({
-            ...state,
-            message: '',
-        });
-        return true;
     };
 
     const validateEmail = () => {

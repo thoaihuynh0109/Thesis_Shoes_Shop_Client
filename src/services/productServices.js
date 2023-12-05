@@ -18,6 +18,7 @@ const productService = {
             console.log(error);
         }
     },
+
     getProductByCategory: async (category) => {
         try {
             // router.get('/categories/:category', ProductController.getByCategory);

@@ -53,7 +53,7 @@ export default function ProductGrid({
         }
     };
 
-    // without searching
+    // render Product with searching
     const renderProductCards = () => {
         let data;
 
@@ -66,9 +66,8 @@ export default function ProductGrid({
             const productsToRender =
                 filteredProducts.length > 0 ? filteredProducts : brandFilteredProducts;
             const filteredProducts2 = productsToRender.filter(
-                (product) =>
-                    // product.title.toLowerCase().includes(searchTerm.toLowerCase()),
-                    product.name,
+                (product) => product.name.toLowerCase().includes(searchTerm.toLowerCase()),
+                // product.name,
             );
 
             // console.log('filter này ne ahihi:', filteredProducts2);
@@ -102,23 +101,6 @@ export default function ProductGrid({
             data.map((product, index) => (
                 <Grid item xs={6} sm={3} md={3} key={index} style={{ display: 'flex', mb: 2 }}>
                     <MakeProductsCard
-                        // productId={product.id}
-                        // onClick={() => navigate('/product-details')}
-                        // title={product.title}
-                        // price={product.price}
-                        // image={product.img}
-                        // rating={product.rating}
-                        // label={product.label}
-                        // minWidthCard={'210px'}
-                        // maxHeightCard={'210px'}
-                        // imgHeight={'140px'}
-                        // imgWidth={'150px'}
-                        // showToast={showToast}
-                        // setShowToast={setShowToast}
-                        // // show suitable toast message
-                        // toastMessage={toastMessage}
-                        // setToastMessage={setToastMessage}
-
                         _id={product._id}
                         onClick={() => navigate('/product-details')}
                         name={product.name}
