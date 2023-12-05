@@ -33,9 +33,10 @@ function EditCategory() {
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
 
-    const fetchAllCategory = async () => {
-        const listCategory = await categoryService.getAllCategory();
-        setCategories(listCategory);
+    const fetchAllParentCategory = async () => {
+        const listCategory = await categoryService.getAllParentCategory();
+        const parentCategory = listCategory.filter((category) => category._id !== id);
+        setCategories(parentCategory);
     };
 
     const fetchCategoryById = async () => {
@@ -46,8 +47,8 @@ function EditCategory() {
     };
 
     React.useEffect(() => {
-        fetchAllCategory();
         fetchCategoryById();
+        fetchAllParentCategory();
     }, []);
 
     const handleChange = (event) => {
@@ -145,7 +146,7 @@ function EditCategory() {
                             error={name.message ? true : false}
                             variant="outlined"
                             placeholder="Enter Category Name"
-                            sx={{ width: '100%', mr: 2 }}
+                            sx={{ width: '100%', mr: 2, mb: 2 }}
                             onBlur={validateName}
                             onChange={(e) => setName({ ...name, value: e.target.value })}
                         />
@@ -155,6 +156,7 @@ function EditCategory() {
                     </Box>
                     <Box>
                         <CustomizeTextField
+                            sx={{ width: '100%', mr: 2, mb: 2 }}
                             label="Description"
                             required
                             fullWidth
@@ -177,7 +179,7 @@ function EditCategory() {
                                 id="demo-controlled-open-select-label"
                                 sx={{ fontSize: '1.6rem' }}
                             >
-                                Select Category
+                                Select Parent Category
                             </InputLabel>
                             <Select
                                 labelId="demo-controlled-open-select-label"
@@ -186,7 +188,7 @@ function EditCategory() {
                                 onClose={handleClose}
                                 onOpen={handleOpen}
                                 value={selectedCategoryId}
-                                label="Select Category"
+                                label="Select Parent Category"
                                 onChange={handleChange}
                                 sx={{ fontSize: '1.6rem' }}
                             >
@@ -194,24 +196,16 @@ function EditCategory() {
                                     <em>None</em>
                                 </MenuItem>
                                 {categories.map((category) => (
-                                    <MenuItem key={category._id} value={category._id}>
+                                    <MenuItem
+                                        key={category._id}
+                                        value={category._id}
+                                        sx={{ fontSize: '1.4rem' }}
+                                    >
                                         {category.name}
                                     </MenuItem>
                                 ))}
                             </Select>
                         </FormControl>
-
-                        // <Select
-                        //     onChange={handleSelected}
-                        //     label="Select Category"
-                        //     sx={{ minWidth: '30%', mt: 2 }}
-                        // >
-                        //     {categories.map((category) => (
-                        //         <MenuItem key={category._id} value={category._id}>
-                        //             {category.name}
-                        //         </MenuItem>
-                        //     ))}
-                        // </Select>
                     )}
 
                     <CustomizeButton type="submit">Update Category</CustomizeButton>
