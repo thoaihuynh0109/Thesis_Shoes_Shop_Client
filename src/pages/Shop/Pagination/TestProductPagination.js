@@ -371,7 +371,7 @@ export default function TestProductPagination() {
     useEffect(() => {
         // Filter products based on selected brands
         const brandFiltered = listAllProducts.filter((product) => {
-            return selectedBrands.length === 0 || selectedBrands.includes(product.brand);
+            return selectedBrands.length === 0 || selectedBrands.includes(product.name);
         });
         setBrandFilteredProducts(brandFiltered);
     }, [selectedBrands, listAllProducts]);
