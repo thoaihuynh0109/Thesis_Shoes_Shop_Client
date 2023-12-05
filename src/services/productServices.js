@@ -18,6 +18,17 @@ const productService = {
             console.log(error);
         }
     },
+    // Trong productService.js
+    getProductsByBrand: async (brand) => {
+        try {
+            const response = await axios.get(`${apiUrl}/brands/${brand}`);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    },
+
     getProductByCategory: async (category) => {
         try {
             // router.get('/categories/:category', ProductController.getByCategory);

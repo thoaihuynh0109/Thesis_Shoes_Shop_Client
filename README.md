@@ -24,6 +24,8 @@
 -   task 5/12/2023
     -   update information for user --> DONE
     -   register account with test case: try with an email exist in database --> Done
+    -   sorting product --> Done
+    -   filter product for shop page by price --> Done
+    -   search for shop page --> Done
     -   product for women
-    -   filter for 3 pages: shop, men, women,
-    -   search for shop page
+    -   filter for 3 pages brand: shop, men, women,

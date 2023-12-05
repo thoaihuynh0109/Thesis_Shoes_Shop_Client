@@ -12,9 +12,22 @@ import StoreIcon from '@mui/icons-material/Store';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
-
+import categoryService from '~/services/categoryServices';
+import brandService from '~/services/brandServices';
 export default function BrandFilterInformation({ handleBrandFilter, selectedBrands }) {
     const [open, setOpen] = useState(true);
+
+    const [listBrands, setListBrands] = useState([]);
+
+    // call api all product brands
+    useEffect(() => {
+        const fetchBrandsData = async () => {
+            const listProductBrands = await brandService.getAllBrand();
+            console.log(listProductBrands);
+            setListBrands(listProductBrands);
+        };
+        fetchBrandsData();
+    }, []);
 
     const brands = ['Nike', 'Adidas', 'Puma', 'New Balance', 'Nai Kì'];
 
@@ -45,26 +58,29 @@ export default function BrandFilterInformation({ handleBrandFilter, selectedBran
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    {brands.map((brand, index) => (
-                        <ListItemButton
-                            key={index}
-                            selected={selectedBrands.includes(brand)}
-                            onClick={() => handleBrandFilter(brand)}
-                        >
-                            <Checkbox
-                                checked={selectedBrands.includes(brand)}
-                                onChange={() => handleBrandFilter(brand)}
-                            />
-                            {/* <ListItemText primary={brand} /> */}
-                            <ListItemText
-                                primary={
-                                    <CustomTypography sx={{ fontSize: '14px' }} variant="body1">
-                                        {brand}
-                                    </CustomTypography>
-                                }
-                            />
-                        </ListItemButton>
-                    ))}
+                    {listBrands.length > 0 &&
+                        listBrands.map((brand, index) => (
+                            <ListItemButton
+                                key={brand._id}
+                                selected={selectedBrands.includes(brand)}
+                                onClick={() => {
+                                    handleBrandFilter(brand);
+                                }}
+                            >
+                                <Checkbox
+                                    checked={selectedBrands.includes(brand)}
+                                    onChange={() => handleBrandFilter(brand)}
+                                />
+                                {/* <ListItemText primary={brand} /> */}
+                                <ListItemText
+                                    primary={
+                                        <CustomTypography sx={{ fontSize: '14px' }} variant="body1">
+                                            {brand.name}
+                                        </CustomTypography>
+                                    }
+                                />
+                            </ListItemButton>
+                        ))}
                 </List>
             </Collapse>
         </List>
