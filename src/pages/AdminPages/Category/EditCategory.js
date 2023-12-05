@@ -179,7 +179,7 @@ function EditCategory() {
                                 id="demo-controlled-open-select-label"
                                 sx={{ fontSize: '1.6rem' }}
                             >
-                                Select Category
+                                Select Parent Category
                             </InputLabel>
                             <Select
                                 labelId="demo-controlled-open-select-label"
@@ -188,7 +188,7 @@ function EditCategory() {
                                 onClose={handleClose}
                                 onOpen={handleOpen}
                                 value={selectedCategoryId}
-                                label="Select Category"
+                                label="Select Parent Category"
                                 onChange={handleChange}
                                 sx={{ fontSize: '1.6rem' }}
                             >
