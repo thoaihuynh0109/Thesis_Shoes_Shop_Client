@@ -293,6 +293,12 @@ function ShippingInformation() {
             )}
 
             {/* show toast message */}
+            <ToastMessage2
+                message={toastMessage}
+                type={typeMessage}
+                showToast={showToast}
+                setShowToast={setShowToast}
+            />
         </Box>
     );
 }

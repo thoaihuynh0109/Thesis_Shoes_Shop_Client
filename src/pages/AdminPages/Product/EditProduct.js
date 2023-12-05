@@ -64,6 +64,8 @@ function EditProduct() {
     const [imgData, setImgData] = React.useState({});
     const [imageUrl, setImageUrl] = React.useState('');
     const [categories, setCategories] = React.useState([]);
+    const [subCategories, setSubCategories] = React.useState([]);
+
     const [selectedBrandId, setSelectedBrandId] = React.useState({});
     const [selectedCategoryId, setSelectedCategoryId] = React.useState({});
     const [selectedSubCategoryId, setSelectedSubCategoryId] = React.useState({});
@@ -76,6 +78,28 @@ function EditProduct() {
 
     const { id } = useParams();
 
+    const fetchAllParentCategory = async () => {
+        const listCategory = await categoryService.getAllParentCategory();
+        setCategories(listCategory);
+    };
+    const fetchCategoryByParentId = async (id) => {
+        const listCategory = await categoryService.getChildCategoryByPId(id);
+        setSubCategories(listCategory);
+    };
+
+    // const fetchAllCategory = async () => {
+    //     const listCategory = await categoryService.getAllCategory();
+    //     setCategories(listCategory);
+    // };
+    const fetchAllBrand = async () => {
+        const listBrand = await brandService.getAllBrand();
+        setBrands(listBrand);
+    };
+
+    React.useEffect(() => {
+        fetchCategoryByParentId(selectedCategoryId);
+    }, [selectedCategoryId]);
+
     React.useEffect(() => {
         async function fetchProduct() {
             const product = await productService.getProductById(id);
@@ -86,12 +110,18 @@ function EditProduct() {
             setPriceSale({ value: product.priceSale, message: '' });
             setColors(product.colors);
             setSelectedBrandId(product.brand);
-            setSelectedCategoryId(product.categoryId);
-            setSelectedSubCategoryId(null);
+            setSelectedCategoryId(
+                product.parentCategoryId ? product.parentCategoryId : product.category,
+            );
+            setSelectedSubCategoryId(product.parentCategoryId ? product.category : null);
             setImageUrl(product.images);
         }
+        fetchAllParentCategory();
         fetchProduct();
+        fetchAllBrand();
+        // fetchAllCategory();
     }, []);
+
     const handleChange = (event) => {
         const {
             target: { value },
@@ -114,19 +144,6 @@ function EditProduct() {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
     const navigate = useNavigate();
-
-    const fetchAllCategory = async () => {
-        const listCategory = await categoryService.getAllCategory();
-        setCategories(listCategory);
-    };
-    const fetchAllBrand = async () => {
-        const listBrand = await brandService.getAllBrand();
-        setBrands(listBrand);
-    };
-    React.useEffect(() => {
-        fetchAllCategory();
-        fetchAllBrand();
-    }, []);
 
     const handleSelectedBrand = (e) => {
         setSelectedBrandId(e.target.value);
@@ -166,7 +183,7 @@ function EditProduct() {
                 sizes: sizes,
                 colors: colors,
                 brand: selectedBrandId,
-                categoryId: selectedCategoryId,
+                categoryId: selectedSubCategoryId ? selectedSubCategoryId : selectedCategoryId,
             };
             const respone = await productService.updateProduct(id, data);
 
@@ -307,7 +324,7 @@ function EditProduct() {
                                             {name.message}
                                         </FormHelperText>
                                     </Box>
-                                    <Stack direction="row">
+                                    <Stack direction="row" sx={{ mb: 2 }}>
                                         <Box sx={{ width: '50%', mr: 2 }}>
                                             <CustomizeTextField
                                                 label="Price"
@@ -363,7 +380,7 @@ function EditProduct() {
                                             />
                                         </Box>
                                     </Stack>
-                                    <Box>
+                                    <Box sx={{ mb: 2 }}>
                                         <CustomizeTextField
                                             id="validation-outlined-input"
                                             label="Description"
@@ -384,9 +401,12 @@ function EditProduct() {
                                         </FormHelperText>
                                     </Box>
 
-                                    <FormControl sx={{ m: 1, width: 300 }}>
-                                        <InputLabel>Select Color</InputLabel>
+                                    <FormControl sx={{ mb: 2, width: 300 }}>
+                                        <InputLabel sx={{ fontSize: '1.6rem' }}>
+                                            Select Color
+                                        </InputLabel>
                                         <Select
+                                            sx={{ fontSize: '1.6rem' }}
                                             multiple
                                             value={colors}
                                             onChange={handleChange}
@@ -407,7 +427,11 @@ function EditProduct() {
                                             MenuProps={MenuProps}
                                         >
                                             {listColors.map((color) => (
-                                                <MenuItem key={color} value={color}>
+                                                <MenuItem
+                                                    key={color}
+                                                    value={color}
+                                                    sx={{ fontSize: '1.4rem' }}
+                                                >
                                                     {color}
                                                 </MenuItem>
                                             ))}
@@ -420,10 +444,14 @@ function EditProduct() {
                                             value={selectedBrandId}
                                             onChange={handleSelectedBrand}
                                             label="Select Brand"
-                                            sx={{ width: '100%' }}
+                                            sx={{ width: '100%', fontSize: '1.4rem', mb: 2 }}
                                         >
                                             {brands.map((brand) => (
-                                                <MenuItem key={brand._id} value={brand._id}>
+                                                <MenuItem
+                                                    key={brand._id}
+                                                    value={brand._id}
+                                                    sx={{ fontSize: '1.4rem' }}
+                                                >
                                                     {brand.name}
                                                 </MenuItem>
                                             ))}
@@ -436,26 +464,33 @@ function EditProduct() {
                                             value={selectedCategoryId}
                                             onChange={handleSelectedCategory}
                                             label="Select Category"
-                                            sx={{ width: '100%' }}
+                                            sx={{ width: '100%', fontSize: '1.4rem', mb: 2 }}
                                         >
                                             {categories.map((category) => (
-                                                <MenuItem key={category._id} value={category._id}>
+                                                <MenuItem
+                                                    key={category._id}
+                                                    value={category._id}
+                                                    sx={{ fontSize: '1.4rem' }}
+                                                >
                                                     {category.name}
                                                 </MenuItem>
                                             ))}
                                         </CustomizeTextField>
                                     )}
-
-                                    {categories?.length > 0 && (
+                                    {subCategories?.length > 0 && (
                                         <CustomizeTextField
                                             select
                                             value={selectedSubCategoryId}
                                             onChange={handleSelectedSubCategory}
                                             label="Select Sub Category"
-                                            sx={{ width: '100%' }}
+                                            sx={{ width: '100%', fontSize: '14px', mb: 2 }}
                                         >
-                                            {categories.map((category) => (
-                                                <MenuItem key={category._id} value={category._id}>
+                                            {subCategories.map((category) => (
+                                                <MenuItem
+                                                    key={category._id}
+                                                    value={category._id}
+                                                    sx={{ fontSize: '14px' }}
+                                                >
                                                     {category.name}
                                                 </MenuItem>
                                             ))}

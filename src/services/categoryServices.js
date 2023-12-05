@@ -12,6 +12,30 @@ const categoryService = {
             console.error(error);
         }
     },
+    getAllParentCategory: async () => {
+        try {
+            const respone = await axios.get(apiUrl + '/parent');
+            return respone.data;
+        } catch (error) {
+            console.error(error);
+        }
+    },
+    getChildCategoryByPId: async (id) => {
+        try {
+            const respone = await axios.get(apiUrl + `/${id}/child`);
+            return respone.data;
+        } catch (error) {
+            console.error(error);
+        }
+    },
+    // getCategoryByChildId: async (id) => {
+    //     try {
+    //         const respone = await axios.get(apiUrl + `/${id}/parent`);
+    //         return respone.data;
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // },
     getCategoryById: async (id) => {
         try {
             const respone = await axios.get(apiUrl + `/${id}`);

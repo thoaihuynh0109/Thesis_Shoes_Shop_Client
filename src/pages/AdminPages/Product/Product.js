@@ -158,7 +158,7 @@ function Product() {
                                         <img src={row.images} width="80px" height="80px" />
                                     </CustomTableCell>
                                     <CustomTableCell align="left">{row.brand}</CustomTableCell>
-                                    <CustomTableCell align="left">{row.categoryId}</CustomTableCell>
+                                    <CustomTableCell align="left">{row.category}</CustomTableCell>
                                     <CustomTableCell align="left">{row.price}</CustomTableCell>
                                     <CustomTableCell align="center">
                                         {row.isActive ? (
