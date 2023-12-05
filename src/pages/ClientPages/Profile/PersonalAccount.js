@@ -33,13 +33,13 @@ function PersonalAccount() {
 
     // Fetch user data from local storage
     useEffect(() => {
-        const storedUserData = JSON.parse(localStorage.getItem('user')) || {};
+        const storedUserData = JSON.parse(localStorage.getItem('user')) || [];
         setUserData(storedUserData);
         setUserId(storedUserData._id); // Assuming userId is part of the user data
         console.log('storedUserData._id: ', storedUserData._id);
     }, []);
 
-    // Populate the state variables with the retrieved user data
+    // // Populate the state variables with the retrieved user data
     useEffect(() => {
         setFirstName(userData?.firstName || '');
         setLastName(userData?.lastName || '');
@@ -49,11 +49,30 @@ function PersonalAccount() {
     }, [userData]);
 
     // check validate
-    const firstNameValidation = useValidation({ value: '' });
+    const firstNameValidation = useValidation({ value: userData.firstName });
     const lastNameValidation = useValidation({ value: '' });
     const emailValidation = useValidation({ value: '' });
     const phoneValidation = useValidation({ value: '' });
     const addressValivation = useValidation({ value: '' });
+
+    // check validate for fields data get from the local storage
+    useEffect(() => {
+        firstNameValidation.setState({ ...firstNameValidation.state, value: firstName });
+    }, [firstName, firstNameValidation]);
+    useEffect(() => {
+        lastNameValidation.setState({ ...lastNameValidation.state, value: lastName });
+    }, [lastName, lastNameValidation]);
+
+    useEffect(() => {
+        emailValidation.setState({ ...emailValidation.state, value: email });
+    }, [email, emailValidation]);
+
+    useEffect(() => {
+        phoneValidation.setState({ ...phoneValidation.state, value: phone });
+    }, [phone, phoneValidation]);
+    useEffect(() => {
+        addressValivation.setState({ ...addressValivation.state, value: address });
+    }, [address, addressValivation]);
 
     const handleCheckTextField = async () => {
         // Validate fields
@@ -68,7 +87,7 @@ function PersonalAccount() {
             isLastNameValid &&
             isEmailValid &&
             isAddressValid &&
-            phoneValidation
+            isPhoneNumberValid
         ) {
             try {
                 // Update user data in the database
@@ -135,7 +154,15 @@ function PersonalAccount() {
                                 }}
                                 label="First Name"
                                 variant="outlined"
-                                onBlur={firstNameValidation.validateRequiredWithoutDigits}
+                                onBlur={
+                                    (firstNameValidation.validateRequiredWithoutDigits,
+                                    () => {
+                                        console.log(
+                                            'Validation result:',
+                                            firstNameValidation.validateRequiredWithoutDigits(),
+                                        );
+                                    })
+                                }
                                 error={firstNameValidation.state.message !== ''}
                                 helperText={firstNameValidation.state.message}
                                 sx={{
