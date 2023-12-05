@@ -13,22 +13,34 @@ function AddCategory() {
         message: '',
     });
     const [categories, setCategories] = React.useState([]);
+    const [subCategories, setSubCategories] = React.useState([]);
+
     const [description, setDescription] = React.useState({
         value: '',
         message: '',
     });
-    const [selectedCategoryId, setSelectedCategoryId] = React.useState(null);
+    const [selectedCategoryId, setSelectedCategoryId] = React.useState('');
+    const [selectedSubCategoryId, setSelectedSubCategoryId] = React.useState('');
+
     const [message, setMessage] = React.useState('');
     const [typeMessage, setTypeMessage] = React.useState('');
     const navigate = useNavigate();
 
-    const fetchAllCategory = async () => {
-        const listCategory = await categoryService.getAllCategory();
+    const fetchAllParentCategory = async () => {
+        const listCategory = await categoryService.getAllParentCategory();
         setCategories(listCategory);
     };
+    const fetchCategoryByParentId = async (id) => {
+        const listCategory = await categoryService.getChildCategoryByPId(id);
+        setSubCategories(listCategory);
+    };
+
     React.useEffect(() => {
-        fetchAllCategory();
+        fetchAllParentCategory();
     }, []);
+    React.useEffect(() => {
+        fetchCategoryByParentId(selectedCategoryId);
+    }, [selectedCategoryId]);
 
     const validateName = () => {
         if (name.value.trim() === '') {
@@ -63,7 +75,7 @@ function AddCategory() {
             const data = {
                 name: name.value,
                 description: description.value,
-                parentId: selectedCategoryId || null,
+                parentId: selectedSubCategoryId ? selectedSubCategoryId : selectedCategoryId,
             };
             const respone = await categoryService.createCategory(data);
 
@@ -73,7 +85,8 @@ function AddCategory() {
                 setTypeMessage('success');
                 setName({ value: '', message: '' });
                 setDescription({ value: '', message: '' });
-                setSelectedCategoryId(null);
+                setSelectedCategoryId('');
+                setSelectedSubCategoryId('');
                 // navigate('/manage-category');
             } else {
                 setMessage('Tạo category thất bại');
@@ -93,9 +106,12 @@ function AddCategory() {
         // window.history.back(); // Quay trở lại trang trước
     };
 
-    const handleSelected = (e) => {
+    const handleSelectedCategory = (e) => {
         console.log(selectedCategoryId);
         setSelectedCategoryId(e.target.value);
+    };
+    const handleSelectedSubCategory = (e) => {
+        setSelectedSubCategoryId(e.target.value);
     };
 
     return (
@@ -121,7 +137,7 @@ function AddCategory() {
                             error={name.message ? true : false}
                             variant="outlined"
                             placeholder="Enter Category Name"
-                            sx={{ width: '100%', mr: 2 }}
+                            sx={{ width: '100%', mr: 2, mb: 2 }}
                             onBlur={validateName}
                             onChange={(e) => setName({ ...name, value: e.target.value })}
                         />
@@ -131,6 +147,7 @@ function AddCategory() {
                     </Box>
                     <Box>
                         <CustomizeTextField
+                            sx={{ width: '100%', mb: 2 }}
                             label="Description"
                             required
                             fullWidth
@@ -151,12 +168,38 @@ function AddCategory() {
                         <CustomizeTextField
                             select
                             value={selectedCategoryId}
-                            onChange={handleSelected}
+                            onChange={handleSelectedCategory}
                             label="Select Category"
-                            sx={{ minWidth: '30%' }}
+                            sx={{ minWidth: '30%', mb: 2, fontSize: '14px' }}
                         >
+                            <MenuItem value="" sx={{ fontSize: '14px' }}>
+                                <em>None</em>
+                            </MenuItem>
                             {categories.map((category) => (
-                                <MenuItem key={category._id} value={category._id}>
+                                <MenuItem
+                                    key={category._id}
+                                    value={category._id}
+                                    sx={{ fontSize: '14px' }}
+                                >
+                                    {category.name}
+                                </MenuItem>
+                            ))}
+                        </CustomizeTextField>
+                    )}
+                    {subCategories?.length > 0 && (
+                        <CustomizeTextField
+                            select
+                            value={selectedSubCategoryId}
+                            onChange={handleSelectedSubCategory}
+                            label="Select Sub Category"
+                            sx={{ width: '100%', fontSize: '14px', mb: 2 }}
+                        >
+                            {subCategories.map((category) => (
+                                <MenuItem
+                                    key={category._id}
+                                    value={category._id}
+                                    sx={{ fontSize: '14px' }}
+                                >
                                     {category.name}
                                 </MenuItem>
                             ))}

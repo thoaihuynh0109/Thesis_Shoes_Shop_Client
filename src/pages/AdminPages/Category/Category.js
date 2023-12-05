@@ -72,10 +72,6 @@ function Category() {
         navigate(`${id}/edit`);
     };
 
-    const getParentCategoryName = async (id) => {
-        const category = await categoryService.getCategoryById(id);
-        return category.name;
-    };
     return (
         <Box>
             <Box
@@ -112,7 +108,7 @@ function Category() {
             {/* Search */}
             <Paper sx={{ mt: 4, mb: 4, padding: 1.5, borderRadius: 4 }}>
                 <TextField
-                    placeholder="Search Customer"
+                    placeholder="Search Category"
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
@@ -131,7 +127,7 @@ function Category() {
                         <TableRow>
                             <CustomTableCell>No</CustomTableCell>
                             <CustomTableCell align="left">Name</CustomTableCell>
-                            <CustomTableCell align="left">Category</CustomTableCell>
+                            <CustomTableCell align="left">Parent Category</CustomTableCell>
                             <CustomTableCell align="left">Description</CustomTableCell>
                             <CustomTableCell align="center">Active</CustomTableCell>
                             <CustomTableCell align="center">Action</CustomTableCell>
@@ -139,35 +135,35 @@ function Category() {
                     </TableHead>
                     <TableBody>
                         {categories.length > 0 &&
-                            categories.map((row, index) => (
+                            categories.map((category, index) => (
                                 <TableRow
-                                    key={row._id}
+                                    key={category._id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
-                                    <CustomTableCell component="th" scope="row">
+                                    <CustomTableCell component="th" scope="category">
                                         {index + 1}
                                     </CustomTableCell>
-                                    <CustomTableCell align="left">{row.name}</CustomTableCell>
+                                    <CustomTableCell align="left">{category.name}</CustomTableCell>
                                     <CustomTableCell align="left">
-                                        {row.parentId ? row.parentId : ''}
+                                        {category.parentCategory}
                                     </CustomTableCell>
                                     <CustomTableCell align="left" sx={{ maxWidth: '400px' }}>
-                                        {row.description}
+                                        {category.description}
                                     </CustomTableCell>
 
                                     <CustomTableCell align="center">
-                                        {row.isActive ? (
+                                        {category.isActive ? (
                                             <CheckIcon color="success" fontSize="large" />
                                         ) : (
                                             <CloseIcon color="error" fontSize="large" />
                                         )}
                                     </CustomTableCell>
                                     <CustomTableCell align="center">
-                                        <IconButton onClick={() => handleDelete(row._id)}>
+                                        <IconButton onClick={() => handleDelete(category._id)}>
                                             <DeleteIcon color="error" fontSize="large" />
                                         </IconButton>
 
-                                        <IconButton onClick={() => handleEdit(row._id)}>
+                                        <IconButton onClick={() => handleEdit(category._id)}>
                                             <EditNoteIcon color="info" fontSize="large" />
                                         </IconButton>
                                     </CustomTableCell>
