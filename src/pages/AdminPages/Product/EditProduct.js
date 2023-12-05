@@ -446,6 +446,9 @@ function EditProduct() {
                                             label="Select Brand"
                                             sx={{ width: '100%', fontSize: '1.4rem', mb: 2 }}
                                         >
+                                            <MenuItem value="">
+                                                <em>None</em>
+                                            </MenuItem>
                                             {brands.map((brand) => (
                                                 <MenuItem
                                                     key={brand._id}
@@ -466,6 +469,9 @@ function EditProduct() {
                                             label="Select Category"
                                             sx={{ width: '100%', fontSize: '1.4rem', mb: 2 }}
                                         >
+                                            <MenuItem value="">
+                                                <em>None</em>
+                                            </MenuItem>
                                             {categories.map((category) => (
                                                 <MenuItem
                                                     key={category._id}
@@ -485,6 +491,9 @@ function EditProduct() {
                                             label="Select Sub Category"
                                             sx={{ width: '100%', fontSize: '14px', mb: 2 }}
                                         >
+                                            <MenuItem value="">
+                                                <em>None</em>
+                                            </MenuItem>
                                             {subCategories.map((category) => (
                                                 <MenuItem
                                                     key={category._id}
