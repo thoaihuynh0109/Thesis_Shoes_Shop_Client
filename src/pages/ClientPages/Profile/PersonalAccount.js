@@ -4,6 +4,7 @@ import { CustomizeTextField } from '~/components/CustomizeTextField/CustomizeTex
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 import useValidation from '~/components/UseValidation/useValidation';
 import userService from '~/services/userServices';
+import { useNavigate } from 'react-router-dom';
 import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
 export const CustomizeButtonPersonalAccount = styled(Button)(({ pl = 15, pr = 15 }) => ({
     marginTop: 4,
@@ -19,6 +20,7 @@ export const CustomizeButtonPersonalAccount = styled(Button)(({ pl = 15, pr = 15
 }));
 
 function PersonalAccount() {
+    const navigate = useNavigate();
     const [userData, setUserData] = useState({});
     const [userId, setUserId] = useState(''); // Assuming you have the userId somewhere in your component
     const [firstName, setFirstName] = useState('');
@@ -49,7 +51,7 @@ function PersonalAccount() {
     }, [userData]);
 
     // check validate
-    const firstNameValidation = useValidation({ value: userData.firstName });
+    const firstNameValidation = useValidation({ value: '' });
     const lastNameValidation = useValidation({ value: '' });
     const emailValidation = useValidation({ value: '' });
     const phoneValidation = useValidation({ value: '' });
@@ -74,12 +76,66 @@ function PersonalAccount() {
         addressValivation.setState({ ...addressValivation.state, value: address });
     }, [address, addressValivation]);
 
+    // const handleCheckTextField = async () => {
+    //     // Validate fields
+    //     const isFirstNameValid = firstNameValidation.validateRequiredWithoutDigits();
+    //     const isLastNameValid = lastNameValidation.validateRequiredWithoutDigits();
+    //     const isEmailValid = emailValidation.validateEmail();
+    //     const isAddressValid = addressValivation.validateRequired();
+    //     const isPhoneNumberValid = phoneValidation.validatePhone();
+
+    //     if (
+    //         isFirstNameValid &&
+    //         isLastNameValid &&
+    //         isEmailValid &&
+    //         isAddressValid &&
+    //         isPhoneNumberValid
+    //     ) {
+    //         try {
+    //             // Update user data in the database
+    //             const updatedUserData = {
+    //                 firstName,
+    //                 lastName,
+    //                 email,
+    //                 address,
+    //                 phone,
+    //             };
+    //             console.log('ahiahi:', userId);
+    //             console.log(updatedUserData);
+    //             await userService.updateUserProfile(userId, updatedUserData);
+
+    //             // Optionally, you can also update the local storage with the new user data
+    //             setUserData(updatedUserData);
+
+    //             setShowToast(true);
+    //             setToastMessage('You just updated your information!');
+    //             setTypeMessage('success');
+
+    //             // navigate to Home Page after 2s
+    //             setTimeout(() => {
+    //                 navigate('/');
+    //             }, 2000);
+
+    //             // Show a success message or perform other actions as needed
+    //             console.log('User profile updated successfully!');
+    //         } catch (error) {
+    //             console.error('Error updating user profile:', error);
+    //         }
+    //     } else {
+    //         setShowToast(true);
+    //         setToastMessage('Please, fill all information below');
+    //         setTypeMessage('warning');
+    //         // Handle validation errors
+    //         console.log('Validation failed. Please check the form.');
+    //     }
+    // };
+
     const handleCheckTextField = async () => {
         // Validate fields
         const isFirstNameValid = firstNameValidation.validateRequiredWithoutDigits();
         const isLastNameValid = lastNameValidation.validateRequiredWithoutDigits();
         const isEmailValid = emailValidation.validateEmail();
-        const isAddressValid = emailValidation.validateRequired();
+        const isAddressValid = addressValivation.validateRequired();
         const isPhoneNumberValid = phoneValidation.validatePhone();
 
         if (
@@ -102,12 +158,20 @@ function PersonalAccount() {
                 console.log(updatedUserData);
                 await userService.updateUserProfile(userId, updatedUserData);
 
-                // Optionally, you can also update the local storage with the new user data
+                // Update the local storage with the new user data
+                localStorage.setItem('user', JSON.stringify(updatedUserData));
+
+                // Update the local state with the new user data
                 setUserData(updatedUserData);
 
                 setShowToast(true);
                 setToastMessage('You just updated your information!');
                 setTypeMessage('success');
+
+                // navigate to Home Page after 2s
+                setTimeout(() => {
+                    navigate('/');
+                }, 2000);
 
                 // Show a success message or perform other actions as needed
                 console.log('User profile updated successfully!');
@@ -115,15 +179,15 @@ function PersonalAccount() {
                 console.error('Error updating user profile:', error);
             }
         } else {
+            setShowToast(true);
+            setToastMessage('Please, fill all information below');
+            setTypeMessage('warning');
             // Handle validation errors
             console.log('Validation failed. Please check the form.');
         }
     };
 
     // back to the previous page
-    function goBack() {
-        window.history.back();
-    }
 
     return (
         <Container sx={{ minHeight: '800px', alignItems: 'center', justifyContent: 'center' }}>
@@ -336,9 +400,11 @@ function PersonalAccount() {
                         pl: 4,
                         pr: 4,
                     }}
-                    onClick={goBack}
+                    onClick={() => {
+                        navigate('/');
+                    }}
                 >
-                    Quay lại
+                    Cancel
                 </CustomizeButtonPersonalAccount>
             </Box>
         </Container>

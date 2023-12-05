@@ -19,7 +19,6 @@ const style = {
 };
 function RegisterAccount() {
     const navigate = useNavigate();
-    const location = useLocation();
     const [showToast, setShowToast] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
     const [firstName, setFirstName] = useState('');
@@ -30,11 +29,13 @@ function RegisterAccount() {
     const [password, setPassword] = useState('');
     const [rePassword, setRePassword] = useState('');
     // Retrieve email from localStorage
-    const emailFromStorage = localStorage.getItem('userEmail') || '';
-    const [email, setEmail] = useState(emailFromStorage);
+    // const emailFromStorage = localStorage.getItem('userEmail') || '';
+    const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
 
+    const [toastMessage, setToastMessage] = useState('');
+    const [typeMessage, setTypeMessage] = useState('');
     // Clear email from localStorage on component mount (page reload)
     useEffect(() => {
         localStorage.removeItem('userEmail');
@@ -109,41 +110,53 @@ function RegisterAccount() {
             isPhoneNumberValid
         ) {
             try {
-                // Call the API to create a new user
-                const registrationData = {
-                    // update to database
-                    firstName,
-                    lastName,
-                    email,
-                    phoneNumber,
-                    password,
-                    rePassword,
-                    address,
-                };
+                // Check if the email is already registered
+                const isEmailRegisteredResponse = await userService.checkEmailAvailability(email);
+                const isEmailRegistered = isEmailRegisteredResponse.available;
 
-                const response = await userService.createUser(registrationData);
-
-                // Check if the registration was successful
-                if (response.status === 201) {
-                    console.log('User registered successfully');
-                    // Set showToast to true after successful registration
-                    // Delay the navigation to /signin page after showing the toast for 1,5 seconds
-                    setTimeout(() => {
-                        // Hide the toast before navigating
-                        setShowToast(false);
-                        // Update the address in the local state of ShowDeliveryInformation
-                        navigate('/signin');
-                    }, 1500);
+                if (!isEmailRegistered) {
+                    // Email is already registered, show a message to the user or take appropriate action
                     setShowToast(true);
+                    setToastMessage('Email is already registered. Please use a different email.');
+                    setTypeMessage('warning');
                 } else {
-                    console.log('User registration failed. Please check the form.');
+                    // Email is not registered, proceed with user registration
+                    const registrationData = {
+                        firstName,
+                        lastName,
+                        email,
+                        phoneNumber,
+                        password,
+                        rePassword,
+                        address,
+                    };
+
+                    const response = await userService.createUser(registrationData);
+
+                    // Check if the registration was successful
+                    if (!response.success) {
+                        console.log('User registered successfully');
+                        // Set showToast to true after successful registration
+                        // Delay the navigation to /signin page after showing the toast for 1.5 seconds
+                        setShowToast(true);
+                        setToastMessage('Account Registration Successful!');
+                        setTypeMessage('success');
+                        setTimeout(() => {
+                            // Hide the toast before navigating
+                            setShowToast(false);
+                            // Update the address in the local state of ShowDeliveryInformation
+                            navigate('/signin');
+                        }, 2500);
+                    }
                 }
             } catch (error) {
                 console.error('Error during user registration:', error);
             }
         } else {
             // Handle validation errors
-            console.log('Validation failed. Please check the form.');
+            setShowToast(true);
+            setToastMessage('Validation failed. Please check the form.');
+            setTypeMessage('warning');
         }
     };
 
@@ -402,8 +415,8 @@ function RegisterAccount() {
             </Box>
 
             <ToastMessage2
-                message="Account registration successful!"
-                type="success"
+                message={toastMessage}
+                type={typeMessage}
                 showToast={showToast}
                 setShowToast={setShowToast}
             />
