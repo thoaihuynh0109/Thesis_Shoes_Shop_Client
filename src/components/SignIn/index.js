@@ -36,44 +36,74 @@ const CustomButton = styled(Button)(({ variant = 'contained', mt, ml, fs, width 
 
 function SignIn() {
     const [email, setEmail] = useState('');
-    const [emailRegister, setEmailRegister] = useState('');
     const [password, setPassword] = useState('');
     const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [typeMessage, setTypeMessage] = useState('');
+
     const emailValidation = useValidation({ value: '' });
+    const passwordValidation = useValidation({ value: '' });
 
     const navigate = useNavigate();
+    // const isEmailValid = emailValidation.validateEmail();
+    // const isPasswordValid = passwordValidation.validatePassword();
     const handleLogin = async () => {
-        const data = {
-            email,
-            password,
-        };
+        const isEmailValid = emailValidation.validateEmail();
+        const isPasswordValid = passwordValidation.validatePassword();
 
-        //
-        const loginData = await authService.signIn(data);
+        if (isEmailValid && isPasswordValid) {
+            const data = {
+                email,
+                password,
+            };
 
-        localStorage.setItem('user', JSON.stringify(loginData));
-        // send info to login api
-        navigate('/');
+            //
+            const loginData = await authService.signIn(data);
+            navigate('/');
+
+            // add to local storage
+            localStorage.setItem('user', JSON.stringify(loginData));
+            // send info to login api
+        } else {
+            setShowToast(true);
+            setToastMessage('Please check the information of account.');
+            setTypeMessage('warning');
+        }
     };
 
-    // const handleLogin = async (event) => {
-    //     // Kiểm tra xem sự kiện là sự kiện nhấn phím Enter
-    //     if (event.key === 'Enter') {
-    //         // Ngăn chặn hành động mặc định của nút Enter (ví dụ: gửi form)
-    //         event.preventDefault();
+    // enter to login
+    const handleKeyPress = (e) => {
+        const isEmailValid = emailValidation.validateEmail();
+        const isPasswordValid = passwordValidation.validatePassword();
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            // Kiểm tra xem email và password có giá trị không
+            if (isEmailValid && isPasswordValid) {
+                handleLogin();
+            } else {
+                // Nếu cả hai trường đều có giá trị, thực hiện đăng nhập
+                setShowToast(true);
+                setToastMessage('Please enter both email and password.');
+                setTypeMessage('warning');
+            }
+        }
+    };
 
-    //         const data = {
-    //             email,
-    //             password,
-    //         };
+    //  lắng nghe sự kiện keydown
+    useEffect(() => {
+        const handleKeyPress = (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+            }
+        };
 
-    //         const loginData = await authService.signIn(data);
+        window.addEventListener('keydown', handleKeyPress);
 
-    //         localStorage.setItem('user', JSON.stringify(loginData));
-    //         // Gửi thông tin đến API đăng nhập
-    //         navigate('/');
-    //     }
-    // };
+        // Cleanup: Remove event listener khi component unmount
+        return () => {
+            window.removeEventListener('keydown', handleKeyPress);
+        };
+    }, []);
 
     const handleRegisterAccount = () => {
         navigate('/register-account');
@@ -82,35 +112,6 @@ function SignIn() {
     const handleForgotPassword = () => {
         navigate('/recover-password');
     };
-
-    // create an account with email address
-    const handleCreateAccount = () => {
-        const data = {
-            emailRegister,
-        };
-        // Email is validate
-        const isEmailValid = emailValidation.validateEmail();
-
-        if (isEmailValid) {
-            // Save email to localStorage
-            localStorage.setItem('userEmail', emailRegister);
-
-            // navigate to register account page with email that filled into textfield
-            navigate('/register-account', { state: { emailRegister } });
-
-            // Set showToast to true after successful registration
-            // setShowToast(true);
-        } else {
-            // Handle validation errors
-            console.log('Validation failed. Please check the form.');
-            setShowToast(true); // show message
-        }
-    };
-
-    useEffect(() => {
-        // Clear email from localStorage on component mount (page reload)
-        localStorage.removeItem('userEmail');
-    }, []);
 
     return (
         <Container sx={{ height: '100%', minHeight: '200vh' }}>
@@ -137,16 +138,26 @@ function SignIn() {
                                 Email address
                             </CustomTypography>
                             <CustomizeTextField
+                                wd="400px"
                                 value={email}
                                 onChange={(e) => {
                                     setEmail(e.target.value);
+                                    emailValidation.setState({
+                                        ...emailValidation.state,
+                                        value: e.target.value,
+                                    });
                                 }}
-                                // fullWidth={true}
-                                wd="400px"
-                                // id="outlined-basic"
-
                                 label="Email"
                                 variant="outlined"
+                                onBlur={emailValidation.validateEmail}
+                                error={emailValidation.state.message !== ''}
+                                helperText={emailValidation.state.message}
+                                sx={{
+                                    '& .MuiFormHelperText-root': {
+                                        fontSize: '12px', // Adjust the font size as needed
+                                    },
+                                }}
+                                onKeyDown={handleKeyPress} // Đặt hàm xử lý key press ở đây
                             />
                             <ToastMessage2
                                 message="Vui Lòng Nhập Email!"
@@ -164,12 +175,22 @@ function SignIn() {
                                 value={password}
                                 onChange={(e) => {
                                     setPassword(e.target.value);
+                                    passwordValidation.setState({
+                                        ...passwordValidation.state,
+                                        value: e.target.value,
+                                    });
                                 }}
-                                fullWidth={true}
-                                // id="outlined-basic"
                                 label="Password"
-                                type="password"
                                 variant="outlined"
+                                onBlur={passwordValidation.validatePassword}
+                                error={passwordValidation.state.message !== ''}
+                                helperText={passwordValidation.state.message}
+                                sx={{
+                                    '& .MuiFormHelperText-root': {
+                                        fontSize: '12px', // Adjust the font size as needed
+                                    },
+                                }}
+                                onKeyDown={handleKeyPress}
                             />
                             <Box
                                 sx={{
@@ -187,7 +208,7 @@ function SignIn() {
                                     // after logging in successfully --> href user to Home page
                                     sx={{ padding: '6px 20px' }}
                                 >
-                                    <CustomTypography>Đăng Nhập</CustomTypography>
+                                    <CustomTypography>Sign In</CustomTypography>
                                 </Button>
                                 <CustomTypography
                                     sx={{
@@ -253,72 +274,15 @@ function SignIn() {
                         </Box>
                     </Box>
                 </Grid>
+                <ToastMessage2
+                    message={toastMessage}
+                    type={typeMessage}
+                    showToast={showToast}
+                    setShowToast={setShowToast}
+                />
             </Box>
         </Container>
     );
 }
 
 export default SignIn;
-
-// function RegisterAccount() {
-//     return (
-//         <>
-//             <Grid item xs={6}>
-//                 <Item sx={{ p: 2, height: '100%' }}>
-//                     <CustomTypography
-//                         fontWeight={700}
-//                         fontSize="20px"
-//                         gutterBottom
-//                         textAlign="center"
-//                     >
-//                         Create an account
-//                     </CustomTypography>
-
-//                     <CustomTypography variant="body1" textAlign={'left'} gutterBottom>
-//                         Please enter your email address to create an account.
-//                     </CustomTypography>
-//                     <CustomTypography variant="body1" textAlign={'left'} sx={{ mb: 2 }}>
-//                         Email address
-//                     </CustomTypography>
-
-//                     {/* <CustomizeTextField
-//                                 value={email}
-//                                 onChange={(e) => setEmail(e.target.value)}
-//                                 id="outlined-basic"
-//                                 label="Email"
-//                                 variant="outlined"
-//                             /> */}
-
-//                     <CustomizeTextField
-//                         value={emailRegister}
-//                         onChange={(e) => {
-//                             setEmailRegister(e.target.value);
-//                             emailValidation.setState({
-//                                 ...emailValidation.state,
-//                                 value: e.target.value,
-//                             });
-//                         }}
-//                         label="Email"
-//                         variant="outlined"
-//                         onBlur={emailValidation.validateEmail}
-//                         error={emailValidation.state.message !== ''}
-//                         helperText={emailValidation.state.message}
-//                         sx={{
-//                             '& .MuiFormHelperText-root': {
-//                                 fontSize: '12px', // Adjust the font size as needed
-//                             },
-//                         }}
-//                     />
-//                     <CustomButton
-//                         variant="contained"
-//                         startIcon={<AccountCircleIcon />}
-//                         onClick={handleCreateAccount}
-//                     >
-//                         Create Account
-//                     </CustomButton>
-//                 </Item>
-//             </Grid>
-//             ;
-//         </>
-//     );
-// }
