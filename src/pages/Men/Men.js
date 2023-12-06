@@ -7,8 +7,9 @@ function Men() {
     return (
         <Box sx={{ minHeight: '80vh', mt: 2, mb: 4 }}>
             <MakeUIForMenAndWomenPage forWomen={false} />
-            {/* <ProductPageForGender selectedGender={'Nam'} /> */}
-            <ProductPageForGender />
+            {/* get product by Gender in database */}
+            <ProductPageForGender selectedGender={'Nam'} />
+            {/* <ProductPageForGender /> */}
         </Box>
     );
 }

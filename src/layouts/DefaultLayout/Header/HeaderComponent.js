@@ -44,7 +44,7 @@ function HeaderDesign() {
     const user = localStorage.getItem('user');
     return (
         <AppBar position="fixed" sx={{ bgcolor: 'var(--header-color)' }}>
-            <Box sx={{ ml: 3, mr: 3 }}>
+            <Box sx={{ ml: '54px', mr: '42px' }}>
                 <Toolbar className={cx('custom-header')}>
                     <HomeIcon fontSize="large"></HomeIcon>
 
@@ -77,7 +77,9 @@ function HeaderDesign() {
                         </CustomizeButton>
 
                         {user ? (
-                            <UserAuthenticated />
+                            <Box sx={{ ml: 2, mr: 2 }}>
+                                <UserAuthenticated />
+                            </Box>
                         ) : (
                             <CustomizeButton component={Link} to="/signin" startIcon={<KeyIcon />}>
                                 Sign In

@@ -22,7 +22,7 @@ function DefaultLayout({ children }) {
 
     return (
         <Box>
-            <Box sx={{ ml: 4, mr: 4 }}>
+            <Box sx={{ ml: 10, mr: 10 }}>
                 <HeaderDesign></HeaderDesign>
                 {/* <NewHeaderDesign /> */}
                 <SubHeader></SubHeader>
