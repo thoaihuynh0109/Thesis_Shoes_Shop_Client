@@ -22,7 +22,7 @@ export const CustomizeButtonPersonalAccount = styled(Button)(({ pl = 15, pr = 15
 function PersonalAccount() {
     const navigate = useNavigate();
     const [userData, setUserData] = useState({});
-    const [userId, setUserId] = useState(''); // Assuming you have the userId somewhere in your component
+    const [userId, setUserId] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');

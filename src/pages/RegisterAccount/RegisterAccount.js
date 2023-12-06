@@ -50,46 +50,6 @@ function RegisterAccount() {
     const passwordValidation = useValidation({ value: '', isShow: false });
     const rePasswordValidation = useValidation({ value: '', isShow: false });
 
-    // const handleRegister = () => {
-    //     console.log({ firstName, lastName, email, password });
-    //     // send data to register account api
-    // };
-
-    // const handleRegister = () => {
-    //     // Validation logic
-    //     const isFirstNameValid = firstNameValidation.validateRequiredWithoutDigits();
-    //     const isLastNameValid = lastNameValidation.validateRequiredWithoutDigits();
-
-    //     const isEmailValid = emailValidation.validateEmail();
-    //     const isPasswordValid = passwordValidation.validatePassword();
-    //     const isRePasswordValid = rePasswordValidation.validateConfirmPassword(password);
-
-    //     if (
-    //         isFirstNameValid &&
-    //         isLastNameValid &&
-    //         isEmailValid &&
-    //         isPasswordValid &&
-    //         isRePasswordValid
-    //     ) {
-    //         // Continue with registration logic
-    //         console.log('Validation succeeded');
-    //         console.log({ firstName, lastName, email, password, rePassword });
-
-    //         // Set showToast to true after successful registration
-    //         // Delay the navigation to /signin page after showing the toast for 1,5 seconds
-    //         setTimeout(() => {
-    //             // Hide the toast before navigating
-    //             setShowToast(false);
-    //             // Update the address in the local state of ShowDeliveryInformation
-    //             navigate('/signin');
-    //         }, 1500);
-    //         setShowToast(true);
-    //     } else {
-    //         // Handle validation errors
-    //         console.log('Validation failed. Please check the form.');
-    //     }
-    // };
-
     const handleRegister = async () => {
         // Validation logic
         const isFirstNameValid = firstNameValidation.validateRequiredWithoutDigits();
