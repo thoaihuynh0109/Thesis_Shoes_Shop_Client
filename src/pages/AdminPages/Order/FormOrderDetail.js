@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import orderService from '~/services/orderServices';
+import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 
 export default function FormOrderDetail({ handleClose, id }) {
     const [order, setOrder] = React.useState({});
@@ -20,25 +21,30 @@ export default function FormOrderDetail({ handleClose, id }) {
     return (
         <React.Fragment>
             <Dialog open={true} onClose={handleClose}>
-                <DialogTitle>{'Order Details'}</DialogTitle>
+                <DialogTitle sx={{ fontSize: '3rem' }}>{'Order Details'}</DialogTitle>
                 {order && (
                     <DialogContent sx={{ width: '600px' }}>
                         <Box>
-                            <Typography>{order._id}</Typography>
+                            <CustomTypography>ID: {order._id}</CustomTypography>
+                            <CustomTypography>Sản phẩm: </CustomTypography>
                             {order.items?.length > 0 &&
                                 order.items.map((item) => {
                                     return (
                                         <>
-                                            <Typography>{item.name}</Typography>
-                                            <Typography>{item.price}</Typography>
-                                            <Typography>{item.quantity}</Typography>
+                                            <CustomTypography>
+                                                "{item.name}" "{item.price}" "{item.quantity}"
+                                            </CustomTypography>
                                         </>
                                     );
                                 })}
-                            <Typography>{order.totalAmount}</Typography>
-                            <Typography>{order.paymentMethod}</Typography>
-                            <Typography>{order.shippingFee}</Typography>
-                            <Typography>{order.status}</Typography>
+                            <CustomTypography>Tổng: </CustomTypography>
+                            <CustomTypography>{order.totalAmount}</CustomTypography>
+                            <CustomTypography>Phương thức thanh toán: </CustomTypography>
+                            <CustomTypography>{order.paymentMethod}</CustomTypography>
+                            <CustomTypography>Phí giao hàng: </CustomTypography>
+                            <CustomTypography>{order.shippingFee}</CustomTypography>
+                            <CustomTypography>Tình trạng: </CustomTypography>
+                            <CustomTypography>{order.status}</CustomTypography>
                         </Box>
                     </DialogContent>
                 )}
