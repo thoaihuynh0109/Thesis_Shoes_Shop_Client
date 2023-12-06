@@ -154,7 +154,8 @@ export function MakeProductsCard({
                 onMouseEnter={handleHover}
                 onMouseLeave={handleUnhover}
             >
-                {label && (
+                {label ? (
+                    // show sale label
                     <Box
                         sx={{
                             position: 'absolute',
@@ -170,6 +171,9 @@ export function MakeProductsCard({
                         {/* {label} */}
                         Sale
                     </Box>
+                ) : (
+                    // price not sale
+                    <Box></Box>
                 )}
 
                 {labelNew && (
@@ -319,7 +323,16 @@ export function MakeProductsCard({
                 </CardActions>
             </Card>
             <Box maxWidth={minWidthCard} sx={{ textAlign: 'center', mt: 1 }}>
-                <Typography sx={{ fontSize: '15px', textTransform: 'capitalize' }}>
+                {/* Hide Name of product when it's too long */}
+                <Typography
+                    sx={{
+                        fontSize: '15px',
+                        textTransform: 'capitalize',
+                        textOverflow: 'ellipsis',
+                        overflow: 'hidden',
+                        whiteSpace: 'nowrap',
+                    }}
+                >
                     {name}
                 </Typography>
                 <Typography sx={{ fontSize: '14px' }}>
