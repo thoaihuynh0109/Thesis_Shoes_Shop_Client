@@ -36,9 +36,12 @@
     -   review
         -   product for women --> Done
         -   filter for 3 pages brand: shop, men, women --> Done
+    -   update animation for search --> Done
+    -   Hide Name of product when it's too long --> Done
+    -   get information of user and fills in address when user checkout
+        -   get data from local storage --> done
+        -   can user change this address?
     -   handle order products
     -   make order history
-    -   Hide Name of product when it's too long
-    -   get information of user and fills in address when user checkout
-
-
+    -   update address in checkout step
+        -   add button update address --> navigate use to profile to update new address or personal account
