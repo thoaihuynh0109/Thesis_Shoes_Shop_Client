@@ -103,14 +103,14 @@ function GimmeMenu() {
                     >
                         CONTACT
                     </Link>
-                    <Link
+                    {/* <Link
                         to="/order-history"
                         className={cx('menu-child-item', {
                             'active-link': isLinkActive('/order-history'),
                         })}
                     >
                         ORDER
-                    </Link>
+                    </Link> */}
                 </Stack>
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <SearchAppBar />
