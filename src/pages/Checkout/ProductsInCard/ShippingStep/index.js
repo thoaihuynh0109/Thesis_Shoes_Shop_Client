@@ -11,7 +11,7 @@ import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 const commonStyles = {
     bgcolor: 'background.paper',
     m: 1,
-    borderColor: 'text.primary',
+    borderColor: '#c4c4c4',
     width: '100%',
     height: '100%',
 };
@@ -31,7 +31,7 @@ function ShippingStep() {
     };
     return (
         <Box>
-            <Box sx={{ ...commonStyles, border: 1, p: 2, borderRadius: '5px' }}>
+            <Box sx={{ ...commonStyles, border: '1px solid #c4c4c4', p: 2, borderRadius: '5px' }}>
                 <Typography variant="body1" fontWeight={'bold'} fontSize="20px">
                     Choose a shipping option for this address
                     {/* Choose a shipping option for this address: Em số 2 HCMUTE */}
@@ -42,7 +42,7 @@ function ShippingStep() {
                         border: 1,
                         display: 'flex',
                         alignItems: 'center',
-                        border: (theme) => `1px solid ${theme.palette.divider}`,
+                        border: '1px solid #c4c4c4',
                         borderRadius: 1,
                         bgcolor: 'background.paper',
                         color: 'text.secondary',

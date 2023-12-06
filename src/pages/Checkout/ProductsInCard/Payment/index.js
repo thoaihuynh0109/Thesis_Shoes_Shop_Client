@@ -57,7 +57,7 @@ function PaymentStep({ onSelectPaymentMethod }) {
     };
 
     return (
-        <Box>
+        <Box sx={{ mt: 4 }}>
             <CustomTypography sx={{ textTransform: 'capitalize', fontSize: '16px' }}>
                 Chọn phương thức thanh toán
             </CustomTypography>

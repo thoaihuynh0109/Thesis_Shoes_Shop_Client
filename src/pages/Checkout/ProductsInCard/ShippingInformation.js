@@ -7,13 +7,24 @@ import useValidation from '~/components/UseValidation/useValidation';
 import { CustomizeTextField } from '~/components/CustomizeTextField/CustomizeTextField';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
+import orderService from '~/services/orderServices';
 
 import PaymentStep from './Payment/index';
+import ShippingStep from './ShippingStep';
+import { useDispatch, useSelector } from 'react-redux';
 
 function ShippingInformation() {
+    const cartItems = useSelector((state) => state.cart.cartItems);
+    // console.log('Cart List: ', cartItems);
+    const tax = 8.75;
+
     const navigate = useNavigate();
     const location = useLocation();
     const { deliveryAddress } = location.state || {};
+
+    // get user data from local storage
+    const [userData, setUserData] = useState({});
+    const [userId, setUserId] = useState('');
 
     // show toast message
     const [showToast, setShowToast] = useState(false);
@@ -35,6 +46,55 @@ function ShippingInformation() {
     const fullNameValidation = useValidation({ value: fullName });
     const phoneNumberValidation = useValidation({ value: phoneNumber });
     const addressValidation = useValidation({ value: address });
+
+    const getTotalPrice = () => {
+        // Assuming the current currency is VND and you want to convert it to USD
+        const exchangeRate = 24300; // Replace with your actual exchange rate
+
+        const totalPriceVND = cartItems.reduce((total, item) => {
+            const itemPrice = parseFloat(item.price.replace(/,/g, '')) * item.quantity;
+            return total + itemPrice;
+        }, 48600);
+
+        console.log('Price in VND:', totalPriceVND);
+        // const totalWithTaxVND = totalPriceVND * (1 + tax / 100);
+        const totalWithTaxVND = Math.ceil((totalPriceVND * (1 + tax / 100)) / 1000) * 1000;
+        console.log('Price VND with Tax:', totalWithTaxVND.toLocaleString());
+
+        // Convert totalPriceVND to USD
+        const totalPriceUSD = (totalWithTaxVND / exchangeRate).toFixed(2);
+        console.log('Price in USD:', totalPriceUSD);
+        return totalPriceUSD;
+    };
+    getTotalPrice();
+
+    // Fetch user data from local storage
+    useEffect(() => {
+        const storedUserData = JSON.parse(localStorage.getItem('user')) || [];
+        setUserData(storedUserData);
+        setUserId(storedUserData._id); // Assuming userId is part of the user data
+        console.log('storedUserData._id: ', storedUserData._id);
+    }, []);
+
+    // Populate the state variables with the retrieved user data
+    useEffect(() => {
+        //get data from local storage and assign it into these textfields below
+        setFullName(userData?.firstName + ' ' + userData?.lastName || '');
+
+        setAddress(userData?.address || '');
+        setPhoneNumber(userData?.phone || '');
+    }, [userData]);
+
+    // check validate for fields data get from the local storage
+    useEffect(() => {
+        fullNameValidation.setState({ ...fullNameValidation.state, value: fullName });
+    }, [fullName, fullNameValidation]);
+    useEffect(() => {
+        phoneNumberValidation.setState({ ...phoneNumberValidation.state, value: phoneNumber });
+    }, [phoneNumber, phoneNumberValidation]);
+    useEffect(() => {
+        addressValidation.setState({ ...addressValidation.state, value: address });
+    }, [address, addressValidation]);
 
     const handleContinue = async () => {
         // Set loading to true when starting the async action
@@ -90,34 +150,62 @@ function ShippingInformation() {
     function goBack() {
         window.history.back();
     }
+
+    const handleUpdateAddress = () => {
+        navigate('/profile');
+    };
+
+    // tiến hành thanh toán
     const handleSubmitOrder = async () => {
         // Check if a payment method is selected
         if (selectedPaymentMethod) {
             console.log('Selected Payment Method:', selectedPaymentMethod);
+            console.log('Total Price: ', getTotalPrice());
 
-            setShowToast(true);
-            setToastMessage('Thanks so much for your order by COD!');
-            setTypeMessage('success');
-            // after 2,5s clicking order button will redirect to '/shop'
-            setTimeout(() => {
-                navigate('/shop');
-            }, 2500);
-
-            // Check if the selected payment method is Cash On Delivery
-            if (selectedPaymentMethod === 'cod') {
-                try {
-                    // Simulate an asynchronous action (e.g., API call)
-                    await new Promise((resolve) => setTimeout(resolve, 2500));
-                    console.log('Order placed successfully for Cash On Delivery');
-                } catch (error) {
-                    console.error('Error during async action:', error);
-                    // Handle error, show error message, etc.
+            const order = {
+                owner: userData._id,
+                // Cần phải có thông tin về sản phẩm trong đơn hàng
+                items: cartItems,
+                /* Số tiền đơn hàng */
+                totalAmount: getTotalPrice(),
+                paymentMethod: selectedPaymentMethod,
+                /* Phí vận chuyển */
+                shippingFee: 48600,
+                status: 'processing',
+            };
+            console.log('Order Free: ', order.totalAmount);
+            try {
+                const checkoutOrder = await orderService.createOrder(order);
+                console.log('checkoutOrder: ', checkoutOrder);
+                if (checkoutOrder) {
+                    // order successfully
+                    setShowToast(true);
+                    setToastMessage('Thanks so much for your order by COD!');
+                    setTypeMessage('success');
+                    // after 2,5s clicking order button will redirect to '/' Home
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 2500);
+                    // Check if the selected payment method is Cash On Delivery
+                    if (selectedPaymentMethod === 'cod') {
+                        try {
+                            // Simulate an asynchronous action (e.g., API call)
+                            await new Promise((resolve) => setTimeout(resolve, 2500));
+                            console.log('Order placed successfully for Cash On Delivery');
+                        } catch (error) {
+                            console.error('Error during async action:', error);
+                            // Handle error, show error message, etc.
+                        }
+                    } else if (selectedPaymentMethod === 'paypal') {
+                        // Proceed with the order logic for PayPal
+                        console.log('Order placed successfully for PayPal');
+                    }
+                    console.log('Order placed successfully');
                 }
-            } else if (selectedPaymentMethod === 'paypal') {
-                // Proceed with the order logic for PayPal
-                console.log('Order placed successfully for PayPal');
+            } catch (error) {
+                console.error('Error during order creation:', error);
+                // Xử lý lỗi, hiển thị thông báo lỗi, v.v.
             }
-            console.log('Order placed successfully');
         } else {
             // If no payment method is selected, show an error message
             console.log('Selected Payment Method:', selectedPaymentMethod);
@@ -210,6 +298,16 @@ function ShippingInformation() {
                 />
             </Box>
 
+            <Box
+                sx={{
+                    width: '805px',
+
+                    ml: '230px',
+                }}
+            >
+                <ShippingStep />
+            </Box>
+
             {/* check if these field are empty */}
             {isLoading ? (
                 // Show a loading spinner while processing the action
@@ -242,9 +340,17 @@ function ShippingInformation() {
                     <CustomizeButtonPersonalAccount
                         variant="contained"
                         onClick={handleContinue}
-                        sx={{ pl: 4, pr: 4 }}
+                        sx={{ pl: 4, pr: 4, mt: 2 }}
                     >
                         Continue
+                    </CustomizeButtonPersonalAccount>
+
+                    <CustomizeButtonPersonalAccount
+                        variant="contained"
+                        onClick={handleUpdateAddress}
+                        sx={{ pl: 4, pr: 4, mt: 2 }}
+                    >
+                        Update Address
                     </CustomizeButtonPersonalAccount>
 
                     <CustomizeButtonPersonalAccount
@@ -264,7 +370,7 @@ function ShippingInformation() {
                 // show payment step
                 <Box>
                     {/* choose shipping method */}
-                    <Box sx={{ ml: 35 }}>
+                    <Box sx={{ ml: 29 }}>
                         <PaymentStep
                             onSelectPaymentMethod={(selectedMethod) =>
                                 setSelectedPaymentMethod(selectedMethod)
