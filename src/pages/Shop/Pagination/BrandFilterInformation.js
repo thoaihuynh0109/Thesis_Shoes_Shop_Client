@@ -16,7 +16,7 @@ import categoryService from '~/services/categoryServices';
 import brandService from '~/services/brandServices';
 export default function BrandFilterInformation({ handleBrandFilter, selectedBrands }) {
     const [open, setOpen] = useState(true);
-
+    
     const [listBrands, setListBrands] = useState([]);
 
     // call api all product brands

@@ -29,7 +29,7 @@ export function LoadMoreProduct({
 
     useEffect(() => {
         const fetchProductByCategory = async () => {
-            const listAllProducts2 = await productService.getProductByCategory('Nam');
+            const listAllProducts2 = await productService.getProductByCategory(selectedGender);
             // const listAllProducts = await productService.getAllProduct();
             console.log('List cate for male: ', listAllProducts2);
             // console.log('List cate for male22:', listAllProducts);
@@ -72,39 +72,41 @@ export function LoadMoreProduct({
     };
 
     const renderProductCards = () => {
-        // let data;
+        let data;
 
-        // if (getValue) {
-        //     const paginatedData = storeValue.slice(0, visibleItems);
-        //     data = paginatedData;
-        // } else {
-        //     const productsToRender =
-        //         filteredProducts.length > 0 ? filteredProducts : brandFilteredProducts;
+        if (getValue) {
+            const paginatedData = storeValue.slice(0, visibleItems);
+            data = paginatedData;
+        } else {
+            const productsToRender =
+                filteredProducts.length > 0 ? filteredProducts : brandFilteredProducts;
 
-        //     // Filter products for males
-        //     // const maleProducts = productsToRender.filter((product) => product.gender === 'Male');
-        //     // dynamic
-        //     // const maleProducts = productsToRender.filter(
-        //     //     (product) => product.category === selectedGender,
-        //     // );
+            // Filter products for males
+            // const maleProducts = productsToRender.filter((product) => product.gender === 'Male');
+            // dynamic
+            const maleProducts = productsToRender.filter(
+                (product) => product.category === selectedGender,
+                // console.log(product.category),
+            );
 
-        //     const paginatedData = sortProducts(productsToRender);
-        //     data = paginatedData.slice(0, visibleItems);
-        // }
+            const paginatedData = sortProducts(maleProducts);
+            data = paginatedData.slice(0, visibleItems);
+        }
 
-        // if (!hasProducts || data.length === 0) {
-        //     return (
-        //         <Box style={{ width: '100%', textAlign: 'center', mt: 4 }}>
-        //             <EmptyCard message={'Không có sản phẩm phù hợp'} />
-        //         </Box>
-        //     );
-        // }
+        if (!hasProducts || data.length === 0) {
+            return (
+                <Box style={{ width: '100%', textAlign: 'center', mt: 4 }}>
+                    <EmptyCard message={'Không có sản phẩm phù hợp'} />
+                </Box>
+            );
+        }
 
+        // show 4 products in rows
         return (
-            <Box display="flex" sx={{ justifyContent: 'space-between' }}>
-                {listAllProducts.length > 0 &&
-                    listAllProducts.map((product, index) => {
-                        return (
+            <Grid container spacing={2}>
+                {data.length > 0 &&
+                    data.map((product, index) => (
+                        <Grid item key={product._id} xs={12} sm={6} md={3}>
                             <MakeProductsCard
                                 key={product._id}
                                 _id={product._id}
@@ -116,16 +118,19 @@ export function LoadMoreProduct({
                                 // labelNew={product.labelNew}
                                 // labelNew={true}
                                 sx={{ margin: '0 20px' }}
-                                mr={0}
+                                minWidthCard={'210px'}
+                                maxHeightCard={'220px'}
+                                imgHeight={'140px'}
+                                imgWidth={'150px'}
                                 showToast={showToast}
                                 setShowToast={setShowToast}
                                 // show suitable toast message
                                 toastMessage={toastMessage}
                                 setToastMessage={setToastMessage}
                             />
-                        );
-                    })}
-            </Box>
+                        </Grid>
+                    ))}
+            </Grid>
         );
     };
 

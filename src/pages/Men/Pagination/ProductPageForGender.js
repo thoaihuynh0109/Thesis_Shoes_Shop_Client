@@ -80,7 +80,7 @@ export default function ProductPageForGender({ selectedGender }) {
             </Box>
             <Box>
                 {hasProducts ? (
-                    <Box sx={{ ml: 14, mr: 12 }}>
+                    <Box sx={{ ml: '100px', mr: '163px' }}>
                         <LoadMoreProduct
                             getValue={getValue}
                             _DATA={_DATA}
@@ -95,7 +95,8 @@ export default function ProductPageForGender({ selectedGender }) {
                         />
                     </Box>
                 ) : (
-                    <EmptyCard message={'Không có sản phẩm phù hợp'} />
+                    // <EmptyCard message={'Không có sản phẩm phù hợp'} />
+                    <EmptyCard message={'No result is found'} />
                 )}
             </Box>
         </Box>
