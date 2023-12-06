@@ -1,4 +1,4 @@
--   checkout:
+-   checkout: --> Done
 
     -   payment:
         -   paypal, get real products
@@ -22,6 +22,7 @@
         Price: chinh gia lai nhu: 1,000, 000
 
 -   task 5/12/2023
+
     -   update information for user --> DONE
     -   register account with test case: try with an email exist in database --> Done
     -   sorting product --> Done
@@ -29,4 +30,15 @@
     -   search for shop page --> Done
     -   filter product follow brands for shop page --> Done
     -   product for women
-    -   filter for 3 pages brand: shop, men, women,
+    -   filter for 3 pages brand: shop, men, women
+
+-   task 6/12/2023
+    -   review
+        -   product for women --> Done
+        -   filter for 3 pages brand: shop, men, women --> Done
+    -   handle order products
+    -   make order history
+    -   Hide Name of product when it's too long
+    -   get information of user and fills in address when user checkout
+
+
