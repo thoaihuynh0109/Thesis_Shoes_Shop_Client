@@ -66,7 +66,6 @@ function ShippingInformation() {
         console.log('Price in USD:', totalPriceUSD);
         return totalPriceUSD;
     };
-    getTotalPrice();
 
     // Fetch user data from local storage
     useEffect(() => {
@@ -165,7 +164,13 @@ function ShippingInformation() {
             const order = {
                 owner: userData._id,
                 // Cần phải có thông tin về sản phẩm trong đơn hàng
-                items: cartItems,
+                items: cartItems.map((item) => {
+                    return {
+                        name: item.name,
+                        price: item.price,
+                        quantity: item.quantity,
+                    };
+                }),
                 /* Số tiền đơn hàng */
                 totalAmount: getTotalPrice(),
                 paymentMethod: selectedPaymentMethod,
@@ -173,10 +178,12 @@ function ShippingInformation() {
                 shippingFee: 48600,
                 status: 'processing',
             };
-            console.log('Order Free: ', order.totalAmount);
+            console.log('Order: ', order);
+
             try {
                 const checkoutOrder = await orderService.createOrder(order);
                 console.log('checkoutOrder: ', checkoutOrder);
+
                 if (checkoutOrder) {
                     // order successfully
                     setShowToast(true);

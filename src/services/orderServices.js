@@ -30,24 +30,7 @@ const orderService = {
             console.log(error);
         }
     },
-
-    updateUserProfile: async (id, data) => {
-        try {
-            const respone = await axios.put(apiUrl + `/${id}/profile`, data);
-            return respone;
-        } catch (error) {
-            console.log(error);
-        }
-    },
-    updateUser: async (id, data) => {
-        try {
-            const respone = await axios.put(apiUrl + `/${id}`, data);
-            return respone;
-        } catch (error) {
-            console.log(error);
-        }
-    },
-    deleteUser: async (id) => {
+    deleteOrder: async (id) => {
         try {
             const respone = await axios.delete(apiUrl + `/${id}`);
             return respone;
