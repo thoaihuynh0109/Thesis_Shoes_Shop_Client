@@ -127,10 +127,14 @@ function ProductsTable() {
         return total;
     };
 
-    const tax = 8.75;
+    const tax = 2;
     const totalWithTax = (tax / 100 + 1) * calculateCartTotal();
     // Format totalWithTax without decimal places and commas
-    const formattedTotalWithTax = Math.floor(totalWithTax).toLocaleString('vi-VN');
+    // Làm tròn totalWithTax lên đến nghìn gần nhất
+    const roundedTotalWithTax = Math.ceil(totalWithTax / 1000) * 1000;
+    // Format totalWithTax without decimal places and commas
+    // 2,929,010 --> 2,930,000
+    const formattedTotalWithTax = roundedTotalWithTax.toLocaleString();
 
     // check if there is no products in cart before adding item
     if (cartItems.length === 0) {
@@ -242,7 +246,7 @@ function ProductsTable() {
             </Box>
 
             <TotalToCheckout
-                tax={8.75}
+                tax={2}
                 subtotal={calculateCartTotal().toLocaleString()}
                 totalWithTax={formattedTotalWithTax}
             />
@@ -330,5 +334,3 @@ function TotalToCheckout({ tax, totalWithTax, subtotal }) {
         </Box>
     );
 }
-
-// Use Case Checkout

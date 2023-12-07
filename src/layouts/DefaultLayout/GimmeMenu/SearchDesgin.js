@@ -6,7 +6,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 
-const SearchContainer = styled('div')(({ theme }) => ({
+// update search width for search textfield
+const SearchContainer = styled('div')(({ theme, isSearchFocused }) => ({
     display: 'flex',
     alignItems: 'center',
     borderRadius: '10px',
@@ -15,11 +16,13 @@ const SearchContainer = styled('div')(({ theme }) => ({
     '&:hover': {
         backgroundColor: 'lightGray',
     },
-    width: '12px',
-    padding: '8px 4px',
+    width: '20px',
+    padding: '6px 8px',
     transition: 'width 0.3s ease-in-out',
     [theme.breakpoints.up('sm')]: {
-        width: '20ch',
+        // when user focusing on this container will update new width
+        // unfocus ==> 20ch initial width
+        width: isSearchFocused ? '30ch' : '20ch',
     },
 }));
 
@@ -41,7 +44,16 @@ export default function SearchAppBar() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
+    // check search container is focused?
     const [isSearchFocused, setIsSearchFocused] = useState(false);
+
+    const handleSearchFocus = () => { // focus on 
+        setIsSearchFocused(true);
+    };
+
+    const handleSearchBlur = () => { // unfocus on
+        setIsSearchFocused(false);
+    };
 
     const handleSearchChange = (e) => {
         const term = e.target.value;
@@ -72,12 +84,16 @@ export default function SearchAppBar() {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <SearchContainer>
+            <SearchContainer isSearchFocused={isSearchFocused}>
                 <StyledInputBase
                     placeholder="Search..."
                     inputProps={{ 'aria-label': 'search' }}
-                    onFocus={() => setIsSearchFocused(true)}
-                    onBlur={() => setIsSearchFocused(false)}
+                    // onFocus={() => setIsSearchFocused(true)}
+                    // onBlur={() => setIsSearchFocused(false)}
+                    // onChange={handleSearchChange}
+                    // className={isSearchFocused ? 'focused' : ''}
+                    onFocus={handleSearchFocus}
+                    onBlur={handleSearchBlur}
                     onChange={handleSearchChange}
                     className={isSearchFocused ? 'focused' : ''}
                 />

@@ -12,6 +12,7 @@ import {
 import { AccountCircle, Dashboard, ExitToApp, Person } from '@mui/icons-material';
 import authService from '~/services/authServices';
 import { useNavigate } from 'react-router-dom';
+import HistoryIcon from '@mui/icons-material/History';
 
 // const settings = [
 //     { label: 'Profile', icon: <Person /> },
@@ -74,6 +75,8 @@ function UserAuthenticated() {
                 <MenuItem
                     onClick={() => {
                         navigate('/profile');
+                        //close menu after user chooses
+                        handleCloseUserMenu();
                         // console.log('user _id: ', dataUser._id);
                         // navigate('/profile', { state: { user: dataUser._id } });
                     }}
@@ -85,10 +88,24 @@ function UserAuthenticated() {
                         Profile
                     </Typography>
                 </MenuItem>
+                <MenuItem
+                    onClick={() => {
+                        navigate('/order-history');
+                        handleCloseUserMenu();
+                    }}
+                >
+                    <ListItemIcon>
+                        <HistoryIcon />
+                    </ListItemIcon>
+                    <Typography textAlign="center" fontSize={'14px'} p={'0 24px 0 0'}>
+                        Order
+                    </Typography>
+                </MenuItem>
 
                 <MenuItem
                     onClick={() => {
                         navigate('/account');
+                        handleCloseUserMenu();
                     }}
                 >
                     <ListItemIcon>
@@ -102,6 +119,7 @@ function UserAuthenticated() {
                     <MenuItem
                         onClick={() => {
                             navigate('/dashboard');
+                            handleCloseUserMenu();
                         }}
                     >
                         <ListItemIcon>

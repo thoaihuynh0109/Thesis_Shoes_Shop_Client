@@ -82,7 +82,7 @@ export default function ProductGrid({
             else {
                 return (
                     <Box style={{ width: '100%', textAlign: 'center', mt: 4 }}>
-                        <EmptyCard message={'Product Is Not Found'} />
+                        <EmptyCard message={'No result is found'} />
                     </Box>
                 );
             }
