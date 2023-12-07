@@ -167,6 +167,7 @@ function ShippingInformation() {
                 items: cartItems.map((item) => {
                     return {
                         images: item.images,
+
                         name: item.name,
                         price: item.price,
                         quantity: item.quantity,
@@ -181,9 +182,13 @@ function ShippingInformation() {
             };
 
             // console.log('Order Free: ', order.totalAmount);
+
+            console.log('Order: ', order);
+
             try {
                 const checkoutOrder = await orderService.createOrder(order);
                 console.log('checkoutOrder: ', checkoutOrder);
+
                 if (checkoutOrder) {
                     // order successfully
                     setShowToast(true);
