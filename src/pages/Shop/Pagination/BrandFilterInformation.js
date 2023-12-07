@@ -15,6 +15,7 @@ import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 import categoryService from '~/services/categoryServices';
 import brandService from '~/services/brandServices';
 export default function BrandFilterInformation({ handleBrandFilter, selectedBrands }) {
+    // export default function BrandFilterInformation({ handleBrandFilter, selectedBrands }) {
     const [open, setOpen] = useState(true);
 
     const [listBrands, setListBrands] = useState([]);
@@ -58,7 +59,8 @@ export default function BrandFilterInformation({ handleBrandFilter, selectedBran
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    {listBrands.length > 0 &&
+                    {selectedBrands &&
+                        listBrands.length > 0 &&
                         listBrands.map((brand, index) => (
                             <ListItemButton
                                 key={brand._id}

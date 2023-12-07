@@ -3,6 +3,7 @@ import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 import { Box, Radio, RadioGroup, FormControlLabel } from '@mui/material';
 import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
 import PayPalMethod from './PayPal/PayPalMethod';
+import PayPalPayment from './PayPal/PayPalPayment';
 
 function PaymentStep({ onSelectPaymentMethod }) {
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('COD');

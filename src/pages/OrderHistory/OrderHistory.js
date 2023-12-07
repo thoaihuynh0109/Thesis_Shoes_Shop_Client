@@ -23,7 +23,6 @@ const OrderHistory = () => {
             >
                 lịch sử giao hàng
             </CustomTypography>
-            <ProductsTable />
             <OrderDetail />
         </Container>
     );

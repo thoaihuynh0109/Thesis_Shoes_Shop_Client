@@ -14,12 +14,12 @@ import ShippingStep from './ShippingStep';
 import { useDispatch, useSelector } from 'react-redux';
 
 function ShippingInformation() {
-    const cartItems = useSelector((state) => state.cart.cartItems);
-    // console.log('Cart List: ', cartItems);
-    const tax = 8.75;
-
     const navigate = useNavigate();
     const location = useLocation();
+    const cartItems = useSelector((state) => state.cart.cartItems);
+    // console.log('Cart List: ', cartItems);
+    const tax = 2;
+
     const { deliveryAddress } = location.state || {};
 
     // get user data from local storage
@@ -56,17 +56,16 @@ function ShippingInformation() {
             return total + itemPrice;
         }, 48600);
 
-        console.log('Price in VND:', totalPriceVND);
+        // console.log('Price in VND:', totalPriceVND);
         // const totalWithTaxVND = totalPriceVND * (1 + tax / 100);
         const totalWithTaxVND = Math.ceil((totalPriceVND * (1 + tax / 100)) / 1000) * 1000;
-        console.log('Price VND with Tax:', totalWithTaxVND.toLocaleString());
+        // console.log('Price VND with Tax:', totalWithTaxVND.toLocaleString());
 
         // Convert totalPriceVND to USD
         const totalPriceUSD = (totalWithTaxVND / exchangeRate).toFixed(2);
-        console.log('Price in USD:', totalPriceUSD);
+        // console.log('Price in USD:', totalPriceUSD);
         return totalPriceUSD;
     };
-    getTotalPrice();
 
     // Fetch user data from local storage
     useEffect(() => {
@@ -165,7 +164,14 @@ function ShippingInformation() {
             const order = {
                 owner: userData._id,
                 // Cần phải có thông tin về sản phẩm trong đơn hàng
-                items: cartItems,
+                items: cartItems.map((item) => {
+                    return {
+                        images: item.images,
+                        name: item.name,
+                        price: item.price,
+                        quantity: item.quantity,
+                    };
+                }),
                 /* Số tiền đơn hàng */
                 totalAmount: getTotalPrice(),
                 paymentMethod: selectedPaymentMethod,
@@ -173,7 +179,8 @@ function ShippingInformation() {
                 shippingFee: 48600,
                 status: 'processing',
             };
-            console.log('Order Free: ', order.totalAmount);
+
+            // console.log('Order Free: ', order.totalAmount);
             try {
                 const checkoutOrder = await orderService.createOrder(order);
                 console.log('checkoutOrder: ', checkoutOrder);
@@ -197,6 +204,26 @@ function ShippingInformation() {
                             // Handle error, show error message, etc.
                         }
                     } else if (selectedPaymentMethod === 'paypal') {
+                        const order2 = {
+                            owner: userData._id,
+                            // Cần phải có thông tin về sản phẩm trong đơn hàng
+                            items: cartItems.map((item) => {
+                                return {
+                                    name: item.name,
+                                    price: item.price,
+                                    quantity: item.quantity,
+                                };
+                            }),
+                            /* Số tiền đơn hàng */
+                            totalAmount: getTotalPrice(),
+                            paymentMethod: 'paypal23',
+                            /* Phí vận chuyển */
+                            shippingFee: 48600,
+                            status: 'processing',
+                        };
+                        const checkoutOrder2 = await orderService.createOrder(order2);
+                        // console.log('checkoutOrder: ', checkoutOrder2);
+
                         // Proceed with the order logic for PayPal
                         console.log('Order placed successfully for PayPal');
                     }
@@ -356,7 +383,11 @@ function ShippingInformation() {
                     <CustomizeButtonPersonalAccount
                         variant="outlined"
                         sx={{
-                            p: '4px 48px',
+                            // p: '4px 48px',
+                            pl: 4,
+                            pr: 4,
+
+                            mt: '14px',
                         }}
                         onClick={goBack}
                     >

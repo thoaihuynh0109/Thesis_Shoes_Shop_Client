@@ -1,111 +1,213 @@
-// OrderDetail.js
-import React, { useState } from 'react';
-import { Box, Typography, Button } from '@mui/material';
+// import React, { useState, useEffect } from 'react';
+// import { Box, Typography, Button, Paper } from '@mui/material';
+// import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
+// import orderService from '~/services/orderServices';
+
+// const OrderDetail = () => {
+//     const [displayedProducts, setDisplayedProducts] = useState(2);
+//     const [purchasedProducts, setPurchasedProducts] = useState([]);
+
+//     const loadMoreProducts = () => {
+//         setDisplayedProducts((prev) => prev + 2);
+//     };
+
+//     useEffect(() => {
+//         const fetchOrderHistory = async () => {
+//             try {
+//                 const orders = await orderService.getAllOrder();
+//                 const products = orders.flatMap((order) => {
+//                     return order.items.map((item) => ({
+//                         orderId: order._id,
+//                         createdAt: order.createdAt, // Assuming orderDate is a property in your order object
+//                         images: item.images,
+//                         name: item.name,
+//                         price: item.price, // Assuming each item has its own price
+//                         quantity: item.quantity,
+//                         shipping: order.shipping, // Adjust this based on your actual structure
+//                         // Include other shipping details as needed
+//                     }));
+//                 });
+//                 setPurchasedProducts(products);
+//             } catch (error) {
+//                 console.error(error);
+//             }
+//         };
+
+//         fetchOrderHistory();
+//     }, []);
+
+//     return (
+//         <Box>
+//             <CustomTypography sx={{ fontWeight: 'bold', fontSize: '24px' }}>
+//                 Order Details
+//             </CustomTypography>
+//             <Box>
+//                 {purchasedProducts.slice(0, displayedProducts).map((product, index) => (
+//                     <Paper
+//                         key={index}
+//                         elevation={3}
+//                         sx={{ my: 2, p: 2, display: 'flex', alignItems: 'center' }}
+//                     >
+//                         <Box sx={{ flex: 1 }}>
+//                             <img
+//                                 src={product.images}
+//                                 alt={`Product: ${product.name}`}
+//                                 style={{ height: '100px', width: '100px', objectFit: 'cover' }}
+//                             />
+//                         </Box>
+//                         <Box sx={{ flex: 3, ml: 2 }}>
+//                             <CustomTypography>{product.name}</CustomTypography>
+//                             <CustomTypography sx={{ mt: 1 }}>
+//                                 Quantity: {product.quantity}
+//                             </CustomTypography>
+//                             {/* Display shipping details */}
+//                             <CustomTypography sx={{ mt: 1 }}>
+//                                 Shipping: {product.shipping}{' '}
+//                                 {/* Adjust this based on your actual structure */}
+//                             </CustomTypography>
+//                             {/* Display order date */}
+//                             <CustomTypography sx={{ mt: 1 }}>
+//                                 Order Date: {new Date(product.createdAt).toLocaleString()}
+//                             </CustomTypography>
+//                             {/* Include other shipping details as needed */}
+//                         </Box>
+//                         <Box sx={{ flex: 1 }}>
+//                             <CustomTypography>Gia: ${product.price}</CustomTypography>
+//                         </Box>
+//                     </Paper>
+//                 ))}
+//             </Box>
+
+//             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 2 }}>
+//                 {displayedProducts < purchasedProducts.length && (
+//                     <Button variant="contained" onClick={loadMoreProducts}>
+//                         <CustomTypography>Load More</CustomTypography>
+//                     </Button>
+//                 )}
+//             </Box>
+//         </Box>
+//     );
+// };
+
+// export default OrderDetail;
+
+import React, { useState, useEffect } from 'react';
+import { Box, Typography, Button, Paper, Divider } from '@mui/material';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
+import orderService from '~/services/orderServices';
 
 const OrderDetail = () => {
-    // Số lượng sản phẩm hiển thị mỗi lần
-    const productsPerPage = 2;
-
-    const [displayedProducts, setDisplayedProducts] = useState(productsPerPage);
+    const [displayedProducts, setDisplayedProducts] = useState(2);
+    const [purchasedProducts, setPurchasedProducts] = useState([]);
+    const [filterDate, setFilterDate] = useState(null);
 
     const loadMoreProducts = () => {
-        setDisplayedProducts((prev) => prev + productsPerPage);
+        setDisplayedProducts((prev) => prev + 2);
     };
 
-    const purchasedProducts = [
-        {
-            img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698222886/Gimme-shoes-images/Puma/SEASONS%20Voyage%20NITRO%E2%84%A2%203.jpg',
-            name: 'Sản phẩm 1',
-            price: 20,
-            quantity: 2,
-        },
-        {
-            img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1700366310/Gimme-shoes-images/Nike/Nike_Full_Force_Low_keuwib.png',
-            name: 'Sản phẩm 2',
-            price: 30,
-            quantity: 1,
-        },
-        {
-            img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698222886/Gimme-shoes-images/Puma/SEASONS%20Voyage%20NITRO%E2%84%A2%203.jpg',
-            name: 'Sản phẩm 1',
-            price: 20,
-            quantity: 2,
-        },
-        {
-            img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1700366310/Gimme-shoes-images/Nike/Nike_Full_Force_Low_keuwib.png',
-            name: 'Sản phẩm 2',
-            price: 30,
-            quantity: 1,
-        },
-        {
-            img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698222886/Gimme-shoes-images/Puma/SEASONS%20Voyage%20NITRO%E2%84%A2%203.jpg',
-            name: 'Sản phẩm 1',
-            price: 20,
-            quantity: 2,
-        },
-        {
-            img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1700366310/Gimme-shoes-images/Nike/Nike_Full_Force_Low_keuwib.png',
-            name: 'Sản phẩm 2',
-            price: 30,
-            quantity: 1,
-        },
-    ];
+    const handleFilterDate = (date) => {
+        setFilterDate(date);
+    };
+
+    useEffect(() => {
+        const fetchOrderHistory = async () => {
+            try {
+                const orders = await orderService.getAllOrder();
+                const groupedProducts = groupProductsByCreatedAt(orders);
+                setPurchasedProducts(groupedProducts);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchOrderHistory();
+    }, []);
+
+    // Function to group products by createdAt
+    const groupProductsByCreatedAt = (orders) => {
+        const groupedProducts = [];
+
+        orders.forEach((order) => {
+            const productsInOrder = order.items.map((item) => ({
+                orderId: order._id,
+                createdAt: order.createdAt,
+                images: item.images,
+                name: item.name,
+                price: item.price,
+                quantity: item.quantity,
+                shipping: order.shipping,
+            }));
+
+            groupedProducts.push(...productsInOrder);
+        });
+
+        return groupedProducts;
+    };
+
+    // Filter products based on filterDate
+    const filteredProducts =
+        filterDate === null
+            ? purchasedProducts
+            : purchasedProducts.filter(
+                  (product) =>
+                      new Date(product.createdAt).toLocaleDateString() ===
+                      new Date(filterDate).toLocaleDateString(),
+              );
 
     return (
         <Box>
             <CustomTypography sx={{ fontWeight: 'bold', fontSize: '24px' }}>
                 Order Details
             </CustomTypography>
-            <Box>
-                {purchasedProducts.slice(0, displayedProducts).map((product, index) => (
-                    <Box sx={{ borderBottom: '1px solid #333' }}>
-                        <Box
-                            key={index}
-                            className="product"
-                            sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                                margin: 2,
-                            }}
-                        >
-                            <Box>
-                                <img
-                                    src={product.img}
-                                    alt={`Product: ${product.name}`}
-                                    style={{ height: '100px ', width: '100px ' }}
-                                />
-                            </Box>
-
-                            <Box
-                                sx={{
-                                    // display: 'flex',
-                                    alignItems: 'flex-start',
-                                    justifyContent: 'flex-start',
-                                    flexGrow: 2,
-                                    ml: 2,
-                                }}
-                            >
-                                <CustomTypography>{product.name}</CustomTypography>
-                                <CustomTypography sx={{ mt: 1 }}>
-                                    Số lượng: {product.quantity}
-                                </CustomTypography>
-                            </Box>
-                            <Box>
-                                <CustomTypography sx={{ flexGrow: 1 }}>
-                                    Giá: ${product.price}
-                                </CustomTypography>
-                            </Box>
-                        </Box>
-                        {/* thành tiền: là số tiền người dùng đã mua 1 sản phẩm hoặc 1 danh sách sản phẩm */}
-                        
-                    </Box>
-                ))}
+            {/* Add date filter buttons or date picker here */}
+            {/* Example with buttons: */}
+            <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+                <Button onClick={() => handleFilterDate(null)}>All</Button>
+                <Button onClick={() => handleFilterDate(new Date())}>Today</Button>
+                {/* Add more buttons as needed */}
             </Box>
-
+            {filteredProducts.slice(0, displayedProducts).map((product, index) => (
+                <Box
+                    key={index}
+                    elevation={3}
+                    sx={{
+                        my: 2,
+                        p: 2,
+                        display: 'flex',
+                        alignItems: 'center',
+                        border: '1px solid #c9c9c9',
+                    }}
+                >
+                    <Box sx={{ flex: 1 }}>
+                        <img
+                            src={product.images}
+                            alt={`Product: ${product.name}`}
+                            style={{ height: '100px', width: '100px', objectFit: 'cover' }}
+                        />
+                    </Box>
+                    <Box sx={{ flex: 3, ml: 2 }}>
+                        <CustomTypography>{product.name}</CustomTypography>
+                        <CustomTypography sx={{ mt: 1 }}>
+                            Quantity: {product.quantity}
+                        </CustomTypography>
+                        {/* Display shipping details */}
+                        <CustomTypography sx={{ mt: 1 }}>
+                            Shipping: {product.shipping}{' '}
+                            {/* Adjust this based on your actual structure */}
+                        </CustomTypography>
+                        {/* Display order date */}
+                        <CustomTypography sx={{ mt: 1 }}>
+                            Order Date: {new Date(product.createdAt).toLocaleString()}
+                        </CustomTypography>
+                        {/* Include other shipping details as needed */}
+                    </Box>
+                    <Box sx={{ flex: 1 }}>
+                        <CustomTypography>Gia: ${product.price}</CustomTypography>
+                    </Box>
+                </Box>
+            ))}
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 2 }}>
-                {displayedProducts < purchasedProducts.length && (
+                {displayedProducts < filteredProducts.length && (
                     <Button variant="contained" onClick={loadMoreProducts}>
                         <CustomTypography>Load More</CustomTypography>
                     </Button>

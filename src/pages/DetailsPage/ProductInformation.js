@@ -1,14 +1,65 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Button, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { FavoriteSharp } from '@mui/icons-material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import MakeProductSize from './MakeProductSize';
 import RatingProductInformation from './RatingProduct';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
+import { addToCart, incrementQuantity } from '~/redux/CartManagement/cartActions';
+import { addToWishlist } from '~/redux/WishListManagement/wishlistActions';
+import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
 
 function ProductInformation({ flashSale }) {
     const productDetail = useSelector((state) => state.productDetail.productDetails);
+
+    const dispatch = useDispatch();
+    const cartItems = useSelector((state) => state.cart.cartItems);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+
+    // add to cart action with product exist in cart
+    const handleAddToCart = () => {
+        const productToAdd = {
+            _id: productDetail._id,
+            images: productDetail.images,
+            name: productDetail.name,
+            price: productDetail.price,
+            quantity: 1,
+        };
+
+        dispatch(addToCart(productToAdd));
+
+        // Show the toast message
+        setToastMessage('Product just added to cart!');
+        setShowToast(true);
+
+        // Reset toast after 3 seconds
+        setTimeout(() => {
+            setShowToast(false);
+        }, 3000);
+    };
+
+    const handleAddToWishlist = () => {
+        const productToAddToWishlist = {
+            _id: productDetail._id,
+            images: productDetail.images, // Replace with the actual property name
+            name: productDetail.name,
+            price: productDetail.price,
+            countInStock: productDetail.countInStock, // Replace with the actual property name
+        };
+
+        dispatch(addToWishlist(productToAddToWishlist));
+
+        // Show the toast message
+        setToastMessage('Sản Phẩm Đã Được Thêm Vào Danh Sách Yêu Thích');
+        setShowToast(true);
+
+        // Reset toast after 3 seconds
+        setTimeout(() => {
+            setShowToast(false);
+        }, 3000);
+    };
 
     if (!productDetail) {
         // If productDetail is null, you can return a loading state or an empty component
@@ -54,22 +105,12 @@ function ProductInformation({ flashSale }) {
                 )} */}
             </Box>
             {/*  make size */}
-            <CustomTypography sx={{ fontWeight: 'bold', mt: 2, mb: '4px' }}>
+            {/* <CustomTypography sx={{ fontWeight: 'bold', mt: 2, mb: '4px' }}>
                 Select Size
             </CustomTypography>
             <Box sx={{ maxWidth: '300px' }}>
                 <MakeProductSize />
-            </Box>
-            {/* add to wish list */}
-            <Box sx={{ mt: 4, mx: 4, minWidth: 40, width: '50%' }}>
-                <Button
-                    startIcon={<FavoriteSharp />}
-                    variant="contained"
-                    sx={{ borderRadius: '20px', width: '100%' }}
-                >
-                    <Typography sx={{ fontSize: '13px', p: '4px 8px' }}>Add to Favorite</Typography>
-                </Button>
-            </Box>
+            </Box> */}
 
             {/* add to add to cart */}
             <Box sx={{ mt: 3, mb: 2, mx: 4, minWidth: 40, width: '50%' }}>
@@ -77,8 +118,21 @@ function ProductInformation({ flashSale }) {
                     startIcon={<AddShoppingCartIcon />}
                     variant="outlined"
                     sx={{ borderRadius: '20px', width: '100%' }}
+                    onClick={handleAddToCart}
                 >
                     <Typography sx={{ fontSize: '13px', p: '6px 8px' }}>Add to Cart</Typography>
+                </Button>
+            </Box>
+
+            {/* add to wish list */}
+            <Box sx={{ mt: 4, mx: 4, minWidth: 40, width: '50%', mb: 4 }}>
+                <Button
+                    startIcon={<FavoriteSharp />}
+                    variant="contained"
+                    sx={{ borderRadius: '20px', width: '100%' }}
+                    onClick={handleAddToWishlist}
+                >
+                    <Typography sx={{ fontSize: '13px', p: '4px 8px' }}>Add to Favorite</Typography>
                 </Button>
             </Box>
 
@@ -96,6 +150,12 @@ function ProductInformation({ flashSale }) {
                 {/* amount of reviews */}
                 <RatingProductInformation />
             </Box>
+            <ToastMessage2
+                message={toastMessage}
+                type="success"
+                showToast={showToast}
+                setShowToast={setShowToast}
+            />
         </Box>
     );
 }
