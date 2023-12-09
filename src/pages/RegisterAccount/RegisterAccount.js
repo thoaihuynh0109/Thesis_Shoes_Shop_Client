@@ -19,8 +19,11 @@ const style = {
 };
 function RegisterAccount() {
     const navigate = useNavigate();
+    // show toast message
     const [showToast, setShowToast] = useState(false);
-    const [openDialog, setOpenDialog] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [typeMessage, setTypeMessage] = useState('');
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
 
@@ -34,8 +37,6 @@ function RegisterAccount() {
     const [address, setAddress] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
 
-    const [toastMessage, setToastMessage] = useState('');
-    const [typeMessage, setTypeMessage] = useState('');
     // Clear email from localStorage on component mount (page reload)
     useEffect(() => {
         localStorage.removeItem('userEmail');
