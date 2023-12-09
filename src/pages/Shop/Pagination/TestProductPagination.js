@@ -343,7 +343,8 @@ export default function TestProductPagination() {
     const [sorting, setSorting] = useState('');
     const [selectedPriceRange, setSelectedPriceRange] = useState('');
     const [selectedBrands, setSelectedBrands] = useState([]);
-    // call api
+
+    // call api to get products
     useEffect(() => {
         const fetchProductData = async () => {
             const listAllProducts = await productService.getAllProduct();
@@ -361,8 +362,8 @@ export default function TestProductPagination() {
     useEffect(() => {
         // Filter products based on selected brands
         const brandFiltered = listAllProducts.filter((product) => {
-            console.log('product Name: ', product.name);
-            console.log('Product Brand: ', product.brand);
+            // console.log('product Name: ', product.name);
+            // console.log('Product Brand: ', product.brand);
             return selectedBrands.length === 0 || selectedBrands.includes(product.brand);
         });
         setBrandFilteredProducts(brandFiltered);
