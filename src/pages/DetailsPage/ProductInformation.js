@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { FavoriteSharp } from '@mui/icons-material';
@@ -9,8 +9,9 @@ import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 import { addToCart, incrementQuantity } from '~/redux/CartManagement/cartActions';
 import { addToWishlist } from '~/redux/WishListManagement/wishlistActions';
 import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
+import { setProductDetails } from '~/redux/ProductDetails/productDetailsActions';
 
-function ProductInformation({ flashSale }) {
+function ProductInformation({ product }) {
     const productDetail = useSelector((state) => state.productDetail.productDetails);
 
     const dispatch = useDispatch();
@@ -18,8 +19,47 @@ function ProductInformation({ flashSale }) {
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
 
+    // useEffect(() => {
+    //     const fetchProductDetails = () => {
+    //         // Check if product details are already stored in localStorage
+    //         const storedProductDetails = localStorage.getItem('productDetails');
+
+    //         if (storedProductDetails) {
+    //             // Parse the stored details
+    //             const parsedStoredDetails = JSON.parse(storedProductDetails);
+
+    //             // If the current product is different, remove the previous details
+    //             if (parsedStoredDetails._id !== productDetail._id) {
+    //                 localStorage.removeItem('productDetails');
+    //             } else {
+    //                 // If the current product is the same as the previous one, dispatch details
+    //                 dispatch(setProductDetails(parsedStoredDetails));
+    //                 return;
+    //             }
+    //         }
+
+    //         // Fetch the product details and store in localStorage
+
+    //         const productDetails = {
+    //             ...productDetail,
+    //             _id: productDetail.productId,
+    //             name: productDetail.name,
+    //             price: productDetail.price,
+    //         };
+
+    //         // Dispatch the action to update the product details in the Redux store
+    //         dispatch(setProductDetails(productDetails));
+
+    //         // Store the details in localStorage
+    //         localStorage.setItem('productDetails', JSON.stringify(productDetails));
+    //     };
+
+    //     fetchProductDetails();
+    // }, [dispatch, productDetail._id]);
+
+    // add to cart action
     // add to cart action with product exist in cart
-    const handleAddToCart = () => {
+    const handleAddToCart = (product) => {
         const productToAdd = {
             _id: productDetail._id,
             images: productDetail.images,
@@ -28,16 +68,28 @@ function ProductInformation({ flashSale }) {
             quantity: 1,
         };
 
-        dispatch(addToCart(productToAdd));
+        // Check if the product is already in the cart
+        const existingProduct = cartItems.find((item) => item._id === product._id);
 
-        // Show the toast message
-        setToastMessage('Product just added to cart!');
-        setShowToast(true);
-
-        // Reset toast after 3 seconds
+        // Simulate a delay of 2 seconds before showing the toast
         setTimeout(() => {
-            setShowToast(false);
-        }, 3000);
+            if (existingProduct) {
+                // If the product is already in the cart, update the quantity
+                dispatch(incrementQuantity(product._id, 1));
+            } else {
+                // If the product is not in the cart, add it with quantity 1
+                dispatch(addToCart(productToAdd));
+            }
+
+            // Show the toast message
+            setToastMessage('Product added to shopping cart successfully!');
+            setShowToast(true);
+
+            // Reset toast after 3 seconds
+            setTimeout(() => {
+                setShowToast(false);
+            }, 3000);
+        }, 100);
     };
 
     const handleAddToWishlist = () => {
@@ -58,7 +110,7 @@ function ProductInformation({ flashSale }) {
         // Reset toast after 3 seconds
         setTimeout(() => {
             setShowToast(false);
-        }, 3000);
+        }, 100);
     };
 
     if (!productDetail) {
@@ -76,12 +128,12 @@ function ProductInformation({ flashSale }) {
                 pr: 12,
                 overflow: 'scroll',
             }}
-            key={productDetail._id}
+            key={product._id}
         >
             {/* product name */}
             {/* <img src={productDetail.image}/> */}
             <CustomTypography sx={{ fontWeight: '600', fontSize: 17, mt: 2 }}>
-                {productDetail.name}
+                {product.name}
             </CustomTypography>
             {/* for who? */}
 
@@ -92,7 +144,9 @@ function ProductInformation({ flashSale }) {
             {/* original price and sale price */}
             <Box sx={{ display: 'flex', mr: 4, mt: 2 }}>
                 {/* amount is reduced */}
-                <CustomTypography sx={{ mr: 1 }}>{productDetail.price}</CustomTypography>
+                <CustomTypography sx={{ mr: 1, fontSize: '15px' }}>
+                    {product.price.toLocaleString()} VND
+                </CustomTypography>
 
                 {/* original price */}
                 {/* {flashSale ? (
