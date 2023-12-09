@@ -44,7 +44,7 @@ export function MakeProductsCard({
     imgHeight,
     imgWidth,
     marginRight,
-    countInStock,
+    countInStock = 20,
     // gender,
     onClick,
     showToast,
@@ -85,7 +85,7 @@ export function MakeProductsCard({
             }
 
             // Show the toast message
-            setToastMessage('Sản Phẩm Đã Được Thêm Vào Giỏ Hàng');
+            setToastMessage('Product added to shopping cart successfully!');
             setShowToast(true);
 
             // Reset toast after 3 seconds
@@ -119,7 +119,7 @@ export function MakeProductsCard({
         // Dispatch the action to store product details
         dispatch(storeProductDetails({ _id, images, name, price }));
         // Navigate to the product detail page
-        navigate(`/product-details`);
+        navigate(`/product-details/${_id}`);
     };
 
     // mouse enter and leave event handlers
@@ -228,6 +228,7 @@ export function MakeProductsCard({
                                         name,
                                         price,
                                         quantity: 1,
+                                        countInStock,
                                     })
                                 }
                             >
