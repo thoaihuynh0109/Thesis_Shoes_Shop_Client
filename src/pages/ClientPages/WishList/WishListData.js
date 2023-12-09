@@ -111,8 +111,8 @@ const WishListTable = () => {
                             <CustomizeTableCell>{product.name}</CustomizeTableCell>
                             <CustomizeTableCell>{product.price}</CustomizeTableCell>
                             <CustomizeTableCell>
-                                {/* {product.countInStock} */}
-                                {product.countInStock ? 'In Stock' : 'Sold Out'}
+                            {product.countInStock}
+                                {/* {product.countInStock ? 'In Stock' : 'Sold Out'} */}
                             </CustomizeTableCell>
                         </TableRow>
                     ))}

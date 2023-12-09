@@ -47,11 +47,13 @@ export default function SearchAppBar() {
     // check search container is focused?
     const [isSearchFocused, setIsSearchFocused] = useState(false);
 
-    const handleSearchFocus = () => { // focus on 
+    const handleSearchFocus = () => {
+        // focus on
         setIsSearchFocused(true);
     };
 
-    const handleSearchBlur = () => { // unfocus on
+    const handleSearchBlur = () => {
+        // unfocus on
         setIsSearchFocused(false);
     };
 
@@ -66,7 +68,8 @@ export default function SearchAppBar() {
 
     // listen event --> when user type and then press "Enter" or Click Search icon
     const handleKeyPress = (e) => {
-        if (e.key === 'Enter') {
+        // Check if the Enter key is pressed and the search input is focused
+        if (e.key === 'Enter' && isSearchFocused) {
             // Check if the current location is already '/shop'
             if (location.pathname !== '/shop') {
                 navigate('/shop');
@@ -80,7 +83,7 @@ export default function SearchAppBar() {
         return () => {
             window.removeEventListener('keydown', handleKeyPress);
         };
-    }, [location.pathname]);
+    }, [location.pathname, isSearchFocused]);
 
     return (
         <Box sx={{ flexGrow: 1 }}>

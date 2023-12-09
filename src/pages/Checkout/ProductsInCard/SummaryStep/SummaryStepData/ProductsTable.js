@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -27,6 +27,7 @@ import {
 import { styled } from '@mui/system';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
+    addToCart,
     incrementQuantity,
     decrementQuantity,
     removeProduct,
@@ -49,11 +50,34 @@ function ProductsTable() {
         return cartItems.reduce((total, item) => total + item.quantity, 0);
     };
 
+    // save product data to local storage
+    // Fetch cart items from localStorage on component mount
+    // useEffect(() => {
+    //     const storedCartItems = localStorage.getItem('cartItems');
+
+    //     if (storedCartItems) {
+    //         const parsedCartItems = JSON.parse(storedCartItems);
+    //         // Dispatch action to update cart items in the Redux store
+    //         parsedCartItems.forEach((item) => dispatch(addToCart(item)));
+    //     }
+    // }, [dispatch]);
+
+    // // Update localStorage whenever cart items change
+    // useEffect(() => {
+    //     localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    // }, [cartItems]);
+
     // Ask user wanna remove Item?
     const [openConfirmation, setOpenConfirmation] = useState(false);
     const [itemToRemove, setItemToRemove] = useState(null);
+    // this is toast message for pop up message to confirm
     const [toastMessage, setToastMessage] = useState('');
     const [toastType, setToastType] = useState('');
+
+    // show toast message
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage2, setToastMessage2] = useState('');
+    const [typeMessage2, setTypeMessage2] = useState('');
 
     // decrease product quantity
     const decrement = (productId) => {
@@ -141,17 +165,31 @@ function ProductsTable() {
         return <EmptyCard message={'No product in cart'} />;
     }
 
-    // Show Checkout Page
-    // ShippingInformation.js
+    // Show Checkout Page and check user logged into Websites?
     const handleCheckoutPage = () => {
-        navigate('/checkout-page');
+        // Check if the "user" key exists in local storage
+        const checkUserLoggedIn = localStorage.getItem('user') !== null;
+
+        // If the user is not logged in, navigate to the sign-in page
+        if (!checkUserLoggedIn) {
+            setShowToast(true);
+            setToastMessage2('Must Login Before Checkout');
+            setTypeMessage2('warning');
+            setTimeout(() => {
+                setShowToast(true);
+                navigate('/signin');
+            }, 2000);
+        } else {
+            // If the user is logged in, proceed to the checkout page
+            navigate('/checkout-page');
+        }
     };
 
     return (
         <Box>
             <Box>
                 <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <Table sx={{ minWidth: 600 }} aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <CustomizeTableCell align="left">Product Image</CustomizeTableCell>
@@ -182,7 +220,8 @@ function ProductsTable() {
                                         {item.name}
                                     </CustomizeTableCell>
                                     <CustomizeTableCell align="left">
-                                        {item.countInstock ? 'In Stock' : 'Sold Out'}
+                                        {item.countInStock}
+                                        {/* {item.countInstock ? 'In Stock' : 'Sold Out'} */}
                                     </CustomizeTableCell>
                                     <CustomizeTableCell align="left">
                                         {item.price.toLocaleString()}
@@ -259,6 +298,12 @@ function ProductsTable() {
                 >
                     Checkout
                 </Button>
+                <ToastMessage2
+                    message={toastMessage2}
+                    type={typeMessage2}
+                    showToast={showToast}
+                    setShowToast={setShowToast}
+                />
             </Box>
         </Box>
     );

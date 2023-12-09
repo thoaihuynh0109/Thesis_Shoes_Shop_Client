@@ -33,6 +33,7 @@ function PersonalAccount() {
     const [toastMessage, setToastMessage] = useState('');
     const [typeMessage, setTypeMessage] = useState('');
 
+    
     // Fetch user data from local storage
     useEffect(() => {
         const storedUserData = JSON.parse(localStorage.getItem('user')) || [];

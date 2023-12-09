@@ -62,7 +62,8 @@ const publicRoutes = [
         component: TestProductPagination,
     },
     {
-        path: '/product-details',
+        // path: '/product-details',
+        path: '/product-details/:id',
         component: DetailsPage,
     },
     // product-detail
@@ -118,7 +119,7 @@ const publicRoutes = [
 
     { path: '/recover-password', component: RecoverPassword },
     // not found page
-    { path: '/*', component: PageNotFound },
+    // { path: '/*', component: PageNotFound },
 ];
 
 // Route can dang nhap

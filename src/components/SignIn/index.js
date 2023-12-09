@@ -51,19 +51,31 @@ function SignIn() {
         const isEmailValid = emailValidation.validateEmail();
         const isPasswordValid = passwordValidation.validatePassword();
 
-        if (isEmailValid && isPasswordValid) {
+        if (email.trim() === '' || password.trim() === '') {
+            setShowToast(true);
+            setToastMessage('Please fill the Email and Password.');
+            setTypeMessage('warning');
+        } else if (isEmailValid && isPasswordValid) {
             const data = {
                 email,
                 password,
             };
 
-            //
+            // email and password is true --> login into system
             const loginData = await authService.signIn(data);
-            navigate('/');
+            if (loginData) {
+                navigate('/');
 
-            // add to local storage
-            localStorage.setItem('user', JSON.stringify(loginData));
-            // send info to login api
+                // add to local storage
+                localStorage.setItem('user', JSON.stringify(loginData));
+                // send info to login api
+            }
+            // email or password is false
+            else {
+                setShowToast(true);
+                setToastMessage('Email or Password is not correct!');
+                setTypeMessage('warning');
+            }
         } else {
             setShowToast(true);
             setToastMessage('Please check the information of account.');
@@ -78,12 +90,15 @@ function SignIn() {
         if (e.key === 'Enter') {
             e.preventDefault();
             // Kiểm tra xem email và password có giá trị không
+            // If both fields are not empty and , proceed with login
             if (isEmailValid && isPasswordValid) {
                 handleLogin();
-            } else {
+            }
+            // Check if both email and password are not empty
+            else {
                 // Nếu cả hai trường đều có giá trị, thực hiện đăng nhập
                 setShowToast(true);
-                setToastMessage('Please enter both email and password.');
+                setToastMessage('Please fill both email and password.');
                 setTypeMessage('warning');
             }
         }
@@ -172,6 +187,7 @@ function SignIn() {
                                 Password
                             </CustomTypography>
                             <CustomizeTextField
+                                type="password"
                                 value={password}
                                 onChange={(e) => {
                                     setPassword(e.target.value);
