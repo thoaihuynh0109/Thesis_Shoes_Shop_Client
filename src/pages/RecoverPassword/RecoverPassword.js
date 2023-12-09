@@ -4,10 +4,10 @@ import { Container, Box, Typography, Button, TextField, styled } from '@mui/mate
 import '~/components/GlobalStyles';
 import styles from './RecoverPassword.module.scss';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
-import { CustomizeTextField } from '~/components/CustomizeTextField/CustomizeTextField';
 import useValidation from '~/components/UseValidation/useValidation';
 import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
-
+import userService from '~/services/userServices';
+import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 const CustomTextField = styled(TextField)(({ theme }) => ({
@@ -21,18 +21,30 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
 }));
 
 function RecoverPassword() {
+    const navigate = useNavigate();
     // check validation
     const [emailorUserName, setEmailOrUserName] = useState('');
     const emailValidation = useValidation({ value: '' });
     const [showToast, setShowToast] = useState(false);
-    const handleRecoverPassword = () => {
+
+    const handleRecoverPassword = async () => {
         const isEmailValid = emailValidation.validateEmail();
-        if (isEmailValid) {
-            console.log('Email: ', emailorUserName);
-            setShowToast(true);
+        const isExistedEmail = await userService.checkEmailAvailability(emailorUserName);
+        if (isEmailValid && isExistedEmail.available === false) {
+            // Xử lý gửi email
+            const data = { email: emailorUserName };
+            const respone = await userService.recoverPassword(data);
+            if (respone.status === 200) {
+                setShowToast(true);
+                setTimeout(() => {
+                    navigate('/signin');
+                }, 2000);
+            }
         } else {
+            // Show message email not exists
+            alert('Email không tồn tại nha má !!');
             // Handle validation errors
-            console.log('Validation failed. Please check the form.');
+            // console.log('Validation failed. Please check the form.');
         }
     };
     return (
