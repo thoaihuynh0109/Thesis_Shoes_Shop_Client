@@ -25,6 +25,14 @@ const userService = {
             return { available: true };
         }
     },
+    recoverPassword: async (data) => {
+        try {
+            const respone = await axios.post(apiUrl + `/recover-password`, data);
+            return respone;
+        } catch (error) {
+            console.error(error);
+        }
+    },
     getUserById: async (id) => {
         try {
             const respone = await axios.get(apiUrl + `/${id}`);
