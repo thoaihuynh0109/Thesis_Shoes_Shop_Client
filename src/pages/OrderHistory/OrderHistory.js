@@ -19,9 +19,15 @@ const OrderHistory = () => {
     return (
         <Container>
             <CustomTypography
-                sx={{ textTransform: 'capitalize', fontWeight: 'bold', fontSize: '24px' }}
+                sx={{
+                    textTransform: 'capitalize',
+                    fontWeight: 'bold',
+                    fontSize: '24px',
+                    mt: 4,
+                    mb: 4,
+                }}
             >
-                lịch sử giao hàng
+                lịch sử mua hàng
             </CustomTypography>
             <OrderDetail />
         </Container>
