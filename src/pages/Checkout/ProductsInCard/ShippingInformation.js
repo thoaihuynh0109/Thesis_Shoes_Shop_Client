@@ -255,6 +255,7 @@ function ShippingInformation() {
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 4 }}>
                 <CustomTypography sx={{ mr: 12 }}>Người Nhận Hàng</CustomTypography>
                 <CustomizeTextField
+                    disabled
                     label={'Người Nhận Hàng'}
                     textField={'Họ tên người nhận hàng'}
                     value={fullName}
@@ -281,6 +282,7 @@ function ShippingInformation() {
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 4 }}>
                 <CustomTypography sx={{ mr: 15 }}>Số Điện Thoại</CustomTypography>
                 <CustomizeTextField
+                    disabled
                     label={'Số Điện Thoại'}
                     textField={'Số Điện Thoại'}
                     wd={600}
@@ -307,6 +309,7 @@ function ShippingInformation() {
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 4 }}>
                 <CustomTypography sx={{ mr: 11 }}>Địa Chỉ Nhận Hàng</CustomTypography>
                 <CustomizeTextField
+                    disabled
                     label={'Địa Chỉ Nhận Hàng'}
                     textField={'Địa Chỉ Nhận Hàng'}
                     value={address}
