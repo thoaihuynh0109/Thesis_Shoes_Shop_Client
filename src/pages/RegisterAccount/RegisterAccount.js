@@ -86,7 +86,7 @@ function RegisterAccount() {
                         firstName,
                         lastName,
                         email,
-                        phoneNumber,
+                        phone: phoneNumber,
                         password,
                         rePassword,
                         address,
@@ -232,15 +232,15 @@ function RegisterAccount() {
                             }}
                         />
 
-                        <CustomTypography
+                        {/* <CustomTypography
                             variant="body1"
                             textAlign={'left'}
                             sx={{ mt: 2 }}
                             gutterBottom
                         >
                             Address
-                        </CustomTypography>
-                        <CustomizeTextField
+                        </CustomTypography> */}
+                        {/* <CustomizeTextField
                             value={address}
                             onChange={(e) => {
                                 setAddress(e.target.value);
@@ -259,7 +259,7 @@ function RegisterAccount() {
                                     fontSize: '12px', // Adjust the font size as needed
                                 },
                             }}
-                        />
+                        /> */}
 
                         <CustomTypography
                             variant="body1"
