@@ -1,220 +1,216 @@
-// import React, { useState, useEffect } from 'react';
-// import { Box, Typography, Button, Paper } from '@mui/material';
-// import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
-// import orderService from '~/services/orderServices';
+import React, { useEffect, useState } from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { Button, IconButton, InputAdornment, Stack, TextField } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import SearchIcon from '@mui/icons-material/Search';
+import UploadIcon from '@mui/icons-material/Upload';
+import DownloadIcon from '@mui/icons-material/Download';
+import DeleteIcon from '@mui/icons-material/Delete';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { Link, useNavigate } from 'react-router-dom';
+import CustomTableCell from '../AdminPages/CustomTableCell/CustomTableCell';
+import ToastMessage from '~/components/ToastMessage/ToastMessage';
+import orderService from '~/services/orderServices';
+import FormOrderDetail from '../AdminPages/Order/FormOrderDetail';
+import ProductDetailView from './ProductDetailView';
 
-// const OrderDetail = () => {
-//     const [displayedProducts, setDisplayedProducts] = useState(2);
-//     const [purchasedProducts, setPurchasedProducts] = useState([]);
+// function OrderDetail() {
+//     const navigate = useNavigate();
+//     const [orders, setOrders] = useState([]);
+//     const [selectedOrderId, setSelectedOrderId] = useState(null);
+//     const [showPopup, setShowPopup] = useState(false);
+//     const [message, setMessage] = useState('');
+//     const [typeMessage, setTypeMessage] = useState('');
+//     const [showForm, setShowForm] = useState(false);
 
-//     const loadMoreProducts = () => {
-//         setDisplayedProducts((prev) => prev + 2);
-//     };
+//     const [userData, setUserData] = useState({});
+//     const [userId, setUserId] = useState('');
+//     // Fetch user data from local storage
+//     useEffect(() => {
+//         const storedUserData = JSON.parse(localStorage.getItem('user')) || {};
+//         setUserData(storedUserData);
+//         setUserId(storedUserData._id); // Assuming userId is part of the user data
+//         console.log('storedUserData._id: ', storedUserData._id);
+//     }, []);
+
+//     // useEffect(() => {
+//     //     const storedUserData = JSON.parse(localStorage.getItem('user')) || {};
+//     //     setUserData(storedUserData);
+//     //     setUserId(storedUserData._id);
+//     // }, []);
+
+//     // console.log('user id;:', userId);
 
 //     useEffect(() => {
-//         const fetchOrderHistory = async () => {
+//         const fetchOrder = async () => {
 //             try {
-//                 const orders = await orderService.getAllOrder();
-//                 const products = orders.flatMap((order) => {
-//                     return order.items.map((item) => ({
-//                         orderId: order._id,
-//                         createdAt: order.createdAt, // Assuming orderDate is a property in your order object
-//                         images: item.images,
-//                         name: item.name,
-//                         price: item.price, // Assuming each item has its own price
-//                         quantity: item.quantity,
-//                         shipping: order.shipping, // Adjust this based on your actual structure
-//                         // Include other shipping details as needed
-//                     }));
-//                 });
-//                 setPurchasedProducts(products);
+//                 console.log('userId:', userId); // Log the userId
+//                 const listOrder = await orderService.getAllOrderById(userId);
+//                 // console.log('listOrder: ', listOrder);
+//                 console.log(`listOrder of user has id:${userId} `, listOrder);
+//                 setOrders(listOrder);
 //             } catch (error) {
-//                 console.error(error);
+//                 console.error('Error fetching orders:', error);
 //             }
 //         };
+//         fetchOrder();
+//     }, [userId]);
 
-//         fetchOrderHistory();
-//     }, []);
+//     const handleCloseForm = () => {
+//         setShowForm(false);
+//     };
+
+//     const handleClosePopup = () => {
+//         setShowPopup(false);
+//     };
+
+//     const handleView = (id) => {
+//         setSelectedOrderId(id);
+//         setShowForm(true);
+//     };
 
 //     return (
 //         <Box>
-//             <CustomTypography sx={{ fontWeight: 'bold', fontSize: '24px' }}>
-//                 Order Details
-//             </CustomTypography>
-//             <Box>
-//                 {purchasedProducts.slice(0, displayedProducts).map((product, index) => (
-//                     <Paper
-//                         key={index}
-//                         elevation={3}
-//                         sx={{ my: 2, p: 2, display: 'flex', alignItems: 'center' }}
-//                     >
-//                         <Box sx={{ flex: 1 }}>
-//                             <img
-//                                 src={product.images}
-//                                 alt={`Product: ${product.name}`}
-//                                 style={{ height: '100px', width: '100px', objectFit: 'cover' }}
-//                             />
-//                         </Box>
-//                         <Box sx={{ flex: 3, ml: 2 }}>
-//                             <CustomTypography>{product.name}</CustomTypography>
-//                             <CustomTypography sx={{ mt: 1 }}>
-//                                 Quantity: {product.quantity}
-//                             </CustomTypography>
-//                             {/* Display shipping details */}
-//                             <CustomTypography sx={{ mt: 1 }}>
-//                                 Shipping: {product.shipping}{' '}
-//                                 {/* Adjust this based on your actual structure */}
-//                             </CustomTypography>
-//                             {/* Display order date */}
-//                             <CustomTypography sx={{ mt: 1 }}>
-//                                 Order Date: {new Date(product.createdAt).toLocaleString()}
-//                             </CustomTypography>
-//                             {/* Include other shipping details as needed */}
-//                         </Box>
-//                         <Box sx={{ flex: 1 }}>
-//                             <CustomTypography>Gia: ${product.price}</CustomTypography>
-//                         </Box>
-//                     </Paper>
-//                 ))}
-//             </Box>
+//             {/* Table */}
+//             <ToastMessage message={message} type={typeMessage} />
+//             <TableContainer component={Paper}>
+//                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
+//                     <TableHead>
+//                         <TableRow>
+//                             <CustomTableCell>No</CustomTableCell>
+//                             <CustomTableCell align="left">Times</CustomTableCell>
+//                             <CustomTableCell align="left">Total</CustomTableCell>
+//                             <CustomTableCell align="left">Payment</CustomTableCell>
 
-//             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 2 }}>
-//                 {displayedProducts < purchasedProducts.length && (
-//                     <Button variant="contained" onClick={loadMoreProducts}>
-//                         <CustomTypography>Load More</CustomTypography>
-//                     </Button>
-//                 )}
-//             </Box>
+//                             <CustomTableCell align="center">Action</CustomTableCell>
+//                         </TableRow>
+//                     </TableHead>
+//                     <TableBody>
+//                         {orders.length > 0 &&
+//                             orders.map((order, index) => (
+//                                 <TableRow
+//                                     key={order._id}
+//                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+//                                 >
+//                                     <CustomTableCell component="th" scope="order">
+//                                         {index + 1}
+//                                     </CustomTableCell>
+//                                     <CustomTableCell align="left">
+//                                         {new Date(order.createdAt).toLocaleString()}
+//                                         {/* {order.createdAt} */}
+//                                     </CustomTableCell>
+//                                     <CustomTableCell align="left">
+//                                         {order.totalAmount}
+//                                     </CustomTableCell>
+//                                     <CustomTableCell align="left">
+//                                         {order.paymentMethod}
+//                                     </CustomTableCell>
+
+//                                     <CustomTableCell align="center">
+//                                         <IconButton onClick={() => handleView(order._id)}>
+//                                             <VisibilityIcon color="info" fontSize="large" />
+//                                         </IconButton>
+//                                     </CustomTableCell>
+//                                 </TableRow>
+//                             ))}
+//                     </TableBody>
+//                 </Table>
+//             </TableContainer>
+//             {showForm && <ProductDetailView handleClose={handleCloseForm} id={selectedOrderId} />}
 //         </Box>
 //     );
-// };
+// }
 
 // export default OrderDetail;
 
-import React, { useState, useEffect } from 'react';
-import { Box, Typography, Button, Paper, Divider } from '@mui/material';
-import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
-import orderService from '~/services/orderServices';
+import userService from '~/services/userServices';
+function OrderDetail() {
+    const [orders, setOrders] = useState([]);
+    const [selectedOrderId, setSelectedOrderId] = useState(null);
+    const [showForm, setShowForm] = useState(false);
 
-const OrderDetail = () => {
-    const [displayedProducts, setDisplayedProducts] = useState(2);
-    const [purchasedProducts, setPurchasedProducts] = useState([]);
-    const [filterDate, setFilterDate] = useState(null);
+    const [userData, setUserData] = useState({});
+    const [userId, setUserId] = useState(JSON.parse(localStorage.getItem('user')) || '');
 
-    const loadMoreProducts = () => {
-        setDisplayedProducts((prev) => prev + 2);
-    };
-
-    const handleFilterDate = (date) => {
-        setFilterDate(date);
-    };
+    // Fetch user data from local storage
+    // const storedUserData = useEffect(() => {
+    //     setUserData(storedUserData);
+    //     setUserId(storedUserData._id);
+    // }, []);
 
     useEffect(() => {
-        const fetchOrderHistory = async () => {
-            try {
-                const orders = await orderService.getAllOrder();
-                const groupedProducts = groupProductsByCreatedAt(orders);
-                setPurchasedProducts(groupedProducts);
-            } catch (error) {
-                console.error(error);
-            }
+        const fetchOrder = async () => {
+            // console.log('userId:', userId._id);
+            const listOrder = await userService.getAllOrderById(userId._id);
+            console.log(`listOrder of user has id:${userId._id} `, listOrder);
+            setOrders(listOrder);
         };
-
-        fetchOrderHistory();
+        fetchOrder();
     }, []);
 
-    // Function to group products by createdAt
-    const groupProductsByCreatedAt = (orders) => {
-        const groupedProducts = [];
-
-        orders.forEach((order) => {
-            const productsInOrder = order.items.map((item) => ({
-                orderId: order._id,
-                createdAt: order.createdAt,
-                images: item.images,
-                name: item.name,
-                price: item.price,
-                quantity: item.quantity,
-                shipping: order.shipping,
-            }));
-
-            groupedProducts.push(...productsInOrder);
-        });
-
-        return groupedProducts;
+    const handleCloseForm = () => {
+        setShowForm(false);
     };
 
-    // Filter products based on filterDate
-    const filteredProducts =
-        filterDate === null
-            ? purchasedProducts
-            : purchasedProducts.filter(
-                  (product) =>
-                      new Date(product.createdAt).toLocaleDateString() ===
-                      new Date(filterDate).toLocaleDateString(),
-              );
+    const handleView = (id) => {
+        setSelectedOrderId(id);
+        setShowForm(true);
+    };
 
     return (
         <Box>
-            <CustomTypography sx={{ fontWeight: 'bold', fontSize: '24px' }}>
-                Order Details
-            </CustomTypography>
-            {/* Add date filter buttons or date picker here */}
-            {/* Example with buttons: */}
-            <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-                <Button onClick={() => handleFilterDate(null)}>All</Button>
-                <Button onClick={() => handleFilterDate(new Date())}>Today</Button>
-                {/* Add more buttons as needed */}
-            </Box>
-            {filteredProducts.slice(0, displayedProducts).map((product, index) => (
-                <Box
-                    key={index}
-                    elevation={3}
-                    sx={{
-                        my: 2,
-                        p: 2,
-                        display: 'flex',
-                        alignItems: 'center',
-                        border: '1px solid #c9c9c9',
-                    }}
-                >
-                    <Box sx={{ flex: 1 }}>
-                        <img
-                            src={product.images}
-                            alt={`Product: ${product.name}`}
-                            style={{ height: '100px', width: '100px', objectFit: 'cover' }}
-                        />
-                    </Box>
-                    <Box sx={{ flex: 3, ml: 2 }}>
-                        <CustomTypography>{product.name}</CustomTypography>
-                        <CustomTypography sx={{ mt: 1 }}>
-                            Quantity: {product.quantity}
-                        </CustomTypography>
-                        {/* Display shipping details */}
-                        <CustomTypography sx={{ mt: 1 }}>
-                            Shipping: {product.shipping}{' '}
-                            {/* Adjust this based on your actual structure */}
-                        </CustomTypography>
-                        {/* Display order date */}
-                        <CustomTypography sx={{ mt: 1 }}>
-                            Order Date: {new Date(product.createdAt).toLocaleString()}
-                        </CustomTypography>
-                        {/* Include other shipping details as needed */}
-                    </Box>
-                    <Box sx={{ flex: 1 }}>
-                        <CustomTypography>Gia: ${product.price}</CustomTypography>
-                    </Box>
-                </Box>
-            ))}
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 2 }}>
-                {displayedProducts < filteredProducts.length && (
-                    <Button variant="contained" onClick={loadMoreProducts}>
-                        <CustomTypography>Load More</CustomTypography>
-                    </Button>
-                )}
-            </Box>
+            {/* Table */}
+
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <CustomTableCell>No</CustomTableCell>
+                            <CustomTableCell align="left">Times</CustomTableCell>
+                            <CustomTableCell align="left">Total</CustomTableCell>
+                            <CustomTableCell align="left">Payment</CustomTableCell>
+                            <CustomTableCell align="center">Action</CustomTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {orders.length > 0 &&
+                            orders.map((order, index) => (
+                                <TableRow
+                                    key={order._id}
+                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
+                                    <CustomTableCell component="th" scope="order">
+                                        {index + 1}
+                                    </CustomTableCell>
+                                    <CustomTableCell align="left">
+                                        {new Date(order.createdAt).toLocaleString()}
+                                    </CustomTableCell>
+                                    <CustomTableCell align="left">
+                                        {order.totalAmount}
+                                    </CustomTableCell>
+                                    <CustomTableCell align="left">
+                                        {order.paymentMethod}
+                                    </CustomTableCell>
+                                    <CustomTableCell align="center">
+                                        <IconButton onClick={() => handleView(order._id)}>
+                                            <VisibilityIcon color="info" fontSize="large" />
+                                        </IconButton>
+                                    </CustomTableCell>
+                                </TableRow>
+                            ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            {showForm && <ProductDetailView handleClose={handleCloseForm} id={selectedOrderId} />}
         </Box>
     );
-};
+}
 
 export default OrderDetail;
