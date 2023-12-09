@@ -99,7 +99,8 @@ const useValidation = (initialState) => {
         return true;
     };
 
-    const validatePhone = () => {
+    // without checking special characters
+    const validatePhone2 = () => {
         if (state.value === '') {
             setState({
                 ...state,
@@ -118,6 +119,33 @@ const useValidation = (initialState) => {
                 setState({
                     ...state,
                     message: 'Số Điện Chỉ Có 10 Số!',
+                });
+                return false;
+            }
+        }
+    };
+
+    const validatePhone = () => {
+        if (state.value === '') {
+            setState({
+                ...state,
+                message: 'Vui Lòng Nhập Số Điện Thoại',
+            });
+            return false;
+        } else {
+            // Check for exactly 10 digits and no special characters
+            let validPhone = state.value.match(/^(0[3|5|7|8|9])[0-9]{8}$/);
+
+            if (validPhone) {
+                setState({
+                    ...state,
+                    message: '',
+                });
+                return true;
+            } else {
+                setState({
+                    ...state,
+                    message: 'Số Điện Chỉ Có 10 Số và Không Chứa Ký Tự Đặc Biệt!',
                 });
                 return false;
             }
