@@ -104,7 +104,7 @@ function UserAuthenticated() {
 
                 <MenuItem
                     onClick={() => {
-                        navigate('/account');
+                        navigate('/change-password');
                         handleCloseUserMenu();
                     }}
                 >
@@ -112,7 +112,7 @@ function UserAuthenticated() {
                         <AccountCircle />
                     </ListItemIcon>
                     <Typography textAlign="center" fontSize={'14px'} p={'0 24px 0 0'}>
-                        Account
+                        Change Password
                     </Typography>
                 </MenuItem>
                 {user && isAdmin ? (

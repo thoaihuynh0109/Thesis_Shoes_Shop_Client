@@ -54,29 +54,6 @@ function CustomizeGridProfile({ label, textField, forPassword, checkValidation }
                             {textField}
                         </CustomizeTextField>
                     </Box>
-                    {forPassword ? (
-                        <Box>
-                            <Typography
-                                sx={{
-                                    fontSize: '14px',
-                                    mr: -99,
-                                    color: '#333',
-                                    textDecoration: 'none',
-                                    '&:hover': {
-                                        cursor: 'pointer',
-                                    },
-                                }}
-                                // to="/recover-password"
-                                // component={Link}
-                                noWrap
-                                onClick={() => navigate('/recover-password')}
-                            >
-                                Quên Mật Khẩu?
-                            </Typography>
-                        </Box>
-                    ) : (
-                        <Box></Box>
-                    )}
                 </Stack>
             </Box>
         </Box>
