@@ -25,26 +25,41 @@ function RecoverPassword() {
     // check validation
     const [emailorUserName, setEmailOrUserName] = useState('');
     const emailValidation = useValidation({ value: '' });
+
+    // show toast message
     const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [typeMessage, setTypeMessage] = useState('');
 
     const handleRecoverPassword = async () => {
         const isEmailValid = emailValidation.validateEmail();
         const isExistedEmail = await userService.checkEmailAvailability(emailorUserName);
-        if (isEmailValid && isExistedEmail.available === false) {
-            // Xử lý gửi email
-            const data = { email: emailorUserName };
-            const respone = await userService.recoverPassword(data);
-            if (respone.status === 200) {
+        if (emailorUserName.trim() !== '') {
+            if (isEmailValid && isExistedEmail.available === false) {
+                // Xử lý gửi email
+                const data = { email: emailorUserName };
+                const respone = await userService.recoverPassword(data);
+                if (respone.status === 200) {
+                    setShowToast(true);
+                    setToastMessage('Please check your email to recover password!');
+                    setTypeMessage('success');
+                    setTimeout(() => {
+                        navigate('/signin');
+                    }, 2500);
+                }
+            } else {
+                // Show message email not exists
+                // alert('Email không tồn tại nha má !!');
                 setShowToast(true);
-                setTimeout(() => {
-                    navigate('/signin');
-                }, 2000);
+                setToastMessage('Oops! Something went wrong. Please check email again');
+                setTypeMessage('warning');
+                // Handle validation errors
+                // console.log('Validation failed. Please check the form.');
             }
         } else {
-            // Show message email not exists
-            alert('Email không tồn tại nha má !!');
-            // Handle validation errors
-            // console.log('Validation failed. Please check the form.');
+            setShowToast(true);
+            setToastMessage('Please fill your email!');
+            setTypeMessage('warning');
         }
     };
     return (
@@ -62,6 +77,7 @@ function RecoverPassword() {
                     create a new password via email.
                 </CustomTypography>
                 <CustomTextField
+                    fullWidth
                     value={emailorUserName}
                     onChange={(e) => {
                         setEmailOrUserName(e.target.value);
@@ -76,7 +92,6 @@ function RecoverPassword() {
                     helperText={emailValidation.state.message}
                     id="input-text-password"
                     label="UserName or Email"
-                    fullWidth
                     sx={{
                         '& label': {
                             fontSize: '18px',
@@ -110,14 +125,10 @@ function RecoverPassword() {
                     Recover Password
                 </Button>
                 <ToastMessage2
-                    message={
-                        <Typography sx={{ textTransform: 'capitalize', fontSize: '14px' }}>
-                            Vui lòng đăng nhập gmail của bạn để lấy lại mật khẩu
-                        </Typography>
-                    }
-                    type={'success'}
-                    setShowToast={setShowToast}
+                    message={toastMessage}
+                    type={typeMessage}
                     showToast={showToast}
+                    setShowToast={setShowToast}
                 />
             </Box>
         </Container>
