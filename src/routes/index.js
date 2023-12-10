@@ -1,6 +1,3 @@
-import React, { useState } from 'react';
-
-import { useNavigate, Link } from 'react-router-dom';
 import SignIn from '~/components/SignIn';
 import AdminLayout from '~/layouts/AdminLayout/AdminLayout';
 import AddCategory from '~/pages/AdminPages/Category/AddCategory';
@@ -24,15 +21,12 @@ import ContactUs from '~/pages/ContactUs/Contact';
 import DetailsPage from '~/pages/DetailsPage/DetailsPage';
 import Home from '~/pages/Home/Home';
 import Men from '~/pages/Men/Men';
-import PageNotFound from '~/pages/NotFound/PageNotFound';
 import OrderHistory from '~/pages/OrderHistory/OrderHistory';
 import RecoverPassword from '~/pages/RecoverPassword/RecoverPassword';
 import RegisterAccount from '~/pages/RegisterAccount/RegisterAccount';
 import TestProductPagination from '~/pages/Shop/Pagination/TestProductPagination';
 import Shop from '~/pages/Shop/Shop';
 import Women from '~/pages/Women/Women';
-import AddressStep from '~/pages/Checkout/ProductsInCard/AddressStep/AddressStep';
-import ShowDeliveryInformation from '~/pages/Checkout/ProductsInCard/AddressStep/ShowDeliveryInformation';
 import ShippingInformation from '~/pages/Checkout/ProductsInCard/ShippingInformation';
 
 // Route khong can dang nhap
@@ -79,7 +73,6 @@ const publicRoutes = [
     {
         path: '/checkout-page',
         // component: AddressStep,
-
         component: ShippingInformation,
     },
     {
@@ -90,34 +83,10 @@ const publicRoutes = [
         path: '/register-account',
         component: RegisterAccount,
     },
-
-    // for authenticated
-    {
-        path: '/profile',
-        component: PersonalAccount,
-    },
-    {
-        path: '/change-password',
-        component: ChangePassword,
-    },
-    {
-        path: '/add-new-address',
-        component: AddNewAddress,
-    },
-    {
-        path: '/update-address',
-        component: UpdateAddress,
-    },
-    {
-        path: '/order-history',
-        component: OrderHistory,
-    },
     {
         path: '/recover-password',
         component: RecoverPassword,
     },
-
-    { path: '/recover-password', component: RecoverPassword },
     // not found page
     // { path: '/*', component: PageNotFound },
 ];
@@ -127,6 +96,13 @@ const privateRoutes = [
     // for authenticated
     { path: '/profile', component: PersonalAccount },
     { path: '/change-password', component: ChangePassword },
+
+    { path: '/add-new-address', component: AddNewAddress },
+    { path: '/update-address', component: UpdateAddress },
+    { path: '/order-history', component: OrderHistory },
+];
+
+const adminRoutes = [
     { path: '/dashboard', component: Dashboard, layout: AdminLayout },
     { path: '/manage-product', component: Product, layout: AdminLayout },
     { path: '/manage-product/create', component: AddProduct, layout: AdminLayout },
@@ -145,4 +121,4 @@ const privateRoutes = [
     { path: '/manage-category/:id/edit', component: EditCategory, layout: AdminLayout },
 ];
 
-export { publicRoutes, privateRoutes };
+export { publicRoutes, privateRoutes, adminRoutes };
