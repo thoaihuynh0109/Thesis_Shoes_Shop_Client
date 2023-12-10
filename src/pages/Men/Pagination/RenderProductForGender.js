@@ -17,8 +17,8 @@ export function LoadMoreProduct({
     navigate,
     selectedGender,
 }) {
-    const initialItemsToShow = 10;
-    const itemsPerLoad = 15;
+    const initialItemsToShow = 8;
+    const itemsPerLoad = 8;
 
     const [visibleItems, setVisibleItems] = useState(initialItemsToShow);
     const [showToast, setShowToast] = useState(false);
@@ -37,14 +37,6 @@ export function LoadMoreProduct({
         };
         fetchProductByCategory();
     }, []);
-
-    // useEffect(() => {
-    //     const fetchCategoriesData = async () => {
-    //         const listAllCategories = await categoryService.getAllCategory();
-    //         setListAllCategories(listAllCategories);
-    //     };
-    //     fetchCategoriesData();
-    // }, []);
 
     const sortProducts = (data) => {
         switch (sorting) {
@@ -134,7 +126,10 @@ export function LoadMoreProduct({
         );
     };
 
-    // this button will load more products
+    // Check if the "Load More" button should be visible
+    const isLoadMoreVisible = visibleItems < listAllProducts.length;
+
+    // Handle the "Load More" button click
     const handleButtonLoadMore = () => {
         setVisibleItems((prevVisibleItems) => prevVisibleItems + itemsPerLoad);
     };
@@ -164,22 +159,25 @@ export function LoadMoreProduct({
                     </Box>
                 </Box>
             </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Button
-                    variant="contained"
-                    onClick={handleButtonLoadMore}
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        textAlign: 'center',
-                        fontSize: '14px',
-                        padding: '8px 24px',
-                        mt: 2,
-                    }}
-                >
-                    Load More
-                </Button>
-            </Box>
+            {/* hide button when there is no product to load more */}
+            {isLoadMoreVisible && (
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Button
+                        variant="contained"
+                        onClick={handleButtonLoadMore}
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            textAlign: 'center',
+                            fontSize: '14px',
+                            padding: '8px 24px',
+                            mt: 2,
+                        }}
+                    >
+                        Load More
+                    </Button>
+                </Box>
+            )}
         </Box>
     );
 }
