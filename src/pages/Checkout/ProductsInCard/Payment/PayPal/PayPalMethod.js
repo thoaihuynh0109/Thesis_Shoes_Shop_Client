@@ -12,10 +12,20 @@ import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 
 export default function PayPalMethod() {
     const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem('user')) || '';
+    // const [userData, setUserData] = useState(user);
+    // const [userId, setUserId] = useState(user._id);
     const cartItems = useSelector((state) => state.cart.cartItems);
 
     const tax = 2;
 
+    const getTotalPriceVND = () => {
+        const totalPriceVND = cartItems.reduce((total, item) => {
+            const itemPrice = parseFloat(item.price.replace(/,/g, '')) * item.quantity;
+            return total + itemPrice;
+        }, 48600);
+        return totalPriceVND;
+    };
     const getTotalPrice = () => {
         // Assuming the current currency is VND and you want to convert it to USD
         const exchangeRate = 24300; // Replace with your actual exchange rate
@@ -37,19 +47,11 @@ export default function PayPalMethod() {
     };
 
     // get user data from local storage
-    const [userData, setUserData] = useState({});
-    const [userId, setUserId] = useState('');
-
     // Fetch user data from local storage
-    useEffect(() => {
-        const storedUserData = JSON.parse(localStorage.getItem('user')) || [];
-        setUserData(storedUserData);
-        setUserId(storedUserData._id); // Assuming userId is part of the user data
-        console.log('storedUserData._id: ', storedUserData._id);
-    }, []);
-    const [orderID, setOrderID] = useState(false);
+    // const [orderID, setOrderID] = useState(false);
     // creates a paypal order
     const createOrder = (data, actions) => {
+        console.log(user);
         return actions.order.create({
             purchase_units: [
                 {
@@ -57,12 +59,12 @@ export default function PayPalMethod() {
                         currency_code: 'USD',
                         value: getTotalPrice(),
                     },
-                    owner: userId,
-                    items: cartItems.map((item) => ({
-                        name: item.name,
-                        price: item.price,
-                        quantity: item.quantity,
-                    })),
+                    owner: user._id,
+                    // items: cartItems.map((item) => ({
+                    //     name: item.name,
+                    //     price: item.price,
+                    //     quantity: item.quantity,
+                    // })),
                     totalAmount: getTotalPrice(),
                     paymentMethod: 'paypal',
                     shippingFee: 48600,
@@ -75,8 +77,10 @@ export default function PayPalMethod() {
     // check Approval
     const onApprove = async (data, actions) => {
         const order = await actions.order.capture();
-        // handleSubmitOrder();
+        handleSubmitOrder();
         console.log('order', order);
+        console.log('data', data);
+
         // setShowToast(true);
         // setToastMessage('Thanks so much for your order!');
         // setTypeMessage('success');
@@ -106,13 +110,13 @@ export default function PayPalMethod() {
         // Check if a payment method is selected
 
         const order = {
-            owner: userId,
+            owner: user._id,
             items: cartItems.map((item) => ({
                 name: item.name,
                 price: item.price,
                 quantity: item.quantity,
             })),
-            totalAmount: getTotalPrice(),
+            totalAmount: getTotalPriceVND(),
             paymentMethod: 'paypal',
             shippingFee: 48600,
             status: 'processing',
@@ -122,7 +126,11 @@ export default function PayPalMethod() {
         try {
             const checkoutOrder = await orderService.createOrder(order);
             console.log('checkoutOrder: ', checkoutOrder);
-            if (checkoutOrder) {
+            if (checkoutOrder.status === 201) {
+                // Order paypal thành công
+                console.log('order paypal thành công');
+                // sau khi order thành công thì phải xóa cart đi
+
                 // order successfully
                 // setShowToast(true);
                 // setToastMessage('Thanks so much for your order by COD!');
@@ -139,14 +147,14 @@ export default function PayPalMethod() {
         }
     };
 
-    const product = {
-        description: 'Checkout at Gimme Stores',
-        // description: handleSubmitOrder(),
-        price: getTotalPrice(),
-        name: 'Ahiahi',
-        quantity: '1',
-        userId: userData._id,
-    };
+    // const product = {
+    //     description: 'Checkout at Gimme Stores',
+    //     // description: handleSubmitOrder(),
+    //     price: getTotalPrice(),
+    //     name: 'Ahiahi',
+    //     quantity: '1',
+    //     userId: userData._id,
+    // };
 
     return (
         <PayPalScriptProvider options={{ 'client-id': process.env.REACT_APP_PAYPAL_CLIENT_ID }}>
