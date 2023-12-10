@@ -58,11 +58,11 @@ export default function PayPalMethod() {
                         value: getTotalPrice(),
                     },
                     owner: userId,
-                    items: cartItems.map((item) => ({
-                        name: item.name,
-                        price: item.price,
-                        quantity: item.quantity,
-                    })),
+                    // items: cartItems.map((item) => ({
+                    //     name: item.name,
+                    //     price: item.price,
+                    //     quantity: item.quantity,
+                    // })),
                     totalAmount: getTotalPrice(),
                     paymentMethod: 'paypal',
                     shippingFee: 48600,
