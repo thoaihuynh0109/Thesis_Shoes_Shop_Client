@@ -12,6 +12,9 @@ import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 
 export default function PayPalMethod() {
     const navigate = useNavigate();
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [typeMessage, setTypeMessage] = useState('');
     const user = JSON.parse(localStorage.getItem('user')) || '';
     // const [userData, setUserData] = useState(user);
     // const [userId, setUserId] = useState(user._id);
@@ -82,9 +85,9 @@ export default function PayPalMethod() {
         console.log('order', order);
         console.log('data', data);
 
-        // setShowToast(true);
-        // setToastMessage('Thanks so much for your order!');
-        // setTypeMessage('success');
+        setShowToast(true);
+        setToastMessage('Thanks so much for your order!');
+        setTypeMessage('success');
         // handleApprove(data.orderID);
     };
     // const onApprove = (data, actions) => {
@@ -116,6 +119,7 @@ export default function PayPalMethod() {
                 name: item.name,
                 price: item.price,
                 quantity: item.quantity,
+                images: item.images,
             })),
             totalAmount: getTotalPriceVND(),
             paymentMethod: 'paypal',
@@ -172,6 +176,12 @@ export default function PayPalMethod() {
                     ></PayPalButtons>
                 </Box>
             </Box>
+            <ToastMessage2
+                message={toastMessage}
+                type={typeMessage}
+                showToast={showToast}
+                setShowToast={setShowToast}
+            />
         </PayPalScriptProvider>
     );
 }
