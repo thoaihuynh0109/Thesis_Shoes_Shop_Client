@@ -33,6 +33,14 @@ const userService = {
             console.error(error);
         }
     },
+    changePassword: async (data) => {
+        try {
+            const respone = await axios.put(apiUrl + `/change-password`, data);
+            return respone;
+        } catch (error) {
+            console.error(error);
+        }
+    },
     getUserById: async (id) => {
         try {
             const respone = await axios.get(apiUrl + `/${id}`);
