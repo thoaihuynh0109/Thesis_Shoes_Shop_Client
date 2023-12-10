@@ -95,6 +95,24 @@ function UserAuthenticated() {
                 </MenuItem>
                 <MenuItem
                     onClick={() => {
+                        navigate('/change-password');
+                        handleCloseUserMenu();
+                    }}
+                >
+                    <ListItemIcon>
+                        <AccountCircle fontSize="large" />
+                    </ListItemIcon>
+                    <Typography
+                        textAlign="center"
+                        fontSize={'14px'}
+                        p={'0 24px 0 0'}
+                        sx={{ ml: 2 }}
+                    >
+                        Change Password
+                    </Typography>
+                </MenuItem>
+                <MenuItem
+                    onClick={() => {
                         navigate('/order-history');
                         handleCloseUserMenu();
                     }}
@@ -112,24 +130,6 @@ function UserAuthenticated() {
                     </Typography>
                 </MenuItem>
 
-                <MenuItem
-                    onClick={() => {
-                        navigate('/change-password');
-                        handleCloseUserMenu();
-                    }}
-                >
-                    <ListItemIcon>
-                        <AccountCircle fontSize="large" />
-                    </ListItemIcon>
-                    <Typography
-                        textAlign="center"
-                        fontSize={'14px'}
-                        p={'0 24px 0 0'}
-                        sx={{ ml: 2 }}
-                    >
-                        Change Password
-                    </Typography>
-                </MenuItem>
                 {user && isAdmin ? (
                     <MenuItem
                         onClick={() => {
