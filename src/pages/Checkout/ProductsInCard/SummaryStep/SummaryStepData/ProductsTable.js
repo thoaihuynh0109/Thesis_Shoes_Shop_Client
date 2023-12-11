@@ -35,6 +35,7 @@ import {
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 import EmptyCard from '~/pages/Checkout/EmptyCard/EmptyCard';
 import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
+
 const CustomizeTableCell = styled(({ fontSize, fontWeight, ...rest }) => <TableCell {...rest} />)(
     ({ fontSize, fontWeight }) => ({
         fontSize: fontSize || '16px',
@@ -104,9 +105,10 @@ function ProductsTable() {
 
     const handleConfirmRemove = () => {
         if (itemToRemove !== null) {
-            removeItem(itemToRemove);
+            removeItem(itemToRemove); // Dispatch your removeProduct action
             setOpenConfirmation(false);
             setItemToRemove(null);
+            setShowToast(true);
             setToastMessage('Item removed successfully');
             setToastType('success');
         }

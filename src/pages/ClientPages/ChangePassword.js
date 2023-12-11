@@ -24,102 +24,33 @@ function ChangePassword() {
     const newPasswordValidation = useValidation({ value: '' });
     const rePasswordValidation = useValidation({ value: '' });
 
-    const handleChangePassword1 = async () => {
-        const isCurrentPasswordValid = currentPasswordValidation.validateRequired();
-        const isNewPasswordValid = newPasswordValidation.validateRequired();
-        const isRePasswordValid = rePasswordValidation.validateRequired();
-
-        if (isCurrentPasswordValid && isNewPasswordValid && isRePasswordValid) {
-            // Check if new password and re-entered password match
-            if (newPassword === rePassword) {
-                try {
-                    // Get the user from the database
-                    const userFromDB = await userService.getUserById(user._id);
-                    console.log('user password: ', userFromDB.password);
-                    const isPasswordMatch = await bcryptjs.compare(
-                        currentPassword,
-                        userFromDB.password,
-                    );
-                    console.log('Compare current passowrd with password in DB: ', isPasswordMatch);
-
-                    if (isPasswordMatch) {
-                        // Passwords match, proceed with changing the password
-                        const response = await userService.changePassword({
-                            id: user._id,
-                            password: currentPassword,
-                            newPassword: newPassword,
-                        });
-
-                        if (response?.status === 200) {
-                            setShowToast(true);
-                            setToastMessage('Change password successfully!');
-                            setTypeMessage('success');
-                        } else {
-                            setShowToast(true);
-                            setToastMessage('Check your password again!');
-                            setTypeMessage('warning');
-                        }
-                    } else {
-                        // Passwords do not match
-                        setShowToast(true);
-                        setToastMessage('Current password is incorrect!');
-                        setTypeMessage('warning');
-                    }
-                } catch (error) {
-                    console.error('Oops something wrong with the system!:', error);
-                    setShowToast(true);
-                    setToastMessage('Oops something wrong with the system!');
-                    setTypeMessage('error');
-                }
-            } else {
-                // New password and re-entered password do not match
-                setShowToast(true);
-                setToastMessage('New password and re-entered password do not match!');
-                setTypeMessage('warning');
-            }
-        } else {
-            setShowToast(true);
-            setToastMessage('Please fill in all fields!');
-            setTypeMessage('warning');
-        }
-    };
-
     const handleChangePassword = async () => {
         const isCurrentPasswordValid = currentPasswordValidation.validateRequired();
         const isNewPasswordValid = newPasswordValidation.validateRequired();
         const isRePasswordValid = rePasswordValidation.validateRequired();
 
         if (isCurrentPasswordValid && isNewPasswordValid && isRePasswordValid) {
-            // Check if new password and re-entered password match
-            const userFromDB = await userService.getUserById(user._id);
-            console.log('user password: ', userFromDB.password);
-            const isPasswordMatch = await bcryptjs.compare(currentPassword, userFromDB.password);
-            console.log('Compare current passowrd with password in DB: ', isPasswordMatch);
-            if (isPasswordMatch) {
-                if (newPassword === rePassword) {
-                    // Passwords match, proceed with changing the password
-                    const response = await userService.changePassword({
-                        id: user._id,
-                        password: currentPassword,
-                        newPassword: newPassword,
-                    });
-
-                    if (response?.status === 200) {
-                        setShowToast(true);
-                        setToastMessage('Change password successfully!');
-                        setTypeMessage('success');
-                    }
-                } else {
-                    // New password and re-entered password do not match
-                    setShowToast(true);
-                    setToastMessage('New password and re-entered password do not match!');
-                    setTypeMessage('warning');
-                }
-            } else {
-                // Passwords do not match
+            const data = {
+                id: user._id,
+                password: currentPassword,
+                newPassword: newPassword,
+            };
+            const respone = await userService.changePassword(data);
+            if (respone?.status === 200) {
                 setShowToast(true);
-                setToastMessage('Current password is incorrect!');
+                setToastMessage('Change password successfully!');
+                setTypeMessage('success');
+                setCurrentPassword('');
+                setNewPassword('');
+                setRePassword('');
+            } else {
+                setShowToast(true);
+                setToastMessage('Check your password again!');
                 setTypeMessage('warning');
+                // alert('Mật khẩu không chính xác! Vui lòng nhập lại!');
+                setCurrentPassword('');
+                setNewPassword('');
+                setRePassword('');
             }
         } else {
             setShowToast(true);
@@ -127,6 +58,51 @@ function ChangePassword() {
             setTypeMessage('warning');
         }
     };
+
+    // check password detail for each fields
+    // const handleChangePassword = async () => {
+    //     const isCurrentPasswordValid = currentPasswordValidation.validateRequired();
+    //     const isNewPasswordValid = newPasswordValidation.validateRequired();
+    //     const isRePasswordValid = rePasswordValidation.validateRequired();
+
+    //     if (isCurrentPasswordValid && isNewPasswordValid && isRePasswordValid) {
+    //         // Check if new password and re-entered password match
+    //         const userFromDB = await userService.getUserById(user._id);
+    //         console.log('user password: ', userFromDB.password);
+    //         const isPasswordMatch = await bcryptjs.compare(currentPassword, userFromDB.password);
+    //         console.log('Compare current passowrd with password in DB: ', isPasswordMatch);
+    //         if (isPasswordMatch) {
+    //             if (newPassword === rePassword) {
+    //                 // Passwords match, proceed with changing the password
+    //                 const response = await userService.changePassword({
+    //                     id: user._id,
+    //                     password: currentPassword,
+    //                     newPassword: newPassword,
+    //                 });
+
+    //                 if (response?.status === 200) {
+    //                     setShowToast(true);
+    //                     setToastMessage('Change password successfully!');
+    //                     setTypeMessage('success');
+    //                 }
+    //             } else {
+    //                 // New password and re-entered password do not match
+    //                 setShowToast(true);
+    //                 setToastMessage('New password and re-entered password do not match!');
+    //                 setTypeMessage('warning');
+    //             }
+    //         } else {
+    //             // Passwords do not match
+    //             setShowToast(true);
+    //             setToastMessage('Current password is incorrect!');
+    //             setTypeMessage('warning');
+    //         }
+    //     } else {
+    //         setShowToast(true);
+    //         setToastMessage('Please fill in all fields!');
+    //         setTypeMessage('warning');
+    //     }
+    // };
 
     return (
         <Box sx={{ minHeight: '550px' }}>

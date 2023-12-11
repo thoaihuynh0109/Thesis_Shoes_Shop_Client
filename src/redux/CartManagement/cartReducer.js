@@ -76,11 +76,18 @@ export const cartReducer = (state = initialState, action) => {
             }
             return state;
 
+        // case REMOVE_PRODUCT:
+        //     const { productId: removeProductId } = action.payload;
+        //     const updatedCartItems = state.cartItems.filter((item) => item._id !== removeProductId);
+
+        //     return {
+        //         ...state,
+        //         cartItems: updatedCartItems,
+        //     };
+
         case REMOVE_PRODUCT:
             const { productId: removeProductId } = action.payload;
-            const updatedCartItems = state.cartItems.filter(
-                (item) => item.productId !== removeProductId,
-            );
+            const updatedCartItems = state.cartItems.filter((item) => item._id !== removeProductId);
 
             return {
                 ...state,
