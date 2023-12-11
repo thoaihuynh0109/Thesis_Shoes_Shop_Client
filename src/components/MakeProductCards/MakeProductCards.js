@@ -231,6 +231,7 @@ export function MakeProductsCard({
                                         countInStock,
                                     })
                                 }
+                                disabled={isLoadingAddToCart}
                             >
                                 {isLoadingAddToCart ? (
                                     <>
@@ -262,6 +263,7 @@ export function MakeProductsCard({
 
                                 mb: '2px',
                             }}
+                            disabled={isLoadingWishList}
                         >
                             {isLoadingWishList ? (
                                 <CircularProgress size={20} />

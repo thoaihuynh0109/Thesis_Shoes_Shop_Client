@@ -98,7 +98,8 @@ export function LoadMoreProduct({
             <Grid container spacing={2}>
                 {data.length > 0 &&
                     data.map((product, index) => (
-                        <Grid item key={product._id} xs={12} sm={6} md={3}>
+                        // <Grid item key={product._id} xs={12} sm={6} md={3}>
+                        <Grid item key={product._id} xs={12} sm={6} md={3} lg={3} xl={2}>
                             <MakeProductsCard
                                 key={product._id}
                                 _id={product._id}
@@ -136,14 +137,16 @@ export function LoadMoreProduct({
 
     return (
         <Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <Box sx={{ display: 'flex' }}>
+                {/* , flexDirection: 'column' */}
+                <Box sx={{ display: 'flex' }}>
+                    {/* , flexDirection: 'column'  */}
                     <Box
                         style={{
                             display: 'flex',
                             flexWrap: 'wrap',
                             minHeight: '500px',
-                            marginLeft: '64px',
+                            // marginLeft: '64px',
                         }}
                     >
                         {renderProductCards()}

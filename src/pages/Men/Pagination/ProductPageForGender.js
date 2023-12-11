@@ -10,24 +10,15 @@ import FilterBrandPriceByAccordion from '../FilterProductForGender';
 
 export default function ProductPageForGender({ selectedGender }) {
     const {
-        products,
-        searchVal,
         storeValue,
         getValue,
-        currentImages,
         filteredProducts,
         hasProducts,
         brandFilteredProducts,
-        page,
-        PER_PAGE,
-        count,
         _DATA,
         sorting,
         selectedPriceRange,
         selectedBrands,
-        setSearchVal,
-        handleChange,
-        handleSearchClickPagination,
         handleBrandFilter,
         handlePriceFilter,
         handleSortChange,
@@ -67,7 +58,8 @@ export default function ProductPageForGender({ selectedGender }) {
             </Box>
             <Box>
                 {hasProducts ? (
-                    <Box sx={{ ml: '100px', mr: '163px' }}>
+                    // <Box sx={{ ml: '100px', mr: '163px' }}>
+                    <Box sx={{ ml: '140px', mr: '143px' }}>
                         <LoadMoreProduct
                             getValue={getValue}
                             _DATA={_DATA}
