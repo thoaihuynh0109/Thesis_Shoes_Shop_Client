@@ -7,7 +7,9 @@ import {
 } from '../actionsContant';
 
 const initialState = {
-    cartItems: [],
+    cartItems: localStorage.getItem('cartItems')
+        ? JSON.parse(localStorage.getItem('cartItems'))
+        : [],
 };
 
 export const findProductIndex = (cartItems, productId) => {
@@ -29,6 +31,7 @@ export const cartReducer = (state = initialState, action) => {
                         ? { ...item, quantity: item.quantity + 1 }
                         : item,
                 );
+                localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
 
                 return {
                     ...state,
@@ -36,9 +39,11 @@ export const cartReducer = (state = initialState, action) => {
                 };
             } else {
                 // If the product is not in the cart, add it with quantity 1
+                const newCartItems = [...state.cartItems, { ...action.payload }];
+                localStorage.setItem('cartItems', JSON.stringify(newCartItems));
                 return {
                     ...state,
-                    cartItems: [...state.cartItems, { ...action.payload }],
+                    cartItems: newCartItems,
                 };
             }
 
@@ -48,13 +53,16 @@ export const cartReducer = (state = initialState, action) => {
 
             if (decExistingIndex !== -1) {
                 // Product exists in the cart
+                const updatedCartItems = state.cartItems.map((item, index) =>
+                    index === decExistingIndex
+                        ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 1 }
+                        : item,
+                );
+
+                localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
                 return {
                     ...state,
-                    cartItems: state.cartItems.map((item, index) =>
-                        index === decExistingIndex
-                            ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 1 }
-                            : item,
-                    ),
+                    cartItems: updatedCartItems,
                 };
             }
             return state;
@@ -65,13 +73,16 @@ export const cartReducer = (state = initialState, action) => {
 
             if (incExistingIndex !== -1) {
                 // Product exists in the cart, increment quantity
+                const updatedCartItems = state.cartItems.map((item, index) =>
+                    index === incExistingIndex
+                        ? { ...item, quantity: item.quantity + incAmount }
+                        : item,
+                );
+
+                localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
                 return {
                     ...state,
-                    cartItems: state.cartItems.map((item, index) =>
-                        index === incExistingIndex
-                            ? { ...item, quantity: item.quantity + incAmount }
-                            : item,
-                    ),
+                    cartItems: updatedCartItems,
                 };
             }
             return state;
@@ -88,6 +99,9 @@ export const cartReducer = (state = initialState, action) => {
         case REMOVE_PRODUCT:
             const { productId: removeProductId } = action.payload;
             const updatedCartItems = state.cartItems.filter((item) => item._id !== removeProductId);
+
+            localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+
 
             return {
                 ...state,

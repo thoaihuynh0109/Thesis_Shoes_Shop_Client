@@ -36,6 +36,7 @@ const userService = {
     changePassword: async (data) => {
         try {
             const respone = await axios.put(apiUrl + `/change-password`, data);
+            console.log('change password:', respone);
             return respone;
         } catch (error) {
             console.error(error);
