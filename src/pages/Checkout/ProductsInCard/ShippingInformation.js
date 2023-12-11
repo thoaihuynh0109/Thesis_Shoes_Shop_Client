@@ -168,12 +168,13 @@ function ShippingInformation() {
                 items: cartItems.map((item) => {
                     return {
                         images: item.images,
-
+                        size: item.size,
                         name: item.name,
                         price: item.price,
                         quantity: item.quantity,
                     };
                 }),
+
                 /* Số tiền đơn hàng */
                 totalAmount: getTotalPrice(),
                 paymentMethod: selectedPaymentMethod,
@@ -186,7 +187,7 @@ function ShippingInformation() {
 
             // console.log('Order Free: ', order.totalAmount);
 
-            console.log('Order: ', order);
+            console.log('Order just payment: ', order);
 
             try {
                 const checkoutOrder = await orderService.createOrder(order);
@@ -198,9 +199,10 @@ function ShippingInformation() {
                     setToastMessage('Thanks so much for your order by COD!');
                     setTypeMessage('success');
                     // after 2,5s clicking order button will redirect to '/' Home
-                    setTimeout(() => {
-                        navigate('/');
-                    }, 2500);
+                    // setTimeout(() => {
+                    //     navigate('/');
+                    // }, 2500);
+
                     // Check if the selected payment method is Cash On Delivery
                     if (selectedPaymentMethod === 'cod') {
                         try {
