@@ -103,6 +103,7 @@ export default function PayPalMethod() {
                 name: item.name,
                 price: item.price,
                 quantity: item.quantity,
+                size: item.size,
                 images: item.images,
             })),
             totalAmount: getTotalPriceVND(),
@@ -111,7 +112,7 @@ export default function PayPalMethod() {
             status: 'processing',
         };
 
-        console.log('information of order: ', order);
+        console.log('information of order by PAYPAL: ', order);
         try {
             const checkoutOrder = await orderService.createOrder(order);
             console.log('checkoutOrder: ', checkoutOrder);
