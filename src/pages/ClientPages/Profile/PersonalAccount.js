@@ -192,8 +192,8 @@ function PersonalAccount() {
 
     return (
         <Container sx={{ minHeight: '800px', alignItems: 'center', justifyContent: 'center' }}>
-            <Typography variant="h4" sx={{ mt: 2, mb: 1 }}>
-                Thông tin cá nhân
+            <Typography variant="h4" sx={{ mt: 4, mb: 1 }}>
+                Personal Account
             </Typography>
             {/* input field */}
 
@@ -401,7 +401,8 @@ function PersonalAccount() {
                         pl: 4,
                         pr: 4,
                     }}
-                    onClick={goBack}
+                    // navigate to Home Page
+                    onClick={() => navigate('/')}
                 >
                     Cancel
                 </CustomizeButtonPersonalAccount>

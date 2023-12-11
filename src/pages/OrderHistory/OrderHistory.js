@@ -27,7 +27,7 @@ const OrderHistory = () => {
                     mb: 4,
                 }}
             >
-                lịch sử mua hàng
+                Order History
             </CustomTypography>
             <OrderDetail />
         </Container>
