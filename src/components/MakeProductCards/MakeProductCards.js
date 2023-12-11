@@ -120,6 +120,7 @@ export function MakeProductsCard({
         dispatch(storeProductDetails({ _id, images, name, price }));
         // Navigate to the product detail page
         navigate(`/product-details/${_id}`);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     // mouse enter and leave event handlers
@@ -134,6 +135,7 @@ export function MakeProductsCard({
     // handle navigating to the wishlist page
     const handleNavigateToWishlist = () => {
         navigate('/my-wishlist');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     return (

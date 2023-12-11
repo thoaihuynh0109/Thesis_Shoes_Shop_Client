@@ -406,6 +406,7 @@ export default function TestProductPagination() {
     const handleChange = (e, p) => {
         setPage(p);
         _DATA.jump(p);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const navigate = useNavigate();

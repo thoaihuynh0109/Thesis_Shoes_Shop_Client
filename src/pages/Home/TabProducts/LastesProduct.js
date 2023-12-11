@@ -26,6 +26,7 @@ function LastesProduct() {
 
     const handleNavigateToShop = () => {
         navigate('/shop');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     return (

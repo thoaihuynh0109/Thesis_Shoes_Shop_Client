@@ -81,16 +81,17 @@ function MakeUIForMenAndWomenPage({ forWomen }) {
                 <CustomTypography sx={{ fontWeight: 'bold', fontSize: '20px', mt: 4, mb: 2 }}>
                     Newest
                 </CustomTypography>
-                <DirectionStack />
+                <DirectionStack forWomen={forWomen} />
             </Box>
         </Box>
     );
 }
 
-const featuredData = [
+const featuredDataForMen = [
     {
         desc1: 'Run Your Run',
         desc2: 'Find Your Next Running Shoes',
+
         img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1700316528/Gimme-shoes-images/Men-Shop-Page/running-shoes-not.jpg',
     },
     {
@@ -102,6 +103,25 @@ const featuredData = [
         desc1: 'Look Good. Feel Good. Run Better.',
         desc2: 'Search Shoes You Like',
         img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1700297693/Gimme-shoes-images/Men-Shop-Page/shoes-run-banner_plzi3f.jpg',
+    },
+];
+
+const featuredDataForWomen = [
+    {
+        desc1: 'Run Your Run',
+        desc2: 'Find Your Next Running Shoes',
+
+        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1702272502/Gimme-shoes-images/Men-Shop-Page/women-1_vo2nhl.jpg',
+    },
+    {
+        desc1: 'Look Good. Feel Good. Run Better.',
+        desc2: 'Find Styles Shoes You Like',
+        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1702272501/Gimme-shoes-images/Men-Shop-Page/women-2_mwlo47.webp',
+    },
+    {
+        desc1: 'Look Good. Feel Good. Run Better.',
+        desc2: 'Search Shoes You Like',
+        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1702272501/Gimme-shoes-images/Men-Shop-Page/women-3_mcxty9.jpg',
     },
 ];
 
@@ -118,12 +138,20 @@ const CustomTypographyGenderPage = styled(Typography)(({ fontSize, fontWeight, c
 }));
 
 // use to show image and description for some activities
-export function DirectionStack() {
+export function DirectionStack({ forWomen }) {
+    const featuredData = forWomen ? featuredDataForWomen : featuredDataForMen;
     return (
         <Box>
-            <Stack direction="row" spacing={2}>
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'space-around',
+                    ml: '16px',
+                    alignItems: 'center',
+                }}
+            >
                 {featuredData.map((item, index) => (
-                    <Box style={{ position: 'relative' }}>
+                    <Box sx={{ mr: '16px', position: 'relative' }}>
                         <CustomTypographyGenderPage sx={{ fontWeight: 'bold', fontSize: '16px' }}>
                             {item.desc1}
                         </CustomTypographyGenderPage>
@@ -136,12 +164,12 @@ export function DirectionStack() {
                             src={item.img}
                             alt={'Adidas'}
                             height="500px"
-                            width="450px"
+                            width="415px"
                             style={{ borderRadius: '10px', objectFit: 'fill' }}
                         />
                     </Box>
                 ))}
-            </Stack>
+            </Box>
         </Box>
     );
 }
