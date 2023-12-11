@@ -7,12 +7,12 @@ const cx = classNames.bind(styles);
 const logoBranch = [
     {
         id: 1,
-        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698743364/Gimme-shoes-images/Logo/nike-logo.jpg',
+        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1702201033/Gimme-shoes-images/Logo/Nike-mobile-removebg-preview_p1ab0u.png',
         title: 'Nike',
     },
     {
         id: 2,
-        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1698743738/Gimme-shoes-images/Logo/adidas-logo.jpg',
+        img: 'https://res.cloudinary.com/dd4gcajeh/image/upload/v1702201116/Gimme-shoes-images/Logo/adidas-logo-removebg-preview_t6nrdg.png',
         title: 'Adidas',
     },
     {
@@ -42,19 +42,15 @@ const logoBranch = [
     },
 ];
 export function InfiniteSliderTrack() {
+    const combinedLogos = [...logoBranch, ...logoBranch]; // Duplicate logos to create an infinite loop
     return (
-        <Box className={cx('slider')}>
+        <Box className={cx('slider')} sx={{ mb: 1 }}>
             <Box className={cx('slider-track')}>
-                <Box className={cx('slide')}>
-                    {logoBranch.map((logo) => (
-                        <img
-                            src={logo.img}
-                            key={logo.id}
-                            alt={logo.title}
-                            // style={((width = '50px'), (height = '50px'))}
-                        />
-                    ))}
-                </Box>
+                {combinedLogos.map((logo) => (
+                    <Box className={cx('slide')} key={logo.id}>
+                        <img src={logo.img} alt={logo.title} />
+                    </Box>
+                ))}
             </Box>
         </Box>
     );

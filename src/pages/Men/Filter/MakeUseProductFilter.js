@@ -59,13 +59,13 @@ const UseProductFilter = () => {
                 selectedPriceRange.length === 0 ||
                 selectedPriceRange.some((range) => {
                     switch (range) {
-                        case 'Dưới 1,000,000đ':
+                        case 'Under 1,000,000đ':
                             return priceNumber < 1000000;
                         case '1,000,000đ - 2,000,000đ':
                             return priceNumber >= 1000000 && priceNumber <= 2000000;
                         case '2,000,000đ - 3,000,000đ':
                             return priceNumber >= 2000000 && priceNumber <= 3000000;
-                        case 'Trên 3,000,000đ':
+                        case 'Above 3,000,000đ':
                             return priceNumber > 3000000;
                         default:
                             return false;

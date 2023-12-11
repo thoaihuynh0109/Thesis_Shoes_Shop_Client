@@ -63,7 +63,11 @@ function LastesProduct() {
                 showToast={showToast}
                 setShowToast={setShowToast}
             />
-            <CustomizeButton variant="contained" onClick={handleNavigateToShop}>
+            <CustomizeButton
+                variant="contained"
+                onClick={handleNavigateToShop}
+                sx={{ mt: 0, mb: 6 }}
+            >
                 More Items
             </CustomizeButton>
         </Box>

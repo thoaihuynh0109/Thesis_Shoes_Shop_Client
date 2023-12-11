@@ -16,7 +16,7 @@ const cx = classNames.bind(styles);
 const CustomizeButton = styled(Button)({
     marginRight: 4,
     marginLeft: 4,
-    fontSize: '16px',
+    fontSize: '14px',
     color: 'inherit',
     position: 'relative',
     // make divider

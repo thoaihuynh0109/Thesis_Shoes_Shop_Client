@@ -3,49 +3,45 @@
     margin: auto;
     position: relative;
     width: 90%;
-    display: grid;
     overflow: hidden;
-    place-items: center;
-    // margin-bottom: 600px;
 }
 
 .slider-track {
     display: flex;
-    width: calc(250px * 18);
     animation: scroll 35s linear infinite;
 }
 
-.slider-track:hover {
-    animation-play-state: paused;
-}
-
 @keyframes scroll {
-    0% {
+    0%,
+    100% {
         transform: translateX(0);
     }
-    100% {
-        transform: translateX(calc(-250px * 18));
+    50% {
+        transform: translateX(calc(-250px * 18 / 2));
     }
 }
 
 .slide {
-    height: 200px;
+    height: 250px;
     width: 250px;
     display: flex;
     align-items: center;
     padding: 15px;
-    perspective: 100px;
 }
 
 .slide img {
+    border-radius: 10px;
+    background-color: #d5cdcd;
+    padding: 8px;
     width: 200px;
-    height: 200px;
+    height: 150px;
     margin: 0 24px;
     transition: transform 1s;
 }
 
 .slide img:hover {
-    transform: translateY(20px);
+    transform: translateY(-20px);
+    z-index: 999;
 }
 
 .slider::before,

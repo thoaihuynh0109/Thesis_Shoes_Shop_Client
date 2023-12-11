@@ -70,6 +70,7 @@ function ProductInformation({ product }) {
 
         // Check if the product is already in the cart
         const existingProduct = cartItems.find((item) => item._id === product._id);
+        console.log('Product Information added to cart: ', productToAdd);
 
         // Simulate a delay of 2 seconds before showing the toast
         setTimeout(() => {
@@ -159,12 +160,12 @@ function ProductInformation({ product }) {
                 )} */}
             </Box>
             {/*  make size */}
-            {/* <CustomTypography sx={{ fontWeight: 'bold', mt: 2, mb: '4px' }}>
+            <CustomTypography sx={{ fontWeight: 'bold', mt: 2, mb: '4px' }}>
                 Select Size
             </CustomTypography>
             <Box sx={{ maxWidth: '300px' }}>
                 <MakeProductSize />
-            </Box> */}
+            </Box>
 
             {/* add to add to cart */}
             <Box sx={{ mt: 3, mb: 2, mx: 4, minWidth: 40, width: '50%' }}>

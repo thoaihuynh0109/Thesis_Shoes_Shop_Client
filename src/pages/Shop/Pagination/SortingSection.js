@@ -29,7 +29,7 @@ export default function SortingSection({ sorting, handleSortChange }) {
                         fontSize: '14px',
                     }}
                 >
-                    Sắp Xếp
+                    Sorting
                 </InputLabel>
                 <Select
                     labelId="demo-simple-select-label"

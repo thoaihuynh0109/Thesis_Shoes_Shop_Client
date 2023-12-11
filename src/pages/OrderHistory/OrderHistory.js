@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Order from './Order';
+
 import { Container } from '@mui/material';
 import ProductsTable from '../Checkout/ProductsInCard/SummaryStep/SummaryStepData/ProductsTable';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
@@ -17,7 +17,7 @@ const OrderHistory = () => {
     ]);
 
     return (
-        <Container>
+        <Container sx={{ minHeight: '40vh' }}>
             <CustomTypography
                 sx={{
                     textTransform: 'capitalize',

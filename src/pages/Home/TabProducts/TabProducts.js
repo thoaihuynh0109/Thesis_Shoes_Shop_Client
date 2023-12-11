@@ -31,19 +31,18 @@ export default function ToastTabProducts() {
                     <TabList onChange={handleChange} aria-label="Products">
                         <CustomTab label="Lastest" value="1" />
                         <CustomTab label="Best Seller" value="2" />
-                        <CustomTab label="Featured" value="3" />
+                        {/* <CustomTab label="Featured" value="3" /> */}
                     </TabList>
                 </Box>
                 <CustomTabPanel value="1">
-                    {/* <RecipeReviewCard/> */}
                     <LastesProduct />
                 </CustomTabPanel>
                 <CustomTabPanel value="2">
                     <BestSeller />
                 </CustomTabPanel>
-                <CustomTabPanel value="3">
+                {/* <CustomTabPanel value="3">
                     <Featured />
-                </CustomTabPanel>
+                </CustomTabPanel> */}
             </TabContext>
         </Box>
     );

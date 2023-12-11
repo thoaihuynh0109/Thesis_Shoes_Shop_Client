@@ -21,3 +21,9 @@ export const STORE_PRODUCT_DETAILS = 'STORE_PRODUCT_DETAILS';
 // Search Product
 export const SET_SEARCH_TERM = 'SET_SEARCH_TERM';
 export const SET_MATCHING_PRODUCTS = 'SET_MATCHING_PRODUCTS';
+
+// for filter products by Prices
+export const UNDER_ONE_M_VND = 'Under 1,000,000đ';
+export const ONE_TO_TWO_M_VND = '1,000,000đ - 2,000,000đ';
+export const TWO_TO_THREE_M_VND = '2,000,000đ - 3,000,000đ';
+export const ABOVE_THREE_M_VND = 'Above 3,000,000đ';

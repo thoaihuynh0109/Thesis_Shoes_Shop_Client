@@ -28,6 +28,7 @@ const breadcrumbData = [
     },
     { path: '/product-details', name: 'Product Details' },
     { path: '/signin', name: 'Đăng nhập' },
+    { path: '/change-password', name: 'Change Password' },
     { path: '/order-history', name: 'Lịch sử mua hàng' },
     { path: '/update-address', name: 'Địa chỉ mua hàng' },
     { path: '/add-new-address', name: 'Thêm địa chỉ mua hàng' },

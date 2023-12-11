@@ -53,6 +53,7 @@ import PageNotFound from '~/pages/NotFound/PageNotFound';
 
 function DefaultLayout({ children }) {
     const location = useLocation();
+    
     const is404Page = location.pathname === '/404';
 
     return (

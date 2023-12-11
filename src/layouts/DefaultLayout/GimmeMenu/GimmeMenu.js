@@ -62,7 +62,12 @@ function GimmeMenu() {
             <DividerDesign />
             <Box
                 className={cx('gimme_mainnav')}
-                sx={{ display: 'flex', alignItems: 'center', mb: 1 }}
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    mb: 1,
+                    justifyContent: 'space-between',
+                }}
             >
                 <Stack direction="row" spacing={8} className={cx('menu-list-item')}>
                     <Link

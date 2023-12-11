@@ -12,9 +12,11 @@ import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 
 export default function PayPalMethod() {
     const navigate = useNavigate();
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [typeMessage, setTypeMessage] = useState('');
     const user = JSON.parse(localStorage.getItem('user')) || '';
-    // const [userData, setUserData] = useState(user);
-    // const [userId, setUserId] = useState(user._id);
+
     const cartItems = useSelector((state) => state.cart.cartItems);
 
     const tax = 2;
@@ -48,7 +50,7 @@ export default function PayPalMethod() {
 
     // get user data from local storage
     // Fetch user data from local storage
-    // const [orderID, setOrderID] = useState(false);
+
     // creates a paypal order
     const createOrder = (data, actions) => {
         console.log(user);
@@ -59,12 +61,9 @@ export default function PayPalMethod() {
                         currency_code: 'USD',
                         value: getTotalPrice(),
                     },
+
                     owner: user._id,
-                    // items: cartItems.map((item) => ({
-                    //     name: item.name,
-                    //     price: item.price,
-                    //     quantity: item.quantity,
-                    // })),
+
                     totalAmount: getTotalPrice(),
                     paymentMethod: 'paypal',
                     shippingFee: 48600,
@@ -81,17 +80,11 @@ export default function PayPalMethod() {
         console.log('order', order);
         console.log('data', data);
 
-        // setShowToast(true);
-        // setToastMessage('Thanks so much for your order!');
-        // setTypeMessage('success');
+        setShowToast(true);
+        setToastMessage('Thanks so much for your order!');
+        setTypeMessage('success');
         // handleApprove(data.orderID);
     };
-    // const onApprove = (data, actions) => {
-    //     return actions.order.capture().then(function (details) {
-    //         // Handle the logic after the order is successfully captured
-    //         handleSubmitOrder();
-    //     });
-    // };
 
     //capture likely error
     const onError = (data, actions) => {
@@ -99,12 +92,6 @@ export default function PayPalMethod() {
         // Handle the error, display an error message, etc.
     };
 
-    // useEffect(() => {
-    //     if (success) {
-    //         alert('Payment successful!!');
-    //         console.log('Order successful . Your order id is--', orderID);
-    //     }
-    // }, [success]);
     // tiến hành thanh toán
     const handleSubmitOrder = async () => {
         // Check if a payment method is selected
@@ -115,6 +102,7 @@ export default function PayPalMethod() {
                 name: item.name,
                 price: item.price,
                 quantity: item.quantity,
+                images: item.images,
             })),
             totalAmount: getTotalPriceVND(),
             paymentMethod: 'paypal',
@@ -131,10 +119,6 @@ export default function PayPalMethod() {
                 console.log('order paypal thành công');
                 // sau khi order thành công thì phải xóa cart đi
 
-                // order successfully
-                // setShowToast(true);
-                // setToastMessage('Thanks so much for your order by COD!');
-                // setTypeMessage('success');
                 // after 2,5s clicking order button will redirect to '/' Home
                 setTimeout(() => {
                     navigate('/');
@@ -146,15 +130,6 @@ export default function PayPalMethod() {
             // Xử lý lỗi, hiển thị thông báo lỗi, v.v.
         }
     };
-
-    // const product = {
-    //     description: 'Checkout at Gimme Stores',
-    //     // description: handleSubmitOrder(),
-    //     price: getTotalPrice(),
-    //     name: 'Ahiahi',
-    //     quantity: '1',
-    //     userId: userData._id,
-    // };
 
     return (
         <PayPalScriptProvider options={{ 'client-id': process.env.REACT_APP_PAYPAL_CLIENT_ID }}>
@@ -171,6 +146,12 @@ export default function PayPalMethod() {
                     ></PayPalButtons>
                 </Box>
             </Box>
+            <ToastMessage2
+                message={toastMessage}
+                type={typeMessage}
+                showToast={showToast}
+                setShowToast={setShowToast}
+            />
         </PayPalScriptProvider>
     );
 }

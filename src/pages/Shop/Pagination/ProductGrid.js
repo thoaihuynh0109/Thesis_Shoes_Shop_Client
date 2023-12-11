@@ -45,31 +45,6 @@ export default function ProductGrid({
         }
     };
 
-    // const sortProducts2 = (data) => {
-    //     switch (sorting) {
-    //         case 'az':
-    //             return data.sort((a, b) => a.name.localeCompare(b.name));
-    //         case 'za':
-    //             return data.sort((a, b) => b.name.localeCompare(a.name));
-    //         case 'asc':
-    //             return data.sort(
-    //                 (a, b) =>
-    //                     // parseFloat(a.price.replace(/,/g, '').replace('đ', '')) -
-    //                     // parseFloat(b.price.replace(/,/g, '').replace('đ', '')),
-    //                     parseFloat(a.price) - parseFloat(b.price),
-    //             );
-    //         case 'desc':
-    //             return data.sort(
-    //                 (a, b) =>
-    //                     // parseFloat(b.price.replace(/,/g, '').replace('đ', '')) -
-    //                     // parseFloat(a.price.replace(/,/g, '').replace('đ', '')),
-    //                     parseFloat(b.price) - parseFloat(a.price),
-    //             );
-    //         default:
-    //             return data;
-    //     }
-    // };
-
     // render Product with searching
     const renderProductCards = () => {
         let data;
