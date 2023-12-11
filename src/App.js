@@ -1,11 +1,12 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useState } from 'react';
 import { adminRoutes, privateRoutes, publicRoutes } from './routes';
 import DefaultLayout from './layouts/DefaultLayout/DefaultLayout';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import PageNotFound from './pages/NotFound/PageNotFound';
 
 function App() {
-    const user = JSON.parse(localStorage.getItem('user')) || '';
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || '');
     const isAdmin = user?.isAdmin;
     return (
         <PayPalScriptProvider options={{ 'client-id': process.env.REACT_APP_PAYPAL_CLIENT_ID }}>

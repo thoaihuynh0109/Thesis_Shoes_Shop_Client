@@ -20,8 +20,13 @@ function ChangePassword() {
             newPassword: newPassword,
         };
         const respone = await userService.changePassword(data);
-        if (respone.status === 200) {
+        if (respone?.status === 200) {
             alert('Đổi pass thành công !');
+            setCurrentPassword('');
+            setNewPassword('');
+            setRePassword('');
+        } else {
+            alert('Mật khẩu không chính xác! Vui lòng nhập lại!');
             setCurrentPassword('');
             setNewPassword('');
             setRePassword('');
