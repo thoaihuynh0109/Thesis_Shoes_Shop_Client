@@ -18,7 +18,6 @@ function DetailsPage() {
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
 
-    
     // previous item
     const handleGoToPrevImage = () => {
         const firstImageIndex = currentImages[0];
@@ -70,14 +69,14 @@ function DetailsPage() {
             </Box>
 
             {/* scroll image */}
-            <Box sx={{ display: 'flex', overflow: 'scroll', mt: 4 }}>
+            {/* <Box sx={{ display: 'flex', overflow: 'scroll', mt: 4 }}>
                 {listAllProducts.map((imageIndex) => (
                     <MakeProductsCard
                         _id={imageIndex._id}
                         key={imageIndex._id}
                         images={imageIndex.images}
                         name={imageIndex.name}
-                        price={imageIndex.price}
+                        price={imageIndex.price.toLocaleString()}
                         rating={imageIndex.rating}
                         label={imageIndex.priceSale}
                         minWidthCard={'280px'}
@@ -89,7 +88,7 @@ function DetailsPage() {
                         setToastMessage={setToastMessage}
                     />
                 ))}
-            </Box>
+            </Box> */}
             <ToastMessage2
                 // message="Product added to cart!"
                 message={toastMessage}

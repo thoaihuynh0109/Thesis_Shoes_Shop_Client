@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography, Grid } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { FavoriteSharp } from '@mui/icons-material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
@@ -19,58 +19,69 @@ function ProductInformation({ product }) {
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
 
-    // useEffect(() => {
-    //     const fetchProductDetails = () => {
-    //         // Check if product details are already stored in localStorage
-    //         const storedProductDetails = localStorage.getItem('productDetails');
+    const [sizeSelected, setSizeSelected] = useState('');
 
-    //         if (storedProductDetails) {
-    //             // Parse the stored details
-    //             const parsedStoredDetails = JSON.parse(storedProductDetails);
-
-    //             // If the current product is different, remove the previous details
-    //             if (parsedStoredDetails._id !== productDetail._id) {
-    //                 localStorage.removeItem('productDetails');
-    //             } else {
-    //                 // If the current product is the same as the previous one, dispatch details
-    //                 dispatch(setProductDetails(parsedStoredDetails));
-    //                 return;
-    //             }
-    //         }
-
-    //         // Fetch the product details and store in localStorage
-
-    //         const productDetails = {
-    //             ...productDetail,
-    //             _id: productDetail.productId,
-    //             name: productDetail.name,
-    //             price: productDetail.price,
-    //         };
-
-    //         // Dispatch the action to update the product details in the Redux store
-    //         dispatch(setProductDetails(productDetails));
-
-    //         // Store the details in localStorage
-    //         localStorage.setItem('productDetails', JSON.stringify(productDetails));
-    //     };
-
-    //     fetchProductDetails();
-    // }, [dispatch, productDetail._id]);
+    const handleOptionClick = (size) => {
+        setSizeSelected(size);
+    };
+    // console.log('Product size is selected: ', selectedValue);
 
     // add to cart action
     // add to cart action with product exist in cart
-    const handleAddToCart = (product) => {
+    // const handleAddToCart = (product) => {
+    //     const productToAdd = {
+    //         _id: productDetail._id,
+    //         images: productDetail.images,
+    //         name: productDetail.name,
+    //         price: productDetail.price,
+    //         size: sizeSelected,
+    //         quantity: 1,
+    //     };
+
+    //     // Check if the product is already in the cart
+    //     const existingProduct = cartItems.find((item) => item._id === product._id);
+    //     console.log('Product Information just added to cart: ', productToAdd);
+
+    //     // Simulate a delay of 2 seconds before showing the toast
+    //     setTimeout(() => {
+    //         if (existingProduct) {
+    //             // If the product is already in the cart, update the quantity
+    //             dispatch(incrementQuantity(product._id, 1));
+    //         } else {
+    //             // If the product is not in the cart, add it with quantity 1
+    //             dispatch(addToCart(productToAdd));
+    //         }
+
+    //         // Show the toast message
+    //         setToastMessage('Product added to shopping cart successfully!');
+    //         setShowToast(true);
+
+    //         // Reset toast after 3 seconds
+    //         setTimeout(() => {
+    //             setShowToast(false);
+    //         }, 3000);
+    //     }, 100);
+    // };
+
+    const handleAddToCart = () => {
+        // Ensure that a size is selected before adding to the cart
+        if (!sizeSelected) {
+            // Handle the case where no size is selected (show an error, etc.)
+            console.error('Please select a size before adding to the cart.');
+            return;
+        }
+
         const productToAdd = {
             _id: productDetail._id,
             images: productDetail.images,
             name: productDetail.name,
             price: productDetail.price,
+            size: sizeSelected,
             quantity: 1,
         };
 
         // Check if the product is already in the cart
         const existingProduct = cartItems.find((item) => item._id === product._id);
-        console.log('Product Information added to cart: ', productToAdd);
 
         // Simulate a delay of 2 seconds before showing the toast
         setTimeout(() => {
@@ -85,7 +96,7 @@ function ProductInformation({ product }) {
             // Show the toast message
             setToastMessage('Product added to shopping cart successfully!');
             setShowToast(true);
-
+            console.log('Product information just added to cart: ', productToAdd);
             // Reset toast after 3 seconds
             setTimeout(() => {
                 setShowToast(false);
@@ -99,6 +110,7 @@ function ProductInformation({ product }) {
             images: productDetail.images, // Replace with the actual property name
             name: productDetail.name,
             price: productDetail.price,
+            size: sizeSelected,
             countInStock: productDetail.countInStock, // Replace with the actual property name
         };
 
@@ -132,16 +144,11 @@ function ProductInformation({ product }) {
             key={product._id}
         >
             {/* product name */}
-            {/* <img src={productDetail.image}/> */}
             <CustomTypography sx={{ fontWeight: '600', fontSize: 17, mt: 2 }}>
                 {product.name}
             </CustomTypography>
             {/* for who? */}
 
-            {/* không lấy được gender */}
-            {/* <CustomTypography>{productDetail.gender}'s Shoes</CustomTypography> */}
-
-            {/* <CustomTypography>Men's Shoes</CustomTypography> */}
             {/* original price and sale price */}
             <Box sx={{ display: 'flex', mr: 4, mt: 2 }}>
                 {/* amount is reduced */}
@@ -164,16 +171,59 @@ function ProductInformation({ product }) {
                 Select Size
             </CustomTypography>
             <Box sx={{ maxWidth: '300px' }}>
-                <MakeProductSize />
+                {/* <MakeProductSize data={product.sizes} /> */}
+                <Grid container spacing={2}>
+                    {product.sizes.length > 0 &&
+                        product.sizes.map((size) => (
+                            <Grid item xs={4} key={size}>
+                                <Box>
+                                    <Button
+                                        variant={sizeSelected === size ? 'contained' : 'outlined'}
+                                        onClick={() => handleOptionClick(size)}
+                                        sx={{
+                                            width: '80px',
+                                            height: '40px',
+                                            borderRadius: '4px',
+                                            textTransform: 'none',
+                                            backgroundColor:
+                                                sizeSelected === size ? '#4CAF50' : 'transparent', // Set the background color for the selected button
+                                            border:
+                                                sizeSelected === size
+                                                    ? 'none'
+                                                    : '1px solid #4CAF50', // Remove border for the selected button
+                                        }}
+                                    >
+                                        <Box
+                                            sx={{
+                                                fontSize: '16px',
+                                                color: sizeSelected === size ? '#fff' : '#000',
+                                            }}
+                                        >
+                                            {size}
+                                        </Box>
+                                    </Button>
+                                </Box>
+                            </Grid>
+                        ))}
+                </Grid>
             </Box>
 
             {/* add to add to cart */}
             <Box sx={{ mt: 3, mb: 2, mx: 4, minWidth: 40, width: '50%' }}>
+                {/* <Button
+                    startIcon={<AddShoppingCartIcon />}
+                    variant="outlined"
+                    sx={{ borderRadius: '20px', width: '100%' }}
+                    onClick={handleAddToCart}
+                >
+                    <Typography sx={{ fontSize: '13px', p: '6px 8px' }}>Add to Cart</Typography>
+                </Button> */}
                 <Button
                     startIcon={<AddShoppingCartIcon />}
                     variant="outlined"
                     sx={{ borderRadius: '20px', width: '100%' }}
                     onClick={handleAddToCart}
+                    disabled={!sizeSelected} // Disable the button if no size is selected
                 >
                     <Typography sx={{ fontSize: '13px', p: '6px 8px' }}>Add to Cart</Typography>
                 </Button>
