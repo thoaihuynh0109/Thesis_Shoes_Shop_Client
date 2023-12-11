@@ -24,7 +24,7 @@ function ChangePassword() {
     const newPasswordValidation = useValidation({ value: '' });
     const rePasswordValidation = useValidation({ value: '' });
 
-    const handleChangePassword1 = async () => {
+    const handleChangePassword = async () => {
         const isCurrentPasswordValid = currentPasswordValidation.validateRequired();
         const isNewPasswordValid = newPasswordValidation.validateRequired();
         const isRePasswordValid = rePasswordValidation.validateRequired();
@@ -34,36 +34,35 @@ function ChangePassword() {
             if (newPassword === rePassword) {
                 try {
                     // Get the user from the database
-                    const userFromDB = await userService.getUserById(user._id);
-                    console.log('user password: ', userFromDB.password);
-                    const isPasswordMatch = await bcryptjs.compare(
-                        currentPassword,
-                        userFromDB.password,
-                    );
-                    console.log('Compare current passowrd with password in DB: ', isPasswordMatch);
+                    // const userFromDB = await userService.getUserById(user._id);
+                    // console.log('user password: ', userFromDB.password);
+                    // const isPasswordMatch = await bcryptjs.compare(
+                    //     currentPassword,
+                    //     userFromDB.password,
+                    // );
+                    // console.log('Compare current passowrd with password in DB: ', isPasswordMatch);
 
-                    if (isPasswordMatch) {
-                        // Passwords match, proceed with changing the password
-                        const response = await userService.changePassword({
-                            id: user._id,
-                            password: currentPassword,
-                            newPassword: newPassword,
-                        });
-
-                        if (response?.status === 200) {
-                            setShowToast(true);
-                            setToastMessage('Change password successfully!');
-                            setTypeMessage('success');
-                        } else {
-                            setShowToast(true);
-                            setToastMessage('Check your password again!');
-                            setTypeMessage('warning');
-                        }
+                    // Passwords match, proceed with changing the password
+                    const response = await userService.changePassword({
+                        id: user._id,
+                        password: currentPassword,
+                        newPassword: newPassword,
+                    });
+                    console.log(response);
+                    if (response?.status === 200) {
+                        setShowToast(true);
+                        setToastMessage('Change password successfully!');
+                        setTypeMessage('success');
+                        setCurrentPassword('');
+                        setNewPassword('');
+                        setRePassword('');
                     } else {
-                        // Passwords do not match
                         setShowToast(true);
                         setToastMessage('Current password is incorrect!');
                         setTypeMessage('warning');
+                        // setShowToast(true);
+                        // setToastMessage('Check your password again!');
+                        // setTypeMessage('warning');
                     }
                 } catch (error) {
                     console.error('Oops something wrong with the system!:', error);
@@ -84,25 +83,27 @@ function ChangePassword() {
         }
     };
 
-    const handleChangePassword = async () => {
-        const data = {
-            id: user._id,
-            password: currentPassword,
-            newPassword: newPassword,
-        };
-        const respone = await userService.changePassword(data);
-        if (respone?.status === 200) {
-            alert('Đổi pass thành công !');
-            setCurrentPassword('');
-            setNewPassword('');
-            setRePassword('');
-        } else {
-            alert('Mật khẩu không chính xác! Vui lòng nhập lại!');
-            setCurrentPassword('');
-            setNewPassword('');
-            setRePassword('');
-        }
-    };
+    // const handleChangePassword = async () => {
+    //     const data = {
+    //         id: user._id,
+    //         password: currentPassword,
+    //         newPassword: newPassword,
+    //     };
+    //     const respone = await userService.changePassword(data);
+    //     console.log(respone);
+    //     if (respone?.status === 200) {
+    //         setShowToast(true);
+    //         setToastMessage('Change password successfully!');
+    //         setTypeMessage('success');
+    //         setCurrentPassword('');
+    //         setNewPassword('');
+    //         setRePassword('');
+    //     } else {
+    //         setShowToast(true);
+    //         setToastMessage('Current password is incorrect!');
+    //         setTypeMessage('warning');
+    //     }
+    // };
 
     return (
         <Box sx={{ minHeight: '550px' }}>
