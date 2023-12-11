@@ -169,12 +169,13 @@ function ShippingInformation() {
                 items: cartItems.map((item) => {
                     return {
                         images: item.images,
-
+                        size: item.size,
                         name: item.name,
                         price: item.price,
                         quantity: item.quantity,
                     };
                 }),
+
                 /* Số tiền đơn hàng */
                 totalAmount: getTotalPrice(),
                 paymentMethod: selectedPaymentMethod,
@@ -187,7 +188,7 @@ function ShippingInformation() {
 
             // console.log('Order Free: ', order.totalAmount);
 
-            console.log('Order: ', order);
+            console.log('Order just payment: ', order);
 
             try {
                 const checkoutOrder = await orderService.createOrder(order);

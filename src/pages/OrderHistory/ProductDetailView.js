@@ -96,9 +96,14 @@ export default function ProductDetailView({ handleClose, id }) {
                                                                     x{item.quantity}
                                                                 </CustomTypography>
                                                             </Box>
-                                                            <CustomTypography>
-                                                                {item.price}
-                                                            </CustomTypography>
+                                                            <Box>
+                                                                <CustomTypography>
+                                                                    size: {item.size}
+                                                                </CustomTypography>
+                                                                <CustomTypography>
+                                                                    {item.price}
+                                                                </CustomTypography>
+                                                            </Box>
 
                                                             {/* "{item.name}" "{item.price}" "
                                                             {item.quantity}" */}

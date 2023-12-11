@@ -458,7 +458,7 @@ export default function MakeProductDetailDescription() {
                         }}
                     >
                         <Box sx={{ minHeight: '600px', minWidth: '540px' }}>
-                            <CustomTypography>{productDetail.gender}</CustomTypography>
+                            {/* <CustomTypography>{productDetail.gender}</CustomTypography> */}
 
                             <img
                                 // src={`${selectedImage}`}

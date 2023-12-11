@@ -159,13 +159,15 @@ function CartTooltip() {
                             key={item.id}
                             sx={{
                                 display: 'flex',
-                                alignItems: 'center',
+                                alignItems: 'flex-start',
                                 justifyContent: 'space-between',
                                 mb: 1,
                             }}
                         >
-                            <Avatar src={item.image} alt={item.title} sx={{ mr: 1 }} />
-                            <CustomTypography sx={{ ml: 2, mr: 2 }}>{item.title}</CustomTypography>
+                            <Avatar src={item.images} alt={item.name} sx={{ mr: 1 }} />
+                            <CustomTypography sx={{ ml: 2, mr: 2, textAlign: 'start' }}>
+                                {item.name}
+                            </CustomTypography>
                             <CustomTypography>{item.price}</CustomTypography>
                         </Box>
                     ))

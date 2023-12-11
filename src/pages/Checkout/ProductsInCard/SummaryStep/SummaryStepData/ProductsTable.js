@@ -113,13 +113,14 @@ function ProductsTable() {
         }
 
         // default value
-        return '0';
+        // return '0';
     };
 
     const calculateCartTotal = () => {
         let total = 0;
         for (const item of cartItems) {
             const itemPrice = parseFloat(item.price.replace(/,/g, ''));
+            // const itemPrice = parseFloat(item.price);
             const itemQuantity = parseFloat(item.quantity);
 
             if (!isNaN(itemPrice) && !isNaN(itemQuantity)) {
@@ -136,6 +137,7 @@ function ProductsTable() {
     const roundedTotalWithTax = Math.ceil(totalWithTax / 1000) * 1000;
     // Format totalWithTax without decimal places and commas
     // 2,929,010 --> 2,930,000
+    // const formattedTotalWithTax = roundedTotalWithTax;
     const formattedTotalWithTax = roundedTotalWithTax.toLocaleString();
 
     // check if there is no products in cart before adding item
@@ -198,10 +200,12 @@ function ProductsTable() {
                                         {item.name}
                                     </CustomizeTableCell>
                                     <CustomizeTableCell align="left">
-                                        {item.countInStock}
+                                        {item.size}
+                                        {/* {item.countInStock} */}
                                         {/* {item.countInstock ? 'In Stock' : 'Sold Out'} */}
                                     </CustomizeTableCell>
                                     <CustomizeTableCell align="left">
+                                        {/* {item.price.toLocaleString()} */}
                                         {item.price.toLocaleString()}
                                     </CustomizeTableCell>
                                     <CustomizeTableCell align="left">
@@ -264,6 +268,7 @@ function ProductsTable() {
 
             <TotalToCheckout
                 tax={2}
+                // subtotal={calculateCartTotal()}
                 subtotal={calculateCartTotal().toLocaleString()}
                 totalWithTax={formattedTotalWithTax}
             />
