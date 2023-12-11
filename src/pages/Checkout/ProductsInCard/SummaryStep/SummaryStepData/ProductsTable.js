@@ -47,38 +47,14 @@ function ProductsTable() {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart.cartItems);
     const navigate = useNavigate();
-    const cartItemsCount = () => {
-        return cartItems.reduce((total, item) => total + item.quantity, 0);
-    };
-
-    // save product data to local storage
-    // Fetch cart items from localStorage on component mount
-    // useEffect(() => {
-    //     const storedCartItems = localStorage.getItem('cartItems');
-
-    //     if (storedCartItems) {
-    //         const parsedCartItems = JSON.parse(storedCartItems);
-    //         // Dispatch action to update cart items in the Redux store
-    //         parsedCartItems.forEach((item) => dispatch(addToCart(item)));
-    //     }
-    // }, [dispatch]);
-
-    // // Update localStorage whenever cart items change
-    // useEffect(() => {
-    //     localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    // }, [cartItems]);
 
     // Ask user wanna remove Item?
     const [openConfirmation, setOpenConfirmation] = useState(false);
     const [itemToRemove, setItemToRemove] = useState(null);
-    // this is toast message for pop up message to confirm
-    const [toastMessage, setToastMessage] = useState('');
-    const [toastType, setToastType] = useState('');
-
     // show toast message
     const [showToast, setShowToast] = useState(false);
-    const [toastMessage2, setToastMessage2] = useState('');
-    const [typeMessage2, setTypeMessage2] = useState('');
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastType, setToastType] = useState('');
 
     // decrease product quantity
     const decrement = (productId) => {
@@ -105,10 +81,10 @@ function ProductsTable() {
 
     const handleConfirmRemove = () => {
         if (itemToRemove !== null) {
+            setShowToast(true);
             removeItem(itemToRemove); // Dispatch your removeProduct action
             setOpenConfirmation(false);
             setItemToRemove(null);
-            setShowToast(true);
             setToastMessage('Item removed successfully');
             setToastType('success');
         }
@@ -175,8 +151,8 @@ function ProductsTable() {
         // If the user is not logged in, navigate to the sign-in page
         if (!checkUserLoggedIn) {
             setShowToast(true);
-            setToastMessage2('Must Login Before Checkout');
-            setTypeMessage2('warning');
+            setToastMessage('Must Login Before Checkout');
+            setToastType('warning');
             setTimeout(() => {
                 setShowToast(true);
                 navigate('/signin');
@@ -300,13 +276,13 @@ function ProductsTable() {
                 >
                     Checkout
                 </Button>
-                <ToastMessage2
-                    message={toastMessage2}
-                    type={typeMessage2}
-                    showToast={showToast}
-                    setShowToast={setShowToast}
-                />
             </Box>
+            <ToastMessage2
+                message={toastMessage}
+                type={toastType}
+                showToast={showToast}
+                setShowToast={setShowToast}
+            />
         </Box>
     );
 }
