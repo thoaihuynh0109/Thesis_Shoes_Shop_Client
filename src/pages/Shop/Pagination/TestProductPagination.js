@@ -498,7 +498,7 @@ export default function TestProductPagination() {
     };
 
     return (
-        <Box sx={{ flexGrow: 1, minHeight: '500vh', mt: 4 }}>
+        <Box sx={{ flexGrow: 1, minHeight: '100vh', mt: 4 }}>
             <Grid container spacing={2}>
                 <Grid item xs={3}>
                     {/* this box for category, filter products */}

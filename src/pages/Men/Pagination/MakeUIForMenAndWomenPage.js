@@ -10,7 +10,7 @@ function MakeUIForMenAndWomenPage({ forWomen }) {
     return (
         <Box>
             <CustomTypography sx={{ fontWeight: 'bold', fontSize: '20px', mb: 2 }}>
-                Nổi Bật
+                Outstanding
             </CustomTypography>
             <Box
                 sx={{
@@ -79,7 +79,7 @@ function MakeUIForMenAndWomenPage({ forWomen }) {
             </Box>
             <Box>
                 <CustomTypography sx={{ fontWeight: 'bold', fontSize: '20px', mt: 4, mb: 2 }}>
-                    Mới Nhất
+                    Newest
                 </CustomTypography>
                 <DirectionStack />
             </Box>

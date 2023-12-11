@@ -42,6 +42,7 @@ const userService = {
             console.error(error);
         }
     },
+
     getUserById: async (id) => {
         try {
             const respone = await axios.get(apiUrl + `/${id}`);

@@ -82,10 +82,33 @@ function UserAuthenticated() {
                     }}
                 >
                     <ListItemIcon>
-                        <Person />
+                        <Person fontSize="large" />
                     </ListItemIcon>
-                    <Typography textAlign="center" fontSize={'14px'} p={'0 24px 0 0'}>
+                    <Typography
+                        textAlign="center"
+                        fontSize={'14px'}
+                        p={'0 24px 0 0'}
+                        sx={{ ml: 2 }}
+                    >
                         Profile
+                    </Typography>
+                </MenuItem>
+                <MenuItem
+                    onClick={() => {
+                        navigate('/change-password');
+                        handleCloseUserMenu();
+                    }}
+                >
+                    <ListItemIcon>
+                        <AccountCircle fontSize="large" />
+                    </ListItemIcon>
+                    <Typography
+                        textAlign="center"
+                        fontSize={'14px'}
+                        p={'0 24px 0 0'}
+                        sx={{ ml: 2 }}
+                    >
+                        Change Password
                     </Typography>
                 </MenuItem>
                 <MenuItem
@@ -95,26 +118,18 @@ function UserAuthenticated() {
                     }}
                 >
                     <ListItemIcon>
-                        <HistoryIcon />
+                        <HistoryIcon fontSize="large" />
                     </ListItemIcon>
-                    <Typography textAlign="center" fontSize={'14px'} p={'0 24px 0 0'}>
+                    <Typography
+                        textAlign="center"
+                        fontSize={'14px'}
+                        p={'0 24px 0 0'}
+                        sx={{ ml: 2 }}
+                    >
                         Order
                     </Typography>
                 </MenuItem>
 
-                <MenuItem
-                    onClick={() => {
-                        navigate('/change-password');
-                        handleCloseUserMenu();
-                    }}
-                >
-                    <ListItemIcon>
-                        <AccountCircle />
-                    </ListItemIcon>
-                    <Typography textAlign="center" fontSize={'14px'} p={'0 24px 0 0'}>
-                        Change Password
-                    </Typography>
-                </MenuItem>
                 {user && isAdmin ? (
                     <MenuItem
                         onClick={() => {
@@ -123,9 +138,14 @@ function UserAuthenticated() {
                         }}
                     >
                         <ListItemIcon>
-                            <Dashboard />
+                            <Dashboard fontSize="large" />
                         </ListItemIcon>
-                        <Typography textAlign="center" fontSize={'14px'} p={'0 24px 0 0'}>
+                        <Typography
+                            textAlign="center"
+                            fontSize={'14px'}
+                            p={'0 24px 0 0'}
+                            sx={{ ml: 2 }}
+                        >
                             Dashboard
                         </Typography>
                     </MenuItem>
@@ -134,9 +154,14 @@ function UserAuthenticated() {
                 )}
                 <MenuItem onClick={handleLogout}>
                     <ListItemIcon>
-                        <ExitToApp />
+                        <ExitToApp fontSize="large" />
                     </ListItemIcon>
-                    <Typography textAlign="center" fontSize={'14px'} p={'0 24px 0 0'}>
+                    <Typography
+                        textAlign="center"
+                        fontSize={'14px'}
+                        p={'0 24px 0 0'}
+                        sx={{ ml: 2 }}
+                    >
                         Logout
                     </Typography>
                 </MenuItem>

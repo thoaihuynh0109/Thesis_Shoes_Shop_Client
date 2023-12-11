@@ -130,33 +130,23 @@ function RegisterAccount() {
                 Create An Account
             </CustomTypography>
             <Box sx={{ border: '1px solid #757575', p: 4 }}>
+                <CustomTypography variant="h5" sx={{ fontSize: '17px' }}>
+                    Your Personal Information
+                </CustomTypography>
+                <Divider sx={{ style }} />
+
                 <Box
                     sx={{
-                        mt: 1,
+                        // mt: 1,
                         display: 'flex',
                         justifyContent: 'space-around',
                         alignItems: 'center',
-                        // border: '1px solid #757575',
-                        // p: 2,
                     }}
                 >
                     <Box>
-                        <CustomTypography variant="h5" sx={{ fontSize: '17px' }}>
-                            Your Personal Information
-                        </CustomTypography>
-                        <Divider sx={{ style }} />
-                        <CustomTypography
-                            variant="body1"
-                            textAlign={'left'}
-                            gutterBottom
-                            sx={{ mt: 2 }}
-                        >
-                            First Name
-                        </CustomTypography>
-
                         <CustomizeTextField
                             value={firstName}
-                            wd={400}
+                            wd={600}
                             onChange={(e) => {
                                 setFirstName(e.target.value);
                                 firstNameValidation.setState({
@@ -165,6 +155,7 @@ function RegisterAccount() {
                                 });
                             }}
                             label="First Name"
+                            placeholder="Fill your first name..."
                             variant="outlined"
                             onBlur={firstNameValidation.validateRequiredWithoutDigits}
                             error={firstNameValidation.state.message !== ''}
@@ -173,16 +164,10 @@ function RegisterAccount() {
                                 '& .MuiFormHelperText-root': {
                                     fontSize: '12px', // Adjust the font size as needed
                                 },
+                                mb: 2,
                             }}
                         />
-                        <CustomTypography
-                            variant="body1"
-                            textAlign={'left'}
-                            sx={{ mt: 2 }}
-                            gutterBottom
-                        >
-                            Last Name
-                        </CustomTypography>
+
                         <CustomizeTextField
                             value={lastName}
                             onChange={(e) => {
@@ -193,6 +178,7 @@ function RegisterAccount() {
                                 });
                             }}
                             label="Last Name"
+                            placeholder="Fill your last name..."
                             variant="outlined"
                             onBlur={lastNameValidation.validateRequiredWithoutDigits}
                             error={lastNameValidation.state.message !== ''}
@@ -201,16 +187,10 @@ function RegisterAccount() {
                                 '& .MuiFormHelperText-root': {
                                     fontSize: '12px', // Adjust the font size as needed
                                 },
+                                mb: 2,
                             }}
                         />
-                        <CustomTypography
-                            variant="body1"
-                            textAlign={'left'}
-                            sx={{ mt: 2 }}
-                            gutterBottom
-                        >
-                            Phone Number
-                        </CustomTypography>
+
                         <CustomizeTextField
                             value={phoneNumber}
                             onChange={(e) => {
@@ -220,6 +200,7 @@ function RegisterAccount() {
                                     value: e.target.value,
                                 });
                             }}
+                            placeholder="Fill your phone number..."
                             label="Phone Number"
                             variant="outlined"
                             onBlur={phoneNumberValidation.validatePhone}
@@ -229,46 +210,10 @@ function RegisterAccount() {
                                 '& .MuiFormHelperText-root': {
                                     fontSize: '12px', // Adjust the font size as needed
                                 },
+                                mb: 2,
                             }}
                         />
 
-                        {/* <CustomTypography
-                            variant="body1"
-                            textAlign={'left'}
-                            sx={{ mt: 2 }}
-                            gutterBottom
-                        >
-                            Address
-                        </CustomTypography> */}
-                        {/* <CustomizeTextField
-                            value={address}
-                            onChange={(e) => {
-                                setAddress(e.target.value);
-                                addressValivation.setState({
-                                    ...addressValivation.state,
-                                    value: e.target.value,
-                                });
-                            }}
-                            label="Address"
-                            variant="outlined"
-                            onBlur={addressValivation.validateRequired}
-                            error={addressValivation.state.message !== ''}
-                            helperText={addressValivation.state.message}
-                            sx={{
-                                '& .MuiFormHelperText-root': {
-                                    fontSize: '12px', // Adjust the font size as needed
-                                },
-                            }}
-                        /> */}
-
-                        <CustomTypography
-                            variant="body1"
-                            textAlign={'left'}
-                            sx={{ mt: 2 }}
-                            gutterBottom
-                        >
-                            Email
-                        </CustomTypography>
                         <CustomizeTextField
                             value={email}
                             onChange={(e) => {
@@ -280,6 +225,7 @@ function RegisterAccount() {
                             }}
                             label="Email"
                             variant="outlined"
+                            placeholder="Fill your address..."
                             onBlur={emailValidation.validateEmail}
                             error={emailValidation.state.message !== ''}
                             helperText={emailValidation.state.message}
@@ -287,17 +233,10 @@ function RegisterAccount() {
                                 '& .MuiFormHelperText-root': {
                                     fontSize: '12px', // Adjust the font size as needed
                                 },
+                                mb: 2,
                             }}
                         />
 
-                        <CustomTypography
-                            variant="body1"
-                            textAlign={'left'}
-                            sx={{ mt: 2 }}
-                            gutterBottom
-                        >
-                            Password
-                        </CustomTypography>
                         <CustomizeTextField
                             value={password}
                             onChange={(e) => {
@@ -308,6 +247,8 @@ function RegisterAccount() {
                                 });
                             }}
                             label="Password"
+                            type="password"
+                            placeholder="Fill your password..."
                             variant="outlined"
                             onBlur={passwordValidation.validatePassword}
                             error={passwordValidation.state.message !== ''}
@@ -316,16 +257,10 @@ function RegisterAccount() {
                                 '& .MuiFormHelperText-root': {
                                     fontSize: '12px', // Adjust the font size as needed
                                 },
+                                mb: 2,
                             }}
                         />
-                        <CustomTypography
-                            variant="body1"
-                            textAlign={'left'}
-                            sx={{ mt: 2 }}
-                            gutterBottom
-                        >
-                            Confirm Password
-                        </CustomTypography>
+
                         <CustomizeTextField
                             value={rePassword}
                             onChange={(e) => {
@@ -336,14 +271,22 @@ function RegisterAccount() {
                                 });
                             }}
                             label="Confirm Password"
+                            type="password"
+                            placeholder="Retype password..."
                             variant="outlined"
-                            onBlur={rePasswordValidation.validateConfirmPassword}
+                            onBlur={() => {
+                                // Check if both password and rePassword have values before validation
+                                if (password !== '' && rePassword !== '') {
+                                    rePasswordValidation.validateConfirmPassword(password);
+                                }
+                            }}
                             error={rePasswordValidation.state.message !== ''}
                             helperText={rePasswordValidation.state.message}
                             sx={{
                                 '& .MuiFormHelperText-root': {
                                     fontSize: '12px', // Adjust the font size as needed
                                 },
+                                mb: 2,
                             }}
                         />
                     </Box>

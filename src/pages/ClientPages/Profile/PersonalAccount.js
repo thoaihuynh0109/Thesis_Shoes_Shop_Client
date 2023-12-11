@@ -6,6 +6,7 @@ import useValidation from '~/components/UseValidation/useValidation';
 import userService from '~/services/userServices';
 import { useNavigate } from 'react-router-dom';
 import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
+import { goBack } from '~/components/GoBack/GoBack';
 export const CustomizeButtonPersonalAccount = styled(Button)(({ pl = 15, pr = 15 }) => ({
     marginTop: 4,
     paddingLeft: pl || 0,
@@ -33,7 +34,6 @@ function PersonalAccount() {
     const [toastMessage, setToastMessage] = useState('');
     const [typeMessage, setTypeMessage] = useState('');
 
-    
     // Fetch user data from local storage
     useEffect(() => {
         const storedUserData = JSON.parse(localStorage.getItem('user')) || [];
@@ -401,9 +401,7 @@ function PersonalAccount() {
                         pl: 4,
                         pr: 4,
                     }}
-                    onClick={() => {
-                        navigate('/');
-                    }}
+                    onClick={goBack}
                 >
                     Cancel
                 </CustomizeButtonPersonalAccount>

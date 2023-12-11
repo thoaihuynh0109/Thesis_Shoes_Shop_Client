@@ -163,6 +163,7 @@ function ShippingInformation() {
 
             const order = {
                 owner: userData._id,
+
                 // Cần phải có thông tin về sản phẩm trong đơn hàng
                 items: cartItems.map((item) => {
                     return {
@@ -180,6 +181,8 @@ function ShippingInformation() {
                 shippingFee: 48600,
                 status: 'processing',
             };
+
+            console.log('Owner id:', order.owner);
 
             // console.log('Order Free: ', order.totalAmount);
 
