@@ -32,3 +32,7 @@ export const removeProduct = (productId) => ({
     type: REMOVE_PRODUCT,
     payload: { productId },
 });
+
+export const removeCart = () => ({
+    type: 'REMOVE_CART',
+});
