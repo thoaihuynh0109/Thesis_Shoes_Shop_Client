@@ -12,8 +12,7 @@ import LocationCityIcon from '@mui/icons-material/LocationCity';
 import MailIcon from '@mui/icons-material/Mail';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import styles from '../Footer/Footer.module.scss';
-import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
-
+import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 const CustomizeFooterHeading = styled(Typography)(({}) => ({
@@ -27,6 +26,7 @@ const CustomizeFooterText = styled(Typography)(({}) => ({
 }));
 
 function Footer() {
+    const navigate = useNavigate();
     return (
         <Box
             className={cx('footer', 'fixed-footer')}
@@ -54,6 +54,11 @@ function Footer() {
                         <Button
                             variant="contained"
                             sx={{ fontSize: '14px', padding: '2px 28px', ml: 2, mr: 2, mt: 2 }}
+                            onClick={() => {
+                                navigate('/contact');
+                                // Scroll to the top of the location
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }}
                         >
                             FIND STORES
                         </Button>
