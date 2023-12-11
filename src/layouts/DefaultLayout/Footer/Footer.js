@@ -68,7 +68,9 @@ function Footer() {
                             {/* Products */}
                             <Grid item xs={12} sm={6} md={4}>
                                 <Box>
-                                    <CustomizeFooterHeading>Products</CustomizeFooterHeading>
+                                    <CustomizeFooterHeading sx={{ mb: 1 }}>
+                                        Products
+                                    </CustomizeFooterHeading>
                                     <CustomizeFooterText sx={{ mb: 1 }}>
                                         Men Shoes
                                     </CustomizeFooterText>
@@ -83,7 +85,9 @@ function Footer() {
                             {/* About Us */}
                             <Grid item xs={12} sm={6} md={4}>
                                 <Box>
-                                    <CustomizeFooterHeading>About Us</CustomizeFooterHeading>
+                                    <CustomizeFooterHeading sx={{ mb: 1 }}>
+                                        About Us
+                                    </CustomizeFooterHeading>
                                     <CustomizeFooterText sx={{ mb: 1 }}>
                                         We are students from HCMUTE.
                                     </CustomizeFooterText>
@@ -98,7 +102,9 @@ function Footer() {
                             {/* Contact */}
                             <Grid item xs={12} sm={6} md={4}>
                                 <Box>
-                                    <CustomizeFooterHeading>Contact</CustomizeFooterHeading>
+                                    <CustomizeFooterHeading sx={{ mb: 1 }}>
+                                        Contact
+                                    </CustomizeFooterHeading>
                                     <Stack direction="row" sx={{ mb: 2 }}>
                                         <Avatar sx={{ mr: 2 }} className={cx('footer-icon')}>
                                             <LocationCityIcon fontSize="large" />
@@ -128,7 +134,9 @@ function Footer() {
                             {/* Follow */}
                             <Grid item xs={12} sm={6} md={3}>
                                 <Box>
-                                    <CustomizeFooterHeading>Follow</CustomizeFooterHeading>
+                                    <CustomizeFooterHeading sx={{ mb: 1 }}>
+                                        Follow
+                                    </CustomizeFooterHeading>
                                     <Box sx={{ display: 'flex' }}>
                                         <Link
                                             href="https://www.facebook.com/"
