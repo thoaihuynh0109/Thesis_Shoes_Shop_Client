@@ -250,8 +250,8 @@ function ShippingInformation() {
 
     return (
         <Box sx={{ minHeight: '800px', alignItems: 'center', justifyContent: 'center' }}>
-            <Typography variant="h4" sx={{ mt: 2, mb: 1, fontWeight: 'bold' }}>
-                Cập Nhật Địa Chỉ Nhận Hàng
+            <Typography variant="h4" sx={{ mt: 3, mb: 4, fontWeight: 'bold' }}>
+                Shipping Address
             </Typography>
 
             {/* input field */}

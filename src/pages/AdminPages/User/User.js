@@ -28,6 +28,7 @@ function User() {
     const [showPopup, setShowPopup] = React.useState(false);
     const [message, setMessage] = React.useState('');
     const [typeMessage, setTypeMessage] = React.useState('');
+    const [searchTerm, setSearchTerm] = React.useState(''); // New state for search term
     const navigate = useNavigate();
     const fetchUsers = async () => {
         const listUser = await userService.getAllUser();
@@ -36,6 +37,11 @@ function User() {
     React.useEffect(() => {
         fetchUsers();
     }, []);
+
+    React.useEffect(() => {
+        // Fetch users when the search term changes
+        fetchUsers();
+    }, [searchTerm]);
 
     const handleDelete = (id) => {
         setSelectedUserId(id);
@@ -70,6 +76,15 @@ function User() {
         navigate(`${id}/edit`);
     };
 
+    //  filter users based on search term: last name --> full name, email, and phone number
+    const filteredUsers = users.filter(
+        (user) =>
+            (user.lastName && user.lastName.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (user.firstName && user.firstName.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (user.email && user.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (user.phone && user.phone.toLowerCase().includes(searchTerm.toLowerCase())),
+    );
+
     return (
         <Box>
             <Box
@@ -82,7 +97,7 @@ function User() {
             >
                 <Box>
                     <Typography sx={{ fontSize: '3rem', fontWeight: 600 }}>Customers</Typography>
-                    <Stack spacing={1} direction="row">
+                    {/* <Stack spacing={1} direction="row">
                         <Button sx={{ fontSize: '1.4rem', textTransform: 'none' }}>
                             <UploadIcon sx={{ mr: 1 }} />
                             Import
@@ -91,7 +106,7 @@ function User() {
                             <DownloadIcon sx={{ mr: 1 }} />
                             Export
                         </Button>
-                    </Stack>
+                    </Stack> */}
                 </Box>
                 <Button
                     variant="contained"
@@ -105,8 +120,22 @@ function User() {
             </Box>
             {/* Search */}
             <Paper sx={{ mt: 4, mb: 4, padding: 1.5, borderRadius: 4 }}>
+                {/* <TextField
+                    placeholder="Search Customer"
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <SearchIcon sx={{ height: 25, width: 25 }} />
+                            </InputAdornment>
+                        ),
+                        style: { fontSize: '1.4rem', color: '#000', borderRadius: 8 },
+                    }}
+                /> */}
+
                 <TextField
                     placeholder="Search Customer"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
@@ -132,8 +161,8 @@ function User() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {users.length > 0 &&
-                            users.map((row, index) => (
+                        {filteredUsers.length > 0 &&
+                            filteredUsers.map((row, index) => (
                                 <TableRow
                                     key={row._id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
