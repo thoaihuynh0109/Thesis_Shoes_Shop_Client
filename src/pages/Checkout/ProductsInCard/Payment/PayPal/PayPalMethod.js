@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Box, Radio, RadioGroup, FormControlLabel, Button, Typography } from '@mui/material';
 import 'react-credit-cards-2/dist/es/styles-compiled.css';
-
 import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import orderService from '~/services/orderServices';
 // import PayPalCheckoutButton from './PayPalCheckoutButton';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeCart } from '~/redux/CartManagement/cartActions';
 // // Separate UI components for each payment method
 
 export default function PayPalMethod() {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
@@ -116,6 +117,7 @@ export default function PayPalMethod() {
             console.log('checkoutOrder: ', checkoutOrder);
             if (checkoutOrder.status === 201) {
                 // Order paypal thành công
+                dispatch(removeCart());
                 console.log('order paypal thành công');
                 // sau khi order thành công thì phải xóa cart đi
 
