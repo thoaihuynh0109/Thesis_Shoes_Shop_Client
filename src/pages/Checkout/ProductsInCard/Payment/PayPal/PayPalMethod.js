@@ -82,7 +82,7 @@ export default function PayPalMethod() {
         console.log('data', data);
 
         setShowToast(true);
-        setToastMessage('Thanks so much for your order!');
+        setToastMessage('Thanks so much for your order by PayPal!');
         setTypeMessage('success');
         // handleApprove(data.orderID);
     };
