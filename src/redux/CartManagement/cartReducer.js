@@ -97,7 +97,12 @@ export const cartReducer = (state = initialState, action) => {
                 ...state,
                 cartItems: updatedCartItems,
             };
-
+        case 'REMOVE_CART':
+            localStorage.setItem('cartItems', []);
+            return {
+                ...state,
+                cartItems: [],
+            };
         default:
             return state;
     }

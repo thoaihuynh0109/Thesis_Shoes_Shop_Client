@@ -8,12 +8,13 @@ import { CustomizeTextField } from '~/components/CustomizeTextField/CustomizeTex
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
 import orderService from '~/services/orderServices';
-
+import { removeCart } from '~/redux/CartManagement/cartActions';
 import PaymentStep from './Payment/index';
 import ShippingStep from './ShippingStep';
 import { useDispatch, useSelector } from 'react-redux';
 
 function ShippingInformation() {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
     const cartItems = useSelector((state) => state.cart.cartItems);
@@ -195,48 +196,51 @@ function ShippingInformation() {
 
                 if (checkoutOrder) {
                     // order successfully
+                    dispatch(removeCart());
                     setShowToast(true);
                     setToastMessage('Thanks so much for your order by COD!');
                     setTypeMessage('success');
                     // after 2,5s clicking order button will redirect to '/' Home
-                    // setTimeout(() => {
-                    //     navigate('/');
-                    // }, 2500);
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 2500);
 
                     // Check if the selected payment method is Cash On Delivery
-                    if (selectedPaymentMethod === 'cod') {
-                        try {
-                            // Simulate an asynchronous action (e.g., API call)
-                            await new Promise((resolve) => setTimeout(resolve, 2500));
-                            console.log('Order placed successfully for Cash On Delivery');
-                        } catch (error) {
-                            console.error('Error during async action:', error);
-                            // Handle error, show error message, etc.
-                        }
-                    } else if (selectedPaymentMethod === 'paypal') {
-                        const order2 = {
-                            owner: userData._id,
-                            // Cần phải có thông tin về sản phẩm trong đơn hàng
-                            items: cartItems.map((item) => {
-                                return {
-                                    name: item.name,
-                                    price: item.price,
-                                    quantity: item.quantity,
-                                };
-                            }),
-                            /* Số tiền đơn hàng */
-                            totalAmount: getTotalPrice(),
-                            paymentMethod: 'paypal23',
-                            /* Phí vận chuyển */
-                            shippingFee: 48600,
-                            status: 'processing',
-                        };
-                        const checkoutOrder2 = await orderService.createOrder(order2);
-                        // console.log('checkoutOrder: ', checkoutOrder2);
+                    // if (selectedPaymentMethod === 'cod') {
+                    //     try {
+                    //         // Simulate an asynchronous action (e.g., API call)
+                    //         await new Promise((resolve) => setTimeout(resolve, 2500));
+                    //         console.log('Order placed successfully for Cash On Delivery');
+                    //     } catch (error) {
+                    //         console.error('Error during async action:', error);
+                    //         // Handle error, show error message, etc.
+                    //     }
+                    // }
+                    // else if (selectedPaymentMethod === 'paypal') {
+                    //     const order2 = {
+                    //         owner: userData._id,
+                    //         // Cần phải có thông tin về sản phẩm trong đơn hàng
+                    //         items: cartItems.map((item) => {
+                    //             return {
+                    //                 name: item.name,
+                    //                 price: item.price,
+                    //                 quantity: item.quantity,
+                    //             };
+                    //         }),
+                    //         /* Số tiền đơn hàng */
+                    //         totalAmount: getTotalPrice(),
+                    //         paymentMethod: 'paypal23',
+                    //         /* Phí vận chuyển */
+                    //         shippingFee: 48600,
+                    //         status: 'processing',
+                    //     };
+                    //     const checkoutOrder2 = await orderService.createOrder(order2);
+                    //     // console.log('checkoutOrder: ', checkoutOrder2);
+                    //     dispatch(removeCart());
+                    //     // Proceed with the order logic for PayPal
+                    //     console.log('Order placed successfully for PayPal');
+                    // }
 
-                        // Proceed with the order logic for PayPal
-                        console.log('Order placed successfully for PayPal');
-                    }
                     console.log('Order placed successfully');
                 }
             } catch (error) {
