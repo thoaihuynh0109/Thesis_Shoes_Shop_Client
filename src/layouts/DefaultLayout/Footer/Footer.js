@@ -4,37 +4,32 @@ import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
+import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-import { Facebook, Instagram, Start, Twitter } from '@mui/icons-material';
+import { Facebook, Instagram, Twitter } from '@mui/icons-material';
 import { Avatar, Box, styled } from '@mui/material';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import MailIcon from '@mui/icons-material/Mail';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import styles from '../Footer/Footer.module.scss';
+import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
+
 const cx = classNames.bind(styles);
 
-const CustomTypographyTitle = styled(Typography)(({}) => ({
+const CustomizeFooterHeading = styled(Typography)(({}) => ({
+    textTransform: 'uppercase',
     fontWeight: 'bold',
-    fontSize: '20px',
-    display: 'flex',
-    justifyContent: 'flex-start',
-    marginBottom: '8px',
+    fontSize: '22px',
 }));
 
-const CustomTypographyContent = styled(Typography)(({}) => ({
+const CustomizeFooterText = styled(Typography)(({}) => ({
     fontSize: '14px',
-    display: 'flex',
-    color: 'text.secondary',
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
 }));
 
 function Footer() {
     return (
         <Box
-            // component="footer"
-            className={cx(' footer', 'fixed-footer')}
+            className={cx('footer', 'fixed-footer')}
             sx={{
                 backgroundColor: (theme) =>
                     theme.palette.mode === 'light'
@@ -44,237 +39,149 @@ function Footer() {
                 mb: -6,
             }}
         >
-            <Container maxWidth="lg">
-                <Grid container spacing={5}>
-                    {/* Contact Us section */}
-                    <Grid item xs={12} sm={3}>
-                        <CustomTypographyTitle>CONTACT US</CustomTypographyTitle>
+            <Container>
+                <Grid container spacing={4}>
+                    {/* Stores */}
+                    <Grid item xs={12} md={3}>
                         <Box>
-                            <Stack direction="row" sx={{ mb: 2 }}>
-                                <Avatar sx={{ mr: 2 }} className={cx('footer-icon')}>
-                                    <LocationCityIcon fontSize="large" />
-                                </Avatar>
-                                <CustomTypographyContent>Số 1 Võ Văn Ngân</CustomTypographyContent>
-                            </Stack>
-
-                            <Stack direction={'row'} sx={{ mb: 2 }}>
-                                <Avatar sx={{ mr: 2 }} className={cx('footer-icon')}>
-                                    <MailIcon fontSize="large" />
-                                </Avatar>
-                                <CustomTypographyContent>
-                                    gimme.shoes@ute.vn
-                                </CustomTypographyContent>
-                            </Stack>
-
-                            <Stack direction={'row'}>
-                                <Avatar sx={{ mr: 2 }} className={cx('footer-icon')}>
-                                    <SmartphoneIcon fontSize="large" />
-                                </Avatar>
-                                <CustomTypographyContent>+84 234 567 8901</CustomTypographyContent>
-                            </Stack>
+                            <img
+                                src="https://res.cloudinary.com/dd4gcajeh/image/upload/v1702262334/Gimme-shoes-images/Logo/Gimme_cropped_zcl77c.png"
+                                height={'75%'}
+                                width={'75%'}
+                            />
                         </Box>
-                    </Grid>
 
-                    {/* ABOUT US section */}
-                    <Grid item xs={12} sm={3}>
-                        <CustomTypographyTitle>ABOUT US</CustomTypographyTitle>
-                        <CustomTypographyContent mt={2}>
-                            We are student come HCMUTE.
-                        </CustomTypographyContent>
+                        <Button
+                            variant="contained"
+                            sx={{ fontSize: '14px', padding: '2px 28px', ml: 2, mr: 2, mt: 2 }}
+                        >
+                            FIND STORES
+                        </Button>
                     </Grid>
-
-                    {/* ACCOUNT section */}
-                    <Grid item xs={12} sm={3}>
-                        <CustomTypographyTitle>ACCOUNT?</CustomTypographyTitle>
-                        <CustomTypographyContent color="text.secondary" mt={2}>
-                            We are student come HCMUTE.
-                        </CustomTypographyContent>
-                    </Grid>
-
-                    {/* Follow Us section */}
-                    <Grid item xs={12} sm={3}>
-                        <CustomTypographyTitle>FOLLOW US</CustomTypographyTitle>
-                        <Box sx={{ display: 'flex' }}>
-                            <Link
-                                href="https://www.facebook.com/"
-                                sx={{ mr: 2 }}
-                                target="_blank"
-                                color="inherit"
-                            >
-                                <Facebook
-                                    sx={{ cursor: 'pointer', fontSize: 32 }}
-                                    className={cx('footer-follow-icon')}
-                                />
-                            </Link>
-                            <Link
-                                href="https://www.instagram.com/"
-                                color="inherit"
-                                sx={{ pl: 1, pr: 1, mr: 2 }}
-                                target="_blank"
-                            >
-                                <Instagram
-                                    sx={{ cursor: 'pointer', fontSize: 32 }}
-                                    className={cx('footer-follow-icon')}
-                                />
-                            </Link>
-                            <Link href="https://www.twitter.com/" target="_blank" color="inherit">
-                                <Twitter
-                                    sx={{ cursor: 'pointer', fontSize: 32 }}
-                                    className={cx('footer-follow-icon')}
-                                />
-                            </Link>
-                        </Box>
+                    <Grid item xs={12} md={9}>
+                        <Grid container>
+                            {/* Products */}
+                            <Grid item xs={12} sm={6} md={4}>
+                                <Box>
+                                    <CustomizeFooterHeading>Products</CustomizeFooterHeading>
+                                    <CustomizeFooterText sx={{ mb: 1 }}>
+                                        Men Shoes
+                                    </CustomizeFooterText>
+                                    <CustomizeFooterText sx={{ mb: 1 }}>
+                                        Women Shoes
+                                    </CustomizeFooterText>
+                                    <CustomizeFooterText sx={{ mb: 1 }}>
+                                        Children Shoes
+                                    </CustomizeFooterText>
+                                </Box>
+                            </Grid>
+                            {/* About Us */}
+                            <Grid item xs={12} sm={6} md={4}>
+                                <Box>
+                                    <CustomizeFooterHeading>About Us</CustomizeFooterHeading>
+                                    <CustomizeFooterText sx={{ mb: 1 }}>
+                                        We are students from HCMUTE.
+                                    </CustomizeFooterText>
+                                    <CustomizeFooterText sx={{ mb: 1 }}>
+                                        Huynh Quoc Thoai
+                                    </CustomizeFooterText>
+                                    <CustomizeFooterText sx={{ mb: 1 }}>
+                                        Huynh Dang Khoa
+                                    </CustomizeFooterText>
+                                </Box>
+                            </Grid>
+                            {/* Contact */}
+                            <Grid item xs={12} sm={6} md={4}>
+                                <Box>
+                                    <CustomizeFooterHeading>Contact</CustomizeFooterHeading>
+                                    <Stack direction="row" sx={{ mb: 2 }}>
+                                        <Avatar sx={{ mr: 2 }} className={cx('footer-icon')}>
+                                            <LocationCityIcon fontSize="large" />
+                                        </Avatar>
+                                        <CustomizeFooterText sx={{ mt: 1 }}>
+                                            Số 1 Võ Văn Ngân
+                                        </CustomizeFooterText>
+                                    </Stack>
+                                    <Stack direction={'row'} sx={{ mb: 2 }}>
+                                        <Avatar sx={{ mr: 2 }} className={cx('footer-icon')}>
+                                            <MailIcon fontSize="large" />
+                                        </Avatar>
+                                        <CustomizeFooterText sx={{ mt: 1 }}>
+                                            gimme.shoes@ute.vn
+                                        </CustomizeFooterText>
+                                    </Stack>
+                                    <Stack direction={'row'}>
+                                        <Avatar sx={{ mr: 2 }} className={cx('footer-icon')}>
+                                            <SmartphoneIcon fontSize="large" />
+                                        </Avatar>
+                                        <CustomizeFooterText sx={{ mt: 1 }}>
+                                            +84 234 567 8901
+                                        </CustomizeFooterText>
+                                    </Stack>
+                                </Box>
+                            </Grid>
+                            {/* Follow */}
+                            <Grid item xs={12} sm={6} md={3}>
+                                <Box>
+                                    <CustomizeFooterHeading>Follow</CustomizeFooterHeading>
+                                    <Box sx={{ display: 'flex' }}>
+                                        <Link
+                                            href="https://www.facebook.com/"
+                                            sx={{ mr: 2 }}
+                                            target="_blank"
+                                            color="inherit"
+                                        >
+                                            <Facebook
+                                                sx={{ cursor: 'pointer', fontSize: 32 }}
+                                                className={cx('footer-follow-icon')}
+                                            />
+                                        </Link>
+                                        <Link
+                                            href="https://www.instagram.com/"
+                                            color="inherit"
+                                            sx={{ pl: 1, pr: 1, mr: 2 }}
+                                            target="_blank"
+                                        >
+                                            <Instagram
+                                                sx={{ cursor: 'pointer', fontSize: 32 }}
+                                                className={cx('footer-follow-icon')}
+                                            />
+                                        </Link>
+                                        <Link
+                                            href="https://www.twitter.com/"
+                                            target="_blank"
+                                            color="inherit"
+                                        >
+                                            <Twitter
+                                                sx={{ cursor: 'pointer', fontSize: 32 }}
+                                                className={cx('footer-follow-icon')}
+                                            />
+                                        </Link>
+                                    </Box>
+                                </Box>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
-
-                {/* Copyright section */}
-                <Box mt={5}>
-                    <Typography
-                        variant="body2"
-                        fontSize="17px"
-                        color="text.secondary"
-                        align="center"
-                    >
-                        {'Copyright © '}
-                        <Link
-                            color="inherit"
-                            href="https://www.facebook.com/profile.php?id=100016889957630"
-                            target="_blank"
-                        >
-                            Gimme Shoes
-                        </Link>{' '}
-                        {new Date().getFullYear()}
-                        {'.'}
-                    </Typography>
-                </Box>
             </Container>
+
+            {/* Copyright section */}
+            <Box mt={6}>
+                <Typography variant="body2" fontSize="17px" color="text.secondary" align="center">
+                    {'Copyright © '}
+                    <Link
+                        color="inherit"
+                        href="https://www.facebook.com/profile.php?id=100016889957630"
+                        target="_blank"
+                    >
+                        Gimme Shoes
+                    </Link>{' '}
+                    {new Date().getFullYear()}
+                    {'.'}
+                </Typography>
+            </Box>
         </Box>
     );
 }
 
 export default Footer;
-
-// function Footer() {
-//     return (
-//         <Box
-//             className={cx('footer', 'fixed-footer')}
-//             sx={{
-//                 backgroundColor: '#f2f2f2',
-//                 padding: '20px',
-//                 textAlign: 'center',
-//                 position: 'fixed',
-//                 left: 0,
-//                 bottom: 0,
-//                 width: '100%',
-//                 zIndex: 91, // Adjust as needed
-//             }}
-//         >
-//             <Container maxWidth="lg">
-//                 <Grid container spacing={5}>
-//                     {/* Contact Us section */}
-//                     <Grid item xs={12} sm={3}>
-//                         <CustomTypographyTitle>CONTACT US</CustomTypographyTitle>
-//                         <Box>
-//                             <Stack direction="row" sx={{ mb: 2 }}>
-//                                 <Avatar sx={{ mr: 2 }} className={cx('footer-icon')}>
-//                                     <LocationCityIcon fontSize="large" />
-//                                 </Avatar>
-//                                 <CustomTypographyContent>Số 1 Võ Văn Ngân</CustomTypographyContent>
-//                             </Stack>
-
-//                             <Stack direction={'row'} sx={{ mb: 2 }}>
-//                                 <Avatar sx={{ mr: 2 }} className={cx('footer-icon')}>
-//                                     <MailIcon fontSize="large" />
-//                                 </Avatar>
-//                                 <CustomTypographyContent>
-//                                     gimme.shoes@ute.vn
-//                                 </CustomTypographyContent>
-//                             </Stack>
-
-//                             <Stack direction={'row'}>
-//                                 <Avatar sx={{ mr: 2 }} className={cx('footer-icon')}>
-//                                     <SmartphoneIcon fontSize="large" />
-//                                 </Avatar>
-//                                 <CustomTypographyContent>+84 234 567 8901</CustomTypographyContent>
-//                             </Stack>
-//                         </Box>
-//                     </Grid>
-
-//                     {/* ABOUT US section */}
-//                     <Grid item xs={12} sm={3}>
-//                         <CustomTypographyTitle>ABOUT US</CustomTypographyTitle>
-//                         <CustomTypographyContent mt={2}>
-//                             We are student come HCMUTE.
-//                         </CustomTypographyContent>
-//                     </Grid>
-
-//                     {/* ACCOUNT section */}
-//                     <Grid item xs={12} sm={3}>
-//                         <CustomTypographyTitle>ACCOUNT?</CustomTypographyTitle>
-//                         <CustomTypographyContent color="text.secondary" mt={2}>
-//                             We are student come HCMUTE.
-//                         </CustomTypographyContent>
-//                     </Grid>
-
-//                     {/* Follow Us section */}
-//                     <Grid item xs={12} sm={3}>
-//                         <CustomTypographyTitle>FOLLOW US</CustomTypographyTitle>
-//                         <Box sx={{ display: 'flex' }}>
-//                             <Link
-//                                 href="https://www.facebook.com/"
-//                                 sx={{ mr: 2 }}
-//                                 target="_blank"
-//                                 color="inherit"
-//                             >
-//                                 <Facebook
-//                                     sx={{ cursor: 'pointer', fontSize: 32 }}
-//                                     className={cx('footer-follow-icon')}
-//                                 />
-//                             </Link>
-//                             <Link
-//                                 href="https://www.instagram.com/"
-//                                 color="inherit"
-//                                 sx={{ pl: 1, pr: 1, mr: 2 }}
-//                                 target="_blank"
-//                             >
-//                                 <Instagram
-//                                     sx={{ cursor: 'pointer', fontSize: 32 }}
-//                                     className={cx('footer-follow-icon')}
-//                                 />
-//                             </Link>
-//                             <Link href="https://www.twitter.com/" target="_blank" color="inherit">
-//                                 <Twitter
-//                                     sx={{ cursor: 'pointer', fontSize: 32 }}
-//                                     className={cx('footer-follow-icon')}
-//                                 />
-//                             </Link>
-//                         </Box>
-//                     </Grid>
-//                 </Grid>
-
-//                 {/* Copyright section */}
-//                 <Box mt={5}>
-//                     <Typography
-//                         variant="body2"
-//                         fontSize="17px"
-//                         color="text.secondary"
-//                         align="center"
-//                     >
-//                         {'Copyright © '}
-//                         <Link
-//                             color="inherit"
-//                             href="https://www.facebook.com/profile.php?id=100016889957630"
-//                             target="_blank"
-//                         >
-//                             Gimme Shoes
-//                         </Link>{' '}
-//                         {new Date().getFullYear()}
-//                         {'.'}
-//                     </Typography>
-//                 </Box>
-//             </Container>
-//         </Box>
-//     );
-// }
-
-// export default Footer;
