@@ -91,13 +91,6 @@ function NewArrivals() {
         fetchProductDetails();
     }, []);
 
-    const handleBuyNow = () => {
-        if (productDetails) {
-            // Navigate to the product detail page with the product ID
-            navigate(`/product-details/${productDetails._id}`);
-        }
-    };
-
     const handleNavigateToProductDetails = () => {
         const navigateToProdcut = {
             _id: productDetails._id,
@@ -109,6 +102,7 @@ function NewArrivals() {
         dispatch(storeProductDetails(navigateToProdcut));
         // Navigate to the product detail page
         navigate(`/product-details/${productDetails._id}`);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     return (

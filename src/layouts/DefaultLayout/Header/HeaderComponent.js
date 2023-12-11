@@ -62,6 +62,7 @@ function HeaderDesign() {
                         <CustomizeButton
                             component={Link}
                             to="/my-wishlist"
+                            sx={window.scrollTo({ top: 0, behavior: 'smooth' })}
                             startIcon={<FavoriteBorderIcon />}
                         >
                             Wish List
@@ -71,6 +72,7 @@ function HeaderDesign() {
                             component={Link}
                             // to="/checkout"
                             to="/shopping-cart"
+                            sx={window.scrollTo({ top: 0, behavior: 'smooth' })}
                             startIcon={<CheckCircleOutlineIcon />}
                         >
                             Checkout
@@ -81,7 +83,12 @@ function HeaderDesign() {
                                 <UserAuthenticated />
                             </Box>
                         ) : (
-                            <CustomizeButton component={Link} to="/signin" startIcon={<KeyIcon />}>
+                            <CustomizeButton
+                                sx={window.scrollTo({ top: 0, behavior: 'smooth' })}
+                                component={Link}
+                                to="/signin"
+                                startIcon={<KeyIcon />}
+                            >
                                 Sign In
                             </CustomizeButton>
                         )}

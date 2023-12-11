@@ -473,7 +473,7 @@ export default function MakeProductDetailDescription() {
                             />
                         </Box>
 
-                        <IconButton
+                        {/* <IconButton
                             sx={{
                                 position: 'absolute',
                                 bottom: '10px',
@@ -520,7 +520,7 @@ export default function MakeProductDetailDescription() {
                                     }}
                                 />
                             </Avatar>
-                        </IconButton>
+                        </IconButton> */}
                     </Box>
                 </Grid>
                 <Grid item xs={12} md={6}>

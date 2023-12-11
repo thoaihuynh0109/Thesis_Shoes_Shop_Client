@@ -62,7 +62,11 @@ const CarouselImage = () => {
             <Button
                 variant="Outlined"
                 sx={{ mt: -4, fontSize: '16px', color: '#0d6efd' }}
-                onClick={() => navigate('/shop')}
+                onClick={() => {
+                    navigate('/shop');
+                    // Scroll to the top of the location
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
             >
                 Shop Now
             </Button>
