@@ -36,11 +36,6 @@ function User() {
     };
     React.useEffect(() => {
         fetchUsers();
-    }, []);
-
-    React.useEffect(() => {
-        // Fetch users when the search term changes
-        fetchUsers();
     }, [searchTerm]);
 
     const handleDelete = (id) => {
