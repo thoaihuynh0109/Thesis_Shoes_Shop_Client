@@ -1,6 +1,5 @@
 import { Box, Container, TextField, Typography, Grid, styled, Paper, Button } from '@mui/material';
 import React, { useState } from 'react';
-import bcryptjs from 'bcryptjs';
 import { goBack } from '~/components/GoBack/GoBack';
 import { CustomizeButtonPersonalAccount } from './Profile/PersonalAccount';
 import userService from '~/services/userServices';

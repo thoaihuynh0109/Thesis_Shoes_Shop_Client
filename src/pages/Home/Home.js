@@ -11,6 +11,7 @@ import FlashSaleProducts from './FlashSaleProducts/FlashSaleProducts';
 const cx = classNames.bind(styles);
 
 function Home() {
+    console.log(JSON.parse(localStorage.getItem('user')));
     return (
         <Box sx={{ height: '100%', minHeight: '450vh' }}>
             <SlideShowImageShop />
