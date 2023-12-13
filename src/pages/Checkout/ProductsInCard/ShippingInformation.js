@@ -59,6 +59,27 @@ function ShippingInformation() {
 
         // console.log('Price in VND:', totalPriceVND);
         // const totalWithTaxVND = totalPriceVND * (1 + tax / 100);
+        const totalWithTax = Math.ceil((totalPriceVND * (1 + tax / 100)) / 1000) * 1000;
+        // console.log('Price VND with Tax:', totalWithTaxVND.toLocaleString());
+        const totalWithTaxInVND = totalWithTax.toLocaleString();
+        console.log('Price VND with Tax:', totalWithTaxInVND);
+        // Convert totalPriceVND to USD
+        // const totalPriceUSD = (totalWithTax / exchangeRate).toFixed(2);
+        // console.log('Price in USD:', totalPriceUSD);
+        return totalWithTaxInVND;
+    };
+
+    const getTotalPrice2 = () => {
+        // Assuming the current currency is VND and you want to convert it to USD
+        const exchangeRate = 24300; // Replace with your actual exchange rate
+
+        const totalPriceVND = cartItems.reduce((total, item) => {
+            const itemPrice = parseFloat(item.price.replace(/,/g, '')) * item.quantity;
+            return total + itemPrice;
+        }, 48600);
+
+        // console.log('Price in VND:', totalPriceVND);
+        // const totalWithTaxVND = totalPriceVND * (1 + tax / 100);
         const totalWithTaxVND = Math.ceil((totalPriceVND * (1 + tax / 100)) / 1000) * 1000;
         // console.log('Price VND with Tax:', totalWithTaxVND.toLocaleString());
 
@@ -161,7 +182,9 @@ function ShippingInformation() {
         if (selectedPaymentMethod) {
             console.log('Selected Payment Method:', selectedPaymentMethod);
             console.log('Total Price: ', getTotalPrice());
-
+            const shippingFree = 48600;
+            const convertToVNDType = shippingFree.toLocaleString();
+            console.log('Shipping Fee is: ', convertToVNDType);
             const order = {
                 owner: userData._id,
 
@@ -180,7 +203,8 @@ function ShippingInformation() {
                 totalAmount: getTotalPrice(),
                 paymentMethod: selectedPaymentMethod,
                 /* Phí vận chuyển */
-                shippingFee: 48600,
+                shippingFee: convertToVNDType,
+                // shippingFee: 48600,
                 status: 'processing',
             };
 
@@ -204,42 +228,6 @@ function ShippingInformation() {
                     setTimeout(() => {
                         navigate('/');
                     }, 2500);
-
-                    // Check if the selected payment method is Cash On Delivery
-                    // if (selectedPaymentMethod === 'cod') {
-                    //     try {
-                    //         // Simulate an asynchronous action (e.g., API call)
-                    //         await new Promise((resolve) => setTimeout(resolve, 2500));
-                    //         console.log('Order placed successfully for Cash On Delivery');
-                    //     } catch (error) {
-                    //         console.error('Error during async action:', error);
-                    //         // Handle error, show error message, etc.
-                    //     }
-                    // }
-                    // else if (selectedPaymentMethod === 'paypal') {
-                    //     const order2 = {
-                    //         owner: userData._id,
-                    //         // Cần phải có thông tin về sản phẩm trong đơn hàng
-                    //         items: cartItems.map((item) => {
-                    //             return {
-                    //                 name: item.name,
-                    //                 price: item.price,
-                    //                 quantity: item.quantity,
-                    //             };
-                    //         }),
-                    //         /* Số tiền đơn hàng */
-                    //         totalAmount: getTotalPrice(),
-                    //         paymentMethod: 'paypal23',
-                    //         /* Phí vận chuyển */
-                    //         shippingFee: 48600,
-                    //         status: 'processing',
-                    //     };
-                    //     const checkoutOrder2 = await orderService.createOrder(order2);
-                    //     // console.log('checkoutOrder: ', checkoutOrder2);
-                    //     dispatch(removeCart());
-                    //     // Proceed with the order logic for PayPal
-                    //     console.log('Order placed successfully for PayPal');
-                    // }
 
                     console.log('Order placed successfully');
                 }
