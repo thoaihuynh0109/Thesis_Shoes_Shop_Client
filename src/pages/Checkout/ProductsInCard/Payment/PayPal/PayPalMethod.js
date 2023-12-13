@@ -23,12 +23,35 @@ export default function PayPalMethod() {
     const tax = 2;
 
     const getTotalPriceVND = () => {
+        const totalPrice = cartItems.reduce((total, item) => {
+            const itemPrice = parseFloat(item.price.replace(/,/g, '')) * item.quantity;
+            return total + itemPrice;
+        }, 48600);
+        const totalPriceInVND = totalPrice.toLocaleString();
+        return totalPriceInVND;
+    };
+
+    const getTotalPrice2 = () => {
+        // Assuming the current currency is VND and you want to convert it to USD
+        const exchangeRate = 24300; // Replace with your actual exchange rate
+
         const totalPriceVND = cartItems.reduce((total, item) => {
             const itemPrice = parseFloat(item.price.replace(/,/g, '')) * item.quantity;
             return total + itemPrice;
         }, 48600);
-        return totalPriceVND;
+
+        // console.log('Price in VND:', totalPriceVND);
+        // const totalWithTaxVND = totalPriceVND * (1 + tax / 100);
+        const totalWithTax = Math.ceil((totalPriceVND * (1 + tax / 100)) / 1000) * 1000;
+        // console.log('Price VND with Tax:', totalWithTaxVND.toLocaleString());
+        const totalWithTaxInVND = totalWithTax.toLocaleString();
+        console.log('Price VND with Tax:', totalWithTaxInVND);
+        // Convert totalPriceVND to USD
+        // const totalPriceUSD = (totalWithTax / exchangeRate).toFixed(2);
+        // console.log('Price in USD:', totalPriceUSD);
+        return totalWithTaxInVND;
     };
+
     const getTotalPrice = () => {
         // Assuming the current currency is VND and you want to convert it to USD
         const exchangeRate = 24300; // Replace with your actual exchange rate
@@ -49,6 +72,9 @@ export default function PayPalMethod() {
         return totalPriceUSD;
     };
 
+    const shippingFree = 48600;
+    const shippingFreeInVND = shippingFree.toLocaleString();
+
     // get user data from local storage
     // Fetch user data from local storage
 
@@ -67,7 +93,7 @@ export default function PayPalMethod() {
 
                     totalAmount: getTotalPrice(),
                     paymentMethod: 'paypal',
-                    shippingFee: 48600,
+                    shippingFee: shippingFreeInVND,
                     status: 'processing',
                 },
             ],
@@ -84,6 +110,9 @@ export default function PayPalMethod() {
         setShowToast(true);
         setToastMessage('Thanks so much for your order by PayPal!');
         setTypeMessage('success');
+        setTimeout(() => {
+            navigate('/');
+        }, 2500);
         // handleApprove(data.orderID);
     };
 
@@ -108,7 +137,7 @@ export default function PayPalMethod() {
             })),
             totalAmount: getTotalPriceVND(),
             paymentMethod: 'paypal',
-            shippingFee: 48600,
+            shippingFee: shippingFreeInVND,
             status: 'processing',
         };
 
@@ -123,9 +152,9 @@ export default function PayPalMethod() {
                 // sau khi order thành công thì phải xóa cart đi
 
                 // after 2,5s clicking order button will redirect to '/' Home
-                setTimeout(() => {
-                    navigate('/');
-                }, 2500);
+                // setTimeout(() => {
+                //     navigate('/');
+                // }, 2500);
                 // Check if the selected payment method is Cash On Delivery
             }
         } catch (error) {
