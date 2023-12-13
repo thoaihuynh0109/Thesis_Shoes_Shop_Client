@@ -28,6 +28,7 @@ import TestProductPagination from '~/pages/Shop/Pagination/TestProductPagination
 import Shop from '~/pages/Shop/Shop';
 import Women from '~/pages/Women/Women';
 import ShippingInformation from '~/pages/Checkout/ProductsInCard/ShippingInformation';
+import Blog from '~/pages/Blog/Blog';
 
 // Route khong can dang nhap
 const publicRoutes = [
@@ -53,7 +54,7 @@ const publicRoutes = [
     },
     {
         path: '/blog',
-        component: TestProductPagination,
+        component: Blog,
     },
     {
         // path: '/product-details',
