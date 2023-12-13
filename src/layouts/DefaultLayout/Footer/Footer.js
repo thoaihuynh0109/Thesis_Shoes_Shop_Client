@@ -89,7 +89,7 @@ function Footer() {
                                         About Us
                                     </CustomizeFooterHeading>
                                     <CustomizeFooterText sx={{ mb: 1 }}>
-                                        We are students from HCMUTE.
+                                        We come from HCMUTE
                                     </CustomizeFooterText>
                                     <CustomizeFooterText sx={{ mb: 1 }}>
                                         Huynh Quoc Thoai

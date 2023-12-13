@@ -18,21 +18,26 @@ export const addToCart = (product) => ({
     payload: product,
 });
 
-export const decrementQuantity = (productId, amount) => ({
+export const decrementQuantity = (productId, amount, sizeSelectedDesc) => ({
     type: DECREMENT_QUANTITY,
-    payload: { productId, amount },
+    payload: { productId, amount, sizeSelectedDesc },
 });
 
-export const incrementQuantity = (productId, amount) => ({
+export const incrementQuantity = (productId, amount, sizeSelected) => ({
     type: INCREMENT_QUANTITY,
-    payload: { productId, amount },
+    payload: { productId, amount, sizeSelected },
 });
 
-export const removeProduct = (productId) => ({
+export const removeProduct = (productId, sizeSelectedRm) => ({
     type: REMOVE_PRODUCT,
-    payload: { productId },
+    payload: { productId, sizeSelectedRm },
 });
 
 export const removeCart = () => ({
     type: 'REMOVE_CART',
+});
+
+export const setStoreSizeSelected = (sizeSelected) => ({
+    type: 'SET_STORE_SIZE_SELECTED',
+    payload: sizeSelected,
 });

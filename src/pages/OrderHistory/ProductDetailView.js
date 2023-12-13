@@ -31,8 +31,10 @@ export default function ProductDetailView({ handleClose, id }) {
             const order = await orderService.getOrderById(id);
             setOrder(order);
         }
+        
         fetchOrder();
     }, []);
+    
 
     return (
         <React.Fragment>
@@ -101,7 +103,7 @@ export default function ProductDetailView({ handleClose, id }) {
                                                                     size: {item.size}
                                                                 </CustomTypography>
                                                                 <CustomTypography>
-                                                                    {item.price}
+                                                                    {item.price} VND
                                                                 </CustomTypography>
                                                             </Box>
 
@@ -120,7 +122,7 @@ export default function ProductDetailView({ handleClose, id }) {
                                     <ListItemText
                                         primary={<CustomTypography>Tổng:</CustomTypography>}
                                     />
-                                    <CustomTypography> {order.totalAmount}</CustomTypography>
+                                    <CustomTypography> {order.totalAmount} VND</CustomTypography>
                                 </ListItemButton>
                                 <ListItemButton>
                                     <ListItemIcon>
@@ -144,7 +146,7 @@ export default function ProductDetailView({ handleClose, id }) {
                                             <CustomTypography>Phí giao hàng:</CustomTypography>
                                         }
                                     />
-                                    <CustomTypography> {order.shippingFee}</CustomTypography>
+                                    <CustomTypography> {order.shippingFee} VND</CustomTypography>
                                 </ListItemButton>
                             </List>
                         </Box>

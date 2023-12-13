@@ -13,7 +13,7 @@ import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
 import userService from '~/services/userServices';
 
 const style = {
-    width: '100%',
+    width: '90%',
     maxWidth: 360,
     bgcolor: 'background.paper',
 };
@@ -146,7 +146,7 @@ function RegisterAccount() {
                     <Box>
                         <CustomizeTextField
                             value={firstName}
-                            wd={600}
+                            wd={500}
                             onChange={(e) => {
                                 setFirstName(e.target.value);
                                 firstNameValidation.setState({
@@ -169,6 +169,7 @@ function RegisterAccount() {
                         />
 
                         <CustomizeTextField
+                            wd={500}
                             value={lastName}
                             onChange={(e) => {
                                 setLastName(e.target.value);
@@ -192,6 +193,7 @@ function RegisterAccount() {
                         />
 
                         <CustomizeTextField
+                            wd={500}
                             value={phoneNumber}
                             onChange={(e) => {
                                 setPhoneNumber(e.target.value);
@@ -215,6 +217,7 @@ function RegisterAccount() {
                         />
 
                         <CustomizeTextField
+                            wd={500}
                             value={email}
                             onChange={(e) => {
                                 setEmail(e.target.value);
@@ -238,6 +241,7 @@ function RegisterAccount() {
                         />
 
                         <CustomizeTextField
+                            wd={500}
                             value={password}
                             onChange={(e) => {
                                 setPassword(e.target.value);
@@ -262,6 +266,7 @@ function RegisterAccount() {
                         />
 
                         <CustomizeTextField
+                            wd={500}
                             value={rePassword}
                             onChange={(e) => {
                                 setRePassword(e.target.value);

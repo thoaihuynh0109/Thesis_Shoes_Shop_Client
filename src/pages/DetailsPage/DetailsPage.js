@@ -43,14 +43,14 @@ function DetailsPage() {
     }, []);
 
     return (
-        <Box sx={{ minHeight: '150vh', ml: 2, mr: 2 }}>
+        <Box sx={{ minHeight: '80vh', ml: 2, mr: 2 }}>
             <MakeProductDetailDescription />
 
             {/* some products suggestion */}
             <Box>
-                <CustomTypography sx={{ mt: 8, fontWeight: 'bold' }}>
+                {/* <CustomTypography sx={{ mt: 8, fontWeight: 'bold' }}>
                     You Might Also Like
-                </CustomTypography>
+                </CustomTypography> */}
                 {/* next and back */}
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                     {/* <IconButton onClick={handlePreviousImage}> */}
