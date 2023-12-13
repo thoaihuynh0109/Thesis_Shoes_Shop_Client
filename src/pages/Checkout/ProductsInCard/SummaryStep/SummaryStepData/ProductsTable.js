@@ -55,36 +55,61 @@ function ProductsTable() {
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [toastType, setToastType] = useState('');
-
+    // const testGetSizeSelected = () => {
+    //     return cartItems.find((item) => item.siz);
+    // };
     // decrease product quantity
-    const decrement = (productId) => {
+    const decrement = (productId, sizeSelected) => {
         // dispatch action to decrement quantity
-        dispatch(decrementQuantity(productId, 1));
+        const existingProduct = cartItems.find(
+            (item) => item._id === productId && item.size === sizeSelected,
+        );
+        if (existingProduct) {
+            dispatch(decrementQuantity(productId, 1, sizeSelected));
+        }
     };
 
     // increase product quantity
-    const increment = (productId) => {
+    const increment = (productId, size) => {
         // dispatch action to increment quantity
-        dispatch(incrementQuantity(productId, 1));
+        const existingProduct = cartItems.find(
+            (item) => item._id === productId && item.size === size,
+        );
+        // console.log('size is increased: ', size);
+        if (existingProduct) {
+            dispatch(incrementQuantity(productId, 1, size));
+        }
     };
 
-    const removeItem = (productId) => {
+    const removeItem = (productId, sizeSelected) => {
         // dispatch action to remove item from the cart
-        dispatch(removeProduct(productId));
+        const existingProduct = cartItems.find(
+            (item) => item._id === productId && item.size === sizeSelected,
+        );
+        console.log('sizeSelected is remove: ', sizeSelected);
+        console.log('Removing existing product: ', existingProduct);
+        if (existingProduct) {
+            dispatch(removeProduct(productId, sizeSelected));
+        }
+
+        const cartItemsAfterRemoving = cartItems.filter(
+            (item) => item._id !== productId || item.size !== sizeSelected,
+        );
+        console.log('Cart after removing: ', cartItemsAfterRemoving);
     };
 
-    // remove item section
-    const handleRemoveItem = (productId) => {
-        setItemToRemove(productId);
+    // remove item section follow productID and product size selected
+    const handleRemoveItem = (productId, size) => {
+        setItemToRemove(productId, size);
         setOpenConfirmation(true);
     };
 
-    const handleConfirmRemove = () => {
+    const handleConfirmRemove = (sizeSelected) => {
         if (itemToRemove !== null) {
-            setShowToast(true);
-            removeItem(itemToRemove); // Dispatch your removeProduct action
+            removeItem(itemToRemove, sizeSelected); // Dispatch your removeProduct action
             setOpenConfirmation(false);
             setItemToRemove(null);
+            setShowToast(true);
             setToastMessage('Item removed successfully');
             setToastType('success');
         }
@@ -95,25 +120,25 @@ function ProductsTable() {
         setItemToRemove(null);
     };
 
+    // calculate price section
     const calculateTotalPrice = (price, quantity) => {
         // check if price is defined and not null
         if (price && typeof price === 'string') {
             // remove commas, ',' and convert to float for price
             const parsedPrice = parseFloat(price.replace(/,/g, ''));
-            // const parsedPrice = parseFloat(price);
 
             // Check if both price is a valid number
             if (!isNaN(parsedPrice) && typeof quantity === 'number' && !isNaN(quantity)) {
                 const total = parsedPrice * quantity;
                 // This will add "commas - ," for better readability
-                return total.toLocaleString(); // convert to vnd
+                // return total.toLocaleString(); // convert to vnd
                 // console.log(total.toString());
-                // return total; // convert to vnd
+                return total.toLocaleString(); // convert to vnd
             }
         }
 
         // default value
-        // return '0';
+        return '0';
     };
 
     const calculateCartTotal = () => {
@@ -122,6 +147,11 @@ function ProductsTable() {
             const itemPrice = parseFloat(item.price.replace(/,/g, ''));
             // const itemPrice = parseFloat(item.price);
             const itemQuantity = parseFloat(item.quantity);
+
+            // const itemPrice = item.price;
+            console.log('Item Price: ', itemPrice);
+            // const itemQuantity = item.quantity;
+            console.log('Item Quantity: ', itemQuantity);
 
             if (!isNaN(itemPrice) && !isNaN(itemQuantity)) {
                 total += itemPrice * itemQuantity;
@@ -137,8 +167,8 @@ function ProductsTable() {
     const roundedTotalWithTax = Math.ceil(totalWithTax / 1000) * 1000;
     // Format totalWithTax without decimal places and commas
     // 2,929,010 --> 2,930,000
-    // const formattedTotalWithTax = roundedTotalWithTax;
-    const formattedTotalWithTax = roundedTotalWithTax.toLocaleString();
+    const formattedTotalWithTax = roundedTotalWithTax;
+    // const formattedTotalWithTax = roundedTotalWithTax.toLocaleString();
 
     // check if there is no products in cart before adding item
     if (cartItems.length === 0) {
@@ -174,7 +204,7 @@ function ProductsTable() {
                             <TableRow>
                                 <CustomizeTableCell align="left">Product Image</CustomizeTableCell>
                                 <CustomizeTableCell align="left">Description</CustomizeTableCell>
-                                <CustomizeTableCell align="left">Status</CustomizeTableCell>
+                                <CustomizeTableCell align="left">Size</CustomizeTableCell>
                                 <CustomizeTableCell align="left">Unit Price</CustomizeTableCell>
                                 <CustomizeTableCell align="left">Quantity</CustomizeTableCell>
                                 <CustomizeTableCell align="left">
@@ -205,8 +235,8 @@ function ProductsTable() {
                                         {/* {item.countInstock ? 'In Stock' : 'Sold Out'} */}
                                     </CustomizeTableCell>
                                     <CustomizeTableCell align="left">
+                                        {item.price}
                                         {/* {item.price.toLocaleString()} */}
-                                        {item.price.toLocaleString()}
                                     </CustomizeTableCell>
                                     <CustomizeTableCell align="left">
                                         <Stack
@@ -217,7 +247,7 @@ function ProductsTable() {
                                         >
                                             <Button
                                                 variant="contained"
-                                                onClick={() => decrement(item._id)}
+                                                onClick={() => decrement(item._id, item.size)}
                                                 sx={{ minWidth: '40px', height: '30px' }}
                                             >
                                                 <CustomTypography>-</CustomTypography>
@@ -225,7 +255,7 @@ function ProductsTable() {
                                             <span>{item.quantity}</span>
                                             <Button
                                                 variant="contained"
-                                                onClick={() => increment(item._id)}
+                                                onClick={() => increment(item._id, item.size)}
                                                 sx={{ minWidth: '40px', height: '30px' }}
                                             >
                                                 <CustomTypography>+</CustomTypography>
@@ -247,7 +277,11 @@ function ProductsTable() {
                                                 </CustomTypography>
                                             }
                                         >
-                                            <IconButton onClick={() => handleRemoveItem(item._id)}>
+                                            <IconButton
+                                                onClick={() =>
+                                                    handleRemoveItem(item._id, item.size)
+                                                }
+                                            >
                                                 <DeleteIcon fontSize="large" />
                                             </IconButton>
                                             <PopUpMessage
@@ -255,7 +289,7 @@ function ProductsTable() {
                                                 title="Confirm Removal"
                                                 message="Are you sure you want to remove this item from your cart?"
                                                 onCancel={handleCancelRemove}
-                                                onConfirm={handleConfirmRemove}
+                                                onConfirm={() => handleConfirmRemove(item.size)}
                                             />
                                         </Tooltip>
                                     </CustomizeTableCell>
@@ -270,7 +304,7 @@ function ProductsTable() {
                 tax={2}
                 // subtotal={calculateCartTotal()}
                 subtotal={calculateCartTotal().toLocaleString()}
-                totalWithTax={formattedTotalWithTax}
+                totalWithTax={formattedTotalWithTax.toLocaleString()}
             />
             <Box sx={{ mb: '10px', display: 'flex', justifyContent: 'end', mt: 2 }}>
                 <Button
