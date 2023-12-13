@@ -93,7 +93,7 @@ function CustomFlashSaleProduct({
                         'https://people.com/thmb/uRU9d4kiEP2xUX8--dgPExGO1-0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(749x0:751x2)/pefs-cariuma-tout-14827c81d8e3498ebea35307e84ad10b.jpg'
                     }
                     alt="Flash Sale Product"
-                    objectFit="contain"
+                    // objectFit="contain"
                     width={imgWidth || '500px'}
                     height={imgHeight || '300px'}
                 />

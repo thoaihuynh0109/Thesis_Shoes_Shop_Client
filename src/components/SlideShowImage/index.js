@@ -46,8 +46,8 @@ export function InfiniteSliderTrack() {
     return (
         <Box className={cx('slider')} sx={{ mb: 1 }}>
             <Box className={cx('slider-track')}>
-                {combinedLogos.map((logo) => (
-                    <Box className={cx('slide')} key={logo.id}>
+                {combinedLogos.map((logo, index) => (
+                    <Box className={cx('slide')} key={index}>
                         <img src={logo.img} alt={logo.title} />
                     </Box>
                 ))}

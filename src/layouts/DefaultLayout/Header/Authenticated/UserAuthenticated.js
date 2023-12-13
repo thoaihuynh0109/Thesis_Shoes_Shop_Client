@@ -13,6 +13,8 @@ import { AccountCircle, Dashboard, ExitToApp, Person } from '@mui/icons-material
 import authService from '~/services/authServices';
 import { useNavigate } from 'react-router-dom';
 import HistoryIcon from '@mui/icons-material/History';
+import { useDispatch } from 'react-redux';
+import { removeUser } from '~/redux/User/userSlice';
 
 // const settings = [
 //     { label: 'Profile', icon: <Person /> },
@@ -22,6 +24,7 @@ import HistoryIcon from '@mui/icons-material/History';
 // ];
 
 function UserAuthenticated() {
+    const dispatch = useDispatch();
     const user = localStorage.getItem('user') || {};
     const dataUser = JSON.parse(user);
     const isAdmin = dataUser.isAdmin;
@@ -31,7 +34,9 @@ function UserAuthenticated() {
         // call api  to logout
         await authService.logout(dataUser);
         // delete data from local storage
-        localStorage.removeItem('user');
+        // localStorage.removeItem('user');
+        dispatch(removeUser());
+
         navigate('/signin');
     };
 
@@ -111,7 +116,7 @@ function UserAuthenticated() {
                         Change Password
                     </Typography>
                 </MenuItem>
-                
+
                 <MenuItem
                     onClick={() => {
                         navigate('/order-history');
