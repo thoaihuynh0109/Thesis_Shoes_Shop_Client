@@ -45,6 +45,7 @@ import {
 } from 'recharts';
 import CustomTableCell from '~/pages/AdminPages/CustomTableCell/CustomTableCell';
 import productService from '~/services/productServices';
+import orderService from '~/services/orderServices';
 
 const dataPie = [
     { name: 'Group A', value: 400 },
