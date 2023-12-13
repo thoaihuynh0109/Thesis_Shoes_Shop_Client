@@ -132,7 +132,10 @@ import ProductDetailView from './ProductDetailView';
 
 import userService from '~/services/userServices';
 function OrderDetail() {
+    // call api
     const [orders, setOrders] = useState([]);
+    const [user, setUser] = useState([]);
+
     const [selectedOrderId, setSelectedOrderId] = useState(null);
     const [showForm, setShowForm] = useState(false);
 
@@ -151,6 +154,16 @@ function OrderDetail() {
             const listOrder = await userService.getAllOrderById(userId._id);
             console.log(`listOrder of user has id:${userId._id} `, listOrder);
             setOrders(listOrder);
+        };
+        fetchOrder();
+    }, []);
+
+    useEffect(() => {
+        const fetchOrder = async () => {
+            // console.log('userId:', userId._id);
+            const listUser = await userService.getUserById(userId._id);
+            console.log(`User get by ID:${userId._id} `, listUser);
+            setUser(listUser);
         };
         fetchOrder();
     }, []);
@@ -193,7 +206,7 @@ function OrderDetail() {
                                         {new Date(order.createdAt).toLocaleString()}
                                     </CustomTableCell>
                                     <CustomTableCell align="left">
-                                        {order.totalAmount}
+                                        {order.totalAmount} VND
                                     </CustomTableCell>
                                     <CustomTableCell align="left">
                                         {order.paymentMethod}
