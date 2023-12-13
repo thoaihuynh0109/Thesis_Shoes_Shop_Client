@@ -81,13 +81,18 @@ function ProductInformation({ product }) {
         };
 
         // Check if the product is already in the cart
-        const existingProduct = cartItems.find((item) => item._id === product._id);
-
+        const existingProduct = cartItems.find(
+            (item) =>
+                item._id === product._id &&
+                // check item.size === selected?
+                item.size === sizeSelected,
+        );
+        console.log(existingProduct);
         // Simulate a delay of 2 seconds before showing the toast
         setTimeout(() => {
             if (existingProduct) {
                 // If the product is already in the cart, update the quantity
-                dispatch(incrementQuantity(product._id, 1));
+                dispatch(incrementQuantity(product._id, 1, sizeSelected));
             } else {
                 // If the product is not in the cart, add it with quantity 1
                 dispatch(addToCart(productToAdd));
