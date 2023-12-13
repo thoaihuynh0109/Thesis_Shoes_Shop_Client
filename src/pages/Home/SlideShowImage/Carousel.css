@@ -1,13 +1,50 @@
 /* Carousel.css */
 .carousel-container {
-    /* position: relative; */
-    width: 100%;
-    height: 400px;
-  }
-  
-  .carousel-image {
-    width: 75%;
-    height: 100%;
-    object-fit: contain;
-  }
-  
+  /* position: relative; */
+  width: 100%;
+  height: 400px;
+}
+
+.carousel-image {
+  width: 75%;
+  height: 100%;
+  object-fit: contain;
+}
+
+
+
+.hover-image-container {
+  position: relative;
+}
+
+.hover-image {
+  border-radius: 10px;
+
+  transition: opacity 0.3s ease-in-out;
+}
+
+.hover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Adjust the opacity as needed */
+  opacity: 0;
+  border-radius: 10px;
+  transition: opacity 0.3s ease-in-out;
+  margin-top: 0px;
+  margin-bottom: 7px;
+}
+
+.hover-image-container:hover .hover-image {
+  opacity: 0.8;
+}
+
+.hover-image-container:hover .hover-overlay {
+  opacity: 1;
+}
