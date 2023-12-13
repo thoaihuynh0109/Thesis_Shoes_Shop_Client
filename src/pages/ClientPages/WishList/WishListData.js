@@ -6,6 +6,7 @@ import {
     Table,
     TableBody,
     TableCell,
+    Button,
     TableContainer,
     TableHead,
     TableRow,
@@ -68,7 +69,7 @@ const WishListTable = () => {
                         <CustomizeTableCell>Image</CustomizeTableCell>
                         <CustomizeTableCell>Products Name</CustomizeTableCell>
                         <CustomizeTableCell>Unit Price</CustomizeTableCell>
-                        <CustomizeTableCell>Stock Status</CustomizeTableCell>
+                        {/* <CustomizeTableCell>Stock Status</CustomizeTableCell> */}
                         <CustomizeTableCell>Shopping</CustomizeTableCell>
                     </TableRow>
                 </TableHead>
@@ -110,8 +111,12 @@ const WishListTable = () => {
                             </CustomizeTableCell>
                             <CustomizeTableCell>{product.name}</CustomizeTableCell>
                             <CustomizeTableCell>{product.price}</CustomizeTableCell>
+                            {/* <CustomizeTableCell>
+                                {product.countInStock}
+                                {/* {product.countInStock ? 'In Stock' : 'Sold Out'} 
+                            </CustomizeTableCell> */}
                             <CustomizeTableCell>
-                            {product.countInStock}
+                                <Button variant="contained" sx={{fontSize:'14px'}}>Buy Now</Button>
                                 {/* {product.countInStock ? 'In Stock' : 'Sold Out'} */}
                             </CustomizeTableCell>
                         </TableRow>
