@@ -218,7 +218,7 @@ export function MakeProductsCard({
                 {/* buttons in card products */}
                 <CardActions disableSpacing sx={{ display: 'block' }}>
                     {/* button for add to cart  */}
-                    <Zoom in={hoverCard}>
+                    {/* <Zoom in={hoverCard}>
                         <Box>
                             <Button
                                 variant="contained"
@@ -252,11 +252,11 @@ export function MakeProductsCard({
                                 )}
                             </Button>
                         </Box>
-                    </Zoom>
+                    </Zoom> */}
 
                     {/* button for add to wisth list */}
                     {/* appear after 0.5 of Add to Cart */}
-                    <Zoom in={hoverCard} style={{ transitionDelay: hoverCard ? '500ms' : '0ms' }}>
+                    <Zoom in={hoverCard} style={{ transitionDelay: hoverCard ? '200ms' : '0ms' }}>
                         <Box
                             sx={{
                                 display: 'flex',
