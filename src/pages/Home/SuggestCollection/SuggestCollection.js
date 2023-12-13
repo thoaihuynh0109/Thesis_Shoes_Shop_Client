@@ -84,7 +84,7 @@ function CustomSuggestCollection() {
                             if (index <= listLastest.length) {
                                 return (
                                     <MakeProductsCard
-                                        key={product._id}
+                                        key={index}
                                         _id={listLastest[product]._id}
                                         images={listLastest[product].images}
                                         name={listLastest[product].name}

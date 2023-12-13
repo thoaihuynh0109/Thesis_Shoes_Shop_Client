@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Paper, Grid, Typography, TextField, Container, Chip } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { setUser } from '~/redux/User/userSlice';
+import { Box, Button, Paper, Grid, Container } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import styles from './SignIn.module.scss';
 import classNames from 'classnames/bind';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
 import LockIcon from '@mui/icons-material/Lock';
 import CustomTypography from '../CustomTyporaphy/CustomTyporaphy';
 import { CustomizeTextField } from '../CustomizeTextField/CustomizeTextField';
@@ -35,6 +37,7 @@ const CustomButton = styled(Button)(({ variant = 'contained', mt, ml, fs, width 
 // function SignIn({ isCheckout }) {
 
 function SignIn() {
+    const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showToast, setShowToast] = useState(false);
@@ -68,6 +71,7 @@ function SignIn() {
 
                 // add to local storage
                 localStorage.setItem('user', JSON.stringify(loginData));
+                dispatch(setUser(JSON.parse(localStorage.getItem('user'))));
                 // send info to login api
             }
             // email or password is false
