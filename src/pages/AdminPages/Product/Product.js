@@ -204,7 +204,7 @@ function Product() {
                                     }}
                                 >
                                     <CustomTableCell component="th" scope="row">
-                                        {index + 1}
+                                        {(currentPage - 1) * itemsPerPage + index + 1}
                                     </CustomTableCell>
                                     <CustomTableCell
                                         align="left"
@@ -243,7 +243,9 @@ function Product() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <CustomTypography sx={{ mt: 2, fontSize:'16px' }}>Total of products: {products.length}</CustomTypography>
+            <CustomTypography sx={{ mt: 2, fontSize: '16px' }}>
+                Total of products: {products.length}
+            </CustomTypography>
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, alignItems: 'center' }}>
                 <Button
                     onClick={() => setCurrentPage(1)}

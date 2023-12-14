@@ -201,7 +201,7 @@ function Order() {
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     <CustomTableCell component="th" scope="order">
-                                        {index + 1}
+                                        {(currentPage - 1) * itemsPerPage + index + 1}
                                     </CustomTableCell>
                                     <CustomTableCell align="left">{order._id}</CustomTableCell>
                                     <CustomTableCell align="left">

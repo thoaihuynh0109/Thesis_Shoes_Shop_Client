@@ -191,6 +191,9 @@ function EditProduct() {
             if (respone.status === 200) {
                 setMessage('Update product thành công');
                 setTypeMessage('success');
+                setTimeout(() => {
+                    navigate('/manage-product');
+                }, 1500);
             } else {
                 setMessage('Update product thất bại');
                 setTypeMessage('error');
@@ -199,10 +202,6 @@ function EditProduct() {
             setMessage('Vui lòng kiểm tra các trường đã nhập');
             setTypeMessage('error');
         }
-        setTimeout(() => {
-            setMessage('');
-            setTypeMessage('');
-        }, 3000);
     };
     const handleBack = () => {
         navigate('/manage-product');
