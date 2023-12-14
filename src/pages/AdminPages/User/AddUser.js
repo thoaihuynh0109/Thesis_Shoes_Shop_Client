@@ -54,25 +54,48 @@ function AddUser() {
     const navigate = useNavigate();
 
     const validateFirstName = () => {
-        if (firstName.value.trim() === '') {
+        if (/\d/.test(firstName.value)) {
+            setFirstName({
+                ...firstName,
+                message: 'Không Được Tồn Tại Số Trong Tên!',
+            });
+            return false;
+        } else if (firstName.value.trim() === '') {
             setFirstName({
                 ...firstName,
                 message: 'Vui lòng nhập first name',
             });
+            return false;
         }
-        setFirstName({ ...firstName, message: '' });
+        setFirstName({
+            ...firstName,
+            message: '',
+        });
+        return true;
     };
 
     const validateLastName = () => {
-        if (lastName.value.trim() === '') {
+        if (/\d/.test(lastName.value)) {
+            setLastName({
+                ...lastName,
+                message: 'Không Được Tồn Tại Số Trong Tên!',
+            });
+            return false;
+        } else if (lastName.value.trim() === '') {
             setLastName({
                 ...lastName,
                 message: 'Vui lòng nhập last name',
             });
+            return false;
         }
-        setLastName({ ...lastName, message: '' });
+        setLastName({
+            ...lastName,
+            message: '',
+        });
+        return true;
     };
 
+    // check email must end with '@gmail.com'
     const validateEmail = () => {
         if (email.value.trim() === '') {
             setEmail({
@@ -81,8 +104,21 @@ function AddUser() {
             });
         } else {
             let validEmail = email.value.toLowerCase().match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
-            if (validEmail) setEmail({ ...email, message: '' });
-            else setEmail({ ...email, message: 'Email không hợp lệ' });
+            if (validEmail) {
+                if (email.value.toLowerCase().endsWith('@gmail.com')) {
+                    setEmail({
+                        ...email,
+                        message: '',
+                    });
+                    return true;
+                } else {
+                    setEmail({
+                        ...email,
+                        message: 'Must includes @gmail.com in your email',
+                    });
+                    return false;
+                }
+            } else setEmail({ ...email, message: 'Email không hợp lệ' });
         }
     };
 
@@ -114,12 +150,26 @@ function AddUser() {
         if (phone.value === '') {
             setPhone({
                 ...phone,
-                message: '',
+                message: 'Vui Lòng Nhập Số Điện Thoại',
             });
+            return false;
         } else {
-            let validPhone = phone.value.match(/(0[3|5|7|8|9])+([0-9]{8})\b/g);
-            if (validPhone) setPhone({ ...phone, message: '' });
-            else setPhone({ ...phone, message: 'Phone Number không hợp lệ' });
+            // Check for exactly 10 digits and no special characters
+            let validPhone = phone.value.match(/^(0[3|5|7|8|9])[0-9]{8}$/);
+
+            if (validPhone) {
+                setPhone({
+                    ...phone,
+                    message: '',
+                });
+                return true;
+            } else {
+                setPhone({
+                    ...phone,
+                    message: 'Phone Number không hợp lệ',
+                });
+                return false;
+            }
         }
     };
 
