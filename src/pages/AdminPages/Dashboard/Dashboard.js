@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import {
     Avatar,
     Button,
@@ -46,14 +47,16 @@ import {
 import CustomTableCell from '~/pages/AdminPages/CustomTableCell/CustomTableCell';
 import productService from '~/services/productServices';
 import orderService from '~/services/orderServices';
+import userService from '~/services/userServices';
+import { setUser } from '~/redux/User/userSlice';
 
-const dataPie = [
-    { name: 'Group A', value: 400 },
-    { name: 'Group B', value: 300 },
-    { name: 'Group C', value: 300 },
-    { name: 'Group D', value: 200 },
-];
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+// const dataPie = [
+//     { name: 'Group A', value: 400 },
+//     { name: 'Group B', value: 300 },
+//     { name: 'Group C', value: 300 },
+//     { name: 'Group D', value: 200 },
+// ];
+// const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
 const StyledTypography = styled(Typography)({
     fontSize: '1.2rem',
@@ -171,15 +174,47 @@ const CustomTooltip = ({ active, payload, label }) => {
 function Dashboard() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [cardContentWidth, setCardContentWidth] = React.useState(0);
-    const [lastestProducts, setLastestProduct] = React.useState([]);
+    const [lastestProducts, setLastestProducts] = React.useState([]);
+    const [lastestOrders, setLastestOrders] = React.useState([]);
+    const [totalUSer, setTotalUSer] = React.useState(0);
+    const [totalOrder, setTotalOrder] = React.useState(0);
+    const [totalEarning, setTotalEarning] = React.useState(0);
 
     React.useEffect(() => {
         const fetchLastestProduct = async () => {
             const listProduct = await productService.getLastestProduct();
-            setLastestProduct(listProduct);
+            setLastestProducts(listProduct);
         };
+        const fetchLastestOrder = async () => {
+            const listLastestOrder = await orderService.getLastestOrder();
+            setLastestOrders(listLastestOrder);
+        };
+
         fetchLastestProduct();
+        fetchLastestOrder();
     }, []);
+
+    React.useEffect(() => {
+        const fetchUsers = async () => {
+            const listUser = await userService.getAllUser();
+            setTotalUSer(listUser.length);
+        };
+        const fetchOrders = async () => {
+            const listOrder = await orderService.getAllOrder();
+            setTotalOrder(listOrder.length);
+            const totalEarning = listOrder.reduce(
+                (acc, order) => acc + parseFloat(order.totalAmount.replace(/,/g, '')),
+                0,
+            );
+            setTotalEarning(totalEarning.toLocaleString());
+        };
+        fetchUsers();
+        fetchOrders();
+    }, []);
+
+    const formattedDatetime = (date) => {
+        return moment(date).utcOffset(7).format('YYYY-MM-DD HH:mm:ss');
+    };
 
     const handleResize = () => {
         const cardContent = document.getElementById('card-content-sales');
@@ -247,7 +282,7 @@ function Dashboard() {
                                             sx={{ fontSize: 32, fontWeight: 600 }}
                                             gutterBottom
                                         >
-                                            $50000
+                                            {totalEarning}
                                         </Typography>
                                     </Grid>
                                     <Grid>
@@ -294,7 +329,7 @@ function Dashboard() {
                                             sx={{ fontSize: 32, fontWeight: 600 }}
                                             gutterBottom
                                         >
-                                            5000
+                                            {totalUSer}
                                         </Typography>
                                     </Grid>
                                     <Grid>
@@ -343,7 +378,7 @@ function Dashboard() {
                                             sx={{ fontSize: 32, fontWeight: 600 }}
                                             gutterBottom
                                         >
-                                            500
+                                            {totalOrder}
                                         </Typography>
                                     </Grid>
                                     <Grid>
@@ -399,7 +434,7 @@ function Dashboard() {
                                             sx={{ fontSize: 32, fontWeight: 600 }}
                                             gutterBottom
                                         >
-                                            $42000
+                                            {totalEarning}
                                         </Typography>
                                     </Grid>
                                     <Grid>
@@ -414,7 +449,7 @@ function Dashboard() {
                 </Grid>
 
                 {/* Sales Chart  */}
-                <Grid xs={12} md={12} lg={8}>
+                <Grid xs={12} md={12} lg={12}>
                     <Paper
                         elevation={0}
                         sx={{ position: 'relative', boxShadow: 'none', fontSize: '1.3rem' }}
@@ -479,7 +514,8 @@ function Dashboard() {
                     </Paper>
                 </Grid>
                 {/* Pie Chart */}
-                <Grid xs={12} md={6} lg={4}>
+
+                {/* <Grid xs={12} md={6} lg={4}>
                     <Paper elevation={0} sx={{ position: 'relative' }}>
                         <Card variant="outlined" sx={{ borderRadius: '20px', minHeight: '14rem' }}>
                             <CardHeader
@@ -527,7 +563,7 @@ function Dashboard() {
                             </CardContent>
                         </Card>
                     </Paper>
-                </Grid>
+                </Grid> */}
 
                 {/* Lastest Product  */}
                 <Grid xs={12} md={6} lg={4}>
@@ -573,7 +609,11 @@ function Dashboard() {
                                                 <CardMedia
                                                     key={product._id}
                                                     component="img"
-                                                    sx={{ maxWidth: 151, maxHeight: 50 }}
+                                                    sx={{
+                                                        maxWidth: 151,
+                                                        maxHeight: 50,
+                                                        objectFit: 'contain',
+                                                    }}
                                                     image={product.images}
                                                     alt={product.name}
                                                 />
@@ -624,38 +664,49 @@ function Dashboard() {
                                     <Table sx={{ minWidth: 600 }}>
                                         <TableHead>
                                             <TableRow>
-                                                <CustomTableCell>ORDER</CustomTableCell>
+                                                <CustomTableCell>NO</CustomTableCell>
                                                 <CustomTableCell align="left">
                                                     CUSTOMER
                                                 </CustomTableCell>
                                                 <CustomTableCell align="left">DATE</CustomTableCell>
                                                 <CustomTableCell align="left">
-                                                    STATUS
+                                                    TOTAL
+                                                </CustomTableCell>
+                                                <CustomTableCell align="left">
+                                                    PAYMENT
                                                 </CustomTableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            <TableRow
-                                                key="1"
-                                                sx={{
-                                                    '&:last-child td, &:last-child th': {
-                                                        border: 0,
-                                                    },
-                                                }}
-                                            >
-                                                <CustomTableCell component="th" scope="row">
-                                                    DEV1049
-                                                </CustomTableCell>
-                                                <CustomTableCell align="left">
-                                                    Ekaterina Tankova
-                                                </CustomTableCell>
-                                                <CustomTableCell align="left">
-                                                    12/04/2019
-                                                </CustomTableCell>
-                                                <CustomTableCell align="left">
-                                                    Pending
-                                                </CustomTableCell>
-                                            </TableRow>
+                                            {lastestOrders.length > 0 &&
+                                                lastestOrders.map((order, index) => (
+                                                    <TableRow
+                                                        key="1"
+                                                        sx={{
+                                                            '&:last-child td, &:last-child th': {
+                                                                border: 0,
+                                                            },
+                                                        }}
+                                                    >
+                                                        <CustomTableCell component="th" scope="row">
+                                                            {index + 1}
+                                                        </CustomTableCell>
+                                                        <CustomTableCell align="left">
+                                                            {order.owner.firstName +
+                                                                ' ' +
+                                                                order.owner.lastName}
+                                                        </CustomTableCell>
+                                                        <CustomTableCell align="left">
+                                                            {formattedDatetime(order.createdAt)}
+                                                        </CustomTableCell>
+                                                        <CustomTableCell align="left">
+                                                            {order.totalAmount}
+                                                        </CustomTableCell>
+                                                        <CustomTableCell align="left">
+                                                            {order.paymentMethod}
+                                                        </CustomTableCell>
+                                                    </TableRow>
+                                                ))}
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
