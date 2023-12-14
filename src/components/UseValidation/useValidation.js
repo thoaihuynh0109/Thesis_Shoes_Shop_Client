@@ -78,27 +78,6 @@ const useValidation = (initialState) => {
         return true;
     };
 
-    // const validateConfirmPassword = (password) => {
-    //     if (state.value === '') {
-    //         setState({
-    //             ...state,
-    //             message: 'Please confirm your password.',
-    //         });
-    //         return false;
-    //     } else if (state.value !== password) {
-    //         setState({
-    //             ...state,
-    //             message: 'Passwords do not match.',
-    //         });
-    //         return false;
-    //     }
-    //     setState({
-    //         ...state,
-    //         message: '',
-    //     });
-    //     return true;
-    // };
-
     const validateConfirmPassword = (password) => {
         const trimmedPassword = String(password).trim();
         const trimmedConfirmPassword = state.value.trim();

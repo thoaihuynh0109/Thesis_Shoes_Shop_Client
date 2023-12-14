@@ -20,6 +20,9 @@ import PopupConfirm from '../PopupConfirm/PopupConfirm';
 import ToastMessage from '~/components/ToastMessage/ToastMessage';
 import orderService from '~/services/orderServices';
 import FormOrderDetail from './FormOrderDetail';
+import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
+import LastPageIcon from '@mui/icons-material/LastPage';
 
 function Order() {
     const [orders, setOrders] = React.useState([]);
@@ -31,13 +34,24 @@ function Order() {
 
     const navigate = useNavigate();
 
+    // search
+    const [searchTerm, setSearchTerm] = React.useState('');
+    const [currentPage, setCurrentPage] = React.useState(1);
+    const [itemsPerPage, setItemsPerPage] = React.useState(5);
+    const [isSearchFocused, setIsSearchFocused] = React.useState(false);
+
     const fetchOrder = async () => {
         const listOrder = await orderService.getAllOrder();
         setOrders(listOrder);
     };
     React.useEffect(() => {
         fetchOrder();
-    }, []);
+    }, [searchTerm, currentPage, itemsPerPage]);
+
+    // reset current page to 1 when the searchTerm changes
+    React.useEffect(() => {
+        setCurrentPage(1);
+    }, [searchTerm]);
 
     const handleDelete = (orderId) => {
         setSelectedOrderId(orderId);
@@ -77,6 +91,37 @@ function Order() {
         setShowForm(true);
     };
 
+    // filter Order according to payment method
+    const filteredOrders = orders.filter(
+        (order) =>
+            order.paymentMethod &&
+            order.paymentMethod.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    // make pagination
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = filteredOrders.slice(indexOfFirstItem, indexOfLastItem);
+
+    const pageNumbers = Math.ceil(filteredOrders.length / itemsPerPage);
+
+    const handleNextPage = () => {
+        setCurrentPage((prevPage) => Math.min(prevPage + 1, pageNumbers));
+    };
+
+    const handlePrevPage = () => {
+        setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+    };
+
+    //search animation
+    const handleSearchFocus = () => {
+        setIsSearchFocused(true);
+    };
+
+    const handleSearchBlur = () => {
+        setIsSearchFocused(false);
+    };
+
     return (
         <Box>
             <Box
@@ -113,14 +158,24 @@ function Order() {
             {/* Search */}
             <Paper sx={{ mt: 4, mb: 4, padding: 1.5, borderRadius: 4 }}>
                 <TextField
-                    placeholder="Search Category"
+                    placeholder="Search Customer"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onFocus={handleSearchFocus}
+                    onBlur={handleSearchBlur}
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
                                 <SearchIcon sx={{ height: 25, width: 25 }} />
                             </InputAdornment>
                         ),
-                        style: { fontSize: '1.4rem', color: '#000', borderRadius: 8 },
+                        style: {
+                            fontSize: '1.4rem',
+                            color: '#000',
+                            borderRadius: 8,
+                            width: isSearchFocused ? '300px' : '200px',
+                            transition: 'width 0.3s ease-in-out', // Add transition effect
+                        },
                     }}
                 />
             </Paper>
@@ -139,8 +194,8 @@ function Order() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {orders.length > 0 &&
-                            orders.map((order, index) => (
+                        {currentItems.length > 0 &&
+                            currentItems.map((order, index) => (
                                 <TableRow
                                     key={order._id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -171,6 +226,37 @@ function Order() {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <CustomTypography sx={{ mt: 2, fontSize: '16px' }}>
+                Total of orders: {orders.length}
+            </CustomTypography>
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, alignItems: 'center' }}>
+                <Button
+                    onClick={() => setCurrentPage(1)}
+                    disabled={currentPage === 1}
+                    sx={{ mr: 2 }}
+                >
+                    <FirstPageIcon fontSize="large" />
+                </Button>
+                <Button onClick={handlePrevPage} disabled={currentPage === 1} sx={{ mr: 2 }}>
+                    <CustomTypography sx={{ textTransform: 'capitalize' }}>
+                        Previous
+                    </CustomTypography>
+                </Button>
+                <Button
+                    onClick={handleNextPage}
+                    disabled={currentPage === pageNumbers}
+                    sx={{ mr: 2 }}
+                >
+                    <CustomTypography sx={{ textTransform: 'capitalize' }}>Next</CustomTypography>
+                </Button>
+                <Button
+                    onClick={() => setCurrentPage(pageNumbers)}
+                    disabled={currentPage === pageNumbers}
+                    sx={{ mr: 2 }}
+                >
+                    <LastPageIcon fontSize="large" />
+                </Button>
+            </Box>
             {showForm && <FormOrderDetail handleClose={handleCloseForm} id={selectedOrderId} />}
 
             {showPopup && (

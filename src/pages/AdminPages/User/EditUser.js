@@ -64,45 +64,113 @@ function EditUser() {
         fetchUser();
     }, []);
 
+    // const validateFirstName = () => {
+    //     if (firstName.value.trim() === '') {
+    //         setFirstName({
+    //             ...firstName,
+    //             message: 'Vui lòng nhập first name',
+    //         });
+    //         return;
+    //     }
+    //     setFirstName({ ...firstName, message: '' });
+    //     return;
+    // };
+
+    // const validateLastName = () => {
+    //     if (lastName.value.trim() === '') {
+    //         setLastName({
+    //             ...lastName,
+    //             message: 'Vui lòng nhập last name',
+    //         });
+    //         return;
+    //     }
+    //     setLastName({ ...lastName, message: '' });
+    //     return;
+    // };
+
     const validateFirstName = () => {
-        if (firstName.value.trim() === '') {
+        if (/\d/.test(firstName.value)) {
+            setFirstName({
+                ...firstName,
+                message: 'Không Được Tồn Tại Số Trong Tên!',
+            });
+            return false;
+        } else if (firstName.value.trim() === '') {
             setFirstName({
                 ...firstName,
                 message: 'Vui lòng nhập first name',
             });
-            return;
+            return false;
         }
-        setFirstName({ ...firstName, message: '' });
-        return;
+        setFirstName({
+            ...firstName,
+            message: '',
+        });
+        return true;
     };
 
     const validateLastName = () => {
-        if (lastName.value.trim() === '') {
+        if (/\d/.test(lastName.value)) {
+            setLastName({
+                ...lastName,
+                message: 'Không Được Tồn Tại Số Trong Tên!',
+            });
+            return false;
+        } else if (lastName.value.trim() === '') {
             setLastName({
                 ...lastName,
                 message: 'Vui lòng nhập last name',
             });
-            return;
+            return false;
         }
-        setLastName({ ...lastName, message: '' });
-        return;
+        setLastName({
+            ...lastName,
+            message: '',
+        });
+        return true;
     };
 
+    // const validateEmail = () => {
+    //     if (email.value.trim() === '') {
+    //         setEmail({
+    //             ...email,
+    //             message: 'Vui lòng nhập email',
+    //         });
+    //         return;
+    //     } else {
+    //         let validEmail = email.value.toLowerCase().match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
+    //         if (validEmail) setEmail({ ...email, message: '' });
+    //         else setEmail({ ...email, message: 'Email không hợp lệ' });
+    //         return;
+    //     }
+    // };
+
+    // check email must end with '@gmail.com'
     const validateEmail = () => {
         if (email.value.trim() === '') {
             setEmail({
                 ...email,
                 message: 'Vui lòng nhập email',
             });
-            return;
         } else {
             let validEmail = email.value.toLowerCase().match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
-            if (validEmail) setEmail({ ...email, message: '' });
-            else setEmail({ ...email, message: 'Email không hợp lệ' });
-            return;
+            if (validEmail) {
+                if (email.value.toLowerCase().endsWith('@gmail.com')) {
+                    setEmail({
+                        ...email,
+                        message: '',
+                    });
+                    return true;
+                } else {
+                    setEmail({
+                        ...email,
+                        message: 'Must includes @gmail.com in your email',
+                    });
+                    return false;
+                }
+            } else setEmail({ ...email, message: 'Email không hợp lệ' });
         }
     };
-
     const validatePassword = () => {
         if (password.value === '') {
             setPassword({
@@ -120,12 +188,26 @@ function EditUser() {
         if (phone.value === '') {
             setPhone({
                 ...phone,
-                message: '',
+                message: 'Vui Lòng Nhập Số Điện Thoại',
             });
+            return false;
         } else {
-            let validPhone = phone.value.match(/(0[3|5|7|8|9])+([0-9]{8})\b/g);
-            if (validPhone) setPhone({ ...phone, message: '' });
-            else setPhone({ ...phone, message: 'Phone Number không hợp lệ' });
+            // Check for exactly 10 digits and no special characters
+            let validPhone = phone.value.match(/^(0[3|5|7|8|9])[0-9]{8}$/);
+
+            if (validPhone) {
+                setPhone({
+                    ...phone,
+                    message: '',
+                });
+                return true;
+            } else {
+                setPhone({
+                    ...phone,
+                    message: 'Phone Number không hợp lệ',
+                });
+                return false;
+            }
         }
     };
     const checkError = () => {
@@ -160,9 +242,13 @@ function EditUser() {
             // call api to create new user
             const response = await userService.updateUser(id, data);
 
-            if (response.status === 200) {
+            if (response?.status === 200) {
                 setMessage('Cập nhật user thành công');
                 setTypeMessage('success');
+
+                setTimeout(() => {
+                    navigate('/manage-user');
+                }, 3000);
             } else {
                 setMessage('Cập nhật user thất bại');
                 setTypeMessage('error');

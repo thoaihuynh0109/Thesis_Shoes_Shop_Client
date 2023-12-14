@@ -21,22 +21,35 @@ import CustomTableCell from '../CustomTableCell/CustomTableCell';
 import PopupConfirm from '../PopupConfirm/PopupConfirm';
 import ToastMessage from '~/components/ToastMessage/ToastMessage';
 import productService from '~/services/productServices';
-
+import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
+import LastPageIcon from '@mui/icons-material/LastPage';
 function Product() {
     const [products, setProducts] = React.useState([]);
     const [selectedProductId, setSelectedProductId] = React.useState(null);
     const [showPopup, setShowPopup] = React.useState(false);
     const [message, setMessage] = React.useState('');
     const [typeMessage, setTypeMessage] = React.useState('');
+    // search
+    const [searchTerm, setSearchTerm] = React.useState('');
+    const [currentPage, setCurrentPage] = React.useState(1);
+    const [itemsPerPage, setItemsPerPage] = React.useState(5);
+    const [isSearchFocused, setIsSearchFocused] = React.useState(false);
     const navigate = useNavigate();
 
     const fetchCategory = async () => {
         const listCategory = await productService.getAllProduct();
         setProducts(listCategory);
     };
+
     React.useEffect(() => {
         fetchCategory();
-    }, []);
+    }, [searchTerm, currentPage, itemsPerPage]);
+
+    // reset current page to 1 when the searchTerm changes
+    React.useEffect(() => {
+        setCurrentPage(1);
+    }, [searchTerm]);
 
     const handleDelete = (cateId) => {
         setSelectedProductId(cateId);
@@ -71,6 +84,38 @@ function Product() {
     const handleEdit = (id) => {
         navigate(`${id}/edit`);
     };
+
+    // filter products according to brand or name
+    const filteredProducts = products.filter(
+        (product) =>
+            (product.name && product.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (product.brand && product.brand.toLowerCase().includes(searchTerm.toLowerCase())),
+    );
+
+    // make pagination
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
+
+    const pageNumbers = Math.ceil(filteredProducts.length / itemsPerPage);
+
+    const handleNextPage = () => {
+        setCurrentPage((prevPage) => Math.min(prevPage + 1, pageNumbers));
+    };
+
+    const handlePrevPage = () => {
+        setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+    };
+
+    //search animation
+    const handleSearchFocus = () => {
+        setIsSearchFocused(true);
+    };
+
+    const handleSearchBlur = () => {
+        setIsSearchFocused(false);
+    };
+
     return (
         <Box>
             <Box
@@ -104,22 +149,34 @@ function Product() {
                     Add
                 </Button>
             </Box>
+
             {/* Search */}
             <Paper sx={{ mt: 4, mb: 4, padding: 1.5, borderRadius: 4 }}>
                 <TextField
                     placeholder="Search Customer"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onFocus={handleSearchFocus}
+                    onBlur={handleSearchBlur}
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
                                 <SearchIcon sx={{ height: 25, width: 25 }} />
                             </InputAdornment>
                         ),
-                        style: { fontSize: '1.4rem', color: '#000', borderRadius: 8 },
+                        style: {
+                            fontSize: '1.4rem',
+                            color: '#000',
+                            borderRadius: 8,
+                            width: isSearchFocused ? '300px' : '200px',
+                            transition: 'width 0.3s ease-in-out', // Add transition effect
+                        },
                     }}
                 />
             </Paper>
             {/* Table */}
             <ToastMessage message={message} type={typeMessage} />
+
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
@@ -135,11 +192,16 @@ function Product() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {products.length > 0 &&
-                            products.map((row, index) => (
+                        {currentItems.length > 0 &&
+                            currentItems.map((row, index) => (
                                 <TableRow
                                     key={row._id}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                    sx={{
+                                        '&:last-child td, &:last-child th': { border: 0 },
+                                        '.MuiTableCell-root': {
+                                            padding: '0 16px',
+                                        },
+                                    }}
                                 >
                                     <CustomTableCell component="th" scope="row">
                                         {index + 1}
@@ -181,6 +243,35 @@ function Product() {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <CustomTypography sx={{ mt: 2, fontSize:'16px' }}>Total of products: {products.length}</CustomTypography>
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, alignItems: 'center' }}>
+                <Button
+                    onClick={() => setCurrentPage(1)}
+                    disabled={currentPage === 1}
+                    sx={{ mr: 2 }}
+                >
+                    <FirstPageIcon fontSize="large" />
+                </Button>
+                <Button onClick={handlePrevPage} disabled={currentPage === 1} sx={{ mr: 2 }}>
+                    <CustomTypography sx={{ textTransform: 'capitalize' }}>
+                        Previous
+                    </CustomTypography>
+                </Button>
+                <Button
+                    onClick={handleNextPage}
+                    disabled={currentPage === pageNumbers}
+                    sx={{ mr: 2 }}
+                >
+                    <CustomTypography sx={{ textTransform: 'capitalize' }}>Next</CustomTypography>
+                </Button>
+                <Button
+                    onClick={() => setCurrentPage(pageNumbers)}
+                    disabled={currentPage === pageNumbers}
+                    sx={{ mr: 2 }}
+                >
+                    <LastPageIcon fontSize="large" />
+                </Button>
+            </Box>
             {showPopup && (
                 <PopupConfirm
                     handleClose={handleClosePopup}

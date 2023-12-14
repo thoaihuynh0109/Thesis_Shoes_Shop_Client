@@ -10,8 +10,6 @@ import Paper from '@mui/material/Paper';
 import { Button, IconButton, InputAdornment, Stack, TextField } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
-import UploadIcon from '@mui/icons-material/Upload';
-import DownloadIcon from '@mui/icons-material/Download';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import CheckIcon from '@mui/icons-material/Check';
@@ -21,34 +19,47 @@ import CustomTableCell from '../CustomTableCell/CustomTableCell';
 import PopupConfirm from '../PopupConfirm/PopupConfirm';
 import userService from '~/services/userServices';
 import ToastMessage from '~/components/ToastMessage/ToastMessage';
-
+import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
+import LastPageIcon from '@mui/icons-material/LastPage';
 function User() {
     const [selectedUserId, setSelectedUserId] = React.useState(null);
     const [users, setUsers] = React.useState([]);
     const [showPopup, setShowPopup] = React.useState(false);
     const [message, setMessage] = React.useState('');
     const [typeMessage, setTypeMessage] = React.useState('');
-    const [searchTerm, setSearchTerm] = React.useState(''); // New state for search term
+    const [searchTerm, setSearchTerm] = React.useState('');
+    const [currentPage, setCurrentPage] = React.useState(1);
+    const [itemsPerPage, setItemsPerPage] = React.useState(6);
+    const [isSearchFocused, setIsSearchFocused] = React.useState(false);
+    // make pagination
+
     const navigate = useNavigate();
+
     const fetchUsers = async () => {
         const listUser = await userService.getAllUser();
         setUsers(listUser);
     };
+
     React.useEffect(() => {
         fetchUsers();
+        // setCurrentPage(1);
+    }, [searchTerm, currentPage, itemsPerPage]);
+
+    // reset current page to 1 when the searchTerm changes
+    React.useEffect(() => {
+        setCurrentPage(1);
     }, [searchTerm]);
 
     const handleDelete = (id) => {
         setSelectedUserId(id);
-        // show pop up to confirm this action
         setShowPopup(true);
     };
 
     const confirmDelete = async (id) => {
-        // call api để xóa user
-        const respone = await userService.deleteUser(id);
-        console.log(respone);
-        if (respone.status === 204) {
+        const response = await userService.deleteUser(id);
+        console.log(response);
+        if (response.status === 204) {
             setMessage('Xóa user thành công');
             setTypeMessage('success');
             setTimeout(() => {
@@ -71,7 +82,6 @@ function User() {
         navigate(`${id}/edit`);
     };
 
-    //  filter users based on search term: last name --> full name, email, and phone number
     const filteredUsers = users.filter(
         (user) =>
             (user.lastName && user.lastName.toLowerCase().includes(searchTerm.toLowerCase())) ||
@@ -79,6 +89,36 @@ function User() {
             (user.email && user.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
             (user.phone && user.phone.toLowerCase().includes(searchTerm.toLowerCase())),
     );
+
+    // make pagination
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
+
+    const pageNumbers = Math.ceil(filteredUsers.length / itemsPerPage);
+
+    const handleNextPage = () => {
+        setCurrentPage((prevPage) => Math.min(prevPage + 1, pageNumbers));
+    };
+
+    const handlePrevPage = () => {
+        setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+    };
+
+    const renderPageNumbers = Array.from({ length: pageNumbers }).map((_, index) => (
+        <Button key={index} onClick={() => setCurrentPage(index + 1)} sx={{ mt: 2 }}>
+            <CustomTypography>{index + 1}</CustomTypography>
+        </Button>
+    ));
+
+    //search animation
+    const handleSearchFocus = () => {
+        setIsSearchFocused(true);
+    };
+
+    const handleSearchBlur = () => {
+        setIsSearchFocused(false);
+    };
 
     return (
         <Box>
@@ -113,60 +153,63 @@ function User() {
                     Add
                 </Button>
             </Box>
-            {/* Search */}
             <Paper sx={{ mt: 4, mb: 4, padding: 1.5, borderRadius: 4 }}>
-                {/* <TextField
-                    placeholder="Search Customer"
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <SearchIcon sx={{ height: 25, width: 25 }} />
-                            </InputAdornment>
-                        ),
-                        style: { fontSize: '1.4rem', color: '#000', borderRadius: 8 },
-                    }}
-                /> */}
-
                 <TextField
                     placeholder="Search Customer"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    onFocus={handleSearchFocus}
+                    onBlur={handleSearchBlur}
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
                                 <SearchIcon sx={{ height: 25, width: 25 }} />
                             </InputAdornment>
                         ),
-                        style: { fontSize: '1.4rem', color: '#000', borderRadius: 8 },
+                        style: {
+                            fontSize: '1.4rem',
+                            color: '#000',
+                            borderRadius: 8,
+                            width: isSearchFocused ? '300px' : '200px',
+                            transition: 'width 0.3s ease-in-out', // Add transition effect
+                        },
                     }}
                 />
             </Paper>
-            {/* Table */}
-            <ToastMessage message={message} type={typeMessage} />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <CustomTableCell>No</CustomTableCell>
-                            <CustomTableCell align="left">Name</CustomTableCell>
-                            <CustomTableCell align="left">Email</CustomTableCell>
-                            <CustomTableCell align="left">Phone</CustomTableCell>
-                            <CustomTableCell align="center">Active</CustomTableCell>
-                            <CustomTableCell align="center">Action</CustomTableCell>
+                            <CustomTableCell sx={{ fontWeight: 'bold' }}>No</CustomTableCell>
+                            <CustomTableCell sx={{ fontWeight: 'bold' }} align="left">
+                                Name
+                            </CustomTableCell>
+                            <CustomTableCell sx={{ fontWeight: 'bold' }} align="left">
+                                Email
+                            </CustomTableCell>
+                            <CustomTableCell sx={{ fontWeight: 'bold' }} align="left">
+                                Phone
+                            </CustomTableCell>
+                            <CustomTableCell sx={{ fontWeight: 'bold' }} align="center">
+                                Active
+                            </CustomTableCell>
+                            <CustomTableCell sx={{ fontWeight: 'bold' }} align="center">
+                                Action
+                            </CustomTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {filteredUsers.length > 0 &&
-                            filteredUsers.map((row, index) => (
+                        {currentItems.length > 0 &&
+                            currentItems.map((row, index) => (
                                 <TableRow
                                     key={row._id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     <CustomTableCell component="th" scope="row">
-                                        {index + 1}
+                                        {(currentPage - 1) * itemsPerPage + index + 1}
                                     </CustomTableCell>
                                     <CustomTableCell align="left">
-                                        {row.lastName + ' ' + row.firstName}
+                                        {row.firstName + ' ' + row.lastName}
                                     </CustomTableCell>
                                     <CustomTableCell align="left">{row.email}</CustomTableCell>
                                     <CustomTableCell align="left">{row.phone}</CustomTableCell>
@@ -181,7 +224,6 @@ function User() {
                                         <IconButton onClick={() => handleDelete(row._id)}>
                                             <DeleteIcon color="error" fontSize="large" />
                                         </IconButton>
-
                                         <IconButton onClick={() => handleEdit(row._id)}>
                                             <EditNoteIcon color="info" fontSize="large" />
                                         </IconButton>
@@ -191,6 +233,31 @@ function User() {
                     </TableBody>
                 </Table>
             </TableContainer>
+            
+            <CustomTypography sx={{ mt: 2, fontSize:'16px' }}>Total of users: {users.length}</CustomTypography>
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, alignItems: 'center' }}>
+                <Button onClick={() => setCurrentPage(1)} disabled={currentPage === 1}>
+                    {/* <CustomTypography sx={{ textTransform: 'capitalize' }}>First</CustomTypography> */}
+
+                    <FirstPageIcon fontSize="large" />
+                </Button>
+                <Button onClick={handlePrevPage} disabled={currentPage === 1}>
+                    <CustomTypography sx={{ textTransform: 'capitalize' }}>
+                        Previous
+                    </CustomTypography>
+                </Button>
+                {/* {renderPageNumbers} */}
+                <Button onClick={handleNextPage} disabled={currentPage === pageNumbers}>
+                    <CustomTypography sx={{ textTransform: 'capitalize' }}>Next</CustomTypography>
+                </Button>
+                <Button
+                    onClick={() => setCurrentPage(pageNumbers)}
+                    disabled={currentPage === pageNumbers}
+                >
+                    {/* <CustomTypography sx={{ textTransform: 'capitalize' }}>Last</CustomTypography> */}
+                    <LastPageIcon fontSize="large" />
+                </Button>
+            </Box>
             {showPopup && (
                 <PopupConfirm
                     handleClose={handleClosePopup}

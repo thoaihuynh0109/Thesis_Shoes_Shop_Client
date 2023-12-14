@@ -1,136 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button, IconButton, InputAdornment, Stack, TextField } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+import { Button, IconButton, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import UploadIcon from '@mui/icons-material/Upload';
-import DownloadIcon from '@mui/icons-material/Download';
-import DeleteIcon from '@mui/icons-material/Delete';
+
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { Link, useNavigate } from 'react-router-dom';
 import CustomTableCell from '../AdminPages/CustomTableCell/CustomTableCell';
-import ToastMessage from '~/components/ToastMessage/ToastMessage';
-import orderService from '~/services/orderServices';
-import FormOrderDetail from '../AdminPages/Order/FormOrderDetail';
+
 import ProductDetailView from './ProductDetailView';
-
-// function OrderDetail() {
-//     const navigate = useNavigate();
-//     const [orders, setOrders] = useState([]);
-//     const [selectedOrderId, setSelectedOrderId] = useState(null);
-//     const [showPopup, setShowPopup] = useState(false);
-//     const [message, setMessage] = useState('');
-//     const [typeMessage, setTypeMessage] = useState('');
-//     const [showForm, setShowForm] = useState(false);
-
-//     const [userData, setUserData] = useState({});
-//     const [userId, setUserId] = useState('');
-//     // Fetch user data from local storage
-//     useEffect(() => {
-//         const storedUserData = JSON.parse(localStorage.getItem('user')) || {};
-//         setUserData(storedUserData);
-//         setUserId(storedUserData._id); // Assuming userId is part of the user data
-//         console.log('storedUserData._id: ', storedUserData._id);
-//     }, []);
-
-//     // useEffect(() => {
-//     //     const storedUserData = JSON.parse(localStorage.getItem('user')) || {};
-//     //     setUserData(storedUserData);
-//     //     setUserId(storedUserData._id);
-//     // }, []);
-
-//     // console.log('user id;:', userId);
-
-//     useEffect(() => {
-//         const fetchOrder = async () => {
-//             try {
-//                 console.log('userId:', userId); // Log the userId
-//                 const listOrder = await orderService.getAllOrderById(userId);
-//                 // console.log('listOrder: ', listOrder);
-//                 console.log(`listOrder of user has id:${userId} `, listOrder);
-//                 setOrders(listOrder);
-//             } catch (error) {
-//                 console.error('Error fetching orders:', error);
-//             }
-//         };
-//         fetchOrder();
-//     }, [userId]);
-
-//     const handleCloseForm = () => {
-//         setShowForm(false);
-//     };
-
-//     const handleClosePopup = () => {
-//         setShowPopup(false);
-//     };
-
-//     const handleView = (id) => {
-//         setSelectedOrderId(id);
-//         setShowForm(true);
-//     };
-
-//     return (
-//         <Box>
-//             {/* Table */}
-//             <ToastMessage message={message} type={typeMessage} />
-//             <TableContainer component={Paper}>
-//                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
-//                     <TableHead>
-//                         <TableRow>
-//                             <CustomTableCell>No</CustomTableCell>
-//                             <CustomTableCell align="left">Times</CustomTableCell>
-//                             <CustomTableCell align="left">Total</CustomTableCell>
-//                             <CustomTableCell align="left">Payment</CustomTableCell>
-
-//                             <CustomTableCell align="center">Action</CustomTableCell>
-//                         </TableRow>
-//                     </TableHead>
-//                     <TableBody>
-//                         {orders.length > 0 &&
-//                             orders.map((order, index) => (
-//                                 <TableRow
-//                                     key={order._id}
-//                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-//                                 >
-//                                     <CustomTableCell component="th" scope="order">
-//                                         {index + 1}
-//                                     </CustomTableCell>
-//                                     <CustomTableCell align="left">
-//                                         {new Date(order.createdAt).toLocaleString()}
-//                                         {/* {order.createdAt} */}
-//                                     </CustomTableCell>
-//                                     <CustomTableCell align="left">
-//                                         {order.totalAmount}
-//                                     </CustomTableCell>
-//                                     <CustomTableCell align="left">
-//                                         {order.paymentMethod}
-//                                     </CustomTableCell>
-
-//                                     <CustomTableCell align="center">
-//                                         <IconButton onClick={() => handleView(order._id)}>
-//                                             <VisibilityIcon color="info" fontSize="large" />
-//                                         </IconButton>
-//                                     </CustomTableCell>
-//                                 </TableRow>
-//                             ))}
-//                     </TableBody>
-//                 </Table>
-//             </TableContainer>
-//             {showForm && <ProductDetailView handleClose={handleCloseForm} id={selectedOrderId} />}
-//         </Box>
-//     );
-// }
-
-// export default OrderDetail;
-
 import userService from '~/services/userServices';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
+import LastPageIcon from '@mui/icons-material/LastPage';
+import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 function OrderDetail() {
     // call api
     const [orders, setOrders] = useState([]);
@@ -139,8 +25,19 @@ function OrderDetail() {
     const [selectedOrderId, setSelectedOrderId] = useState(null);
     const [showForm, setShowForm] = useState(false);
 
-    const [userData, setUserData] = useState({});
+    // get userID from local storage
     const [userId, setUserId] = useState(JSON.parse(localStorage.getItem('user')) || '');
+    // pagination
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(6);
+    // search
+    const [searchTerm, setSearchTerm] = useState('');
+    const [isSearchFocused, setIsSearchFocused] = useState(false);
+
+    // reset current page to 1 when the searchTerm changes
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchTerm]);
 
     // Fetch user data from local storage
     // const storedUserData = useEffect(() => {
@@ -156,7 +53,7 @@ function OrderDetail() {
             setOrders(listOrder);
         };
         fetchOrder();
-    }, []);
+    }, [searchTerm, currentPage, itemsPerPage]);
 
     useEffect(() => {
         const fetchOrder = async () => {
@@ -177,12 +74,37 @@ function OrderDetail() {
         setShowForm(true);
     };
 
+    // pagination
+    // make pagination
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = orders.slice(indexOfFirstItem, indexOfLastItem);
+
+    const pageNumbers = Math.ceil(orders.length / itemsPerPage);
+
+    const handleNextPage = () => {
+        setCurrentPage((prevPage) => Math.min(prevPage + 1, pageNumbers));
+    };
+
+    const handlePrevPage = () => {
+        setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+    };
+
+    //search animation
+    const handleSearchFocus = () => {
+        setIsSearchFocused(true);
+    };
+
+    const handleSearchBlur = () => {
+        setIsSearchFocused(false);
+    };
+
     return (
         <Box>
             {/* Table */}
 
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <Table sx={{ minWidth: 650, minHeight: 350 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <CustomTableCell>No</CustomTableCell>
@@ -193,8 +115,8 @@ function OrderDetail() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {orders.length > 0 &&
-                            orders.map((order, index) => (
+                        {currentItems.length > 0 &&
+                            currentItems.map((order, index) => (
                                 <TableRow
                                     key={order._id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -221,6 +143,29 @@ function OrderDetail() {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, alignItems: 'center' }}>
+                <Button onClick={() => setCurrentPage(1)} disabled={currentPage === 1}>
+                    {/* <CustomTypography sx={{ textTransform: 'capitalize' }}>First</CustomTypography> */}
+
+                    <FirstPageIcon fontSize="large" />
+                </Button>
+                <Button onClick={handlePrevPage} disabled={currentPage === 1}>
+                    <CustomTypography sx={{ textTransform: 'capitalize' }}>
+                        Previous
+                    </CustomTypography>
+                </Button>
+                {/* {renderPageNumbers} */}
+                <Button onClick={handleNextPage} disabled={currentPage === pageNumbers}>
+                    <CustomTypography sx={{ textTransform: 'capitalize' }}>Next</CustomTypography>
+                </Button>
+                <Button
+                    onClick={() => setCurrentPage(pageNumbers)}
+                    disabled={currentPage === pageNumbers}
+                >
+                    {/* <CustomTypography sx={{ textTransform: 'capitalize' }}>Last</CustomTypography> */}
+                    <LastPageIcon fontSize="large" />
+                </Button>
+            </Box>
             {showForm && <ProductDetailView handleClose={handleCloseForm} id={selectedOrderId} />}
         </Box>
     );
