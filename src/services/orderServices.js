@@ -13,7 +13,15 @@ const orderService = {
         }
     },
 
-    
+    getLastestOrder: async () => {
+        try {
+            const respone = await axios.get(apiUrl + '/lastest-orders');
+            return respone.data;
+        } catch (error) {
+            console.error(error);
+        }
+    },
+
     getOrderById: async (id) => {
         try {
             const respone = await axios.get(apiUrl + `/${id}`);
