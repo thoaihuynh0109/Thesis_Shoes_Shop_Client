@@ -72,9 +72,12 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { storeProductDetails } from '~/redux/ProductDetails/productDetailsActions';
 
+import Loading from '~/pages/Home/Loading/Loading';
 function NewArrivals() {
     const dispatch = useDispatch();
     const [productDetails, setProductDetails] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
     const navigate = useNavigate();
     useEffect(() => {
         const fetchProductDetails = async () => {
@@ -83,6 +86,7 @@ function NewArrivals() {
                 const productID = '656f5ac507890ef58e7c4fd0';
                 const product = await productService.getProductById(productID);
                 setProductDetails(product);
+                setIsLoading(false);
             } catch (error) {
                 console.error('Error fetching product details:', error);
             }
@@ -104,6 +108,10 @@ function NewArrivals() {
         navigate(`/product-details/${productDetails._id}`);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
+
+    if (isLoading) {
+        return <Loading />;
+    }
 
     return (
         <Box

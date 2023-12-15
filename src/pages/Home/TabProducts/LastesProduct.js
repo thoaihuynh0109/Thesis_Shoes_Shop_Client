@@ -8,18 +8,21 @@ import { CustomizeButton } from '~/components/CustomizeButton/CustomizeButton';
 import { MakeProductsCard } from '~/components/MakeProductCards/MakeProductCards';
 import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
 import productService from '~/services/productServices';
+import Loading from '../Loading/Loading';
 
 function LastesProduct() {
     const navigate = useNavigate();
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [listLastest, setListLastest] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     // call api
     useEffect(() => {
         const fetchData = async () => {
             const listProduct = await productService.getLastestProduct();
             setListLastest(listProduct);
+            setIsLoading(false);
         };
         fetchData();
     }, []);
@@ -28,6 +31,10 @@ function LastesProduct() {
         navigate('/shop');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
+
+    if (isLoading) {
+        return <Loading />;
+    }
 
     return (
         <Box sx={{ mt: 4 }}>
