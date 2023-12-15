@@ -12,6 +12,7 @@ import { removeCart } from '~/redux/CartManagement/cartActions';
 import PaymentStep from './Payment/index';
 import ShippingStep from './ShippingStep';
 import { useDispatch, useSelector } from 'react-redux';
+import Loading from '~/pages/Home/Loading/Loading';
 
 function ShippingInformation() {
     const dispatch = useDispatch();
@@ -34,6 +35,10 @@ function ShippingInformation() {
 
     // wait continue loading
     const [isLoading, setIsLoading] = useState(false);
+    // loading data
+    const [isLoadingData, setIsLoadingData] = useState(true);
+    // disable button while ordering products
+    const [buttonDisabled, setButtonDisabled] = useState(false);
 
     const [fullName, setFullName] = useState(deliveryAddress?.fullName || '');
     const [phoneNumber, setPhoneNumber] = useState(deliveryAddress?.phoneNumber || '');
@@ -147,7 +152,6 @@ function ShippingInformation() {
             try {
                 // Simulate an asynchronous action (e.g., API call)
                 await new Promise((resolve) => setTimeout(resolve, 2500));
-
                 // Update the address in the local state of ShowDeliveryInformation
                 navigate('/checkout-page', { state: { deliveryAddress: selectedAddress } });
                 // Set the state to indicate that information is filled
@@ -179,6 +183,8 @@ function ShippingInformation() {
     // tiến hành thanh toán
     const handleSubmitOrder = async () => {
         // Check if a payment method is selected
+        setButtonDisabled(true);
+
         if (selectedPaymentMethod) {
             console.log('Selected Payment Method:', selectedPaymentMethod);
             console.log('Total Price: ', getTotalPrice());
@@ -241,6 +247,10 @@ function ShippingInformation() {
             // Show a toast message for not selecting a payment method
         }
     };
+
+    // if (isLoadingData) {
+    //     return <Loading />;
+    // }
 
     return (
         <Box sx={{ minHeight: '800px', alignItems: 'center', justifyContent: 'center' }}>
@@ -426,6 +436,7 @@ function ShippingInformation() {
                                     textTransform: 'capitalize',
                                 }}
                                 onClick={handleSubmitOrder}
+                                disabled={buttonDisabled}
                             >
                                 Order
                             </CustomizeButtonPersonalAccount>

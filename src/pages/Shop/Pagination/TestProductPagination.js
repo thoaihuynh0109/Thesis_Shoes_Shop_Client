@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Grid, IconButton, TextField, Typography, Pagination, Divider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,6 +14,7 @@ import SearchAppBar from '~/layouts/DefaultLayout/GimmeMenu/SearchDesgin';
 import categoryService from '~/services/categoryServices';
 import productService from '~/services/productServices';
 import brandService from '~/services/brandServices';
+import Loading from '~/pages/Home/Loading/Loading';
 
 export default function TestProductPagination() {
     const [listAllProducts, setListAllProducts] = useState([]); // call api
@@ -35,6 +36,7 @@ export default function TestProductPagination() {
     const [sorting, setSorting] = useState('');
     const [selectedPriceRange, setSelectedPriceRange] = useState('');
     const [selectedBrands, setSelectedBrands] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     // call api to get products
     useEffect(() => {
@@ -42,7 +44,9 @@ export default function TestProductPagination() {
             const listAllProducts = await productService.getAllProduct();
             console.log('listAllProducts', listAllProducts);
             setListAllProducts(listAllProducts);
+            setLoading(false); // Set loading to false when data is received
         };
+
         fetchProductData();
     }, []);
 
@@ -95,6 +99,7 @@ export default function TestProductPagination() {
         setHasProducts(priceFiltered.length > 0);
     }, [selectedPriceRange, brandFilteredProducts]);
 
+    // move to another page
     const handleChange = (e, p) => {
         setPage(p);
         _DATA.jump(p);
@@ -106,54 +111,54 @@ export default function TestProductPagination() {
     //     setSearchVal(e.target.value);
     // };
 
-    const handleSearchInputChange = (e) => {
-        // const searchTerm = e.target.value.toLowerCase();
-        const searchTerm = e.target.value;
+    // const handleSearchInputChange = (e) => {
+    //     // const searchTerm = e.target.value.toLowerCase();
+    //     const searchTerm = e.target.value;
 
-        // Update the search value in the state
-        setSearchVal(searchTerm);
+    //     // Update the search value in the state
+    //     setSearchVal(searchTerm);
 
-        // Filter products based on the search term
-        const filteredProducts = listAllProducts.filter(
-            (item) => item.title,
-            // item.title.toLowerCase().includes(searchTerm),
-        );
+    //     // Filter products based on the search term
+    //     const filteredProducts = listAllProducts.filter(
+    //         (item) => item.title,
+    //         // item.title.toLowerCase().includes(searchTerm),
+    //     );
 
-        // Update the state with the filtered products
-        setListAllProducts(filteredProducts);
-        setStoreValue(filteredProducts);
-        setGetValue(true);
-        setPage(1);
+    //     // Update the state with the filtered products
+    //     setListAllProducts(filteredProducts);
+    //     setStoreValue(filteredProducts);
+    //     setGetValue(true);
+    //     setPage(1);
 
-        // Update the state to reflect whether there are products or not
-        setHasProducts(filteredProducts.length > 0);
-    };
+    //     // Update the state to reflect whether there are products or not
+    //     setHasProducts(filteredProducts.length > 0);
+    // };
 
-    const handleSearchClickPagination = () => {
-        if (!searchVal.trim()) {
-            // If the search input is empty, reset the products to the original list
-            setListAllProducts(listAllProducts);
-            setGetValue(false);
-            setPage(1);
-            return;
-        }
+    // const handleSearchClickPagination = () => {
+    //     if (!searchVal.trim()) {
+    //         // If the search input is empty, reset the products to the original list
+    //         setListAllProducts(listAllProducts);
+    //         setGetValue(false);
+    //         setPage(1);
+    //         return;
+    //     }
 
-        // Filter products based on the search term
-        const searchTermLower = searchVal;
-        // const searchTermLower = searchVal.toLowerCase();
-        const filteredProducts = listAllProducts.filter(
-            (item) => item.title.includes(searchTermLower),
-            // item.title.toLowerCase().includes(searchTermLower),
-        );
+    //     // Filter products based on the search term
+    //     const searchTermLower = searchVal;
+    //     // const searchTermLower = searchVal.toLowerCase();
+    //     const filteredProducts = listAllProducts.filter(
+    //         (item) => item.title.includes(searchTermLower),
+    //         // item.title.toLowerCase().includes(searchTermLower),
+    //     );
 
-        // Update the state to reflect whether there are products or not
-        setHasProducts(filteredProducts.length > 0);
+    //     // Update the state to reflect whether there are products or not
+    //     setHasProducts(filteredProducts.length > 0);
 
-        setListAllProducts(filteredProducts);
-        setStoreValue(filteredProducts);
-        setGetValue(true);
-        setPage(1);
-    };
+    //     setListAllProducts(filteredProducts);
+    //     setStoreValue(filteredProducts);
+    //     setGetValue(true);
+    //     setPage(1);
+    // };
 
     const handleBrandFilter = (selectedBrand) => {
         let updatedSelectedBrands = [...selectedBrands];
@@ -167,6 +172,7 @@ export default function TestProductPagination() {
         }
 
         setSelectedBrands(updatedSelectedBrands);
+        setPage(1);
     };
 
     const handlePriceFilter = (selectedPrice) => {
@@ -183,12 +189,18 @@ export default function TestProductPagination() {
         }
 
         setSelectedPriceRange(updatedSelectedPriceRange);
+        setPage(1);
     };
 
     const handleSortChange = (event) => {
         const selectedSorting = event.target.value;
         setSorting(selectedSorting);
+        setPage(1);
     };
+
+    if (loading) {
+        return <Loading />;
+    }
 
     return (
         <Box sx={{ flexGrow: 1, minHeight: '100vh', mt: 4 }}>
@@ -250,6 +262,7 @@ export default function TestProductPagination() {
                         <ProductGrid
                             getValue={getValue}
                             page={page}
+                            setPage={setPage}
                             PER_PAGE={PER_PAGE}
                             _DATA={_DATA}
                             storeValue={storeValue}
@@ -258,12 +271,16 @@ export default function TestProductPagination() {
                             sorting={sorting}
                             hasProducts={hasProducts}
                             navigate={navigate}
+                            // Pass count as a prop
+                            count={count}
+                            handleChange={handleChange}
                         />
                     ) : (
                         <EmptyCard message={'Không có sản phẩm '} />
                     )}
 
-                    <Box sx={{ display: 'flex', justifyContent: 'space-around', mt: 2 }}>
+                    {/*     pagination */}
+                    {/* <Box sx={{ display: 'flex', justifyContent: 'space-around', mt: 2 }}>
                         <Pagination
                             count={count}
                             size="large"
@@ -272,7 +289,7 @@ export default function TestProductPagination() {
                             shape="rounded"
                             onChange={handleChange}
                         />
-                    </Box>
+                    </Box> */}
                 </Grid>
             </Grid>
         </Box>

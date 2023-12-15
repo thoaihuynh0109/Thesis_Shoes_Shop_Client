@@ -9,6 +9,7 @@ import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 import { useDispatch } from 'react-redux';
 import { setProductDetails } from '~/redux/ProductDetails/productDetailsActions';
 import productService from '~/services/productServices';
+import Loading from '../Home/Loading/Loading';
 
 export default function MakeProductDetailDescription() {
     const { id } = useParams();
@@ -55,7 +56,7 @@ export default function MakeProductDetailDescription() {
 
     if (!productDetail) {
         // Loading state or error handling
-        return <div>Loading...</div>;
+        return <Loading />;
     }
 
     return (
