@@ -5,6 +5,7 @@ import { MakeProductsCard } from '~/components/MakeProductCards/MakeProductCards
 import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
 import productService from '~/services/productServices';
 import categoryService from '~/services/categoryServices';
+import Loading from '~/pages/Home/Loading/Loading';
 
 export function LoadMoreProduct({
     getValue,
@@ -24,6 +25,7 @@ export function LoadMoreProduct({
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [listAllProducts, setListAllProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     // call api
 
@@ -34,6 +36,7 @@ export function LoadMoreProduct({
             console.log('List cate for male: ', listAllProducts2);
             // console.log('List cate for male22:', listAllProducts);
             setListAllProducts(listAllProducts2);
+            setLoading(false);
         };
         fetchProductByCategory();
     }, []);
@@ -134,6 +137,10 @@ export function LoadMoreProduct({
     const handleButtonLoadMore = () => {
         setVisibleItems((prevVisibleItems) => prevVisibleItems + itemsPerLoad);
     };
+
+    if (loading) {
+        return <Loading />;
+    }
 
     return (
         <Box>
