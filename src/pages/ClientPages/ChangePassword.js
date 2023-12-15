@@ -7,7 +7,9 @@ import { CustomizeTextField } from '~/components/CustomizeTextField/CustomizeTex
 import useValidation from '~/components/UseValidation/useValidation';
 import { ToastMessage2 } from '~/components/MakeProductCards/MakeProductCards';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
+import { useNavigate } from 'react-router-dom';
 function ChangePassword() {
+    const navigate = useNavigate();
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [rePassword, setRePassword] = useState('');
@@ -39,6 +41,10 @@ function ChangePassword() {
                 setShowToast(true);
                 setToastMessage('Change password successfully!');
                 setTypeMessage('success');
+                setTimeout(() => {
+                    navigate('/');
+                }, 2000);
+
                 setCurrentPassword('');
                 setNewPassword('');
                 setRePassword('');
@@ -156,6 +162,7 @@ function ChangePassword() {
                             });
                         }}
                         label="Current Password"
+                        type="password"
                         placeholder="Your current password...."
                         variant="outlined"
                         onBlur={currentPasswordValidation.validateRequired}
@@ -186,6 +193,7 @@ function ChangePassword() {
                             });
                         }}
                         label="New Password"
+                        type="password"
                         variant="outlined"
                         placeholder="Enter new password...."
                         onBlur={newPasswordValidation.validateRequired}
@@ -211,6 +219,7 @@ function ChangePassword() {
                         }}
                         label="Retype Password"
                         variant="outlined"
+                        type="password"
                         placeholder="Retype password...."
                         onBlur={rePasswordValidation.validateRequired}
                         error={rePasswordValidation.state.message !== ''}
