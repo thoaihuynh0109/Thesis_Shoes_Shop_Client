@@ -9,6 +9,9 @@ function Women() {
             <MakeUIForMenAndWomenPage forWomen={true} />
             {/* get product for gender is Nữ in database */}
             <ProductPageForGender selectedGender={'Nữ'} />
+            <Box>
+                
+            </Box>
         </Box>
     );
 }
