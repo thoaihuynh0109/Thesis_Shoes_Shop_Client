@@ -44,7 +44,7 @@ export default function FormOrderDetail({ handleClose, id }) {
                             <List
                                 sx={{
                                     width: '100%',
-                                    maxWidth: 360,
+                                    maxWidth: 500,
                                     bgcolor: 'background.paper',
                                 }}
                                 component="nav"
@@ -54,7 +54,9 @@ export default function FormOrderDetail({ handleClose, id }) {
                                     <ListItemIcon>
                                         <SendIcon />
                                     </ListItemIcon>
-                                    <ListItemText primary="ID:" />
+                                    <ListItemText
+                                        primary={<CustomTypography>ID:</CustomTypography>}
+                                    />
                                     <CustomTypography> {order._id}</CustomTypography>
                                 </ListItemButton>
 
@@ -62,7 +64,10 @@ export default function FormOrderDetail({ handleClose, id }) {
                                     <ListItemIcon>
                                         <SendIcon />
                                     </ListItemIcon>
-                                    <ListItemText primary="Sản phẩm:" />
+                                    <ListItemText
+                                        primary={<CustomTypography>Sản phẩm:</CustomTypography>}
+                                    />
+
                                     {open ? <ExpandLess /> : <ExpandMore />}
                                 </ListItemButton>
                                 {order.items?.length > 0 &&
@@ -70,11 +75,42 @@ export default function FormOrderDetail({ handleClose, id }) {
                                         return (
                                             <>
                                                 <Collapse in={open} timeout="auto" unmountOnExit>
-                                                    <List component="div" sx={{ pl: 8 }}>
-                                                        <CustomTypography>
-                                                            "{item.name}" "{item.price}" "
-                                                            {item.quantity}"
-                                                        </CustomTypography>
+                                                    <List component="div" sx={{ ml: '4px' }}>
+                                                        <Box
+                                                            sx={{
+                                                                display: 'flex',
+                                                                justifyContent: 'space-between',
+                                                                // alignItems: 'start',
+                                                            }}
+                                                        >
+                                                            <Box sx={{ ml: 0 }}>
+                                                                <img
+                                                                    src={item.images}
+                                                                    alt={item.name}
+                                                                    height="50px"
+                                                                    width="50px"
+                                                                />
+                                                            </Box>
+                                                            <Box sx={{ ml: 2, mr: 'auto' }}>
+                                                                <CustomTypography>
+                                                                    {item.name}
+                                                                </CustomTypography>
+                                                                <CustomTypography>
+                                                                    x{item.quantity}
+                                                                </CustomTypography>
+                                                            </Box>
+                                                            <Box>
+                                                                <CustomTypography>
+                                                                    size: {item.size}
+                                                                </CustomTypography>
+                                                                <CustomTypography>
+                                                                    {item.price} VND
+                                                                </CustomTypography>
+                                                            </Box>
+
+                                                            {/* "{item.name}" "{item.price}" "
+                                                            {item.quantity}" */}
+                                                        </Box>
                                                     </List>
                                                 </Collapse>
                                             </>
@@ -84,28 +120,46 @@ export default function FormOrderDetail({ handleClose, id }) {
                                     <ListItemIcon>
                                         <SendIcon />
                                     </ListItemIcon>
-                                    <ListItemText primary="Tổng:" />
+
+                                    <ListItemText
+                                        primary={<CustomTypography>Tổng:</CustomTypography>}
+                                    />
                                     <CustomTypography> {order.totalAmount}</CustomTypography>
                                 </ListItemButton>
                                 <ListItemButton>
                                     <ListItemIcon>
                                         <SendIcon />
                                     </ListItemIcon>
-                                    <ListItemText primary="Phương thức thanh toán:" />
+                                    <ListItemText
+                                        primary={
+                                            <CustomTypography>
+                                                Phương thức thanh toán:
+                                            </CustomTypography>
+                                        }
+                                    />
+
                                     <CustomTypography> {order.paymentMethod}</CustomTypography>
                                 </ListItemButton>
                                 <ListItemButton>
                                     <ListItemIcon>
                                         <SendIcon />
                                     </ListItemIcon>
-                                    <ListItemText primary="Phí giao hàng:" />
+                                    <ListItemText
+                                        primary={
+                                            <CustomTypography>Phí giao hàng:</CustomTypography>
+                                        }
+                                    />
+
                                     <CustomTypography> {order.shippingFee}</CustomTypography>
                                 </ListItemButton>
                                 <ListItemButton>
                                     <ListItemIcon>
                                         <SendIcon />
                                     </ListItemIcon>
-                                    <ListItemText primary="Tình trạng:" />
+                                    <ListItemText
+                                        primary={<CustomTypography>Tình trạng:</CustomTypography>}
+                                    />
+
                                     <CustomTypography> {order.status}</CustomTypography>
                                 </ListItemButton>
                             </List>
