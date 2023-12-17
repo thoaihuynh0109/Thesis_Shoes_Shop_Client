@@ -5,17 +5,31 @@ const initialState = {
         : [],
 };
 
+export const findProductIndex = (wishlistItems, productId) => {
+    return wishlistItems.findIndex((item) => item._id === productId);
+};
+
 const wishlistReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_TO_WISHLIST:
-            const newWishlistItems = [...state.wishlistItems, action.payload];
+            const existingProductIndex = findProductIndex(
+                state.wishlistItems,
+                action.payload.productId,
+            );
 
-            localStorage.setItem('wishlistItems', JSON.stringify(newWishlistItems));
+            if (existingProductIndex === -1) {
+                // Product doesn't exist in the wishlist, add it
+                const newWishlistItems = [...state.wishlistItems, action.payload];
+                localStorage.setItem('wishlistItems', JSON.stringify(newWishlistItems));
 
-            return {
-                ...state,
-                wishlistItems: newWishlistItems,
-            };
+                return {
+                    ...state,
+                    wishlistItems: newWishlistItems,
+                };
+            } else {
+                // Product already exists in the wishlist
+                return state;
+            }
         case REMOVE_FROM_WISHLIST:
             const { productId: removeProductId } = action.payload;
             const updatedWishlistItems = state.wishlistItems.filter(

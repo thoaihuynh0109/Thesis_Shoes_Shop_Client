@@ -4,7 +4,7 @@ import { STORE_PRODUCT_DETAILS } from '../actionsContant';
 const initialState = {
     // chỉnh lại chỗ này. Tập hợp lại các state chung
 
-    productDetails: { title: null, price: null, image: null, gender: null },
+    productDetails: { _id: null, name: null, images: null, price: null },
 };
 
 const productDetailsReducer = (state = initialState, action) => {
