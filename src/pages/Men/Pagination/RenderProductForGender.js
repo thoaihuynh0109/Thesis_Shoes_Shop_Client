@@ -90,7 +90,7 @@ export function LoadMoreProduct({
 
         if (!hasProducts || data.length === 0) {
             return (
-                <Box style={{ width: '100%', textAlign: 'center', mt: 4 }}>
+                <Box sx={{ textAlign: 'center', mt: 4, width: '100%' }}>
                     <EmptyCard message={'Không có sản phẩm phù hợp'} />
                 </Box>
             );
@@ -102,7 +102,7 @@ export function LoadMoreProduct({
                 {data.length > 0 &&
                     data.map((product, index) => (
                         // <Grid item key={product._id} xs={12} sm={6} md={3}>
-                        <Grid item key={product._id} xs={12} sm={6} md={3} lg={3} xl={2}>
+                        <Grid item key={product._id} xs={12} sm={6} md={3}>
                             <MakeProductsCard
                                 key={product._id}
                                 _id={product._id}
@@ -142,32 +142,69 @@ export function LoadMoreProduct({
         return <Loading />;
     }
 
+    // return (
+    //     <Box>
+    //         <Box sx={{ display: 'flex' }}>
+    //             {/* , flexDirection: 'column' */}
+    //             <Box sx={{ display: 'flex' }}>
+    //                 {/* , flexDirection: 'column'  */}
+    //                 <Box
+    //                     style={{
+    //                         display: 'flex',
+    //                         // flexWrap: 'wrap',
+    //                         minHeight: '500px',
+    //                         // flexDirection: 'column',
+    //                         // marginLeft: '64px',
+    //                     }}
+    //                 >
+    //                     {renderProductCards()}
+    //                     {/* {renderProductCards()} */}
+
+    //                     <ToastMessage2
+    //                         // message="Product added to cart!"
+    //                         message={toastMessage}
+    //                         type="success"
+    //                         showToast={showToast}
+    //                         setShowToast={setShowToast}
+    //                     />
+    //                 </Box>
+    //             </Box>
+    //         </Box>
+    //         {/* hide button when there is no product to load more */}
+    //         {isLoadMoreVisible && (
+    //             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    //                 <Button
+    //                     variant="contained"
+    //                     onClick={handleButtonLoadMore}
+    //                     sx={{
+    //                         display: 'flex',
+    //                         alignItems: 'center',
+    //                         textAlign: 'center',
+    //                         fontSize: '14px',
+    //                         padding: '8px 24px',
+    //                         mt: 2,
+    //                     }}
+    //                 >
+    //                     Load More
+    //                 </Button>
+    //             </Box>
+    //         )}
+    //     </Box>
+    // );
+
     return (
         <Box>
-            <Box sx={{ display: 'flex' }}>
-                {/* , flexDirection: 'column' */}
-                <Box sx={{ display: 'flex' }}>
-                    {/* , flexDirection: 'column'  */}
-                    <Box
-                        style={{
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            minHeight: '500px',
-                            // marginLeft: '64px',
-                        }}
-                    >
-                        {renderProductCards()}
-                        {/* {renderProductCards()} */}
+            <Box sx={{ display: 'flex', minHeight: '500px' }}>
 
-                        <ToastMessage2
-                            // message="Product added to cart!"
-                            message={toastMessage}
-                            type="success"
-                            showToast={showToast}
-                            setShowToast={setShowToast}
-                        />
-                    </Box>
-                </Box>
+
+                {renderProductCards()}
+                <ToastMessage2
+                    // message="Product added to cart!"
+                    message={toastMessage}
+                    type="success"
+                    showToast={showToast}
+                    setShowToast={setShowToast}
+                />
             </Box>
             {/* hide button when there is no product to load more */}
             {isLoadMoreVisible && (
