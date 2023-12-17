@@ -7,4 +7,17 @@
 
 ### Description
 
--   Developing an e-commerce website to sell shoes
+-   Developing an e-commerce website to sell shoes using ReactJS and NodeJS
+
+### Task must complete
+
+-   chỉnh lại thứ tự loading
+-   hình đầu tiên bên trái nó loading rồi mất rồi hiện
+
+Detail pages
+
+-   add to wishlist lỗi
+
+Admin Pages:
+
+-   add loading for admin UI
