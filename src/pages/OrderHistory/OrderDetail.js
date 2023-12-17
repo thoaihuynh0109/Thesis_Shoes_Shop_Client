@@ -17,6 +17,7 @@ import userService from '~/services/userServices';
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
+import Loading from '../Home/Loading/Loading';
 function OrderDetail() {
     // call api
     const [orders, setOrders] = useState([]);
@@ -33,6 +34,7 @@ function OrderDetail() {
     // search
     const [searchTerm, setSearchTerm] = useState('');
     const [isSearchFocused, setIsSearchFocused] = useState(false);
+    const [isLoadingData, setIsLoadingData] = useState(true);
 
     // reset current page to 1 when the searchTerm changes
     useEffect(() => {
@@ -51,6 +53,7 @@ function OrderDetail() {
             const listOrder = await userService.getAllOrderById(userId._id);
             console.log(`listOrder of user has id:${userId._id} `, listOrder);
             setOrders(listOrder);
+            setIsLoadingData(false);
         };
         fetchOrder();
     }, [searchTerm, currentPage, itemsPerPage]);
@@ -99,12 +102,16 @@ function OrderDetail() {
         setIsSearchFocused(false);
     };
 
+    if (isLoadingData) {
+        return <Loading />;
+    }
+
     return (
         <Box>
             {/* Table */}
 
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650, minHeight: 350 }} aria-label="simple table">
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <CustomTableCell>No</CustomTableCell>
@@ -122,7 +129,7 @@ function OrderDetail() {
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     <CustomTableCell component="th" scope="order">
-                                        {index + 1}
+                                        {(currentPage - 1) * itemsPerPage + index + 1}
                                     </CustomTableCell>
                                     <CustomTableCell align="left">
                                         {new Date(order.createdAt).toLocaleString()}

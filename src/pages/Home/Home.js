@@ -8,12 +8,14 @@ import SuggestCollection from './SuggestCollection/SuggestCollection';
 import SlideShowImageShop from './SlideShowImage/SlideShowImageShop';
 import MostProductsViewed from './MostProductsViewed/MostProductsViewed';
 import FlashSaleProducts from './FlashSaleProducts/FlashSaleProducts';
+import Loading from './Loading/Loading';
 const cx = classNames.bind(styles);
 
 function Home() {
     console.log(JSON.parse(localStorage.getItem('user')));
     return (
-        <Box sx={{ height: '100%', minHeight: '450vh' }}>
+        // <Box sx={{ height: '100%', minHeight: '450vh' }}>
+        <Box sx={{ height: '100%', minHeight: '850vh' }}>
             <SlideShowImageShop />
             <TabProducts />
             {/* New Products Arrivals */}
@@ -24,6 +26,7 @@ function Home() {
             <FlashSaleProducts />
             {/* Most Products Viewed */}
             <MostProductsViewed />
+            {/* <Loading /> */}
         </Box>
     );
 }

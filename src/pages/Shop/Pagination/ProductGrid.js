@@ -19,14 +19,20 @@ export default function ProductGrid({
     brandFilteredProducts,
     sorting,
     hasProducts,
+    setPage,
     navigate,
+    count,
+    handleChange,
 }) {
-    // const [showToast, setToast] = useState(false);
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
 
     const dispatch = useDispatch();
     const searchTerm = useSelector((state) => state.search.searchTerm);
+    useEffect(() => {
+        // Reset page to 1 when search term changes
+        setPage(1);
+    }, [searchTerm]);
 
     const sortProducts = (data) => {
         const toLowerCase = (str) => str.toLowerCase();
@@ -46,7 +52,7 @@ export default function ProductGrid({
     };
 
     // render Product with searching
-    const renderProductCards = () => {
+    const renderProductCardsInitial = () => {
         let data;
 
         if (getValue) {
@@ -127,36 +133,53 @@ export default function ProductGrid({
         );
     };
 
-    // render Product with searching
-    const renderProductCards2 = () => {
-        // initial
+    const renderProductCards = () => {
+        if (_DATA <= 1) {
+            return null; // Hide pagination when there is only one page or no products
+        }
         let data;
 
         if (getValue) {
-            // render product with pagination
-            const startIndex = (page - 1) * PER_PAGE;
-            const endIndex = startIndex + PER_PAGE;
-            const paginatedData = storeValue.slice(startIndex, endIndex);
-            data = paginatedData;
+            // For the entire dataset (storeValue)
+            data = sortProducts(storeValue);
+            _DATA = Math.ceil(data.length / PER_PAGE);
+
+            // console.log('data is sorted: ', data);
+            // Paginate the sorted data
+            // PER_PAGE: The number of products in 1 page - 8
+            // page: total of page - 1
+            const startIndex = (page - 1) * PER_PAGE; // 0
+            // console.log('page in start index: ', page);
+            // console.log('Start Index: ', startIndex);
+            const endIndex = startIndex + PER_PAGE; // 8
+            // console.log('End Index: ', endIndex);
+            data = data.slice(startIndex, endIndex); // lấy sản phẩm trong list từ vị trí 0 --> 7 tương ứng với 8 sản phẩm
+
+            // console.log('Data in Shop: ', data);
         } else {
-            // render product with pagination + with filtered
             const productsToRender =
                 filteredProducts.length > 0 ? filteredProducts : brandFilteredProducts;
-            const filteredProducts2 = productsToRender.filter(
-                (product) => product.name.toLowerCase().includes(searchTerm.toLowerCase()),
-                // product.name,
+            const filteredProducts2 = productsToRender.filter((product) =>
+                product.name.toLowerCase().includes(searchTerm.toLowerCase()),
             );
 
-            // console.log('filter này ne ahihi:', filteredProducts2);
             if (filteredProducts2.length > 0) {
-                // console.log('List Product:', filteredProducts2);
+                // Sort the filtered data
+                data = sortProducts(filteredProducts2);
+                // get length of data is sorted or filtered for pagination.
+                // and calculate the number of pagination based on this length
+                _DATA = Math.ceil(data.length / PER_PAGE);
+                // Paginate the sorted data
                 const startIndex = (page - 1) * PER_PAGE;
                 const endIndex = startIndex + PER_PAGE;
-                const paginatedData = filteredProducts2.slice(startIndex, endIndex);
-                data = sortProducts(paginatedData);
-            }
-            // Update the state to reflect whether there are products or not
-            else {
+                data = data.slice(startIndex, endIndex); // chia sản phẩm ra. có 8 sản phẩm trên 1 trang
+
+                // console.log('page in start index2: ', page);
+                // console.log('22_PER_PAGE: ', PER_PAGE);
+                // console.log('22_Start Index: ', startIndex);
+                // console.log('22_End Index: ', endIndex);
+                // console.log('22_Data in Shop: ', data);
+            } else {
                 return (
                     <Box style={{ width: '100%', textAlign: 'center', mt: 4 }}>
                         <EmptyCard message={'No result is found'} />
@@ -192,7 +215,6 @@ export default function ProductGrid({
                         showToast={showToast}
                         marginRight={4}
                         setShowToast={setShowToast}
-                        // show suitable toast message
                         toastMessage={toastMessage}
                         setToastMessage={setToastMessage}
                     />
@@ -202,16 +224,27 @@ export default function ProductGrid({
     };
 
     return (
-        <Box style={{ display: 'flex', flexWrap: 'wrap', minHeight: '500px' }}>
-            {renderProductCards()}
-            {/* show toast message after adding product to cart */}
-            <ToastMessage2
-                // message="Product added to cart!"
-                message={toastMessage}
-                type="success"
-                showToast={showToast}
-                setShowToast={setShowToast}
-            />
+        <Box>
+            <Box style={{ display: 'flex', flexWrap: 'wrap', minHeight: '500px' }}>
+                {renderProductCards()}
+                {/* show toast message after adding product to cart */}
+                <ToastMessage2
+                    message={toastMessage}
+                    type="success"
+                    showToast={showToast}
+                    setShowToast={setShowToast}
+                />
+            </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'space-around', mt: 2 }}>
+                <Pagination
+                    count={_DATA}
+                    size="large"
+                    page={page}
+                    variant="outlined"
+                    shape="rounded"
+                    onChange={handleChange}
+                />
+            </Box>
         </Box>
     );
 }
