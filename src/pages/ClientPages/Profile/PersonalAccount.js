@@ -286,6 +286,7 @@ function PersonalAccount() {
                         </Grid>
                         <Grid item>
                             <CustomizeTextField
+                                disabled
                                 value={email}
                                 wd={400}
                                 onChange={(e) => {
