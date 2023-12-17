@@ -138,9 +138,9 @@ export function LoadMoreProduct({
         setVisibleItems((prevVisibleItems) => prevVisibleItems + itemsPerLoad);
     };
 
-    if (loading) {
-        return <Loading />;
-    }
+    // if (loading) {
+    //     return <Loading />;
+    // }
 
     // return (
     //     <Box>
@@ -195,8 +195,6 @@ export function LoadMoreProduct({
     return (
         <Box>
             <Box sx={{ display: 'flex', minHeight: '500px' }}>
-
-
                 {renderProductCards()}
                 <ToastMessage2
                     // message="Product added to cart!"
