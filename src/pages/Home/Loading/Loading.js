@@ -6,7 +6,7 @@ function Loading() {
     const [key, setKey] = useState(0);
 
     return (
-        <Box className="overlay-container" sx={{ minHeight: '100vh' }}>
+        <Box className="overlay-container" sx={{ minHeight: '100vh', zIndex: 99999 }}>
             <div className="overlay-background"></div>
             <div className="overlay-content">
                 <div className="sharingan">

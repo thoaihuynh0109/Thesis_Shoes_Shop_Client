@@ -34,6 +34,12 @@ function PersonalAccount() {
     const [toastMessage, setToastMessage] = useState('');
     const [typeMessage, setTypeMessage] = useState('');
 
+    // edit mode
+    const [editMode, setEditMode] = useState(false);
+    const handleEditMode = () => {
+        setEditMode(true);
+    };
+
     // Fetch user data from local storage
     useEffect(() => {
         const storedUserData = JSON.parse(localStorage.getItem('user')) || [];
@@ -208,6 +214,7 @@ function PersonalAccount() {
                         </Grid>
                         <Grid item>
                             <CustomizeTextField
+                                disabled={!editMode}
                                 value={firstName}
                                 wd={400}
                                 onChange={(e) => {
@@ -251,6 +258,7 @@ function PersonalAccount() {
                         </Grid>
                         <Grid item>
                             <CustomizeTextField
+                                disabled={!editMode}
                                 value={lastName}
                                 wd={400}
                                 onChange={(e) => {
@@ -323,6 +331,7 @@ function PersonalAccount() {
                         </Grid>
                         <Grid item>
                             <CustomizeTextField
+                                disabled={!editMode}
                                 value={phone}
                                 wd={400}
                                 onChange={(e) => {
@@ -359,6 +368,7 @@ function PersonalAccount() {
                         </Grid>
                         <Grid item>
                             <CustomizeTextField
+                                disabled={!editMode}
                                 value={address}
                                 wd={400}
                                 onChange={(e) => {
@@ -385,29 +395,81 @@ function PersonalAccount() {
             </Grid>
 
             {/* check if these field are empty */}
-            <Box display="flex" justifyContent={'center'} alignItems={'center'}>
-                <CustomizeButtonPersonalAccount variant="contained" onClick={handleCheckTextField}>
-                    Save Profile
-                </CustomizeButtonPersonalAccount>
-                <ToastMessage2
-                    message={toastMessage}
-                    type={typeMessage}
-                    showToast={showToast}
-                    setShowToast={setShowToast}
-                />
+            {!editMode ? (
+                <Box display="flex" justifyContent={'center'} alignItems={'center'}>
+                    <CustomizeButtonPersonalAccount
+                        sx={{
+                            width: '140px',
+                            pt: 1,
+                            pb: 1,
+                            transition: 'all 0.3s',
+                            textTransform: 'capitalize',
+                            '&:hover': {
+                                fontSize: '16px',
+                                textTransform: 'uppercase',
+                                fontWeight: 'bold',
+                                color: 'greenyellow',
+                            },
+                        }}
+                        variant="contained"
+                        onClick={handleEditMode}
+                    >
+                        Edit
+                    </CustomizeButtonPersonalAccount>
+                    <Button></Button>
+                </Box>
+            ) : (
+                <>
+                    <Box display="flex" justifyContent={'center'} alignItems={'center'}>
+                        <CustomizeButtonPersonalAccount
+                            sx={{
+                                width: '140px',
+                                pt: 1,
+                                pb: 1,
+                                transition: 'all 0.3s',
+                                textTransform: 'capitalize',
+                                '&:hover': {
+                                    textTransform: 'uppercase',
+                                    fontWeight: 'bold',
+                                    color: 'greenyellow',
+                                },
+                            }}
+                            variant="contained"
+                            onClick={handleCheckTextField}
+                        >
+                            Save Profile
+                        </CustomizeButtonPersonalAccount>
+                        <ToastMessage2
+                            message={toastMessage}
+                            type={typeMessage}
+                            showToast={showToast}
+                            setShowToast={setShowToast}
+                        />
 
-                <CustomizeButtonPersonalAccount
-                    variant="outlined"
-                    sx={{
-                        pl: 4,
-                        pr: 4,
-                    }}
-                    // navigate to Home Page
-                    onClick={() => navigate('/')}
-                >
-                    Cancel
-                </CustomizeButtonPersonalAccount>
-            </Box>
+                        <CustomizeButtonPersonalAccount
+                            variant="outlined"
+                            sx={{
+                                pl: 4,
+                                pr: 4,
+                                pt: 1,
+                                pb: 1,
+                                width: '140px',
+                                textTransform: 'capitalize',
+                                '&:hover': {
+                                    backgroundColor: 'grey',
+                                    textTransform: 'uppercase',
+                                    fontWeight: 'bold',
+                                    color: 'greenyellow',
+                                },
+                            }}
+                            // navigate to Home Page
+                            onClick={() => navigate('/')}
+                        >
+                            Cancel
+                        </CustomizeButtonPersonalAccount>
+                    </Box>
+                </>
+            )}
         </Container>
     );
 }

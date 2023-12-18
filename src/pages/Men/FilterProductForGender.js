@@ -92,7 +92,15 @@ function FilterBrandPriceByPopover({
                 >
                     {/* Brands Popover Content */}
                     <Box p={2} width={'600px'}>
-                        <Typography variant="h6" sx={{ mb: 2 }}>
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                mb: 2,
+                                fontSize: '16px',
+                                fontWeight: 'bold',
+                                color: 'blue',
+                            }}
+                        >
                             Choose Brands
                         </Typography>
                         <Grid container spacing={0}>
@@ -138,7 +146,15 @@ function FilterBrandPriceByPopover({
                 >
                     {/* Prices Popover Content */}
                     <Box p={2} width={'600px'}>
-                        <Typography variant="h6" sx={{ mb: 2 }}>
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                mb: 2,
+                                fontSize: '16px',
+                                fontWeight: 'bold',
+                                color: 'blue',
+                            }}
+                        >
                             Choose Prices
                         </Typography>
                         <Grid container spacing={2}>

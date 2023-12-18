@@ -15,7 +15,7 @@ function Home() {
     console.log(JSON.parse(localStorage.getItem('user')));
     return (
         // <Box sx={{ height: '100%', minHeight: '450vh' }}>
-        <Box sx={{ height: '100%', minHeight: '850vh' }}>
+        <Box sx={{ height: '100%', minHeight: '450vh' }}>
             <SlideShowImageShop />
             <TabProducts />
             {/* New Products Arrivals */}

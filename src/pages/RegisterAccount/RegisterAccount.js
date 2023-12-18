@@ -58,7 +58,7 @@ function RegisterAccount() {
         const isEmailValid = emailValidation.validateEmail();
         const isPasswordValid = passwordValidation.validatePassword();
         const isRePasswordValid = rePasswordValidation.validateConfirmPassword(password);
-        const isAddressValid = emailValidation.validateRequired();
+        const isAddressValid = addressValivation.validateRequired();
         const isPhoneNumberValid = phoneNumberValidation.validatePhone();
 
         if (
@@ -67,7 +67,7 @@ function RegisterAccount() {
             isEmailValid &&
             isPasswordValid &&
             isRePasswordValid &&
-            isAddressValid &&
+            // isAddressValid &&
             isPhoneNumberValid
         ) {
             try {
@@ -89,7 +89,7 @@ function RegisterAccount() {
                         phone: phoneNumber,
                         password,
                         rePassword,
-                        address,
+                        // address,
                     };
 
                     const response = await userService.createUser(registrationData);
@@ -228,7 +228,7 @@ function RegisterAccount() {
                             }}
                             label="Email"
                             variant="outlined"
-                            placeholder="Fill your address..."
+                            placeholder="Fill your email..."
                             onBlur={emailValidation.validateEmail}
                             error={emailValidation.state.message !== ''}
                             helperText={emailValidation.state.message}
@@ -239,6 +239,29 @@ function RegisterAccount() {
                                 mb: 2,
                             }}
                         />
+                        {/* <CustomizeTextField
+                            wd={500}
+                            value={address}
+                            onChange={(e) => {
+                                setAddress(e.target.value);
+                                addressValivation.setState({
+                                    ...addressValivation.state,
+                                    value: e.target.value,
+                                });
+                            }}
+                            label="Address"
+                            variant="outlined"
+                            placeholder="Fill your address..."
+                            onBlur={addressValivation.validateRequired}
+                            error={addressValivation.state.message !== ''}
+                            helperText={addressValivation.state.message}
+                            sx={{
+                                '& .MuiFormHelperText-root': {
+                                    fontSize: '12px', // Adjust the font size as needed
+                                },
+                                mb: 2,
+                            }}
+                        /> */}
 
                         <CustomizeTextField
                             wd={500}

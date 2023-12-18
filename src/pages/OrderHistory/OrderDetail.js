@@ -18,6 +18,7 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 import Loading from '../Home/Loading/Loading';
+import EmptyCard from '../Checkout/EmptyCard/EmptyCard';
 function OrderDetail() {
     // call api
     const [orders, setOrders] = useState([]);
@@ -57,6 +58,25 @@ function OrderDetail() {
         };
         fetchOrder();
     }, [searchTerm, currentPage, itemsPerPage]);
+
+    // useEffect(() => {
+    //     const fetchOrder = async () => {
+    //         try {
+    //             setIsLoadingData(true);
+
+    //             // Fetch orders
+    //             const listOrder = await userService.getAllOrderById(userId._id);
+    //             setOrders(listOrder);
+
+    //             setIsLoadingData(false);
+    //         } catch (error) {
+    //             console.error('Error fetching orders:', error);
+    //             setIsLoadingData(false);
+    //         }
+    //     };
+
+    //     fetchOrder();
+    // }, [userId._id]);
 
     useEffect(() => {
         const fetchOrder = async () => {
@@ -109,70 +129,101 @@ function OrderDetail() {
     return (
         <Box>
             {/* Table */}
-
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <CustomTableCell>No</CustomTableCell>
-                            <CustomTableCell align="left">Times</CustomTableCell>
-                            <CustomTableCell align="left">Total</CustomTableCell>
-                            <CustomTableCell align="left">Payment</CustomTableCell>
-                            <CustomTableCell align="center">Action</CustomTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {currentItems.length > 0 &&
-                            currentItems.map((order, index) => (
-                                <TableRow
-                                    key={order._id}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
-                                    <CustomTableCell component="th" scope="order">
-                                        {(currentPage - 1) * itemsPerPage + index + 1}
-                                    </CustomTableCell>
-                                    <CustomTableCell align="left">
-                                        {new Date(order.createdAt).toLocaleString()}
-                                    </CustomTableCell>
-                                    <CustomTableCell align="left">
-                                        {order.totalAmount} VND
-                                    </CustomTableCell>
-                                    <CustomTableCell align="left">
-                                        {order.paymentMethod}
-                                    </CustomTableCell>
-                                    <CustomTableCell align="center">
-                                        <IconButton onClick={() => handleView(order._id)}>
-                                            <VisibilityIcon color="info" fontSize="large" />
-                                        </IconButton>
-                                    </CustomTableCell>
+            {currentItems.length > 0 ? (
+                <>
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <CustomTableCell>No</CustomTableCell>
+                                    <CustomTableCell align="left">Time</CustomTableCell>
+                                    <CustomTableCell align="left">Total</CustomTableCell>
+                                    <CustomTableCell align="left">Payment</CustomTableCell>
+                                    <CustomTableCell align="center">Action</CustomTableCell>
                                 </TableRow>
-                            ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, alignItems: 'center' }}>
-                <Button onClick={() => setCurrentPage(1)} disabled={currentPage === 1}>
-                    {/* <CustomTypography sx={{ textTransform: 'capitalize' }}>First</CustomTypography> */}
+                            </TableHead>
+                            <TableBody>
+                                {currentItems.length > 0 &&
+                                    currentItems.map((order, index) => (
+                                        <TableRow
+                                            key={order._id}
+                                            sx={{
+                                                '&:last-child td, &:last-child th': { border: 0 },
+                                            }}
+                                        >
+                                            <CustomTableCell component="th" scope="order">
+                                                {(currentPage - 1) * itemsPerPage + index + 1}
+                                            </CustomTableCell>
 
-                    <FirstPageIcon fontSize="large" />
-                </Button>
-                <Button onClick={handlePrevPage} disabled={currentPage === 1}>
-                    <CustomTypography sx={{ textTransform: 'capitalize' }}>
-                        Previous
-                    </CustomTypography>
-                </Button>
-                {/* {renderPageNumbers} */}
-                <Button onClick={handleNextPage} disabled={currentPage === pageNumbers}>
-                    <CustomTypography sx={{ textTransform: 'capitalize' }}>Next</CustomTypography>
-                </Button>
-                <Button
-                    onClick={() => setCurrentPage(pageNumbers)}
-                    disabled={currentPage === pageNumbers}
-                >
-                    {/* <CustomTypography sx={{ textTransform: 'capitalize' }}>Last</CustomTypography> */}
-                    <LastPageIcon fontSize="large" />
-                </Button>
-            </Box>
+                                            <CustomTableCell align="left">
+                                                {new Date(order.createdAt).toLocaleString()}
+                                            </CustomTableCell>
+                                            <CustomTableCell align="left">
+                                                {order.totalAmount} VND
+                                            </CustomTableCell>
+                                            <CustomTableCell align="left">
+                                                {order.paymentMethod}
+                                            </CustomTableCell>
+                                            <CustomTableCell align="center">
+                                                <IconButton onClick={() => handleView(order._id)}>
+                                                    <VisibilityIcon color="info" fontSize="large" />
+                                                </IconButton>
+                                            </CustomTableCell>
+                                        </TableRow>
+                                    ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            mt: 4,
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Button
+                            sx={{ mr: 2 }}
+                            onClick={() => setCurrentPage(1)}
+                            disabled={currentPage === 1}
+                        >
+                            {/* <CustomTypography sx={{ textTransform: 'capitalize' }}>First</CustomTypography> */}
+
+                            <FirstPageIcon fontSize="large" />
+                        </Button>
+                        <Button
+                            sx={{ mr: 2 }}
+                            onClick={handlePrevPage}
+                            disabled={currentPage === 1}
+                        >
+                            <CustomTypography sx={{ textTransform: 'capitalize' }}>
+                                Previous
+                            </CustomTypography>
+                        </Button>
+                        {/* {renderPageNumbers} */}
+                        <Button
+                            sx={{ mr: 2 }}
+                            onClick={handleNextPage}
+                            disabled={currentPage === pageNumbers}
+                        >
+                            <CustomTypography sx={{ textTransform: 'capitalize' }}>
+                                Next
+                            </CustomTypography>
+                        </Button>
+                        <Button
+                            sx={{ mr: 2 }}
+                            onClick={() => setCurrentPage(pageNumbers)}
+                            disabled={currentPage === pageNumbers}
+                        >
+                            {/* <CustomTypography sx={{ textTransform: 'capitalize' }}>Last</CustomTypography> */}
+                            <LastPageIcon fontSize="large" />
+                        </Button>
+                    </Box>
+                </>
+            ) : (
+                <EmptyCard message={"You haven't ordered any orders yet!"} />
+            )}
+
             {showForm && <ProductDetailView handleClose={handleCloseForm} id={selectedOrderId} />}
         </Box>
     );

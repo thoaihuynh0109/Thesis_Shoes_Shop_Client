@@ -56,6 +56,7 @@ export function MakeProductsCard({
 }) {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart.cartItems);
+    const wishlistItems = useSelector((state) => state.wishlist.wishlistItems);
     const navigate = useNavigate();
 
     const [hoverCard, setHoverCard] = useState(false);
@@ -96,15 +97,45 @@ export function MakeProductsCard({
     };
 
     // add to wish list action
+    // const handleAddProductToWishList = (product) => {
+    //     setIsLoadingWishList(true);
+
+    //     // Simulate a delay of 2 seconds before updating wishlist
+    //     setTimeout(() => {
+    //         dispatch(addToWishlist(product));
+    //         setCheckAddToWishList(true);
+    //         setIsLoadingWishList(false);
+    //         setToastMessage('Sản Phẩm Đã Được Thêm Vào Danh Sách Yêu Thích');
+    //         // Show the toast message
+    //         setShowToast(true);
+
+    //         // Reset toast after 3 seconds
+    //         setTimeout(() => {
+    //             setShowToast(false);
+    //         }, 3000);
+    //     }, 2000);
+    // };
+    // add to wish list action
     const handleAddProductToWishList = (product) => {
         setIsLoadingWishList(true);
 
+        // Check if the product is already in the wishlist
+        const existingProduct = wishlistItems.find((item) => item._id === product._id);
+
         // Simulate a delay of 2 seconds before updating wishlist
         setTimeout(() => {
-            dispatch(addToWishlist(product));
-            setCheckAddToWishList(true);
-            setIsLoadingWishList(false);
-            setToastMessage('Sản Phẩm Đã Được Thêm Vào Danh Sách Yêu Thích');
+            if (existingProduct) {
+                setIsLoadingWishList(false);
+                setToastMessage('Sản Phẩm Đã Tồn Tại Trong Danh Sách Yêu Thích');
+            } else {
+                // Product already exists in the wishlist
+                dispatch(addToWishlist(product));
+                setCheckAddToWishList(true);
+                setIsLoadingWishList(false);
+                console.log('thông tin sản phảm được add vào trong wishlist: ', product);
+                setToastMessage('Sản Phẩm Đã Được Thêm Vào Danh Sách Yêu Thích');
+            }
+
             // Show the toast message
             setShowToast(true);
 

@@ -18,10 +18,11 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
 import orderService from '~/services/orderServices';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
-
+import Loading from '~/pages/Home/Loading/Loading';
 export default function FormOrderDetail({ handleClose, id }) {
     const [order, setOrder] = React.useState({});
     const [open, setOpen] = React.useState(true);
+    const [isLoadingData, setIsLoadingData] = React.useState(true);
 
     const handleClick = () => {
         setOpen(!open);
@@ -29,10 +30,15 @@ export default function FormOrderDetail({ handleClose, id }) {
     React.useEffect(() => {
         async function fetchOrder() {
             const order = await orderService.getOrderById(id);
+            setIsLoadingData(false);
             setOrder(order);
         }
         fetchOrder();
     }, []);
+
+    if (isLoadingData) {
+        return <Loading />;
+    }
 
     return (
         <React.Fragment>

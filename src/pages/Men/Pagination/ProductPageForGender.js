@@ -7,6 +7,7 @@ import SortingSection from '~/pages/Shop/Pagination/SortingSection';
 import { LoadMoreProduct } from './RenderProductForGender';
 import useProductFilter from '../Filter/MakeUseProductFilter';
 import FilterBrandPriceByAccordion from '../FilterProductForGender';
+import Loading from '~/pages/Home/Loading/Loading';
 
 export default function ProductPageForGender({ selectedGender }) {
     const {
@@ -75,7 +76,8 @@ export default function ProductPageForGender({ selectedGender }) {
                     </Box>
                 ) : (
                     // <EmptyCard message={'Không có sản phẩm phù hợp'} />
-                    <EmptyCard message={'No result is found'} />
+                    // <EmptyCard message={'No result is found'} />
+                    <Loading />
                 )}
             </Box>
         </Box>
