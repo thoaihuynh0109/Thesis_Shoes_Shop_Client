@@ -23,6 +23,7 @@ import FormOrderDetail from './FormOrderDetail';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import LastPageIcon from '@mui/icons-material/LastPage';
+import Loading from '~/pages/Home/Loading/Loading';
 
 function Order() {
     const [orders, setOrders] = React.useState([]);
@@ -39,9 +40,11 @@ function Order() {
     const [currentPage, setCurrentPage] = React.useState(1);
     const [itemsPerPage, setItemsPerPage] = React.useState(5);
     const [isSearchFocused, setIsSearchFocused] = React.useState(false);
+    const [isLoadingData, setIsLoadingData] = React.useState(true);
 
     const fetchOrder = async () => {
         const listOrder = await orderService.getAllOrder();
+        setIsLoadingData(false);
         setOrders(listOrder);
     };
     React.useEffect(() => {
@@ -121,6 +124,9 @@ function Order() {
     const handleSearchBlur = () => {
         setIsSearchFocused(false);
     };
+    if (isLoadingData) {
+        return <Loading />;
+    }
 
     return (
         <Box>
