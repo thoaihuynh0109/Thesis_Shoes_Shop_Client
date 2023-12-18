@@ -21,3 +21,9 @@ Detail pages
 Admin Pages:
 
 -   add loading for admin UI
+-   search:
+    - update lại total
+    - không có thì hiển thị empty card
+    - hide đi button next, previous: phân trang
+
+
