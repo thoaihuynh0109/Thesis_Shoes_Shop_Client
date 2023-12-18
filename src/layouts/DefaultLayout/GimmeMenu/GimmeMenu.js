@@ -159,7 +159,7 @@ function CartTooltip() {
                             key={item.id}
                             sx={{
                                 display: 'flex',
-                                alignItems: 'flex-start',
+                                alignItems: 'center',
                                 justifyContent: 'space-between',
                                 mb: 1,
                             }}
