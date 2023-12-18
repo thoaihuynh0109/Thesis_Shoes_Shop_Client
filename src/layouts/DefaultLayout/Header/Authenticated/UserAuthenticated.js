@@ -77,6 +77,28 @@ function UserAuthenticated() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
             >
+                {user && isAdmin ? (
+                    <MenuItem
+                        onClick={() => {
+                            navigate('/dashboard');
+                            handleCloseUserMenu();
+                        }}
+                    >
+                        <ListItemIcon>
+                            <Dashboard fontSize="large" />
+                        </ListItemIcon>
+                        <Typography
+                            textAlign="center"
+                            fontSize={'14px'}
+                            p={'0 24px 0 0'}
+                            sx={{ ml: 2 }}
+                        >
+                            Dashboard
+                        </Typography>
+                    </MenuItem>
+                ) : (
+                    console.log(dataUser)
+                )}
                 <MenuItem
                     onClick={() => {
                         navigate('/profile');
@@ -136,28 +158,6 @@ function UserAuthenticated() {
                     </Typography>
                 </MenuItem>
 
-                {user && isAdmin ? (
-                    <MenuItem
-                        onClick={() => {
-                            navigate('/dashboard');
-                            handleCloseUserMenu();
-                        }}
-                    >
-                        <ListItemIcon>
-                            <Dashboard fontSize="large" />
-                        </ListItemIcon>
-                        <Typography
-                            textAlign="center"
-                            fontSize={'14px'}
-                            p={'0 24px 0 0'}
-                            sx={{ ml: 2 }}
-                        >
-                            Dashboard
-                        </Typography>
-                    </MenuItem>
-                ) : (
-                    console.log(dataUser)
-                )}
                 <MenuItem onClick={handleLogout}>
                     <ListItemIcon>
                         <ExitToApp fontSize="large" />
