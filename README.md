@@ -11,8 +11,4 @@
 
 ### Task must complete
 
-
 -   hình đầu tiên bên trái nó loading rồi mất rồi hiện
-
-
-Khi vào profile thì k phải bấm edit mới enable lên nút save profile
