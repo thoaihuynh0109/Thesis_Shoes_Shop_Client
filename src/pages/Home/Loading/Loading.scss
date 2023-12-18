@@ -13,9 +13,11 @@
     height: 8em;
     position: relative;
     border: 5px #000 solid;
-    animation: spin 5s linear infinite, shine 5s linear infinite;
+    // animation: spin 5s ease-in-out infinite, shine 10s ease-in infinite;
+    animation: spin 3s linear infinite;
 }
 
+// sharin 2
 .mangekyou {
     background: #050505;
     width: 8em;
@@ -214,6 +216,33 @@
         transform: rotate(1280deg);
     }
 }
+
+// @keyframes rotate {
+//     0% {
+//         transform: rotate(0deg);
+//         background-image: url('./img1.png');
+//     }
+//     20% {
+//         transform: rotate(360deg);
+//         background-image: url('./img1.png');
+//     }
+//     40% {
+//         background-image: url('./img2.png');
+//         transform: rotate(720deg) scale(1.25);
+//     }
+//     60% {
+//         background-image: url('./img2.png');
+//         transform: rotate(1020deg) scale(1.25);
+//     }
+//     80% {
+//         background-image: url('./img4.png');
+//         transform: rotate(720deg) scale(1.25);
+//     }
+//     100% {
+//         background-image: url('./img1.png');
+//         transform: rotate(1280deg);
+//     }
+// }
 
 .overlay-container {
     position: fixed;
