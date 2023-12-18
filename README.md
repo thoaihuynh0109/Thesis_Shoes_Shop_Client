@@ -11,19 +11,8 @@
 
 ### Task must complete
 
--   chỉnh lại thứ tự loading
+
 -   hình đầu tiên bên trái nó loading rồi mất rồi hiện
 
-Detail pages
 
--   add to wishlist lỗi
-
-Admin Pages:
-
--   add loading for admin UI
--   search:
-    - update lại total
-    - không có thì hiển thị empty card
-    - hide đi button next, previous: phân trang
-
-
+Khi vào profile thì k phải bấm edit mới enable lên nút save profile
