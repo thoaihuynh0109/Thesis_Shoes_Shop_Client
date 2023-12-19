@@ -97,6 +97,7 @@ function UpdateAddress() {
                         '& .MuiFormHelperText-root': {
                             fontSize: '12px', // Adjust the font size as needed
                         },
+                        textTransform: 'capitalize',
                     }}
                 />
             </Box>
@@ -147,6 +148,7 @@ function UpdateAddress() {
                         '& .MuiFormHelperText-root': {
                             fontSize: '12px', // Adjust the font size as needed
                         },
+                        textTransform: 'capitalize',
                     }}
                 />
             </Box>

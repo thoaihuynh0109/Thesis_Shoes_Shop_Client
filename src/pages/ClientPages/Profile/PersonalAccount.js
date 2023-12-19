@@ -180,6 +180,7 @@ function PersonalAccount() {
                                     '& .MuiFormHelperText-root': {
                                         fontSize: '12px', // Adjust the font size as needed
                                     },
+                                    textTransform: 'capitalize',
                                 }}
                             />
                         </Grid>
@@ -215,6 +216,7 @@ function PersonalAccount() {
                                     '& .MuiFormHelperText-root': {
                                         fontSize: '12px', // Adjust the font size as needed
                                     },
+                                    textTransform: 'capitalize',
                                 }}
                             />
                         </Grid>
@@ -323,6 +325,7 @@ function PersonalAccount() {
                                     '& .MuiFormHelperText-root': {
                                         fontSize: '12px', // Adjust the font size as needed
                                     },
+                                    textTransform: 'capitalize',
                                 }}
                             />
                         </Grid>

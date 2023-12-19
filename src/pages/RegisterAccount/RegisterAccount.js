@@ -165,6 +165,7 @@ function RegisterAccount() {
                                     fontSize: '12px', // Adjust the font size as needed
                                 },
                                 mb: 2,
+                                textTransform: 'capitalize',
                             }}
                         />
 
@@ -189,6 +190,7 @@ function RegisterAccount() {
                                     fontSize: '12px', // Adjust the font size as needed
                                 },
                                 mb: 2,
+                                textTransform: 'capitalize',
                             }}
                         />
 

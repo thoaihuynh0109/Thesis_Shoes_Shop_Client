@@ -110,6 +110,7 @@ export default function SearchAppBar() {
                             '&:hover': {
                                 backgroundColor: 'transparent',
                             },
+                            textTransform: 'capitalize',
                         }}
                     >
                         <Zoom in={isSearchFocused} style={{ transitionDelay: '150ms' }}>
