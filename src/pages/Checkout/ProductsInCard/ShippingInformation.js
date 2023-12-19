@@ -342,9 +342,9 @@ function ShippingInformation() {
 
             <Box
                 sx={{
-                    width: '805px',
-
-                    ml: '230px',
+                    width: '810px',
+                    ml: '225px',
+                    // ml: '205px',
                 }}
             >
                 <ShippingStep />
@@ -378,11 +378,11 @@ function ShippingInformation() {
                 // hide 2 buttons: Contine and Back
                 <Box></Box>
             ) : (
-                <Box display="flex" justifyContent={'center'} alignItems={'center'}>
+                <Box display="flex" justifyContent={'center'} alignItems={'center'} sx={{ mr: 10 }}>
                     <CustomizeButtonPersonalAccount
-                        variant="contained"
+                        variant="outlined"
                         onClick={handleContinue}
-                        sx={{ pl: 4, pr: 4, mt: 2 }}
+                        sx={{ pl: 4, pr: 4, pt: 1, pb: 1, mt: 2, width: '160px' }}
                     >
                         Continue
                     </CustomizeButtonPersonalAccount>
@@ -390,7 +390,7 @@ function ShippingInformation() {
                     <CustomizeButtonPersonalAccount
                         variant="contained"
                         onClick={handleUpdateAddress}
-                        sx={{ pl: 4, pr: 4, mt: 2 }}
+                        sx={{ pl: 4, pr: 4, mt: 2, pt: 1, pb: 1 }}
                     >
                         Update Address
                     </CustomizeButtonPersonalAccount>
@@ -398,11 +398,12 @@ function ShippingInformation() {
                     <CustomizeButtonPersonalAccount
                         variant="outlined"
                         sx={{
-                            // p: '4px 48px',
                             pl: 4,
                             pr: 4,
-
+                            pt: 1,
+                            pb: 1,
                             mt: '14px',
+                            width: '160px',
                         }}
                         onClick={goBack}
                     >
@@ -430,10 +431,14 @@ function ShippingInformation() {
                             <CustomizeButtonPersonalAccount
                                 variant="outlined"
                                 sx={{
-                                    mt: '20px',
-                                    mr: 35,
+                                    // mt: '20px',
+                                    mr: '212px',
                                     padding: '8px 30px',
                                     textTransform: 'capitalize',
+                                    pt: 1,
+                                    pb: 1,
+                                    pl: 8,
+                                    pr: 8,
                                 }}
                                 onClick={handleSubmitOrder}
                                 disabled={buttonDisabled}

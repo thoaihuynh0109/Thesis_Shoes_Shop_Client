@@ -8,30 +8,46 @@ const useValidation = (initialState) => {
     });
 
     const validateRequired = () => {
+        //  trường hợp có kí tự đặc biệt
+        // const specialCharRegex = /[!@#$%^&*(),.?":{}|<>`~]/;
+        const specialCharRegex = /[!@#$%^&*()?":{}|<>`~]/;
+
+        // not fill information
         if (state.value.trim() === '') {
             setState({
                 ...state,
                 message: 'This field is required.',
             });
             return false;
-        } else {
+        }
+
+        // check if exist specialCharRegex in text field
+        if (specialCharRegex.test(state.value)) {
             setState({
                 ...state,
-                message: '',
+                message: 'This field should not contain special characters.',
             });
-            return true;
+            return false;
         }
+
+        // Nếu không có vấn đề gì, trả về true
+        setState({
+            ...state,
+            message: '',
+        });
+        return true;
     };
 
     const validateEmail = () => {
         if (state.value.trim() === '') {
+            // empty
             setState({
                 ...state,
                 message: 'Please enter an email address.',
             });
             return false;
         } else {
-            let validEmail = state.value.toLowerCase().match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
+            let validEmail = state.value.toLowerCase().match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/); // @ and .
             if (validEmail) {
                 // Additional check for Gmail
                 if (state.value.toLowerCase().endsWith('@gmail.com')) {
@@ -50,7 +66,7 @@ const useValidation = (initialState) => {
             } else {
                 setState({
                     ...state,
-                    message: 'Invalid email address.',
+                    message: 'Invalid email address. Email does not contain special characters',
                 });
                 return false;
             }
@@ -103,32 +119,6 @@ const useValidation = (initialState) => {
         return true;
     };
 
-    // without checking special characters
-    const validatePhone2 = () => {
-        if (state.value === '') {
-            setState({
-                ...state,
-                message: 'Vui Lòng Nhập Số Điện Thoại',
-            });
-            return false;
-        } else {
-            let validPhone = state.value.match(/(0[3|5|7|8|9])+([0-9]{8})\b/g);
-            if (validPhone) {
-                setState({
-                    ...state,
-                    message: '',
-                });
-                return true;
-            } else {
-                setState({
-                    ...state,
-                    message: 'Số Điện Chỉ Có 10 Số!',
-                });
-                return false;
-            }
-        }
-    };
-
     const validatePhone = () => {
         if (state.value === '') {
             setState({
@@ -157,10 +147,11 @@ const useValidation = (initialState) => {
     };
 
     const validateRequiredWithoutDigits = () => {
-        if (/\d/.test(state.value)) {
+        // Allow letters, spaces, and accented characters
+        if (/[\d!@#$%^&*()_+={};':"\\|,.<>/?`~]+/.test(state.value)) {
             setState({
                 ...state,
-                message: 'Không Được Tồn Tại Số Trong Tên!',
+                message: 'Không Được Tồn Tại Số Hoặc Kí Tự Đặc Biệt Trong Tên!',
             });
             return false;
         } else if (state.value.trim() === '') {

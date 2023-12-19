@@ -116,7 +116,6 @@ function ProductInformation({ product }) {
             name: productDetail.name,
             price: productDetail.price,
             size: sizeSelected,
-            countInStock: productDetail.countInStock, // Replace with the actual property name
         };
 
         dispatch(addToWishlist(productToAddToWishlist));

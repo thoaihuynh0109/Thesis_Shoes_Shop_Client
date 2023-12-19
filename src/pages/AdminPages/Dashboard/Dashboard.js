@@ -49,6 +49,7 @@ import productService from '~/services/productServices';
 import orderService from '~/services/orderServices';
 import userService from '~/services/userServices';
 import { setUser } from '~/redux/User/userSlice';
+import Loading from '~/pages/Home/Loading/Loading';
 
 // const dataPie = [
 //     { name: 'Group A', value: 400 },
@@ -179,14 +180,17 @@ function Dashboard() {
     const [totalUSer, setTotalUSer] = React.useState(0);
     const [totalOrder, setTotalOrder] = React.useState(0);
     const [totalEarning, setTotalEarning] = React.useState(0);
+    const [isLoadingData, setIsLoadingData] = React.useState(true);
 
     React.useEffect(() => {
         const fetchLastestProduct = async () => {
             const listProduct = await productService.getLastestProduct();
+            setIsLoadingData(false);
             setLastestProducts(listProduct);
         };
         const fetchLastestOrder = async () => {
             const listLastestOrder = await orderService.getLastestOrder();
+            setIsLoadingData(false);
             setLastestOrders(listLastestOrder);
         };
 
@@ -197,10 +201,12 @@ function Dashboard() {
     React.useEffect(() => {
         const fetchUsers = async () => {
             const listUser = await userService.getAllUser();
+            setIsLoadingData(false);
             setTotalUSer(listUser.length);
         };
         const fetchOrders = async () => {
             const listOrder = await orderService.getAllOrder();
+            setIsLoadingData(false);
             setTotalOrder(listOrder.length);
             const totalEarning = listOrder.reduce(
                 (acc, order) => acc + parseFloat(order.totalAmount.replace(/,/g, '')),
@@ -208,6 +214,7 @@ function Dashboard() {
             );
             setTotalEarning(totalEarning.toLocaleString());
         };
+
         fetchUsers();
         fetchOrders();
     }, []);
@@ -239,6 +246,11 @@ function Dashboard() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    // loading ui
+    if (isLoadingData) {
+        return <Loading />;
+    }
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={3}>
@@ -279,7 +291,7 @@ function Dashboard() {
                                         <Typography
                                             variant="h1"
                                             component="h4"
-                                            sx={{ fontSize: 32, fontWeight: 600 }}
+                                            sx={{ fontSize: 28, fontWeight: 600 }}
                                             gutterBottom
                                         >
                                             {totalEarning}
@@ -326,7 +338,7 @@ function Dashboard() {
                                         <Typography
                                             variant="h1"
                                             component="h4"
-                                            sx={{ fontSize: 32, fontWeight: 600 }}
+                                            sx={{ fontSize: 28, fontWeight: 600 }}
                                             gutterBottom
                                         >
                                             {totalUSer}
@@ -375,7 +387,7 @@ function Dashboard() {
                                         <Typography
                                             variant="h1"
                                             component="h4"
-                                            sx={{ fontSize: 32, fontWeight: 600 }}
+                                            sx={{ fontSize: 28, fontWeight: 600 }}
                                             gutterBottom
                                         >
                                             {totalOrder}
@@ -431,7 +443,7 @@ function Dashboard() {
                                         <Typography
                                             variant="h1"
                                             component="h4"
-                                            sx={{ fontSize: 32, fontWeight: 600 }}
+                                            sx={{ fontSize: 28, fontWeight: 600 }}
                                             gutterBottom
                                         >
                                             {totalEarning}

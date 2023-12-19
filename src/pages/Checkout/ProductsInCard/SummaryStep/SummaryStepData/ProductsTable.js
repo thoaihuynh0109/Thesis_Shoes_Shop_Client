@@ -80,7 +80,6 @@ function ProductsTable() {
             dispatch(incrementQuantity(productId, 1, size));
         }
     };
-
     const removeItem = (productId, sizeSelected) => {
         // dispatch action to remove item from the cart
         const existingProduct = cartItems.find(
@@ -119,7 +118,6 @@ function ProductsTable() {
         setOpenConfirmation(false);
         setItemToRemove(null);
     };
-
     // calculate price section
     const calculateTotalPrice = (price, quantity) => {
         // check if price is defined and not null
@@ -206,7 +204,9 @@ function ProductsTable() {
                                 <CustomizeTableCell align="left">Description</CustomizeTableCell>
                                 <CustomizeTableCell align="left">Size</CustomizeTableCell>
                                 <CustomizeTableCell align="left">Unit Price</CustomizeTableCell>
-                                <CustomizeTableCell align="left">Quantity</CustomizeTableCell>
+                                <CustomizeTableCell align="left" sx={{ mr: '40px' }}>
+                                    Quantity
+                                </CustomizeTableCell>
                                 <CustomizeTableCell align="left">
                                     <Typography sx={{ ml: 6, fontSize: '16px' }}>Total</Typography>
                                 </CustomizeTableCell>
@@ -225,8 +225,17 @@ function ProductsTable() {
                                             style={{ width: '50px' }}
                                         />
                                     </CustomizeTableCell>
+                                    {/* <CustomizeTableCell
+                                        align="left"
+                                        sx={{ wordWrap: 'break-word' }}
+                                    >
+                                        {item.name}
+                                    </CustomizeTableCell> */}
 
-                                    <CustomizeTableCell align="left">
+                                    <CustomizeTableCell
+                                        align="left"
+                                        sx={{ whiteSpace: 'normal', maxWidth: '32ch' }}
+                                    >
                                         {item.name}
                                     </CustomizeTableCell>
                                     <CustomizeTableCell align="left">
@@ -243,7 +252,8 @@ function ProductsTable() {
                                             direction="row"
                                             spacing={2}
                                             justifyContent="center"
-                                            sx={{ ml: -8 }}
+                                            sx={{ mr: '20px' }}
+                                            // sx={{ ml: -8,  }}
                                         >
                                             <Button
                                                 variant="contained"
@@ -252,7 +262,15 @@ function ProductsTable() {
                                             >
                                                 <CustomTypography>-</CustomTypography>
                                             </Button>
-                                            <span>{item.quantity}</span>
+                                            <Box
+                                                sx={{
+                                                    minWidth: '20px',
+
+                                                    textAlign: 'center',
+                                                }}
+                                            >
+                                                <span>{item.quantity}</span>
+                                            </Box>
                                             <Button
                                                 variant="contained"
                                                 onClick={() => increment(item._id, item.size)}

@@ -22,6 +22,8 @@ import ToastMessage from '~/components/ToastMessage/ToastMessage';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import LastPageIcon from '@mui/icons-material/LastPage';
+import Loading from '~/pages/Home/Loading/Loading';
+import EmptyCard from '~/pages/Checkout/EmptyCard/EmptyCard';
 function User() {
     const [selectedUserId, setSelectedUserId] = React.useState(null);
     const [users, setUsers] = React.useState([]);
@@ -32,12 +34,14 @@ function User() {
     const [currentPage, setCurrentPage] = React.useState(1);
     const [itemsPerPage, setItemsPerPage] = React.useState(6);
     const [isSearchFocused, setIsSearchFocused] = React.useState(false);
+    const [isLoadingData, setIsLoadingData] = React.useState(true);
     // make pagination
 
     const navigate = useNavigate();
 
     const fetchUsers = async () => {
         const listUser = await userService.getAllUser();
+        setIsLoadingData(false);
         setUsers(listUser);
     };
 
@@ -120,6 +124,10 @@ function User() {
         setIsSearchFocused(false);
     };
 
+    if (isLoadingData) {
+        return <Loading />;
+    }
+
     return (
         <Box>
             <Box
@@ -176,88 +184,104 @@ function User() {
                     }}
                 />
             </Paper>
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <CustomTableCell sx={{ fontWeight: 'bold' }}>No</CustomTableCell>
-                            <CustomTableCell sx={{ fontWeight: 'bold' }} align="left">
-                                Name
-                            </CustomTableCell>
-                            <CustomTableCell sx={{ fontWeight: 'bold' }} align="left">
-                                Email
-                            </CustomTableCell>
-                            <CustomTableCell sx={{ fontWeight: 'bold' }} align="left">
-                                Phone
-                            </CustomTableCell>
-                            <CustomTableCell sx={{ fontWeight: 'bold' }} align="center">
-                                Active
-                            </CustomTableCell>
-                            <CustomTableCell sx={{ fontWeight: 'bold' }} align="center">
-                                Action
-                            </CustomTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {currentItems.length > 0 &&
-                            currentItems.map((row, index) => (
-                                <TableRow
-                                    key={row._id}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
-                                    <CustomTableCell component="th" scope="row">
-                                        {(currentPage - 1) * itemsPerPage + index + 1}
-                                    </CustomTableCell>
-                                    <CustomTableCell align="left">
-                                        {row.firstName + ' ' + row.lastName}
-                                    </CustomTableCell>
-                                    <CustomTableCell align="left">{row.email}</CustomTableCell>
-                                    <CustomTableCell align="left">{row.phone}</CustomTableCell>
-                                    <CustomTableCell align="center">
-                                        {row.isActive ? (
-                                            <CheckIcon color="success" fontSize="large" />
-                                        ) : (
-                                            <CloseIcon color="error" fontSize="large" />
-                                        )}
-                                    </CustomTableCell>
-                                    <CustomTableCell align="center">
-                                        <IconButton onClick={() => handleDelete(row._id)}>
-                                            <DeleteIcon color="error" fontSize="large" />
-                                        </IconButton>
-                                        <IconButton onClick={() => handleEdit(row._id)}>
-                                            <EditNoteIcon color="info" fontSize="large" />
-                                        </IconButton>
-                                    </CustomTableCell>
-                                </TableRow>
-                            ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            
-            <CustomTypography sx={{ mt: 2, fontSize:'16px' }}>Total of users: {users.length}</CustomTypography>
-            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, alignItems: 'center' }}>
-                <Button onClick={() => setCurrentPage(1)} disabled={currentPage === 1}>
-                    {/* <CustomTypography sx={{ textTransform: 'capitalize' }}>First</CustomTypography> */}
+            {filteredUsers.length > 0 ? (
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <CustomTableCell sx={{ fontWeight: 'bold' }}>No</CustomTableCell>
+                                <CustomTableCell sx={{ fontWeight: 'bold' }} align="left">
+                                    Name
+                                </CustomTableCell>
+                                <CustomTableCell sx={{ fontWeight: 'bold' }} align="left">
+                                    Email
+                                </CustomTableCell>
+                                <CustomTableCell sx={{ fontWeight: 'bold' }} align="left">
+                                    Phone
+                                </CustomTableCell>
+                                <CustomTableCell sx={{ fontWeight: 'bold' }} align="center">
+                                    Active
+                                </CustomTableCell>
+                                <CustomTableCell sx={{ fontWeight: 'bold' }} align="center">
+                                    Action
+                                </CustomTableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {currentItems.length > 0 &&
+                                currentItems.map((row, index) => (
+                                    <TableRow
+                                        key={row._id}
+                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                    >
+                                        <CustomTableCell component="th" scope="row">
+                                            {(currentPage - 1) * itemsPerPage + index + 1}
+                                        </CustomTableCell>
+                                        <CustomTableCell align="left">
+                                            {row.firstName + ' ' + row.lastName}
+                                        </CustomTableCell>
+                                        <CustomTableCell align="left">{row.email}</CustomTableCell>
+                                        <CustomTableCell align="left">{row.phone}</CustomTableCell>
+                                        <CustomTableCell align="center">
+                                            {row.isActive ? (
+                                                <CheckIcon color="success" fontSize="large" />
+                                            ) : (
+                                                <CloseIcon color="error" fontSize="large" />
+                                            )}
+                                        </CustomTableCell>
+                                        <CustomTableCell align="center">
+                                            <IconButton onClick={() => handleDelete(row._id)}>
+                                                <DeleteIcon color="error" fontSize="large" />
+                                            </IconButton>
+                                            <IconButton onClick={() => handleEdit(row._id)}>
+                                                <EditNoteIcon color="info" fontSize="large" />
+                                            </IconButton>
+                                        </CustomTableCell>
+                                    </TableRow>
+                                ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            ) : (
+                <EmptyCard message={'No users found.'} />
+            )}
 
-                    <FirstPageIcon fontSize="large" />
-                </Button>
-                <Button onClick={handlePrevPage} disabled={currentPage === 1}>
-                    <CustomTypography sx={{ textTransform: 'capitalize' }}>
-                        Previous
-                    </CustomTypography>
-                </Button>
-                {/* {renderPageNumbers} */}
-                <Button onClick={handleNextPage} disabled={currentPage === pageNumbers}>
-                    <CustomTypography sx={{ textTransform: 'capitalize' }}>Next</CustomTypography>
-                </Button>
-                <Button
-                    onClick={() => setCurrentPage(pageNumbers)}
-                    disabled={currentPage === pageNumbers}
+            <CustomTypography sx={{ mt: 2, fontSize: '16px' }}>
+                <strong>Total of users:</strong> {filteredUsers.length}
+            </CustomTypography>
+
+            {filteredUsers.length > 0 ? (
+                <Box
+                    sx={{ display: 'flex', justifyContent: 'center', mt: 2, alignItems: 'center' }}
                 >
-                    {/* <CustomTypography sx={{ textTransform: 'capitalize' }}>Last</CustomTypography> */}
-                    <LastPageIcon fontSize="large" />
-                </Button>
-            </Box>
+                    <Button onClick={() => setCurrentPage(1)} disabled={currentPage === 1}>
+                        {/* <CustomTypography sx={{ textTransform: 'capitalize' }}>First</CustomTypography> */}
+
+                        <FirstPageIcon fontSize="large" />
+                    </Button>
+                    <Button onClick={handlePrevPage} disabled={currentPage === 1}>
+                        <CustomTypography sx={{ textTransform: 'capitalize' }}>
+                            Previous
+                        </CustomTypography>
+                    </Button>
+                    {/* {renderPageNumbers} */}
+                    <Button onClick={handleNextPage} disabled={currentPage === pageNumbers}>
+                        <CustomTypography sx={{ textTransform: 'capitalize' }}>
+                            Next
+                        </CustomTypography>
+                    </Button>
+                    <Button
+                        onClick={() => setCurrentPage(pageNumbers)}
+                        disabled={currentPage === pageNumbers}
+                    >
+                        {/* <CustomTypography sx={{ textTransform: 'capitalize' }}>Last</CustomTypography> */}
+                        <LastPageIcon fontSize="large" />
+                    </Button>
+                </Box>
+            ) : (
+                // hide pagination
+                <Box></Box>
+            )}
             {showPopup && (
                 <PopupConfirm
                     handleClose={handleClosePopup}

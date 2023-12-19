@@ -24,6 +24,8 @@ import productService from '~/services/productServices';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import LastPageIcon from '@mui/icons-material/LastPage';
+import Loading from '~/pages/Home/Loading/Loading';
+import EmptyCard from '~/pages/Checkout/EmptyCard/EmptyCard';
 function Product() {
     const [products, setProducts] = React.useState([]);
     const [selectedProductId, setSelectedProductId] = React.useState(null);
@@ -35,10 +37,12 @@ function Product() {
     const [currentPage, setCurrentPage] = React.useState(1);
     const [itemsPerPage, setItemsPerPage] = React.useState(5);
     const [isSearchFocused, setIsSearchFocused] = React.useState(false);
+    const [isLoadingData, setIsLoadingData] = React.useState(true);
     const navigate = useNavigate();
 
     const fetchCategory = async () => {
         const listCategory = await productService.getAllProduct();
+        setIsLoadingData(false);
         setProducts(listCategory);
     };
 
@@ -116,6 +120,9 @@ function Product() {
         setIsSearchFocused(false);
     };
 
+    if (isLoadingData) {
+        return <Loading />;
+    }
     return (
         <Box>
             <Box
@@ -176,104 +183,119 @@ function Product() {
             </Paper>
             {/* Table */}
             <ToastMessage message={message} type={typeMessage} />
-
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <CustomTableCell>No</CustomTableCell>
-                            <CustomTableCell align="left">Name</CustomTableCell>
-                            <CustomTableCell align="left">Image</CustomTableCell>
-                            <CustomTableCell align="left">Brand</CustomTableCell>
-                            <CustomTableCell align="left">Category</CustomTableCell>
-                            <CustomTableCell align="left">Price</CustomTableCell>
-                            <CustomTableCell align="center">Active</CustomTableCell>
-                            <CustomTableCell align="center">Action</CustomTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {currentItems.length > 0 &&
-                            currentItems.map((row, index) => (
-                                <TableRow
-                                    key={row._id}
-                                    sx={{
-                                        '&:last-child td, &:last-child th': { border: 0 },
-                                        '.MuiTableCell-root': {
-                                            padding: '0 16px',
-                                        },
-                                    }}
-                                >
-                                    <CustomTableCell component="th" scope="row">
-                                        {(currentPage - 1) * itemsPerPage + index + 1}
-                                    </CustomTableCell>
-                                    <CustomTableCell
-                                        align="left"
+            {filteredProducts.length > 0 ? (
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <CustomTableCell>No</CustomTableCell>
+                                <CustomTableCell align="left">Name</CustomTableCell>
+                                <CustomTableCell align="left">Image</CustomTableCell>
+                                <CustomTableCell align="left">Brand</CustomTableCell>
+                                <CustomTableCell align="left">Category</CustomTableCell>
+                                <CustomTableCell align="left">Price</CustomTableCell>
+                                <CustomTableCell align="center">Active</CustomTableCell>
+                                <CustomTableCell align="center">Action</CustomTableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {currentItems.length > 0 &&
+                                currentItems.map((row, index) => (
+                                    <TableRow
+                                        key={row._id}
                                         sx={{
-                                            width: '320px',
-                                            overflow: 'hidden',
-                                            textOverflow: 'ellipsis',
+                                            '&:last-child td, &:last-child th': { border: 0 },
+                                            '.MuiTableCell-root': {
+                                                padding: '0 16px',
+                                            },
                                         }}
                                     >
-                                        {row.name}
-                                    </CustomTableCell>
-                                    <CustomTableCell align="left">
-                                        <img src={row.images} width="80px" height="80px" />
-                                    </CustomTableCell>
-                                    <CustomTableCell align="left">{row.brand}</CustomTableCell>
-                                    <CustomTableCell align="left">{row.category}</CustomTableCell>
-                                    <CustomTableCell align="left">{row.price}</CustomTableCell>
-                                    <CustomTableCell align="center">
-                                        {row.isActive ? (
-                                            <CheckIcon color="success" fontSize="large" />
-                                        ) : (
-                                            <CloseIcon color="error" fontSize="large" />
-                                        )}
-                                    </CustomTableCell>
-                                    <CustomTableCell align="center">
-                                        <IconButton onClick={() => handleDelete(row._id)}>
-                                            <DeleteIcon color="error" fontSize="large" />
-                                        </IconButton>
+                                        <CustomTableCell component="th" scope="row">
+                                            {(currentPage - 1) * itemsPerPage + index + 1}
+                                        </CustomTableCell>
+                                        <CustomTableCell
+                                            align="left"
+                                            sx={{
+                                                width: '320px',
+                                                overflow: 'hidden',
+                                                textOverflow: 'ellipsis',
+                                            }}
+                                        >
+                                            {row.name}
+                                        </CustomTableCell>
+                                        <CustomTableCell align="left">
+                                            <img src={row.images} width="80px" height="80px" />
+                                        </CustomTableCell>
+                                        <CustomTableCell align="left">{row.brand}</CustomTableCell>
+                                        <CustomTableCell align="left">
+                                            {row.category}
+                                        </CustomTableCell>
+                                        <CustomTableCell align="left">{row.price}</CustomTableCell>
+                                        <CustomTableCell align="center">
+                                            {row.isActive ? (
+                                                <CheckIcon color="success" fontSize="large" />
+                                            ) : (
+                                                <CloseIcon color="error" fontSize="large" />
+                                            )}
+                                        </CustomTableCell>
+                                        <CustomTableCell align="center">
+                                            <IconButton onClick={() => handleDelete(row._id)}>
+                                                <DeleteIcon color="error" fontSize="large" />
+                                            </IconButton>
 
-                                        <IconButton onClick={() => handleEdit(row._id)}>
-                                            <EditNoteIcon color="info" fontSize="large" />
-                                        </IconButton>
-                                    </CustomTableCell>
-                                </TableRow>
-                            ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                                            <IconButton onClick={() => handleEdit(row._id)}>
+                                                <EditNoteIcon color="info" fontSize="large" />
+                                            </IconButton>
+                                        </CustomTableCell>
+                                    </TableRow>
+                                ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            ) : (
+                <EmptyCard message={'No products found.'} />
+            )}
+
             <CustomTypography sx={{ mt: 2, fontSize: '16px' }}>
-                Total of products: {products.length}
+                Total of products: {filteredProducts.length}
             </CustomTypography>
-            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, alignItems: 'center' }}>
-                <Button
-                    onClick={() => setCurrentPage(1)}
-                    disabled={currentPage === 1}
-                    sx={{ mr: 2 }}
+            {filteredProducts.length > 0 ? (
+                <Box
+                    sx={{ display: 'flex', justifyContent: 'center', mt: 2, alignItems: 'center' }}
                 >
-                    <FirstPageIcon fontSize="large" />
-                </Button>
-                <Button onClick={handlePrevPage} disabled={currentPage === 1} sx={{ mr: 2 }}>
-                    <CustomTypography sx={{ textTransform: 'capitalize' }}>
-                        Previous
-                    </CustomTypography>
-                </Button>
-                <Button
-                    onClick={handleNextPage}
-                    disabled={currentPage === pageNumbers}
-                    sx={{ mr: 2 }}
-                >
-                    <CustomTypography sx={{ textTransform: 'capitalize' }}>Next</CustomTypography>
-                </Button>
-                <Button
-                    onClick={() => setCurrentPage(pageNumbers)}
-                    disabled={currentPage === pageNumbers}
-                    sx={{ mr: 2 }}
-                >
-                    <LastPageIcon fontSize="large" />
-                </Button>
-            </Box>
+                    <Button
+                        onClick={() => setCurrentPage(1)}
+                        disabled={currentPage === 1}
+                        sx={{ mr: 2 }}
+                    >
+                        <FirstPageIcon fontSize="large" />
+                    </Button>
+                    <Button onClick={handlePrevPage} disabled={currentPage === 1} sx={{ mr: 2 }}>
+                        <CustomTypography sx={{ textTransform: 'capitalize' }}>
+                            Previous
+                        </CustomTypography>
+                    </Button>
+                    <Button
+                        onClick={handleNextPage}
+                        disabled={currentPage === pageNumbers}
+                        sx={{ mr: 2 }}
+                    >
+                        <CustomTypography sx={{ textTransform: 'capitalize' }}>
+                            Next
+                        </CustomTypography>
+                    </Button>
+                    <Button
+                        onClick={() => setCurrentPage(pageNumbers)}
+                        disabled={currentPage === pageNumbers}
+                        sx={{ mr: 2 }}
+                    >
+                        <LastPageIcon fontSize="large" />
+                    </Button>
+                </Box>
+            ) : (
+                <Box></Box>
+            )}
+
             {showPopup && (
                 <PopupConfirm
                     handleClose={handleClosePopup}
