@@ -16,6 +16,7 @@ import { CustomizeButton } from '~/components/CustomizeButton/CustomizeButton';
 import userService from '~/services/userServices';
 import { useNavigate } from 'react-router-dom';
 import ToastMessage from '~/components/ToastMessage/ToastMessage';
+import { FireTruck } from '@mui/icons-material';
 
 function AddUser() {
     const [firstName, setFirstName] = React.useState({
@@ -52,12 +53,18 @@ function AddUser() {
     const [typeMessage, setTypeMessage] = React.useState('');
 
     const navigate = useNavigate();
-
+    const specialCharRegexForFLName = /[\d!@#$%^&*()_+={};':"\\|,.<>/?`~]+/;
     const validateFirstName = () => {
         if (/\d/.test(firstName.value)) {
             setFirstName({
                 ...firstName,
                 message: 'Không Được Tồn Tại Số Trong Tên!',
+            });
+            return false;
+        } else if (specialCharRegexForFLName.test(firstName.value)) {
+            setFirstName({
+                ...firstName,
+                message: 'Không Được Tồn Tại Kí Tự Đặc Biệt Trong Tên!',
             });
             return false;
         } else if (firstName.value.trim() === '') {
@@ -81,6 +88,12 @@ function AddUser() {
                 message: 'Không Được Tồn Tại Số Trong Tên!',
             });
             return false;
+        } else if (specialCharRegexForFLName.test(lastName.value)) {
+            setLastName({
+                ...lastName,
+                message: 'Không Được Tồn Tại Kí Tự Đặc Biệt Trong Tên!',
+            });
+            return false;
         } else if (lastName.value.trim() === '') {
             setLastName({
                 ...lastName,
@@ -97,13 +110,13 @@ function AddUser() {
 
     // check email must end with '@gmail.com'
     const validateEmail = () => {
+        let validEmail = email.value.toLowerCase().match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/); // @ and .
         if (email.value.trim() === '') {
             setEmail({
                 ...email,
                 message: 'Vui lòng nhập email',
             });
         } else {
-            let validEmail = email.value.toLowerCase().match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
             if (validEmail) {
                 if (email.value.toLowerCase().endsWith('@gmail.com')) {
                     setEmail({
@@ -118,7 +131,11 @@ function AddUser() {
                     });
                     return false;
                 }
-            } else setEmail({ ...email, message: 'Email không hợp lệ' });
+            } else {
+                setEmail({ ...email, message: 'Email không chứa các ký tự đặc biệt' });
+                // setEmail({ ...email, message: 'Email không hợp lệ' });
+                return false;
+            }
         }
     };
 
@@ -171,6 +188,28 @@ function AddUser() {
                 return false;
             }
         }
+    };
+
+    const specialCharRegexEmail = /[!@#$%^&*()?":{}|<>`~]/; // adapt "Khánh" có dấu
+    const validateAddress = () => {
+        if (specialCharRegexEmail.test(address.value)) {
+            setAddress({
+                ...address,
+                message: 'Không Được Tồn Tại Kí Tự Đặc Biệt Trong Address',
+            });
+            return false;
+        } else if (address.value.trim() === '') {
+            setAddress({
+                ...address,
+                message: 'Vui lòng nhập Address',
+            });
+            return false;
+        }
+        setAddress({
+            ...address,
+            message: '',
+        });
+        return true;
     };
 
     const handleShowPassword = () => {
@@ -389,7 +428,11 @@ function AddUser() {
                             variant="outlined"
                             placeholder="Enter Address"
                             onChange={(e) => setAddress({ ...address, value: e.target.value })}
+                            onBlur={validateAddress}
                         />
+                        <FormHelperText error sx={{ fontSize: '1.4rem' }}>
+                            {address.message}
+                        </FormHelperText>
                     </Box>
                     <Box>
                         <CustomizeTextField

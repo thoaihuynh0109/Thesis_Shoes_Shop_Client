@@ -64,35 +64,19 @@ function EditUser() {
         fetchUser();
     }, []);
 
-    // const validateFirstName = () => {
-    //     if (firstName.value.trim() === '') {
-    //         setFirstName({
-    //             ...firstName,
-    //             message: 'Vui lòng nhập first name',
-    //         });
-    //         return;
-    //     }
-    //     setFirstName({ ...firstName, message: '' });
-    //     return;
-    // };
-
-    // const validateLastName = () => {
-    //     if (lastName.value.trim() === '') {
-    //         setLastName({
-    //             ...lastName,
-    //             message: 'Vui lòng nhập last name',
-    //         });
-    //         return;
-    //     }
-    //     setLastName({ ...lastName, message: '' });
-    //     return;
-    // };
-
+    // check validate for input textfields
+    const specialCharRegexForFLName = /[\d!@#$%^&*()_+={};':"\\|,.<>/?`~]+/;
     const validateFirstName = () => {
         if (/\d/.test(firstName.value)) {
             setFirstName({
                 ...firstName,
                 message: 'Không Được Tồn Tại Số Trong Tên!',
+            });
+            return false;
+        } else if (specialCharRegexForFLName.test(firstName.value)) {
+            setFirstName({
+                ...firstName,
+                message: 'Không Được Tồn Tại Kí Tự Đặc Biệt Trong Tên!',
             });
             return false;
         } else if (firstName.value.trim() === '') {
@@ -116,6 +100,12 @@ function EditUser() {
                 message: 'Không Được Tồn Tại Số Trong Tên!',
             });
             return false;
+        } else if (specialCharRegexForFLName.test(lastName.value)) {
+            setLastName({
+                ...lastName,
+                message: 'Không Được Tồn Tại Kí Tự Đặc Biệt Trong Tên!',
+            });
+            return false;
         } else if (lastName.value.trim() === '') {
             setLastName({
                 ...lastName,
@@ -129,6 +119,49 @@ function EditUser() {
         });
         return true;
     };
+
+    // validate without special characters
+    // const validateFirstName = () => {
+    //     if (/\d/.test(firstName.value)) {
+    //         setFirstName({
+    //             ...firstName,
+    //             message: 'Không Được Tồn Tại Số Trong Tên!',
+    //         });
+    //         return false;
+    //     } else if (firstName.value.trim() === '') {
+    //         setFirstName({
+    //             ...firstName,
+    //             message: 'Vui lòng nhập first name',
+    //         });
+    //         return false;
+    //     }
+    //     setFirstName({
+    //         ...firstName,
+    //         message: '',
+    //     });
+    //     return true;
+    // };
+
+    // const validateLastName = () => {
+    //     if (/\d/.test(lastName.value)) {
+    //         setLastName({
+    //             ...lastName,
+    //             message: 'Không Được Tồn Tại Số Trong Tên!',
+    //         });
+    //         return false;
+    //     } else if (lastName.value.trim() === '') {
+    //         setLastName({
+    //             ...lastName,
+    //             message: 'Vui lòng nhập last name',
+    //         });
+    //         return false;
+    //     }
+    //     setLastName({
+    //         ...lastName,
+    //         message: '',
+    //     });
+    //     return true;
+    // };
 
     // const validateEmail = () => {
     //     if (email.value.trim() === '') {
@@ -210,6 +243,30 @@ function EditUser() {
             }
         }
     };
+
+    const specialCharRegexEmail = /[!@#$%^&*()?":{}|<>`~]/; // adapt "Khánh" có dấu
+    const validateAddress = () => {
+        if (specialCharRegexEmail.test(address.value)) {
+            setAddress({
+                ...address,
+                message: 'Không Được Tồn Tại Kí Tự Đặc Biệt Trong Address',
+            });
+            return false;
+        } else if (address.value.trim() === '') {
+            setAddress({
+                ...address,
+                message: 'Vui lòng nhập Address',
+            });
+            return false;
+        }
+        setAddress({
+            ...address,
+            message: '',
+        });
+        return true;
+    };
+
+    // check error
     const checkError = () => {
         if (
             firstName.message !== '' ||
@@ -322,6 +379,7 @@ function EditUser() {
                         <CustomizeTextField
                             label="Email"
                             fullWidth
+                            disabled
                             required
                             value={email.value}
                             error={email.message ? true : false}
@@ -335,7 +393,7 @@ function EditUser() {
                         </FormHelperText>
                     </Box>
 
-                    <Box sx={{ width: '100%' }}>
+                    <Box sx={{ width: '100%', mb: '16px' }}>
                         <CustomizeTextField
                             id="validation-outlined-input"
                             label="Password"
@@ -376,8 +434,12 @@ function EditUser() {
                             fullWidth
                             variant="outlined"
                             placeholder="Enter Address"
+                            onBlur={validateAddress}
                             onChange={(e) => setAddress({ ...address, value: e.target.value })}
                         />
+                        <FormHelperText error sx={{ fontSize: '1.4rem' }}>
+                            {address.message}
+                        </FormHelperText>
                     </Box>
                     <Box>
                         <CustomizeTextField
