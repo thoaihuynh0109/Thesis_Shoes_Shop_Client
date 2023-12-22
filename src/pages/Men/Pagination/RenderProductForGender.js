@@ -34,9 +34,9 @@ export function LoadMoreProduct({
             const listAllProducts2 = await productService.getProductByCategory(selectedGender);
             // const listAllProducts = await productService.getAllProduct();
             console.log('List cate for male: ', listAllProducts2);
+            setLoading(false);
             // console.log('List cate for male22:', listAllProducts);
             setListAllProducts(listAllProducts2);
-            setLoading(false);
         };
         fetchProductByCategory();
     }, []);
@@ -69,6 +69,13 @@ export function LoadMoreProduct({
     const renderProductCards = () => {
         let data;
 
+        if (loading) {
+            return (
+                <Box sx={{ textAlign: 'center', mt: 4, width: '100%' }}>
+                    <Loading />
+                </Box>
+            );
+        }
         if (getValue) {
             const paginatedData = storeValue.slice(0, visibleItems);
             data = paginatedData;
@@ -88,13 +95,21 @@ export function LoadMoreProduct({
             data = paginatedData.slice(0, visibleItems);
         }
 
-        if (!hasProducts || data.length === 0) {
+        // if (data.length === 0 || !hasProducts) {
+        if (data.length === 0 || !hasProducts) {
             return (
                 <Box sx={{ textAlign: 'center', mt: 4, width: '100%' }}>
                     <EmptyCard message={'Không có sản phẩm phù hợp'} />
                 </Box>
             );
         }
+        // if (!hasProducts || data.length === 0) {
+        // return (
+        //     <Box sx={{ textAlign: 'center', mt: 4, width: '100%' }}>
+        //         <EmptyCard message={'Không có sản phẩm phù hợp'} />
+        //     </Box>
+        // );
+        // }
 
         // show 4 products in rows
         return (
@@ -137,60 +152,6 @@ export function LoadMoreProduct({
     const handleButtonLoadMore = () => {
         setVisibleItems((prevVisibleItems) => prevVisibleItems + itemsPerLoad);
     };
-
-    // if (loading) {
-    //     return <Loading />;
-    // }
-
-    // return (
-    //     <Box>
-    //         <Box sx={{ display: 'flex' }}>
-    //             {/* , flexDirection: 'column' */}
-    //             <Box sx={{ display: 'flex' }}>
-    //                 {/* , flexDirection: 'column'  */}
-    //                 <Box
-    //                     style={{
-    //                         display: 'flex',
-    //                         // flexWrap: 'wrap',
-    //                         minHeight: '500px',
-    //                         // flexDirection: 'column',
-    //                         // marginLeft: '64px',
-    //                     }}
-    //                 >
-    //                     {renderProductCards()}
-    //                     {/* {renderProductCards()} */}
-
-    //                     <ToastMessage2
-    //                         // message="Product added to cart!"
-    //                         message={toastMessage}
-    //                         type="success"
-    //                         showToast={showToast}
-    //                         setShowToast={setShowToast}
-    //                     />
-    //                 </Box>
-    //             </Box>
-    //         </Box>
-    //         {/* hide button when there is no product to load more */}
-    //         {isLoadMoreVisible && (
-    //             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-    //                 <Button
-    //                     variant="contained"
-    //                     onClick={handleButtonLoadMore}
-    //                     sx={{
-    //                         display: 'flex',
-    //                         alignItems: 'center',
-    //                         textAlign: 'center',
-    //                         fontSize: '14px',
-    //                         padding: '8px 24px',
-    //                         mt: 2,
-    //                     }}
-    //                 >
-    //                     Load More
-    //                 </Button>
-    //             </Box>
-    //         )}
-    //     </Box>
-    // );
 
     return (
         <Box>
