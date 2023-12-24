@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, ButtonGroup, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
@@ -26,6 +26,17 @@ export default function ProductPageForGender({ selectedGender }) {
     } = useProductFilter();
 
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        // Simulate loading for 2 seconds
+        const timeoutId = setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+
+        // Cleanup the timeout to avoid memory leaks
+        return () => clearTimeout(timeoutId);
+    }, []); // Run this effect only once when the component mounts
 
     return (
         <Box sx={{ flexGrow: 1, minHeight: '100vh', mt: 4 }}>
@@ -75,7 +86,6 @@ export default function ProductPageForGender({ selectedGender }) {
                         />
                     </Box>
                 ) : (
-                    // <EmptyCard message={'Không có sản phẩm phù hợp'} />
                     // <EmptyCard message={'No result is found'} />
                     <Loading />
                 )}

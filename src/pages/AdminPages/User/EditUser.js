@@ -346,7 +346,7 @@ function EditUser() {
                                 error={firstName.message ? true : false}
                                 variant="outlined"
                                 placeholder="Enter First Name"
-                                sx={{ width: '100%', mr: 2 }}
+                                sx={{ width: '100%', mr: 2, textTransform: 'capitalize' }}
                                 onBlur={validateFirstName}
                                 onChange={(e) =>
                                     setFirstName({ ...firstName, value: e.target.value })
@@ -364,7 +364,7 @@ function EditUser() {
                                 error={lastName.message ? true : false}
                                 variant="outlined"
                                 placeholder="Enter Last Name"
-                                sx={{ width: '100%' }}
+                                sx={{ width: '100%', textTransform: 'capitalize' }}
                                 onBlur={validateLastName}
                                 onChange={(e) =>
                                     setLastName({ ...lastName, value: e.target.value })
@@ -432,6 +432,7 @@ function EditUser() {
                             value={address.value}
                             error={address.message ? true : false}
                             fullWidth
+                            sx={{ textTransform: 'capitalize' }}
                             variant="outlined"
                             placeholder="Enter Address"
                             onBlur={validateAddress}

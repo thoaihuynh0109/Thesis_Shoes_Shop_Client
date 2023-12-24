@@ -77,60 +77,6 @@ function PersonalAccount() {
         addressValivation.setState({ ...addressValivation.state, value: address });
     }, [address, addressValivation]);
 
-    // const handleCheckTextField = async () => {
-    //     // Validate fields
-    //     const isFirstNameValid = firstNameValidation.validateRequiredWithoutDigits();
-    //     const isLastNameValid = lastNameValidation.validateRequiredWithoutDigits();
-    //     const isEmailValid = emailValidation.validateEmail();
-    //     const isAddressValid = addressValivation.validateRequired();
-    //     const isPhoneNumberValid = phoneValidation.validatePhone();
-
-    //     if (
-    //         isFirstNameValid &&
-    //         isLastNameValid &&
-    //         isEmailValid &&
-    //         isAddressValid &&
-    //         isPhoneNumberValid
-    //     ) {
-    //         try {
-    //             // Update user data in the database
-    //             const updatedUserData = {
-    //                 firstName,
-    //                 lastName,
-    //                 email,
-    //                 address,
-    //                 phone,
-    //             };
-    //             console.log('ahiahi:', userId);
-    //             console.log(updatedUserData);
-    //             await userService.updateUserProfile(userId, updatedUserData);
-
-    //             // Optionally, you can also update the local storage with the new user data
-    //             setUserData(updatedUserData);
-
-    //             setShowToast(true);
-    //             setToastMessage('You just updated your information!');
-    //             setTypeMessage('success');
-
-    //             // navigate to Home Page after 2s
-    //             setTimeout(() => {
-    //                 navigate('/');
-    //             }, 2000);
-
-    //             // Show a success message or perform other actions as needed
-    //             console.log('User profile updated successfully!');
-    //         } catch (error) {
-    //             console.error('Error updating user profile:', error);
-    //         }
-    //     } else {
-    //         setShowToast(true);
-    //         setToastMessage('Please, fill all information below');
-    //         setTypeMessage('warning');
-    //         // Handle validation errors
-    //         console.log('Validation failed. Please check the form.');
-    //     }
-    // };
-
     const handleCheckTextField = async () => {
         // Validate fields
         const isFirstNameValid = firstNameValidation.validateRequiredWithoutDigits();
@@ -234,6 +180,7 @@ function PersonalAccount() {
                                     '& .MuiFormHelperText-root': {
                                         fontSize: '12px', // Adjust the font size as needed
                                     },
+                                    textTransform: 'capitalize',
                                 }}
                             />
                         </Grid>
@@ -269,6 +216,7 @@ function PersonalAccount() {
                                     '& .MuiFormHelperText-root': {
                                         fontSize: '12px', // Adjust the font size as needed
                                     },
+                                    textTransform: 'capitalize',
                                 }}
                             />
                         </Grid>
@@ -377,6 +325,7 @@ function PersonalAccount() {
                                     '& .MuiFormHelperText-root': {
                                         fontSize: '12px', // Adjust the font size as needed
                                     },
+                                    textTransform: 'capitalize',
                                 }}
                             />
                         </Grid>

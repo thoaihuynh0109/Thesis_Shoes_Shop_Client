@@ -14,6 +14,7 @@ import { Storefront, AttachMoneyOutlined } from '@mui/icons-material';
 import CustomTypography from '~/components/CustomTyporaphy/CustomTyporaphy';
 import brandService from '~/services/brandServices';
 import useProductFilter from './Filter/MakeUseProductFilter';
+import Loading from '../Home/Loading/Loading';
 function FilterBrandPriceByPopover({
     handleBrandFilter,
     selectedBrands,
@@ -25,6 +26,7 @@ function FilterBrandPriceByPopover({
     const [listBrands, setListBrands] = useState([]);
     const [brandPopoverAnchorEl, setBrandPopoverAnchorEl] = useState(null);
     const [pricePopoverAnchorEl, setPricePopoverAnchorEl] = useState(null);
+    const [isLoadingData, setIsLoadingData] = useState(true);
     const prices = [
         'Under 1,000,000đ',
         '1,000,000đ - 2,000,000đ',
@@ -35,6 +37,7 @@ function FilterBrandPriceByPopover({
     useEffect(() => {
         const fetchBrandsData = async () => {
             const listProductBrands = await brandService.getAllBrand();
+            // setIsLoadingData(false);
             setListBrands(listProductBrands);
         };
         fetchBrandsData();
@@ -56,6 +59,9 @@ function FilterBrandPriceByPopover({
     const brandPopoverOpen = Boolean(brandPopoverAnchorEl);
     const pricePopoverOpen = Boolean(pricePopoverAnchorEl);
 
+    // if (isLoadingData) {
+    //     return <Loading />;
+    // }
     return (
         <Box>
             <Box>

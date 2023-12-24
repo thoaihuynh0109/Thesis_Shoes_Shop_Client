@@ -233,7 +233,7 @@ function ShippingInformation() {
                     // after 2,5s clicking order button will redirect to '/' Home
                     setTimeout(() => {
                         navigate('/');
-                    }, 2500);
+                    }, 1000);
 
                     console.log('Order placed successfully');
                 }
@@ -417,6 +417,20 @@ function ShippingInformation() {
                 // show payment step
                 <Box>
                     {/* choose shipping method */}
+
+                    {/* hide selected button when click into order button */}
+                    {/* {buttonDisabled ? (
+                        <Box></Box>
+                    ) : (
+                        <Box sx={{ ml: 29 }}>
+                            <PaymentStep
+                                onSelectPaymentMethod={(selectedMethod) =>
+                                    setSelectedPaymentMethod(selectedMethod)
+                                }
+                            />
+                        </Box>
+                    )} */}
+
                     <Box sx={{ ml: 29 }}>
                         <PaymentStep
                             onSelectPaymentMethod={(selectedMethod) =>

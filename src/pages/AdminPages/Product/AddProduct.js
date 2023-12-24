@@ -299,7 +299,11 @@ function AddProduct() {
                                             error={name.message ? true : false}
                                             variant="outlined"
                                             placeholder="Enter Product Name"
-                                            sx={{ width: '100%', mr: 2 }}
+                                            sx={{
+                                                width: '100%',
+                                                mr: 2,
+                                                textTransform: 'capitalize',
+                                            }}
                                             onBlur={validateName}
                                             onChange={(e) =>
                                                 setName({
@@ -376,6 +380,7 @@ function AddProduct() {
                                             error={description.message ? true : false}
                                             fullWidth
                                             required
+                                            sx={{ textTransform: 'capitalize' }}
                                             variant="outlined"
                                             placeholder="Enter Description"
                                             onChange={(e) =>
