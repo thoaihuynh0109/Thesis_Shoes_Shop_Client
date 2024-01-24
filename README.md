@@ -9,8 +9,3 @@
 
 -   Developing an e-commerce website to sell shoes using ReactJS and NodeJS
 
-### Task must complete
-
--   hình đầu tiên bên trái nó loading rồi mất rồi hiện
--   chuyển các text field về các capitalize or camamel
-
